@@ -19,12 +19,12 @@ namespace DAnCE
     {
       DANCE_TRACE("MDD_Handler::mono_deployment_descriptions");
 
-      deploymentPlan::implementation_const_iterator imp_e =
-        src.end_implementation ();
+      auto imp_e =
+        src.implementation_values ().end ();
       CORBA::ULong pos = 0;
-      dest.length (src.count_implementation ());
-      for (deploymentPlan::implementation_const_iterator imp_b =
-             src.begin_implementation ();
+      dest.length (src.implementation_values ().size ());
+      for (auto imp_b =
+             src.implementation_values ().begin ();
            imp_b != imp_e;
            ++imp_b)
         {
@@ -45,13 +45,13 @@ namespace DAnCE
       toconfig.name =
         CORBA::string_dup (desc.name ().c_str ());
 
-      MonolithicDeploymentDescription::source_const_iterator me =
-        desc.end_source ();
+      auto me =
+        desc.source_values ().end ();
 
       CORBA::ULong len = 0;
-      toconfig.source.length (desc.count_source ());
-      for (MonolithicDeploymentDescription::source_const_iterator se =
-             desc.begin_source ();
+      toconfig.source.length (desc.source_values ().size ());
+      for (auto se =
+             desc.source_values ().begin ();
            se != me;
            ++se)
         {
@@ -59,12 +59,12 @@ namespace DAnCE
             CORBA::string_dup (se->c_str ());
         }
 
-      MonolithicDeploymentDescription::artifact_const_iterator ae =
-        desc.end_artifact ();
+      auto ae =
+        desc.artifact_values ().end ();
       len = 0;
-      toconfig.artifactRef.length (desc.count_artifact ());
-      for (MonolithicDeploymentDescription::artifact_const_iterator
-             ab = desc.begin_artifact ();
+      toconfig.artifactRef.length (desc.artifact_values ().size ());
+      for (auto
+             ab = desc.artifact_values ().begin ();
            ae != ab;
            ++ab)
         {
@@ -80,12 +80,12 @@ namespace DAnCE
           toconfig.artifactRef[len++] = tmp;
         }
 
-      MonolithicDeploymentDescription::execParameter_const_iterator epce =
-        desc.end_execParameter ();
+      auto epce =
+        desc.execParameter_values ().end ();
       len = 0;
-      toconfig.execParameter.length (desc.count_execParameter ());
-      for (MonolithicDeploymentDescription::execParameter_const_iterator epcb =
-             desc.begin_execParameter ();
+      toconfig.execParameter.length (desc.execParameter_values ().size ());
+      for (auto epcb =
+             desc.execParameter_values ().begin ();
            epcb != epce;
            ++epcb)
         {
@@ -93,9 +93,9 @@ namespace DAnCE
                                              toconfig.execParameter[len++]);
         }
 
-      toconfig.deployRequirement.length (desc.count_deployRequirement ());
-      std::for_each (desc.begin_deployRequirement (),
-                     desc.end_deployRequirement (),
+      toconfig.deployRequirement.length (desc.deployRequirement_values ().size ());
+      std::for_each (desc.deployRequirement_values ().begin (),
+                     desc.deployRequirement_values ().end (),
                      Requirement_Functor (toconfig.deployRequirement));
 
       // Handle the idref

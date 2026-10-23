@@ -14,13 +14,13 @@ namespace DAnCE
     {
       DANCE_TRACE("PSPE_Handler::sub_component_port_endpoints");
 
-      PlanConnectionDescription::internalEndpoint_const_iterator iei_e =
-        src.end_internalEndpoint ();
+      auto iei_e =
+        src.internalEndpoint_values ().end ();
       CORBA::ULong pos = 0;
-      dest.length (src.count_internalEndpoint ());
+      dest.length (src.internalEndpoint_values ().size ());
 
-      for (PlanConnectionDescription::internalEndpoint_const_iterator iei_b =
-             src.begin_internalEndpoint ();
+      for (auto iei_b =
+             src.internalEndpoint_values ().begin ();
            iei_b != iei_e;
            ++iei_b)
         {

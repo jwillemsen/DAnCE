@@ -68,27 +68,27 @@ namespace DAnCE
 
       toconfig.name =  desc.name ().c_str ();
 
-      toconfig.deployRequirement.length (desc.count_deployRequirement ());
-      std::for_each (desc.begin_deployRequirement (),
-             desc.end_deployRequirement (),
+      toconfig.deployRequirement.length (desc.deployRequirement_values ().size ());
+      std::for_each (desc.deployRequirement_values ().begin (),
+             desc.deployRequirement_values ().end (),
              Requirement_Functor (toconfig.deployRequirement));
 
-      toconfig.internalEndpoint.length (desc.count_internalEndpoint ());
+      toconfig.internalEndpoint.length (desc.internalEndpoint_values ().size ());
       SEQ_HAND_GCC_BUG_WORKAROUND (SPE_Handler::handle_spe,
-                                   (*desc.begin_internalEndpoint ()),
+                                   (*desc.internalEndpoint_values ().begin ()),
                                    toconfig.internalEndpoint);
-      std::for_each (desc.begin_internalEndpoint (),
-             desc.end_internalEndpoint (),
+      std::for_each (desc.internalEndpoint_values ().begin (),
+             desc.internalEndpoint_values ().end (),
              SPE_Functor (toconfig.internalEndpoint));
 
-      toconfig.externalEndpoint.length (desc.count_externalEndpoint ());
-      std::for_each (desc.begin_externalEndpoint (),
-                     desc.end_externalEndpoint (),
+      toconfig.externalEndpoint.length (desc.externalEndpoint_values ().size ());
+      std::for_each (desc.externalEndpoint_values ().begin (),
+                     desc.externalEndpoint_values ().end (),
                      CEPE_Functor (toconfig.externalEndpoint));
 
-      toconfig.externalReference.length (desc.count_externalReference ());
-      std::for_each (desc.begin_externalReference (),
-             desc.end_externalReference (),
+      toconfig.externalReference.length (desc.externalReference_values ().size ());
+      std::for_each (desc.externalReference_values ().begin (),
+             desc.externalReference_values ().end (),
              ERE_Functor (toconfig.externalReference));
 
     }
@@ -179,12 +179,12 @@ namespace DAnCE
       toconfig.externalName =
         desc.externalName ().c_str ();
 
-      toconfig.delegatesTo.length (desc.count_delegatesTo ());
+      toconfig.delegatesTo.length (desc.delegatesTo_values ().size ());
       SEQ_HAND_GCC_BUG_WORKAROUND (SPR_Handler::handle_spr,
-                                   (*desc.begin_delegatesTo ()),
+                                   (*desc.delegatesTo_values ().begin ()),
                                    toconfig.delegatesTo);
-      std::for_each (desc.begin_delegatesTo (),
-             desc.end_delegatesTo (),
+      std::for_each (desc.delegatesTo_values ().begin (),
+             desc.delegatesTo_values ().end (),
              SPR_Functor (toconfig.delegatesTo));
     }
 
@@ -216,27 +216,27 @@ namespace DAnCE
       {
         DANCE_TRACE("CAD_Handler::component_assem_descr");
 
-        toconfig.instance.length (desc.count_instance ());
-        std::for_each (desc.begin_instance (),
-                       desc.end_instance (),
+        toconfig.instance.length (desc.instance_values ().size ());
+        std::for_each (desc.instance_values ().begin (),
+                       desc.instance_values ().end (),
                        SID_Functor (toconfig.instance));
 
         /* @@ MAJO: Implement Locality */
 
-        toconfig.connection.length (desc.count_connection ());
+        toconfig.connection.length (desc.connection_values ().size ());
         SEQ_HAND_GCC_BUG_WORKAROUND (ACD_Handler::handle_acd,
-                                     (*desc.begin_connection ()),
+                                     (*desc.connection_values ().begin ()),
                                      toconfig.connection);
-        std::for_each (desc.begin_connection (),
-                       desc.end_connection (),
+        std::for_each (desc.connection_values ().begin (),
+                       desc.connection_values ().end (),
                        ACD_Functor (toconfig.connection));
 
-        toconfig.externalProperty.length (desc.count_externalProperty ());
+        toconfig.externalProperty.length (desc.externalProperty_values ().size ());
         SEQ_HAND_GCC_BUG_WORKAROUND (APM_Handler::handle_apm,
-                                     (*desc.begin_externalProperty ()),
+                                     (*desc.externalProperty_values ().begin ()),
                                      toconfig.externalProperty);
-        std::for_each (desc.begin_externalProperty (),
-                       desc.end_externalProperty (),
+        std::for_each (desc.externalProperty_values ().begin (),
+                       desc.externalProperty_values ().end (),
                        APM_Functor (toconfig.externalProperty));
       }
 

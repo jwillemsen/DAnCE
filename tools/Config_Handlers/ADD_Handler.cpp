@@ -16,12 +16,12 @@ namespace DAnCE
       {
         DANCE_TRACE("ADD_Handler::atrifact_deployment_descrs");
 
-        deploymentPlan::artifact_const_iterator aci_e =
-          src.end_artifact ();
-        dest.length (src.count_artifact ());
+        auto aci_e =
+          src.artifact_values ().end ();
+        dest.length (src.artifact_values ().size ());
         CORBA::ULong pos = 0;
-        for (deploymentPlan::artifact_const_iterator aci_b =
-               src.begin_artifact ();
+        for (auto aci_b =
+               src.artifact_values ().begin ();
              aci_e != aci_b;
              ++aci_b)
           {
@@ -44,25 +44,25 @@ namespace DAnCE
 
         dest.node =  src.node ().c_str ();
 
-        ArtifactDeploymentDescription::location_const_iterator end =
-          src.end_location ();
+        auto end =
+          src.location_values ().end ();
 
-        dest.location.length (src.count_location ());
+        dest.location.length (src.location_values ().size ());
         CORBA::ULong len = 0;
-        for (ArtifactDeploymentDescription::location_const_iterator
-               start = src.begin_location ();
+        for (auto
+               start = src.location_values ().begin ();
              start != end;
              ++start)
           {
             dest.location[len++] =  start->c_str ();
           }
 
-        ArtifactDeploymentDescription::source_const_iterator sce =
-          src.end_source ();
+        auto sce =
+          src.source_values ().end ();
         len = 0;
-        dest.source.length (src.count_source ());
-        for (ArtifactDeploymentDescription::source_const_iterator
-               scb = src.begin_source ();
+        dest.source.length (src.source_values ().size ());
+        for (auto
+               scb = src.source_values ().begin ();
              scb != sce;
              ++scb)
           {
@@ -70,12 +70,12 @@ namespace DAnCE
           }
 
         // @@TODO: See this loop is repeated
-        ArtifactDeploymentDescription::execParameter_const_iterator adce =
-          src.end_execParameter ();
+        auto adce =
+          src.execParameter_values ().end ();
         len = 0;
-        dest.execParameter.length (src.count_execParameter ());
-        for (ArtifactDeploymentDescription::execParameter_const_iterator adcb =
-               src.begin_execParameter ();
+        dest.execParameter.length (src.execParameter_values ().size ());
+        for (auto adcb =
+               src.execParameter_values ().begin ();
              adcb != adce;
              ++adcb)
           {

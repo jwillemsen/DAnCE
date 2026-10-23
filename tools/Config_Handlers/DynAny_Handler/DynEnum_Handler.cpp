@@ -45,7 +45,7 @@ namespace DAnCE
             temp.in ());
 
           retval->set_as_string (
-            value.begin_enum ()->c_str ());
+            value.enum_values ().begin ()->c_str ());
 
           return retval._retn ();
         }
@@ -93,11 +93,11 @@ namespace DAnCE
 
       // Construct TypeCode for the enum
       CORBA::EnumMemberSeq members;
-      members.length (enum__if_set_ptr_2->count_member ());
+      members.length (enum__if_set_ptr_2->member_values ().size ());
       CORBA::ULong index (0);
 
-      for (EnumType::member_const_iterator i = enum__if_set_ptr_2->begin_member ();
-           i != enum__if_set_ptr_2->end_member ();
+      for (auto i = enum__if_set_ptr_2->member_values ().begin ();
+           i != enum__if_set_ptr_2->member_values ().end ();
            ++i)
         {
           members[index++] = CORBA::string_dup (

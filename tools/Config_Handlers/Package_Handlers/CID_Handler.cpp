@@ -36,14 +36,14 @@ namespace DAnCE
 
       toconfig.name =  desc.name ().c_str ();
 
-      toconfig.resourceType.length (desc.count_resourceType ());
-      std::for_each (desc.begin_resourceType (),
-             desc.end_resourceType (),
+      toconfig.resourceType.length (desc.resourceType_values ().size ());
+      std::for_each (desc.resourceType_values ().begin (),
+             desc.resourceType_values ().end (),
              String_Seq_Functor (toconfig.resourceType));
 
-      toconfig.property.length (desc.count_property ());
-      std::for_each (desc.begin_property (),
-             desc.end_property (),
+      toconfig.property.length (desc.property_values ().size ());
+      std::for_each (desc.property_values ().begin (),
+             desc.property_values ().end (),
              SatisfierProperty_Functor (toconfig.property));
     }
 
@@ -122,8 +122,8 @@ namespace DAnCE
       toconfig.resourceType =  desc.resourceType ().c_str ();
       toconfig.name =  desc.name ().c_str ();
 
-      std::for_each (desc.begin_property (),
-             desc.end_property (),
+      std::for_each (desc.property_values ().begin (),
+             desc.property_values ().end (),
              Property_Functor (toconfig.property ));
     }
 
@@ -188,33 +188,33 @@ namespace DAnCE
     {
       DANCE_TRACE ("MID_Handler::get_mid");
 
-      toconfig.nodeExecParameter.length (desc.count_nodeExecParameter ());
-      std::for_each (desc.begin_nodeExecParameter (),
-             desc.end_nodeExecParameter (),
+      toconfig.nodeExecParameter.length (desc.nodeExecParameter_values ().size ());
+      std::for_each (desc.nodeExecParameter_values ().begin (),
+             desc.nodeExecParameter_values ().end (),
              Property_Functor (toconfig.nodeExecParameter));
 
       toconfig.componentExecParameter.length (
-        desc.count_componentExecParameter ());
-      std::for_each (desc.begin_componentExecParameter (),
-             desc.end_componentExecParameter (),
+        desc.componentExecParameter_values ().size ());
+      std::for_each (desc.componentExecParameter_values ().begin (),
+             desc.componentExecParameter_values ().end (),
              Property_Functor (toconfig.componentExecParameter));
 
-      toconfig.deployRequirement.length (desc.count_deployRequirement ());
+      toconfig.deployRequirement.length (desc.deployRequirement_values ().size ());
       while (0)
         {
-          IR_Handler::handle_ir (*desc.begin_deployRequirement (),
+          IR_Handler::handle_ir (*desc.deployRequirement_values ().begin (),
                                  toconfig.deployRequirement[0]);
         }
-      std::for_each (desc.begin_deployRequirement (),
-             desc.end_deployRequirement (),
+      std::for_each (desc.deployRequirement_values ().begin (),
+             desc.deployRequirement_values ().end (),
              IR_Functor (toconfig.deployRequirement));
 
-      toconfig.primaryArtifact.length (desc.count_primaryArtifact ());
+      toconfig.primaryArtifact.length (desc.primaryArtifact_values ().size ());
       SEQ_HAND_GCC_BUG_WORKAROUND (NIA_Handler::handle_nia,
-                                   (*desc.begin_primaryArtifact ()),
+                                   (*desc.primaryArtifact_values ().begin ()),
                                    toconfig.primaryArtifact);
-      std::for_each (desc.begin_primaryArtifact (),
-             desc.end_primaryArtifact (),
+      std::for_each (desc.primaryArtifact_values ().begin (),
+             desc.primaryArtifact_values ().end (),
              NIA_Functor (toconfig.primaryArtifact));
     }
 
@@ -317,34 +317,34 @@ namespace DAnCE
                       "assemblyImpl or monolithicImpl"));
 
         // configProperty
-        toconfig.configProperty.length (cid->count_configProperty ());
-        std::for_each (cid->begin_configProperty (),
-                       cid->end_configProperty (),
+        toconfig.configProperty.length (cid->configProperty_values ().size ());
+        std::for_each (cid->configProperty_values ().begin (),
+                       cid->configProperty_values ().end (),
                        Property_Functor (toconfig.configProperty));
 
         // capability
-        toconfig.capability.length (cid->count_capability ());
+        toconfig.capability.length (cid->capability_values ().size ());
         SEQ_HAND_GCC_BUG_WORKAROUND (Capability_Handler::handle_capability,
-                                     (*cid->begin_capability ()),
+                                     (*cid->capability_values ().begin ()),
                                      toconfig.capability);
-        std::for_each (cid->begin_capability (),
-                       cid->end_capability (),
+        std::for_each (cid->capability_values ().begin (),
+                       cid->capability_values ().end (),
                        Capability_Functor (toconfig.capability));
 
         // dependsOn
-        toconfig.dependsOn.length (cid->count_dependsOn ());
+        toconfig.dependsOn.length (cid->dependsOn_values ().size ());
         CORBA::ULong pos = 0;
-        for (ComponentImplementationDescription::dependsOn_const_iterator i =
-               cid->begin_dependsOn ();
-             i != cid->end_dependsOn ();
+        for (auto i =
+               cid->dependsOn_values ().begin ();
+             i != cid->dependsOn_values ().end ();
              ++i)
           toconfig.dependsOn[pos++].requiredType =
              i->requiredType ().c_str ();
 
         // infoProperty
-        toconfig.infoProperty.length (cid->count_infoProperty ());
-        std::for_each (cid->begin_infoProperty (),
-                       cid->end_infoProperty (),
+        toconfig.infoProperty.length (cid->infoProperty_values ().size ());
+        std::for_each (cid->infoProperty_values ().begin (),
+                       cid->infoProperty_values ().end (),
                        Property_Functor (toconfig.infoProperty));
 
       }

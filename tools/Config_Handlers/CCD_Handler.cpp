@@ -39,37 +39,37 @@ namespace DAnCE
             CORBA::string_dup (specificType_if_set_ptr->c_str ());
         }
 
-      ComponentInterfaceDescription::supportedType_const_iterator
-        end = desc.end_supportedType ();
+      auto
+        end = desc.supportedType_values ().end ();
 
       CORBA::ULong pos = 0;
-      toconfig.supportedType.length (desc.count_supportedType ());
-      for (ComponentInterfaceDescription::supportedType_const_iterator s =
-             desc.begin_supportedType ();
+      toconfig.supportedType.length (desc.supportedType_values ().size ());
+      for (auto s =
+             desc.supportedType_values ().begin ();
            s != end;
            ++s)
         {
           toconfig.supportedType[pos++] = s->c_str ();
         }
 
-      ComponentInterfaceDescription::idlFile_const_iterator
-        eidl = desc.end_idlFile ();
+      auto
+        eidl = desc.idlFile_values ().end ();
       pos = 0;
-      toconfig.idlFile.length (desc.count_idlFile ());
-      for (ComponentInterfaceDescription::idlFile_const_iterator sidl=
-             desc.begin_idlFile ();
+      toconfig.idlFile.length (desc.idlFile_values ().size ());
+      for (auto sidl=
+             desc.idlFile_values ().begin ();
            sidl != eidl;
            ++sidl)
         {
           toconfig.idlFile [pos++] = sidl->c_str ();
         }
 
-      ComponentInterfaceDescription::configProperty_const_iterator pend =
-        desc.end_configProperty ();
+      auto pend =
+        desc.configProperty_values ().end ();
       pos = 0;
-      toconfig.configProperty.length (desc.count_configProperty ());
-      for (ComponentInterfaceDescription::configProperty_const_iterator pstart =
-             desc.begin_configProperty ();
+      toconfig.configProperty.length (desc.configProperty_values ().size ());
+      for (auto pstart =
+             desc.configProperty_values ().begin ();
            pstart != pend;
            ++pstart)
         {
@@ -78,10 +78,10 @@ namespace DAnCE
         }
 
       pos = 0;
-      toconfig.port.length (desc.count_port ());
-      for (ComponentInterfaceDescription::port_const_iterator
-             port (desc.begin_port ());
-           port != desc.end_port ();
+      toconfig.port.length (desc.port_values ().size ());
+      for (auto
+             port (desc.port_values ().begin ());
+           port != desc.port_values ().end ();
            ++port)
         {
           CPD_Handler::handle_component_port_description (*port,
@@ -89,11 +89,11 @@ namespace DAnCE
         }
 
       pos = 0;
-      CORBA::ULong len = desc.count_property ();
+      CORBA::ULong len = desc.property_values ().size ();
       toconfig.property.length ( len );
-      for(ComponentInterfaceDescription::property_const_iterator
-            prop (desc.begin_property());
-          prop != desc.end_property();
+      for(auto
+            prop (desc.property_values ().begin ());
+          prop != desc.property_values ().end ();
           prop++)
         {
           ComponentPropertyDescription_Handler::component_property_description (*prop,
@@ -101,10 +101,10 @@ namespace DAnCE
         }
 
       pos = 0;
-      toconfig.infoProperty.length (desc.count_infoProperty ());
-      for ( ComponentInterfaceDescription::infoProperty_const_iterator
-              infoProp (desc.begin_infoProperty());
-            infoProp != desc.end_infoProperty();
+      toconfig.infoProperty.length (desc.infoProperty_values ().size ());
+      for ( auto
+              infoProp (desc.infoProperty_values ().begin ());
+            infoProp != desc.infoProperty_values ().end ();
             infoProp++)
         {
           Property_Handler::handle_property (*infoProp,

@@ -31,8 +31,8 @@ namespace DAnCE
       toconfig.requirementName =  desc.requirementName ().c_str ();
       toconfig.resourceName =  desc.resourceName ().c_str ();
 
-      std::for_each (desc.begin_property (),
-                     desc.end_property (),
+      std::for_each (desc.property_values ().begin (),
+                     desc.property_values ().end (),
                      Property_Functor (toconfig.property));
     }
 

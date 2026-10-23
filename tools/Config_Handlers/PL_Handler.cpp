@@ -31,10 +31,10 @@ namespace DAnCE
 
 
       size_t pos = 0;
-      toconfig.constrainedInstanceRef.length (desc.count_constrainedInstance ());
+      toconfig.constrainedInstanceRef.length (desc.constrainedInstance_values ().size ());
 
-      for (PlanLocality::constrainedInstance_const_iterator i = desc.begin_constrainedInstance ();
-           i != desc.end_constrainedInstance ();
+      for (auto i = desc.constrainedInstance_values ().begin ();
+           i != desc.constrainedInstance_values ().end ();
            ++i)
         {
           CORBA::ULong tmp = 0;

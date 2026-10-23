@@ -76,11 +76,11 @@ namespace DAnCE
         case TCKind::tk_array_l:
           try
             {
-              dynseq.length (value.count_element ());
-              retval->set_length (value.count_element ());
+              dynseq.length (value.element_values ().size ());
+              retval->set_length (value.element_values ().size ());
 
-              for (DataValue::element_const_iterator i = value.begin_element ();
-                   i != value.end_element ();
+              for (auto i = value.element_values ().begin ();
+                   i != value.element_values ().end ();
                    ++i)
                 {
                   DynamicAny::DynAny_var dynany

@@ -44,9 +44,9 @@ namespace DAnCE
           toconfig.source[0] = source_if_set_ptr->c_str ();
         }
 
-      toconfig.deployRequirement.length (desc.count_deployRequirement ());
-      std::for_each (desc.begin_deployRequirement (),
-                     desc.end_deployRequirement (),
+      toconfig.deployRequirement.length (desc.deployRequirement_values ().size ());
+      std::for_each (desc.deployRequirement_values ().begin (),
+                     desc.deployRequirement_values ().end (),
                      Requirement_Functor (toconfig.deployRequirement));
 
 
@@ -65,10 +65,10 @@ namespace DAnCE
       //Configure the resource value.
       CRDD_Handler crddhandler;
       CORBA::ULong pos = 0;
-      toconfig.deployedResource.length (desc.count_deployedResource ());
-      for(PlanConnectionDescription::deployedResource_const_iterator res =
-            desc.begin_deployedResource();
-          res != desc.end_deployedResource();
+      toconfig.deployedResource.length (desc.deployedResource_values ().size ());
+      for(auto res =
+            desc.deployedResource_values ().begin ();
+          res != desc.deployedResource_values ().end ();
           res++)
         {
           crddhandler.get_ConnectionResourceDeploymentDescription (toconfig.deployedResource[pos++],

@@ -43,7 +43,7 @@ namespace DAnCE
 
             tpd = reader::topLevelPackageDescription (dom);
 
-            PCD_Handler::package_config (*tpd.begin_package (),
+            PCD_Handler::package_config (*tpd.package_values ().begin (),
                                          toconfig);
           }
         else if (root == XML::XStr (
@@ -113,14 +113,14 @@ namespace DAnCE
 
         // @@ MAJO: Support other elements present here.
 
-        toconfig.configProperty.length (desc.count_configProperty ());
-        std::for_each (desc.begin_configProperty (),
-                       desc.end_configProperty (),
+        toconfig.configProperty.length (desc.configProperty_values ().size ());
+        std::for_each (desc.configProperty_values ().begin (),
+                       desc.configProperty_values ().end (),
                        Property_Functor (toconfig.configProperty));
 
-        toconfig.selectRequirement.length (desc.count_selectRequirement ());
-        std::for_each (desc.begin_selectRequirement (),
-                       desc.end_selectRequirement (),
+        toconfig.selectRequirement.length (desc.selectRequirement_values ().size ());
+        std::for_each (desc.selectRequirement_values ().begin (),
+                       desc.selectRequirement_values ().end (),
                        Requirement_Functor (toconfig.selectRequirement));
 
       }

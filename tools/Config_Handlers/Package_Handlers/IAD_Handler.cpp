@@ -49,32 +49,32 @@ namespace DAnCE
         if (UUID_if_set_ptr)
           toconfig.UUID = UUID_if_set_ptr->c_str ();
 
-        toconfig.location.length (iad->count_location ());
-        std::for_each (iad->begin_location (),
-                       iad->end_location (),
+        toconfig.location.length (iad->location_values ().size ());
+        std::for_each (iad->location_values ().begin (),
+                       iad->location_values ().end (),
                        String_Seq_Functor (toconfig.location));
 
-        toconfig.dependsOn.length (iad->count_dependsOn ());
+        toconfig.dependsOn.length (iad->dependsOn_values ().size ());
         SEQ_HAND_GCC_BUG_WORKAROUND (NIA_Handler::handle_nia,
-                                     (*desc.begin_dependsOn ()),
+                                     (*desc.dependsOn_values ().begin ()),
                                      toconfig.dependsOn);
-        std::for_each (iad->begin_dependsOn (),
-                       iad->end_dependsOn (),
+        std::for_each (iad->dependsOn_values ().begin (),
+                       iad->dependsOn_values ().end (),
                        NIA_Functor (toconfig.dependsOn));
 
-        toconfig.execParameter.length (iad->count_execParameter ());
-        std::for_each (iad->begin_execParameter (),
-                       iad->end_execParameter (),
+        toconfig.execParameter.length (iad->execParameter_values ().size ());
+        std::for_each (iad->execParameter_values ().begin (),
+                       iad->execParameter_values ().end (),
                        Property_Functor (toconfig.execParameter));
 
-        toconfig.infoProperty.length (iad->count_infoProperty ());
-        std::for_each (iad->begin_infoProperty (),
-                       iad->end_infoProperty (),
+        toconfig.infoProperty.length (iad->infoProperty_values ().size ());
+        std::for_each (iad->infoProperty_values ().begin (),
+                       iad->infoProperty_values ().end (),
                        Property_Functor (toconfig.infoProperty));
 
-        toconfig.deployRequirement.length (iad->count_deployRequirement ());
-        std::for_each (iad->begin_deployRequirement (),
-                       iad->end_deployRequirement (),
+        toconfig.deployRequirement.length (iad->deployRequirement_values ().size ());
+        std::for_each (iad->deployRequirement_values ().begin (),
+                       iad->deployRequirement_values ().end (),
                        Requirement_Functor (toconfig.deployRequirement ));
       }
 

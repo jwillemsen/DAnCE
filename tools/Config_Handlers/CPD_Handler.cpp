@@ -22,9 +22,9 @@ namespace DAnCE
         toconfig.specificType =
           specificType_if_set_ptr->c_str ();
 
-      toconfig.supportedType.length (desc.count_supportedType ());
-      std::for_each (desc.begin_supportedType (),
-                     desc.end_supportedType (),
+      toconfig.supportedType.length (desc.supportedType_values ().size ());
+      std::for_each (desc.supportedType_values ().begin (),
+                     desc.supportedType_values ().end (),
                      String_Seq_Functor (toconfig.supportedType));
 
 

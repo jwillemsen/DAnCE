@@ -33,9 +33,9 @@ namespace DAnCE
         DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
 
       const char* s = 0;
-      if (value.count_string ())
+      if (value.string_values ().size ())
         {
-          s = value.begin_string ()->c_str ();
+          s = value.string_values ().begin ()->c_str ();
         }
       retval->insert_string (s);
 
@@ -60,9 +60,9 @@ namespace DAnCE
       ::DAnCE::Config_Handlers::BoundedStringType const* boundedString_if_set_ptr = type.boundedString_if_set ();
       if (boundedString_if_set_ptr)
         {
-          if (boundedString_if_set_ptr->count_bound ())
+          if (boundedString_if_set_ptr->bound_values ().size ())
           {
-            bound = *boundedString_if_set_ptr->begin_bound ();
+            bound = *boundedString_if_set_ptr->bound_values ().begin ();
           }
         }
 

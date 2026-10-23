@@ -19,13 +19,13 @@ namespace DAnCE
                                              Deployment::InstanceDeploymentDescriptions& dest)
     {
       DANCE_TRACE("IDD_Handler::instance_deployment_descrs");
-      deploymentPlan::instance_const_iterator idd_e =
-        src.end_instance ();
+      auto idd_e =
+        src.instance_values ().end ();
 
       CORBA::ULong pos = 0;
-      dest.length (src.count_instance ());
-      for (deploymentPlan::instance_const_iterator idd_b =
-             src.begin_instance ();
+      dest.length (src.instance_values ().size ());
+      for (auto idd_b =
+             src.instance_values ().begin ();
            idd_b != idd_e;
            ++idd_b)
         {
@@ -78,14 +78,14 @@ namespace DAnCE
 
           dest.implementationRef = tmp;
 
-          dest.configProperty.length (src.count_configProperty ());
-          std::for_each (src.begin_configProperty (),
-                         src.end_configProperty (),
+          dest.configProperty.length (src.configProperty_values ().size ());
+          std::for_each (src.configProperty_values ().begin (),
+                         src.configProperty_values ().end (),
                          Property_Functor (dest.configProperty));
 
-          dest.deployedResource.length (src.count_deployedResource ());
-          std::for_each (src.begin_deployedResource (),
-                         src.end_deployedResource (),
+          dest.deployedResource.length (src.deployedResource_values ().size ());
+          std::for_each (src.deployedResource_values ().begin (),
+                         src.deployedResource_values ().end (),
                          IRDD_Functor (dest.deployedResource));
 
 

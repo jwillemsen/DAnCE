@@ -26,9 +26,9 @@ namespace DAnCE
         throw Config_Error (ACE_TEXT (""),
                             ACE_TEXT ("Expected struct type information"));
 
-      for (StructType::member_const_iterator i =
-             structType->begin_member ();
-           i != structType->end_member (); ++i)
+      for (auto i =
+             structType->member_values ().begin ();
+           i != structType->member_values ().end (); ++i)
         {
           dt_map[i->name ()] = &(i->type ());
         }
@@ -67,10 +67,10 @@ namespace DAnCE
 
           CORBA::ULong pos (0);
           DynamicAny::NameDynAnyPairSeq values;
-          values.length (value.count_member ());
+          values.length (value.member_values ().size ());
 
-          for (DataValue::member_const_iterator i = value.begin_member ();
-               i != value.end_member (); ++i)
+          for (auto i = value.member_values ().begin ();
+               i != value.member_values ().end (); ++i)
             {
               values[pos].id =
                 i->name ().c_str ();
@@ -118,12 +118,12 @@ namespace DAnCE
       std::string name (struct__if_set_ptr_2->name ());
 
       CORBA::StructMemberSeq members;
-      members.length (struct__if_set_ptr_2->count_member ());
+      members.length (struct__if_set_ptr_2->member_values ().size ());
       CORBA::ULong pos (0);
 
-      for (StructType::member_const_iterator i =
-        struct__if_set_ptr_2->begin_member ();
-           i != struct__if_set_ptr_2->end_member (); ++i)
+      for (auto i =
+        struct__if_set_ptr_2->member_values ().begin ();
+           i != struct__if_set_ptr_2->member_values ().end (); ++i)
         {
           members[pos].name = i->name ().c_str ();
           members[pos].type = DYNANY_HANDLER->create_typecode (i->type ());
