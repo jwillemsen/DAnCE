@@ -115,8 +115,10 @@ namespace DAnCE
             ComponentPackageReference cpr (
               Comp_Intf_Descr_Handler::comp_intf_descr (
                 src.referencedPackage[0].requiredType));
-            cpr.requiredUUID (ACE_TEXT_CHAR_TO_TCHAR (src.referencedPackage[0].requiredUUID.in ()));
-            cpr.requiredName (ACE_TEXT_CHAR_TO_TCHAR (src.referencedPackage[0].requiredName.in ()));
+            XMLSchema::string<char> required_uuid (src.referencedPackage[0].requiredUUID.in ());
+            cpr.requiredUUID (required_uuid);
+            XMLSchema::string<char> required_name (src.referencedPackage[0].requiredName.in ());
+            cpr.requiredName (required_name);
 
             retval.referencedPackage (cpr);
           }

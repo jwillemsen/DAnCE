@@ -18,7 +18,7 @@ namespace DAnCE
       {
       }
 
-      std::string reason_;
+      std::string const reason_;
     };
 
     struct Plan_Error
@@ -28,7 +28,7 @@ namespace DAnCE
       {
       }
 
-      std::string reason_;
+      std::string const reason_;
     };
 
   }
