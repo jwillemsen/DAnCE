@@ -71,10 +71,10 @@ namespace DAnCE
         }
 
       CORBA::TypeCode_var tc =
-        DYNANY_HANDLER->orb ()->create_alias_tc
-        (alias_type->typeId ().c_str (),
-         alias_type->name ().c_str (),
-         DYNANY_HANDLER->create_typecode (alias_type->elementType ()));
+        DYNANY_HANDLER->orb ()->create_alias_tc (
+          alias_type->typeId ().c_str (),
+          alias_type->name ().c_str (),
+          DYNANY_HANDLER->create_typecode (alias_type->elementType ()));
 
       DYNANY_HANDLER->register_typecode (alias_type->typeId (), tc.in ());
 

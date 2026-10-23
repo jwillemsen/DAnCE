@@ -85,7 +85,7 @@ namespace DAnCE
       // Construct TypeCode for the enum
       CORBA::EnumMemberSeq members {};
       members.length (enum_type->member ().size ());
-      CORBA::ULong index (0);
+      CORBA::ULong index {};
 
       for (auto i = enum_type->member ().begin (); i != enum_type->member ().end (); ++i)
         {

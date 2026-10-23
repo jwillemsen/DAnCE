@@ -31,7 +31,7 @@ namespace DAnCE
       // Make the actual DynAny
       DynamicAny::DynAny_var retval = DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
 
-      char const* s = nullptr;
+      char const* s {};
       if (!value.string ().empty ())
         {
           s = value.string ().front ().c_str ();
@@ -51,7 +51,7 @@ namespace DAnCE
           throw Config_Error ("", "Expected <string> element, incorrect tc_kind.");
         }
 
-      CORBA::ULong bound (0);
+      CORBA::ULong bound {};
       ::DAnCE::Config_Handlers::BoundedStringType const* boundedString_if_set_ptr = type.boundedString_if_set ();
       if (boundedString_if_set_ptr)
         {

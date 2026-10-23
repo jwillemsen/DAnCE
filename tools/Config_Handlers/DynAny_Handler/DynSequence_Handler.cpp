@@ -135,7 +135,7 @@ namespace DAnCE
 
       CORBA::TypeCode_var etc = DYNANY_HANDLER->create_typecode (sequence_if_set_ptr->elementType ());
 
-      CORBA::ULong bound (0);
+      CORBA::ULong bound {};
       ::XMLSchema::unsignedInt const* bound_if_set_ptr = sequence_if_set_ptr->bound_if_set ();
       if (bound_if_set_ptr)
         bound = *bound_if_set_ptr;
