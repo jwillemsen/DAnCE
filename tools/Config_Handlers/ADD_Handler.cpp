@@ -73,7 +73,7 @@ namespace DAnCE
         else
           {
             DANCE_DEBUG (DANCE_LOG_NONFATAL_ERROR, (LM_ERROR,
-                        "(%P|%t) Warning: ADD %s has no idref.\n",
+                        "(%P|%t) Warning: ADD %C has no idref.\n",
                         src.name ().c_str ()));
           }
 

@@ -51,7 +51,7 @@ namespace DAnCE
           else
             {
               DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR, (LM_WARNING,
-                               "(%P|%t) Warning:  IDD %s has no idref\n",
+                               "(%P|%t) Warning:  IDD %C has no idref\n",
                                src.name ().c_str ()));
             }
 
@@ -95,7 +95,7 @@ namespace DAnCE
       catch (...)
         {
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
-            (LM_ERROR, ACE_TEXT ("Unknown exception at IDD:%s"),
+            (LM_ERROR, ACE_TEXT ("Unknown exception at IDD:%C"),
             src.name ().c_str ()));
           throw Config_Error (src.name (), "Unknown exception");
         }

@@ -53,7 +53,7 @@ namespace DAnCE
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR,
               ACE_TEXT ("Invalid value provided in XML when trying to ")
-              ACE_TEXT ("initialize an instance of enumerated type %s\n"),
+              ACE_TEXT ("initialize an instance of enumerated type %C\n"),
               enumType->typeId ().c_str ()));
           throw Config_Error (enumType->typeId (), "Invalid value provided in XML");
         }

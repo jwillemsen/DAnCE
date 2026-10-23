@@ -52,7 +52,7 @@ namespace DAnCE
 
         default:
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_ERROR, "Invalid port type in connection %s\n",
+            (LM_ERROR, "Invalid port type in connection %C\n",
              desc.name ().c_str ()));
           throw 1;
         }

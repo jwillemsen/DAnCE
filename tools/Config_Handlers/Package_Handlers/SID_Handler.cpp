@@ -87,7 +87,7 @@ namespace DAnCE
           }
         else
           DANCE_ERROR (DANCE_LOG_WARNING,
-            (LM_WARNING, ACE_TEXT ("Warning: SID With Name %s has no ID\n"),
+            (LM_WARNING, ACE_TEXT ("Warning: SID With Name %C has no ID\n"),
              desc.name ().c_str ()));
 
       }

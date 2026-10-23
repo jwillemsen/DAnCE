@@ -87,7 +87,7 @@ namespace DAnCE
       else
         {
           DANCE_ERROR(DANCE_LOG_NONFATAL_ERROR, (LM_WARNING,
-                     "(%P|%t) Warning:  MDD %s has no idref\n",
+                     "(%P|%t) Warning:  MDD %C has no idref\n",
                      desc.name ().c_str ()));
         }
     }

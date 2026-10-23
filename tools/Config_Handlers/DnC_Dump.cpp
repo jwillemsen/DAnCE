@@ -28,9 +28,9 @@ namespace Deployment
 
         for (CORBA::ULong i {}; i < size; ++i)
           {
-            DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "%s%s %d:\n",
+            DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "%C%C %d:\n",
                         Dump_Obj::indent(), caption, i));
-            DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "%s  %s:\n",
+            DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "%C  %C:\n",
                         Dump_Obj::indent(), str_seq[i].in ()));
           }
       }
@@ -41,7 +41,7 @@ namespace Deployment
   {
     DANCE_TRACE("DnC_Dump::dump");
     DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-      (LM_DEBUG, "%s%s: %s\n", Dump_Obj::indent(),
+      (LM_DEBUG, "%C%C: %C\n", Dump_Obj::indent(),
       caption, str.in()));
   }
 
@@ -50,7 +50,7 @@ namespace Deployment
   {
     DANCE_TRACE("DnC_Dump::dump");
     DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-      (LM_DEBUG, "%s%s: %s\n", Dump_Obj::indent(),
+      (LM_DEBUG, "%C%C: %C\n", Dump_Obj::indent(),
       caption, val ? "true" : "false"));
   }
 
@@ -66,7 +66,7 @@ namespace Deployment
     dump ("name", sp.name);
 
     DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-      (LM_DEBUG, "%skind: ", Dump_Obj::indent()));
+      (LM_DEBUG, "%Ckind: ", Dump_Obj::indent()));
 
     switch (sp.kind) {
     case Quantity:
@@ -90,7 +90,7 @@ namespace Deployment
     }
 
     DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-      (LM_DEBUG, "%svalue:\n", Dump_Obj::indent()));
+      (LM_DEBUG, "%Cvalue:\n", Dump_Obj::indent()));
     dump (sp.value);
   }
 
@@ -233,7 +233,7 @@ namespace Deployment
     dump ("optional", compportdesc.optional);
 
     DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-      (LM_DEBUG, "%skind: ", Dump_Obj::indent()));
+      (LM_DEBUG, "%Ckind: ", Dump_Obj::indent()));
     switch (compportdesc.kind) {
     case Facet:
       DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
@@ -276,7 +276,7 @@ namespace Deployment
     dump ("name", comppropdesc.name);
 
     DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-      (LM_DEBUG, "%stype: ", Dump_Obj::indent()));
+      (LM_DEBUG, "%Ctype: ", Dump_Obj::indent()));
     switch (comppropdesc.type.in()->kind()) {
     case ::CORBA::tk_null:
       DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_null\n"));
@@ -446,7 +446,7 @@ namespace Deployment
   {
     DANCE_TRACE("DnC_Dump::dump");
     DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-      (LM_DEBUG, "%sresourceUsage: ", Dump_Obj::indent()));
+      (LM_DEBUG, "%CresourceUsage: ", Dump_Obj::indent()));
     switch (ruk) {
     case None:
       DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
@@ -483,7 +483,7 @@ namespace Deployment
     dump ("requirementName", irdd.requirementName);
     dump ("resourceName", irdd.resourceName);
     DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG,
-      "%sresourceValue:\n", Dump_Obj::indent()));
+      "%CresourceValue:\n", Dump_Obj::indent()));
     ::Deployment::DnC_Dump_T::dump_sequence ("property",  irdd.property);
   }
 
@@ -527,7 +527,7 @@ namespace Deployment
     dump ("portName", pspe.portName);
     dump ("provider", pspe.provider);
     DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-      (LM_DEBUG, "%skind: ", Dump_Obj::indent()));
+      (LM_DEBUG, "%Ckind: ", Dump_Obj::indent()));
     switch (pspe.kind) {
     case Facet:
       DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
@@ -583,7 +583,7 @@ namespace Deployment
     dump ("requirementName", crdd.requirementName);
     dump ("resourceName", crdd.resourceName);
     DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-      (LM_DEBUG, "%sresourceValue:\n", Dump_Obj::indent()));
+      (LM_DEBUG, "%CresourceValue:\n", Dump_Obj::indent()));
     ::Deployment::DnC_Dump_T::dump_sequence ("properties", crdd.property);
   }
 
@@ -646,7 +646,7 @@ namespace Deployment
     dump ("requirementName", rdd.requirementName);
     dump ("resourceName", rdd.resourceName);
     DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-      (LM_DEBUG, "%sresourceValue:\n", Dump_Obj::indent()));
+      (LM_DEBUG, "%CresourceValue:\n", Dump_Obj::indent()));
     ::Deployment::DnC_Dump_T::dump_sequence ("properties", rdd.property);
   }
 
@@ -725,7 +725,7 @@ namespace Deployment
     a >>= v;
 
     DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-      (LM_DEBUG, "%sinstance: %s\n", Dump_Obj::indent (),
+      (LM_DEBUG, "%Cinstance: %C\n", Dump_Obj::indent (),
       v->instance[value].name.in ()));
   }
 
@@ -759,7 +759,7 @@ namespace Deployment
     a >>= v;
 
     DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-      (LM_DEBUG, "%sinstance: %s\n", Dump_Obj::indent (),
+      (LM_DEBUG, "%Cinstance: %C\n", Dump_Obj::indent (),
       v->instance[value].name.in ()));
   }
 
@@ -861,7 +861,7 @@ namespace Deployment
     dump ("label", cid.label);
     dump ("UUID", cid.UUID);
     DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-      (LM_DEBUG, "%sImplements:\n", Dump_Obj::indent()));
+      (LM_DEBUG, "%CImplements:\n", Dump_Obj::indent()));
     dump (cid.implements);
     ::Deployment::DnC_Dump_T::dump_sequence ("assemblyImpl", cid.assemblyImpl);
     ::Deployment::DnC_Dump_T::dump_sequence ("monolithicImpl", cid.monolithicImpl);
@@ -880,7 +880,7 @@ namespace Deployment
 
     dump ("Name", pci.name);
     DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG,
-                "%sreferencedImplementation:\n", Dump_Obj::indent()));
+                "%CreferencedImplementation:\n", Dump_Obj::indent()));
     DnC_Dump::dump (pci.referencedImplementation);
   }
 
@@ -894,7 +894,7 @@ namespace Deployment
     dump ("label", comppkgdesc.label);
     dump ("UUID", comppkgdesc.UUID);
     DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-      (LM_DEBUG, "%srealizes:\n", Dump_Obj::indent ()));
+      (LM_DEBUG, "%Crealizes:\n", Dump_Obj::indent ()));
     DnC_Dump::dump (comppkgdesc.realizes); // ComponentInterfaceDescription
     ::Deployment::DnC_Dump_T::dump_sequence ("configProperty", comppkgdesc.configProperty);
     ::Deployment::DnC_Dump_T::dump_sequence ("implementation", comppkgdesc.implementation);
@@ -922,7 +922,7 @@ namespace Deployment
     Dump_Obj dump_obj("Property");
     dump ("name", property.name);
     DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-      (LM_DEBUG, "%svalue:\n", Dump_Obj::indent()));
+      (LM_DEBUG, "%Cvalue:\n", Dump_Obj::indent()));
     dump (property.value);
   }
 
@@ -944,14 +944,14 @@ encoded different type"));
               throw CORBA::INTERNAL ();
             }
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_DEBUG, "%sAny value: %d\n", Dump_Obj::indent (),
+            (LM_DEBUG, "%CAny value: %d\n", Dump_Obj::indent (),
             temp));
         }
         break;
 
       case CORBA::tk_null:
         DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-          (LM_DEBUG, "%sAny value: null value encoded\n",
+          (LM_DEBUG, "%CAny value: null value encoded\n",
           Dump_Obj::indent ()));
         break;
 
@@ -970,7 +970,7 @@ encoded with different type"));
               throw CORBA::INTERNAL ();
             }
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_DEBUG, "%sAny value: %d\n", Dump_Obj::indent (),
+            (LM_DEBUG, "%CAny value: %d\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -986,7 +986,7 @@ encoded with different type"));
               throw CORBA::INTERNAL ();
             }
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_DEBUG, "%sAny value: %u\n", Dump_Obj::indent (),
+            (LM_DEBUG, "%CAny value: %u\n", Dump_Obj::indent (),
             temp));
         }
         break;
@@ -1002,7 +1002,7 @@ encoded with different type"));
               throw CORBA::INTERNAL ();
             }
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_DEBUG, "%sAny value: %u\n", Dump_Obj::indent (),
+            (LM_DEBUG, "%CAny value: %u\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -1018,7 +1018,7 @@ encoded with different type"));
               throw CORBA::INTERNAL ();
             }
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_DEBUG, "%sAny value: %f\n", Dump_Obj::indent (),
+            (LM_DEBUG, "%CAny value: %f\n", Dump_Obj::indent (),
             temp));
         }
         break;
@@ -1033,7 +1033,7 @@ encoded with different type"));
               throw CORBA::INTERNAL ();
             }
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_DEBUG, "%sAny value: %f\n", Dump_Obj::indent (),
+            (LM_DEBUG, "%CAny value: %f\n", Dump_Obj::indent (),
             temp));
         }
         break;
@@ -1068,7 +1068,7 @@ encoded with different type"));
               throw CORBA::INTERNAL ();
             }
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_DEBUG, "%sAny value: %c\n", Dump_Obj::indent (),
+            (LM_DEBUG, "%CAny value: %c\n", Dump_Obj::indent (),
              temp));
         }
         break;
@@ -1084,7 +1084,7 @@ encoded with different type"));
               throw CORBA::INTERNAL ();
             }
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG,
-            "%sAny value: %d\n", Dump_Obj::indent (),
+            "%CAny value: %d\n", Dump_Obj::indent (),
             temp));
         }
         break;
@@ -1100,7 +1100,7 @@ encoded with different type"));
               throw CORBA::INTERNAL ();
             }
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_DEBUG, "%sAny value: %s\n", Dump_Obj::indent (),
+            (LM_DEBUG, "%CAny value: %C\n", Dump_Obj::indent (),
             temp));
         }
         break;
@@ -1115,7 +1115,7 @@ encoded with different type"));
               throw CORBA::INTERNAL ();
             }
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_DEBUG, "%sAny value: %l\n", Dump_Obj::indent (),
+            (LM_DEBUG, "%CAny value: %l\n", Dump_Obj::indent (),
             temp));
         }
         break;
@@ -1131,7 +1131,7 @@ encoded with different type"));
               throw CORBA::INTERNAL ();
             }
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_DEBUG, "%sAny value: %d\n", Dump_Obj::indent (),
+            (LM_DEBUG, "%CAny value: %d\n", Dump_Obj::indent (),
             temp));
         }
 
@@ -1147,7 +1147,7 @@ encoded with different type"));
               throw CORBA::INTERNAL ();
             }
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_DEBUG, "%sAny value: %c\n", Dump_Obj::indent (),
+            (LM_DEBUG, "%CAny value: %c\n", Dump_Obj::indent (),
             temp));
         }
         break;
@@ -1163,7 +1163,7 @@ encoded with different type"));
               throw CORBA::INTERNAL ();
             }
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG,
-            "%sAny value: %s\n", Dump_Obj::indent (),
+            "%CAny value: %W\n", Dump_Obj::indent (),
             temp));
         }
         break;
@@ -1179,7 +1179,7 @@ encoded with different type"));
               throw CORBA::INTERNAL ();
             }
 */          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-              (LM_DEBUG, "%sAny value: some enum\n", Dump_Obj::indent ()));
+              (LM_DEBUG, "%CAny value: some enum\n", Dump_Obj::indent ()));
         }
         break;
 
