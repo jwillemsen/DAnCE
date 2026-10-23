@@ -8,28 +8,26 @@ namespace DAnCE
   {
     void
     ComponentPropertyDescription_Handler::component_property_description (
-                                                                          const ComponentPropertyDescription& desc,
+                                                                          ComponentPropertyDescription const& desc,
                                                                           ::Deployment::ComponentPropertyDescription& toconfig)
     {
       DANCE_TRACE("ComponentPropertyDescription_Handler::component_property_description");
-      toconfig.name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ()));
+      toconfig.name = CORBA::string_dup (desc.name ().c_str ());
 
       // Delegate the DataType to the
       // DataType_Handler.
 
       // @@ There is a lurking bug here.
-      //#if 0
       CORBA::TypeCode_ptr tcptr = toconfig.type.in ();
       DataType_Handler::data_type (desc.type (), tcptr);
-      //#endif /*if 0*/
     }
 
     ComponentPropertyDescription
     ComponentPropertyDescription_Handler::component_property_description (
-                                                                          const ::Deployment::ComponentPropertyDescription &src)
+                                                                          ::Deployment::ComponentPropertyDescription const& src)
     {
       DANCE_TRACE("ComponentPropertyDescription_Handler::component_property_description - reverse");
-      XMLSchema::string< ACE_TCHAR > name (ACE_TEXT_CHAR_TO_TCHAR (src.name));
+      XMLSchema::string<char> name (src.name);
       DataType dt (DataType_Handler::data_type (src.type));
       ComponentPropertyDescription cpd (name,dt);
       return cpd;

@@ -17,6 +17,7 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
 #include "ace/SString.h"
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,9 +37,7 @@ template <typename T>
 class IDREF_Base
 {
 public:
-IDREF_Base ()
-{
-}
+IDREF_Base () = default;
 
 IDREF_Base (T start_point)
 : next_ (start_point)
@@ -46,37 +45,36 @@ IDREF_Base (T start_point)
 }
 
 /// Bind an IDREF to an index
- void bind_ref (ACE_TString& id, T value);
+ void bind_ref (std::string& id, T value);
 
-void bind_next_available (ACE_TString &id);
+void bind_next_available (std::string &id);
 
 /// Get the index associated with an IDREF
- void find_ref (const ACE_TString& id, T& value);
+ void find_ref (std::string const& id, T& value);
 
 /// get the IDREF associated with an index
- void find_ref (const T &value, ACE_TString& id);
+ void find_ref (T const& value, std::string& id);
 
 /// Unbind all IDREFS
 bool
-unbind_refs (void);
+unbind_refs ();
 
-typedef ACE_Hash_Map_Manager<ACE_TString,
+typedef ACE_Hash_Map_Manager<std::string,
 T,
 ACE_Null_Mutex> IDREF_MAP;
 
-
 typedef ACE_Hash_Map_Manager<T,
-ACE_TString,
+std::string,
 ACE_Null_Mutex> POS_MAP;
 protected:
 /// The map used to store and look up the indexes of elements
 /// referenced by their IDREF.
-IDREF_MAP idref_map_;
+IDREF_MAP idref_map_ {};
 /// The map used to store and look up the IDREFS of elements
 /// referenced by their index.
-POS_MAP pos_map_;
+POS_MAP pos_map_ {};
 
-T next_;
+T next_ {};
 };
 
 }

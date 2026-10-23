@@ -8,7 +8,6 @@
 
 #include /**/ "ace/pre.h"
 #include "Package_Handlers/Packaging_Handlers_Export.h"
-#include "Utils/Functors.h"
 #include "dance/Deployment/Deployment_Packaging_DataC.h"
 #include "iad.hpp"
 
@@ -33,17 +32,14 @@ namespace DAnCE
       class Packaging_Handlers_Export NIA_Handler
       {
       public:
-        static void handle_nia (const NamedImplementationArtifact &desc,
+        static void handle_nia (NamedImplementationArtifact const& desc,
                              ::Deployment::NamedImplementationArtifact &toconfig)
         {
-          toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
-          IAD_Handler::impl_artifact_descr (desc.referencedArtifact (),
-                                            toconfig.referencedArtifact);
+          toconfig.name = desc.name ().c_str ();
+          IAD_Handler::impl_artifact_descr (desc.referencedArtifact (), toconfig.referencedArtifact);
         }
 
-
-        static NamedImplementationArtifact
-        get_nia (const ::Deployment::NamedImplementationArtifact &src)
+        static NamedImplementationArtifact get_nia (::Deployment::NamedImplementationArtifact const& src)
         {
           return NamedImplementationArtifact (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()),
                                               IAD_Handler::impl_artifact_descr (src.referencedArtifact));
@@ -51,10 +47,6 @@ namespace DAnCE
 
       };
 
-      typedef Sequence_Handler < NamedImplementationArtifact,
-                                 ::Deployment::NamedImplementationArtifacts,
-                                 ::Deployment::NamedImplementationArtifact,
-        NIA_Handler::handle_nia > NIA_Functor;
     }
   }
 }

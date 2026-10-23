@@ -12,6 +12,7 @@
 #include /**/ "ace/pre.h"
 
 #include "Package_Handlers/Packaging_Handlers_Export.h"
+#include <string_view>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -47,14 +48,13 @@ namespace DAnCE
         /// <ImplementationArtifactDescription> to the CORBA IDL type
         /// <Deployment::ImplementationArtifactDescription>.
         static void
-        impl_artifact_descr (const ImplementationArtifactDescription &desc,
+        impl_artifact_descr (ImplementationArtifactDescription const& desc,
                              ::Deployment::ImplementationArtifactDescription &toconfig);
 
-
         static ImplementationArtifactDescription
-        impl_artifact_descr (const Deployment::ImplementationArtifactDescription& src);
+        impl_artifact_descr (Deployment::ImplementationArtifactDescription const& src);
 
-        static ImplementationArtifactDescription * resolve_iad (const ACE_TCHAR *uri);
+        static ImplementationArtifactDescription * resolve_iad (std::string_view uri);
       };
     }
   }

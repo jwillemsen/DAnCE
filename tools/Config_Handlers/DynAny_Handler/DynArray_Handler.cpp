@@ -16,28 +16,30 @@ namespace DAnCE
   namespace Config_Handlers
   {
     DynamicAny::DynAny_ptr
-    DynArray_Handler::extract_into_dynany (const DataType &type,
-                                           const DataValue &value,
+    DynArray_Handler::extract_into_dynany (DataType const& type,
+                                           DataValue const& value,
                                            CORBA::TypeCode_ptr req_tc)
     {
       DANCE_TRACE("DynArray_Handler::extract_into_dynany");
 
-      CORBA::TypeCode_var tc;
+      ::DAnCE::Config_Handlers::ArrayType const* arrayType = type.array_if_set ();
+      if (!arrayType)
+        throw Config_Error ("", "Expected array type information");
+
+      CORBA::TypeCode_var tc {};
       if (req_tc)
         tc = req_tc;
       else
         tc = DynArray_Handler::create_typecode (type);
 
       // Make the actual DynArray
-      DynamicAny::DynAny_var temp =
-        DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
-      DynamicAny::DynArray_var retval =
-        DynamicAny::DynArray::_narrow (temp.in ());
+      DynamicAny::DynAny_var const temp = DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
+      DynamicAny::DynArray_var retval = DynamicAny::DynArray::_narrow (temp.in ());
 
-      DynamicAny::DynAnySeq dynseq;
-      CORBA::ULong pos = 0;
+      DynamicAny::DynAnySeq dynseq {};
+      CORBA::ULong pos {};
 
-      switch (type.array ().elementType ().kind ().integral ())
+      switch (arrayType->elementType ().kind ().integral ())
         {
           // ========== BASIC TYPES
         case TCKind::tk_null_l:
@@ -48,8 +50,8 @@ namespace DAnCE
         case TCKind::tk_home_l:
 
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_WARNING, "I don't know how to handle null or void types\n"));
-          throw 1;
+            (LM_WARNING, "Null and void element types are not supported in arrays\n"));
+          throw Config_Error ("", "Null or void element types are not supported in arrays");
 
         case TCKind::tk_short_l:
         case TCKind::tk_long_l:
@@ -70,27 +72,26 @@ namespace DAnCE
         case TCKind::tk_array_l:
           try
             {
-              dynseq.length (value.count_element ());
+              dynseq.length (value.element ().size ());
 
-              for (DataValue::element_const_iterator i = value.begin_element ();
-                   i != value.end_element ();
-                   ++i)
+              for (auto const& element : value.element ())
                 {
-                  DynamicAny::DynAny_var dynany
-                    (DYNANY_HANDLER->extract_into_dynany (type.array ().elementType (),
-                                                          **i));
+                  DynamicAny::DynAny_var const dynany (
+                    DYNANY_HANDLER->extract_into_dynany (arrayType->elementType (), element));
                   dynseq[pos++] = dynany->copy ();
                 }
 
               retval->set_elements_as_dyn_any (dynseq);
               return retval._retn ();
             }
-          catch (const DynamicAny::DynAny::InvalidValue&)
+          catch (DynamicAny::DynAny::InvalidValue const&)
             {
-              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("Invalid value provided in XML when trying to ")
-                          ACE_TEXT ("populate %ith element of an array\n"),
-                          pos));
-              throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Invalid value whilst populating the array."));
+              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+                (LM_ERROR,
+                 ACE_TEXT ("Invalid value provided in XML when trying to ")
+                 ACE_TEXT ("populate %ith element of an array\n"),
+                 pos));
+              throw Config_Error ("", "Invalid value whilst populating the array.");
             }
 
         case TCKind::tk_char_l:
@@ -111,39 +112,34 @@ namespace DAnCE
         case TCKind::tk_local_interface_l:
         case TCKind::tk_event_l:
           // Special case where element association in datavalue contains another datavalue.
-          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("DynArray_Handler::extract_into_dynany - Type not supported\n")));
-          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Type not supported"));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR,
+             DLINFO ACE_TEXT ("DynArray_Handler::extract_into_dynany - Type not supported\n")));
+          throw Config_Error ("", "Type not supported");
         }
 
       return retval._retn ();
     }
 
-    CORBA::TypeCode_ptr
-    DynArray_Handler::create_typecode (const DataType &type)
+    CORBA::TypeCode_ptr DynArray_Handler::create_typecode (DataType const& type)
     {
       DANCE_TRACE("DynArray_Handler::create_typecode");
 
-      if (!type.array_p ())
+      ::DAnCE::Config_Handlers::ArrayType const* array_if_set_ptr = type.array_if_set ();
+      if (!array_if_set_ptr)
         {
-          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_ERROR, ACE_TEXT (
-              "ERROR: Array type description required")));
-          throw Config_Error (ACE_TEXT (""),
-            ACE_TEXT ("Expected <array> element, incorrect tc_kind."));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("ERROR: Array type description required")));
+          throw Config_Error ("", "Expected <array> element, incorrect tc_kind.");
         }
 
-      CORBA::TypeCode_var etc =
-        DYNANY_HANDLER->create_typecode (type.array ().elementType ());
+      CORBA::TypeCode_var etc = DYNANY_HANDLER->create_typecode (array_if_set_ptr->elementType ());
 
-      CORBA::ULong const length =  type.array ().length ();
+      CORBA::ULong const length = array_if_set_ptr->length ();
 
-      CORBA::TypeCode_var tc =
-        DYNANY_HANDLER->orb ()->create_array_tc (length, etc);
+      CORBA::TypeCode_var tc = DYNANY_HANDLER->orb ()->create_array_tc (length, etc);
 
       return tc._retn ();
     }
   }
 }
-
-
 

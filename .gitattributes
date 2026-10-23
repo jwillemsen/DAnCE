@@ -1,0 +1,23 @@
+# XSC-generated configuration handler sources
+tools/Config_Handlers/Basic_Deployment_Data.cpp linguist-generated=true
+tools/Config_Handlers/Basic_Deployment_Data.hpp linguist-generated=true
+tools/Config_Handlers/Deployment.cpp linguist-generated=true
+tools/Config_Handlers/Deployment.hpp linguist-generated=true
+tools/Config_Handlers/XMI.cpp linguist-generated=true
+tools/Config_Handlers/XMI.hpp linguist-generated=true
+tools/Config_Handlers/ccd.cpp linguist-generated=true
+tools/Config_Handlers/ccd.hpp linguist-generated=true
+tools/Config_Handlers/cdd.cpp linguist-generated=true
+tools/Config_Handlers/cdd.hpp linguist-generated=true
+tools/Config_Handlers/cdp.cpp linguist-generated=true
+tools/Config_Handlers/cdp.hpp linguist-generated=true
+tools/Config_Handlers/cid.cpp linguist-generated=true
+tools/Config_Handlers/cid.hpp linguist-generated=true
+tools/Config_Handlers/cpd.cpp linguist-generated=true
+tools/Config_Handlers/cpd.hpp linguist-generated=true
+tools/Config_Handlers/iad.cpp linguist-generated=true
+tools/Config_Handlers/iad.hpp linguist-generated=true
+tools/Config_Handlers/pcd.cpp linguist-generated=true
+tools/Config_Handlers/pcd.hpp linguist-generated=true
+tools/Config_Handlers/toplevel.cpp linguist-generated=true
+tools/Config_Handlers/toplevel.hpp linguist-generated=true

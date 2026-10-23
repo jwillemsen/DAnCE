@@ -1,5 +1,6 @@
 #include "CPD_Handler.h"
 #include "Basic_Deployment_Data.hpp"
+#include "Common.h"
 #include "dance/Deployment/Deployment_DataC.h"
 #include "dance/Logger/Log_Macros.h"
 
@@ -9,22 +10,20 @@ namespace DAnCE
   {
     void
     CPD_Handler::handle_component_port_description (
-                                             const ComponentPortDescription& desc,
+                                             ComponentPortDescription const& desc,
                                              Deployment::ComponentPortDescription& toconfig)
     {
       DANCE_TRACE("CPD_Handler::component_port_description");
-      toconfig.name =
-        ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
+      toconfig.name = desc.name ().c_str ();
 
-      if (desc.specificType_p ())
-        toconfig.specificType =
-          ACE_TEXT_ALWAYS_CHAR (desc.specificType ().c_str ());
+      ::XMLSchema::string<char> const* specificType_if_set_ptr = desc.specificType_if_set ();
+      if (specificType_if_set_ptr)
+        toconfig.specificType = specificType_if_set_ptr->c_str ();
 
-      toconfig.supportedType.length (desc.count_supportedType ());
-      std::for_each (desc.begin_supportedType (),
-                     desc.end_supportedType (),
-                     String_Seq_Functor (toconfig.supportedType));
-
+      toconfig.supportedType.length (desc.supportedType ().size ());
+      CORBA::ULong supportedType_index {};
+      for (auto const& source_item : desc.supportedType ())
+        toconfig.supportedType[supportedType_index++] = source_item.c_str ();
 
       switch (desc.kind ().integral ())
         {
@@ -54,32 +53,30 @@ namespace DAnCE
 
         default:
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_ERROR, "Invalid port type in connection %s\n",
+            (LM_ERROR, "Invalid port type in connection %C\n",
              desc.name ().c_str ()));
-          throw 1;
+          throw Config_Error (desc.name ().c_str (), "Invalid port type");
         }
 
       /* @@BUG: We need to consider how to handle booleans. */
       toconfig.provider = desc.provider ();
       toconfig.exclusiveProvider = desc.exclusiveProvider ();
       toconfig.exclusiveUser = desc.exclusiveUser ();
-      toconfig.optional =  desc.optional ();
+      toconfig.optional = desc.optional ();
     }
 
-    ComponentPortDescription
-    CPD_Handler::component_port_description (
-                                             const Deployment::ComponentPortDescription& src)
+    ComponentPortDescription CPD_Handler::component_port_description (Deployment::ComponentPortDescription const& src)
     {
       DANCE_TRACE("CPD_Handler::component_port_description - reverse");
-      ::XMLSchema::string< ACE_TCHAR > name (ACE_TEXT_CHAR_TO_TCHAR (src.name));
-      ::XMLSchema::string< ACE_TCHAR > stype (ACE_TEXT_CHAR_TO_TCHAR (src.specificType));
+      XMLSchema::string<char> name (src.name);
+      XMLSchema::string<char> stype (src.specificType);
 
-      ::XMLSchema::string< ACE_TCHAR > tval (ACE_TEXT ("true"));
-      ::XMLSchema::string< ACE_TCHAR > fval (ACE_TEXT ("false"));
-      XMLSchema::boolean provider;
-      XMLSchema::boolean  exclusiveProvider;
-      XMLSchema::boolean exclusiveUser;
-      XMLSchema::boolean optional;
+      XMLSchema::string<char> tval ("true");
+      XMLSchema::string<char> fval ("false");
+      XMLSchema::boolean provider {};
+      XMLSchema::boolean exclusiveProvider {};
+      XMLSchema::boolean exclusiveUser {};
+      XMLSchema::boolean optional {};
 
       if (src.provider)
         provider = true;
@@ -138,11 +135,6 @@ namespace DAnCE
           DANCE_DEBUG (DANCE_LOG_NONFATAL_ERROR,
             (LM_ERROR, ACE_TEXT("Invalid port kind in connection %C\n"),
             name.c_str ()));
-        }
-
-      for (CORBA::ULong i = 0; i < src.supportedType.length (); ++i)
-        {
-          //cpd.add_supportedType (XMLSchema::string< ACE_TCHAR > ((src.supportedType[i])));
         }
 
       return cpd;

@@ -7,47 +7,39 @@ namespace DAnCE
   namespace Config_Handlers
   {
 
-    Req_Handler::Req_Handler (void)
+    Req_Handler::Req_Handler ()
     {
     }
 
-    Req_Handler::~Req_Handler (void)
+    Req_Handler::~Req_Handler ()
     {
     }
 
-    void
-    Req_Handler::handle_requirement (const Requirement& desc,
-                     Deployment::Requirement& toconfig)
+    void Req_Handler::handle_requirement (Requirement const& desc, Deployment::Requirement& toconfig)
     {
       DANCE_TRACE("Req_Handler::get_Requirement");
 
       //Map the basic string types to their Deployment::Req
       //counterparts.
-      toconfig.name = ACE_TEXT_ALWAYS_CHAR ( desc.name ().c_str ());
-      toconfig.resourceType = ACE_TEXT_ALWAYS_CHAR ( desc.resourceType ().c_str ());
+      toconfig.name = desc.name ().c_str ();
+      toconfig.resourceType = desc.resourceType ().c_str ();
 
-      toconfig.property.length (desc.count_property ());
-      std::for_each (desc.begin_property (),
-                     desc.end_property (),
-                     Property_Functor (toconfig.property));
+      toconfig.property.length (desc.property ().size ());
+      CORBA::ULong property_index {};
+      for (auto const& source_item : desc.property ())
+        Property_Handler::handle_property (source_item, toconfig.property[property_index++]);
     }
 
-    Requirement
-    Req_Handler::get_requirement (const Deployment::Requirement& src)
+    Requirement Req_Handler::get_requirement (Deployment::Requirement const& src)
     {
       DANCE_TRACE("Req_Handler::get_requirement - reverse");
 
       //Get the values for name and res
-      XMLSchema::string< ACE_TCHAR > name (ACE_TEXT_CHAR_TO_TCHAR (src.name));
-      XMLSchema::string< ACE_TCHAR > res (ACE_TEXT_CHAR_TO_TCHAR (src.resourceType));
+      XMLSchema::string<char> const name (src.name);
+      XMLSchema::string<char> const res (src.resourceType);
 
       //Instantiate the Requirement
       Requirement req (name,res);
-
-      for (CORBA::ULong i = 0; i < src.property.length (); ++i)
-        {
-          //req.add_property (Property_Handler::get_property (src.property[i]));
-        }
 
       return req;
     }

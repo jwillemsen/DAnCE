@@ -9,48 +9,43 @@ namespace DAnCE
   {
     void
     PSPE_Handler::sub_component_port_endpoints (
-                                                const PlanConnectionDescription &src,
+                                                PlanConnectionDescription const& src,
                                                 ::Deployment::PlanSubcomponentPortEndpoints &dest)
     {
       DANCE_TRACE("PSPE_Handler::sub_component_port_endpoints");
 
-      PlanConnectionDescription::internalEndpoint_const_iterator iei_e =
-        src.end_internalEndpoint ();
-      CORBA::ULong pos = 0;
-      dest.length (src.count_internalEndpoint ());
+      CORBA::ULong pos {};
+      dest.length (src.internalEndpoint ().size ());
 
-      for (PlanConnectionDescription::internalEndpoint_const_iterator iei_b =
-             src.begin_internalEndpoint ();
-           iei_b != iei_e;
-           ++iei_b)
-        {
-          PSPE_Handler::sub_component_port_endpoint (*(*iei_b),
-                                                     dest[pos++]);
-        }
+      for (auto const& source_item : src.internalEndpoint ())
+        PSPE_Handler::sub_component_port_endpoint (source_item, dest[pos++]);
     }
 
     void
     PSPE_Handler::sub_component_port_endpoint (
-      const PlanSubcomponentPortEndpoint &src,
+      PlanSubcomponentPortEndpoint const& src,
       ::Deployment::PlanSubcomponentPortEndpoint &dest)
     {
       DANCE_TRACE("PSPE_Handler::sub_component_port_endpoint");
-      dest.portName =
-        ACE_TEXT_ALWAYS_CHAR (src.portName ().c_str ());
+      dest.portName = src.portName ().c_str ();
 
-      if (src.provider_p ())
+      ::XMLSchema::string<char> const* provider_if_set_ptr = src.provider_if_set ();
+      if (provider_if_set_ptr)
         {
-          dest.provider = src.provider () == ACE_TEXT ("true");
+          dest.provider = *provider_if_set_ptr == "true";
         }
       else
         {
           dest.provider = false;
         }
 
-      CORBA::ULong tmp = 0;
+      CORBA::ULong tmp {};
 
-      IDD_Handler::IDREF.find_ref (
-        ACE_TString (src.instance ().idref ().id ().c_str ()), tmp);
+      ::XMLSchema::IDREF<char> const* instanceRef = src.instance ().idref_if_set ();
+      if (!instanceRef)
+        throw Config_Error ("", "Plan subcomponent port endpoint has no instance IDREF");
+
+      IDD_Handler::IDREF.find_ref (instanceRef->id ().c_str (), tmp);
 
       dest.instanceRef = tmp;
 
@@ -81,34 +76,30 @@ namespace DAnCE
           break;
 
         default:
-          DANCE_DEBUG (DANCE_LOG_NONFATAL_ERROR,
-            (LM_DEBUG, "Invalid port kind in connection\n"));
+          DANCE_DEBUG (DANCE_LOG_NONFATAL_ERROR, (LM_DEBUG, "Invalid port kind in connection\n"));
 
         }
     }
 
     PlanSubcomponentPortEndpoint
     PSPE_Handler::sub_component_port_endpoint (
-      const Deployment::PlanSubcomponentPortEndpoint &src)
+      Deployment::PlanSubcomponentPortEndpoint const& src)
     { // @@MAJO
       DANCE_TRACE("PSPE_Handler::sub_component_port_endpoint - reverse");
-      XMLSchema::string< ACE_TCHAR > pname (
-        ACE_TEXT_CHAR_TO_TCHAR (src.portName));
-      XMLSchema::string< ACE_TCHAR > tval  (ACE_TEXT ("true"));
-      XMLSchema::string< ACE_TCHAR > prov  (ACE_TEXT (""));
-      ACE_TString id;
+      XMLSchema::string<char> pname (src.portName);
+      XMLSchema::string<char> tval  ("true");
+      XMLSchema::string<char> prov  ("");
+      std::string id {};
       IDD_Handler::IDREF.find_ref(src.instanceRef, id);
-      XMLSchema::IDREF < ACE_TCHAR > idref(id.c_str());
+      XMLSchema::IDREF<char> idref(id.c_str());
 
       if (src.provider)
         prov = tval;
 
-      IdRef idr;
+      IdRef idr {};
       idr.idref (idref);
 
-      PlanSubcomponentPortEndpoint pspe (pname,
-                                         CCMComponentPortKind::Facet,
-                                         idr);
+      PlanSubcomponentPortEndpoint pspe (pname, CCMComponentPortKind::Facet, idr);
       pspe.provider (prov);
 
       switch (src.kind)
@@ -138,10 +129,8 @@ namespace DAnCE
           break;
 
         default:
-          DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
-            (LM_ERROR, "Invalid port kind in PSPE\n"));
+          DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR, (LM_ERROR, "Invalid port kind in PSPE\n"));
         }
-
 
       return pspe;
     }

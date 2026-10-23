@@ -12,6 +12,7 @@
 #include /**/ "ace/pre.h"
 
 #include "Packaging_Handlers_Export.h"
+#include <string_view>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -44,19 +45,17 @@ namespace DAnCE
       {
 
       public:
-        static void package_config (const ACE_TCHAR *uri,
-                                    ::Deployment::PackageConfiguration &toconfig);
+        static void package_config (ACE_TCHAR const* uri, ::Deployment::PackageConfiguration &toconfig);
 
         /// Maps the values from the XSC object
         /// <PackageConfiguration> to the CORBA IDL type
         /// <Deployment::PackageConfiguration>.
-        static void package_config (const PackageConfiguration &desc,
-                                    ::Deployment::PackageConfiguration &toconfig);
+        static void package_config (PackageConfiguration const& desc, ::Deployment::PackageConfiguration &toconfig);
 
-        static PackageConfiguration package_config (const Deployment::PackageConfiguration& src);
+        static PackageConfiguration package_config (Deployment::PackageConfiguration const& src);
 
       private:
-         static PackageConfiguration *resolve_package_config (const ACE_TCHAR *uri);
+         static PackageConfiguration *resolve_package_config (std::string_view uri);
       };
     }
 

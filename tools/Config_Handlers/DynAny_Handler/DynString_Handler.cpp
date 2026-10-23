@@ -16,62 +16,55 @@ namespace DAnCE
   namespace Config_Handlers
   {
     DynamicAny::DynAny_ptr
-    DynString_Handler::extract_into_dynany (const DataType &type,
-                                            const DataValue &value,
+    DynString_Handler::extract_into_dynany (DataType const& type,
+                                            DataValue const& value,
                                             CORBA::TypeCode_ptr req_tc)
     {
       DANCE_TRACE("DynString_Handler::extract_into_dynany");
 
-      CORBA::TypeCode_var tc;
+      CORBA::TypeCode_var tc {};
       if (req_tc)
         tc = req_tc;
       else
         tc = DynString_Handler::create_typecode (type);
 
       // Make the actual DynAny
-      DynamicAny::DynAny_var retval =
-        DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
+      DynamicAny::DynAny_var retval = DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
 
-      const char* s = 0;
-      if (value.count_string ())
+      char const* s {};
+      if (!value.string ().empty ())
         {
-          s = ACE_TEXT_ALWAYS_CHAR ((*value.begin_string ())->c_str ());
+          s = value.string ().front ().c_str ();
         }
       retval->insert_string (s);
 
       return retval._retn ();
     }
 
-    CORBA::TypeCode_ptr
-    DynString_Handler::create_typecode (const DataType &type)
+    CORBA::TypeCode_ptr DynString_Handler::create_typecode (DataType const& type)
     {
       DANCE_TRACE("DynString_Handler::create_typecode");
 
       if (type.kind ().integral () != TCKind::tk_string_l)
         {
-          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_ERROR, ACE_TEXT (
-              "ERROR: String type description required")));
-          throw Config_Error (ACE_TEXT (""),
-            ACE_TEXT ("Expected <string> element, incorrect tc_kind."));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("ERROR: String type description required")));
+          throw Config_Error ("", "Expected <string> element, incorrect tc_kind.");
         }
 
-      CORBA::ULong bound (0);
-      if (type.boundedString_p ())
+      CORBA::ULong bound {};
+      ::DAnCE::Config_Handlers::BoundedStringType const* boundedString_if_set_ptr = type.boundedString_if_set ();
+      if (boundedString_if_set_ptr)
         {
-          if (type.boundedString ().count_bound ())
+          if (!boundedString_if_set_ptr->bound ().empty ())
           {
-            bound = *(*type.boundedString ().begin_bound ());
+            bound = boundedString_if_set_ptr->bound ().front ();
           }
         }
 
-      CORBA::TypeCode_var tc =
-        DYNANY_HANDLER->orb ()->create_string_tc (bound);
+      CORBA::TypeCode_var tc = DYNANY_HANDLER->orb ()->create_string_tc (bound);
 
       return tc._retn ();
     }
   }
 }
-
-
 

@@ -12,7 +12,6 @@
 #include /**/ "ace/pre.h"
 
 #include "Config_Handlers_Common_Export.h"
-#include "Utils/Functors.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -47,17 +46,12 @@ namespace DAnCE
       /// Maps the values from the XSC object
       /// <ComponentInterfaceDescription> to the CORBA IDL type
       /// <Deployment::ComponentInterfaceDescription>.
-      static void handle_component_port_description (const ComponentPortDescription &desc,
+      static void handle_component_port_description (ComponentPortDescription const& desc,
                              ::Deployment::ComponentPortDescription &toconfig);
 
       static ComponentPortDescription
-        component_port_description (const Deployment::ComponentPortDescription& src);
+        component_port_description (Deployment::ComponentPortDescription const& src);
     };
-
-      typedef Sequence_Handler < ComponentPortDescription,
-                 ::Deployment::ComponentPortDescriptions,
-                 ::Deployment::ComponentPortDescription,
-                 CPD_Handler::handle_component_port_description > CPD_Functor;
 
     }
 }

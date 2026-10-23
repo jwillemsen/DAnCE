@@ -1,5 +1,5 @@
 #include "XML_File_Intf.h"
-#include "ace/XML_Utils/XML_Typedefs.h"
+#include "ace/XML_Utils/XMLSchema/Types.hpp"
 #include "Deployment.hpp"
 #include "DP_Handler.h"
 #include "DD_Handler.h"
@@ -14,35 +14,31 @@ namespace DAnCE
 {
   namespace Config_Handlers
   {
-    XML_File_Intf::XML_File_Intf (const ACE_TCHAR *file)
-      : file_ (file),
-        idl_dp_ (0)
+    XML_File_Intf::XML_File_Intf (ACE_TCHAR const* file)
+      : file_ (file)
     {
       DANCE_TRACE("XML_File_Intf::constructor");
     }
 
-    XML_File_Intf::~XML_File_Intf (void)
+    XML_File_Intf::~XML_File_Intf ()
     {
       DANCE_TRACE("XML_File_Intf::destructor");
 
-      //      XML_Helper::XML_HELPER.terminate_parser ();
     }
 
-    bool
-    XML_File_Intf::read_process_plan (const ACE_TCHAR *file)
+    bool XML_File_Intf::read_process_plan (ACE_TCHAR const* file)
     {
       DANCE_TRACE("XML_File_Intf::read_process_plan");
 
       try
         {
-          if (!XML_Helper_type::XML_HELPER.is_initialized ())
+          if (!xml_helper_.is_initialized ())
             return false;
 
           DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
             (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_plan - ")
                        ACE_TEXT ("Constructing DOM\n")));
-          XERCES_CPP_NAMESPACE::DOMDocument *dom =
-            XML_Helper_type::XML_HELPER.create_dom ((file));
+          XERCES_CPP_NAMESPACE::DOMDocument *dom = xml_helper_.create_dom ((file));
 
           if (dom == 0)
             {
@@ -63,8 +59,7 @@ namespace DAnCE
           DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE,
             DLINFO ACE_TEXT ("XML_File_Intf::read_process_plan - ")
             ACE_TEXT ("Parsing XML file with XSC\n")));
-          deploymentPlan dp =
-            DAnCE::Config_Handlers::reader::DeploymentPlan (dom);
+          deploymentPlan dp = DAnCE::Config_Handlers::reader::DeploymentPlan (dom);
 
           DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE,
             DLINFO ACE_TEXT ("XML_File_Intf::read_process_plan - ")
@@ -76,16 +71,15 @@ namespace DAnCE
           if (this->idl_dp_.get ())
             return true;
         }
-      catch (const CORBA::Exception &ex)
+      catch (CORBA::Exception const& ex)
         {
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
             ACE_TEXT ("CORBA Exception whilst parsing XML into IDL\n"),
             ex._info ().c_str ()));
-          throw Config_Error (this->file_,
-                              ex._info ().c_str ());
+          throw Config_Error (ACE_TEXT_ALWAYS_CHAR (this->file_.c_str ()), ex._info ().c_str ());
         }
-      catch (const Config_Error &ex)
+      catch (Config_Error const& ex)
         {
           throw ex;
         }
@@ -94,28 +88,26 @@ namespace DAnCE
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
             ACE_TEXT ("Unexpected exception whilst parsing XML into IDL.\n")));
-          throw Config_Error (this->file_,
-            ACE_TEXT ("Unexpected C++ exception whilst parsing XML"));
+          throw Config_Error (ACE_TEXT_ALWAYS_CHAR (this->file_.c_str ()),
+            "Unexpected C++ exception whilst parsing XML");
         }
 
       return false;
     }
 
-    bool
-    XML_File_Intf::read_process_domain (const ACE_TCHAR *file)
+    bool XML_File_Intf::read_process_domain (ACE_TCHAR const* file)
     {
       DANCE_TRACE("XML_File_Intf::read_process_domain");
 
       try
         {
-          if (!XML_Helper_type::XML_HELPER.is_initialized ())
+          if (!xml_helper_.is_initialized ())
             return false;
 
           DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE,
             DLINFO ACE_TEXT ("XML_File_Intf::read_process_domain - ")
                        ACE_TEXT ("Constructing DOM\n")));
-          XERCES_CPP_NAMESPACE::DOMDocument *dom =
-            XML_Helper_type::XML_HELPER.create_dom ((file));
+          XERCES_CPP_NAMESPACE::DOMDocument *dom = xml_helper_.create_dom ((file));
 
           if (dom == 0)
             {
@@ -137,8 +129,7 @@ namespace DAnCE
           ID_Map::TSS_ID_Map* TSS_ID_Map (ACE_Singleton<ID_Map::TSS_ID_Map, ACE_Null_Mutex>::instance());
           (*TSS_ID_Map)->reset ();
 
-          Domain dp =
-            DAnCE::Config_Handlers::reader::domain (dom);
+          Domain dp = DAnCE::Config_Handlers::reader::domain (dom);
 
           DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE,
             DLINFO ACE_TEXT ("XML_File_Intf::read_process_domain - ")
@@ -150,16 +141,15 @@ namespace DAnCE
           if (this->idl_domain_.get ())
             return true;
         }
-      catch (const CORBA::Exception &ex)
+      catch (CORBA::Exception const& ex)
         {
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
                            ACE_TEXT ("CORBA Exception whilst parsing XML into IDL\n"),
                            ex._info ().c_str ()));
-          throw Config_Error (this->file_,
-                              ex._info ().c_str ());
+          throw Config_Error (ACE_TEXT_ALWAYS_CHAR (this->file_.c_str ()), ex._info ().c_str ());
         }
-      catch (const Config_Error &ex)
+      catch (Config_Error const& ex)
         {
           throw ex;
         }
@@ -168,15 +158,15 @@ namespace DAnCE
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
                       ACE_TEXT ("Unexpected exception whilst parsing XML into IDL.\n")));
-          throw Config_Error (this->file_,
-                              ACE_TEXT ("Unexpected C++ exception whilst parsing XML"));
+          throw Config_Error (ACE_TEXT_ALWAYS_CHAR (this->file_.c_str ()),
+                              "Unexpected C++ exception whilst parsing XML");
         }
 
       return false;
     }
 
     ::Deployment::DeploymentPlan const *
-    XML_File_Intf::get_plan (void)
+    XML_File_Intf::get_plan ()
     {
       DANCE_TRACE("get_plan");
 
@@ -186,8 +176,7 @@ namespace DAnCE
       return this->idl_dp_.get ();
     }
 
-    ::Deployment::DeploymentPlan *
-    XML_File_Intf::release_plan (void)
+    ::Deployment::DeploymentPlan * XML_File_Intf::release_plan ()
     {
       DANCE_TRACE("XML_File_Intf::get_plan");
 
@@ -197,7 +186,7 @@ namespace DAnCE
     }
 
     ::Deployment::Domain const *
-    XML_File_Intf::get_domain (void)
+    XML_File_Intf::get_domain ()
     {
       DANCE_TRACE("get_domain");
 
@@ -207,8 +196,7 @@ namespace DAnCE
       return this->idl_domain_.get ();
     }
 
-    ::Deployment::Domain *
-    XML_File_Intf::release_domain (void)
+    ::Deployment::Domain * XML_File_Intf::release_domain ()
     {
       DANCE_TRACE("XML_File_Intf::get_domain");
 
@@ -217,12 +205,10 @@ namespace DAnCE
       return this->idl_domain_.release ();
     }
 
-    void
-    XML_File_Intf::add_search_path (const ACE_TCHAR *environment,
-                                    const ACE_TCHAR *relpath)
+    void XML_File_Intf::add_search_path (ACE_TCHAR const* environment, ACE_TCHAR const* relpath)
     {
       DANCE_TRACE("XML_File_Intf::add_search_path");
-      XML_Helper_type::XML_HELPER.get_resolver ().get_resolver ().add_path (environment, relpath);
+      xml_helper_.get_resolver ().get_resolver ().add_path (environment, relpath);
     }
 
   }

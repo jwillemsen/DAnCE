@@ -20,84 +20,84 @@ namespace DAnCE
 
       void
       SID_Handler::handle_sub_comp_inst_descr (
-        const SubcomponentInstantiationDescription &desc,
+        SubcomponentInstantiationDescription const& desc,
          ::Deployment::SubcomponentInstantiationDescription &toconfig)
       {
         DANCE_TRACE ("SID_Handler::sub_comp_inst_descr");
-        toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
+        toconfig.name = desc.name ().c_str ();
 
-        if (desc.basePackage_p ())
+        ::DAnCE::Config_Handlers::PackageConfiguration const* specializedConfig = desc.specializedConfig_if_set ();
+        ::DAnCE::Config_Handlers::ComponentPackageImport const* importedPackage = desc.importedPackage_if_set ();
+        ::DAnCE::Config_Handlers::ComponentPackageReference const* referencedPackage = desc.referencedPackage_if_set ();
+
+        ::DAnCE::Config_Handlers::ComponentPackageDescription const*
+          basePackage_if_set_ptr = desc.basePackage_if_set ();
+        if (basePackage_if_set_ptr)
           {
             toconfig.basePackage.length (1);
-            CPD_Handler::handle_component_package_descr (desc.basePackage (),
-                                                  toconfig.basePackage[0]);
+            CPD_Handler::handle_component_package_descr (*basePackage_if_set_ptr, toconfig.basePackage[0]);
           }
-        else if (desc.specializedConfig_p ())
+        else if (specializedConfig)
           {
             toconfig.specializedConfig.length (1);
-            PCD_Handler::package_config (desc.specializedConfig (),
-                                         toconfig.specializedConfig[0]);
+            PCD_Handler::package_config (*specializedConfig, toconfig.specializedConfig[0]);
           }
-        else if (desc.importedPackage_p ())
+        else if (importedPackage)
           {
             toconfig.importedPackage.length (1);
-            toconfig.importedPackage[0].location.length (
-              desc.importedPackage ().count_location ());
+            toconfig.importedPackage[0].location.length (importedPackage->location ().size ());
 
-            std::for_each (desc.importedPackage ().begin_location (),
-                           desc.importedPackage ().end_location (),
-                           String_Seq_Functor (
-                             toconfig.importedPackage[0].location));
+            CORBA::ULong location_index {};
+            for (auto const& source_item : importedPackage->location ())
+              toconfig.importedPackage[0].location[location_index++] = source_item.c_str ();
           }
-        else if (desc.referencedPackage_p ())
+        else if (referencedPackage)
           {
             toconfig.referencedPackage.length (1);
 
-            if (desc.referencedPackage ().requiredUUID_p ())
-              toconfig.referencedPackage[0].requiredUUID =
-                ACE_TEXT_ALWAYS_CHAR (
-                  desc.referencedPackage ().requiredUUID ().c_str ());
+            ::XMLSchema::string<char> const* requiredUUID = referencedPackage->requiredUUID_if_set ();
+            if (requiredUUID)
+              toconfig.referencedPackage[0].requiredUUID = requiredUUID->c_str ();
 
-            if (desc.referencedPackage ().requiredName_p ())
-              toconfig.referencedPackage[0].requiredName =
-                ACE_TEXT_ALWAYS_CHAR (
-                  desc.referencedPackage ().requiredName ().c_str ());
+            ::XMLSchema::string<char> const* requiredName = referencedPackage->requiredName_if_set ();
+            if (requiredName)
+              toconfig.referencedPackage[0].requiredName = requiredName->c_str ();
 
             Comp_Intf_Descr_Handler::comp_intf_descr (
-              desc.referencedPackage ().requiredType (),
+              referencedPackage->requiredType (),
               toconfig.referencedPackage[0].requiredType);
 
           }
 
-        toconfig.selectRequirement.length (desc.count_selectRequirement ());
-        std::for_each (desc.begin_selectRequirement (),
-                       desc.end_selectRequirement (),
-                       Requirement_Functor (toconfig.selectRequirement));
+        toconfig.selectRequirement.length (desc.selectRequirement ().size ());
+        CORBA::ULong selectRequirement_index {};
+        for (auto const& source_item : desc.selectRequirement ())
+          Req_Handler::handle_requirement (source_item, toconfig.selectRequirement[selectRequirement_index++]);
 
-        toconfig.configProperty.length (desc.count_configProperty ());
-        std::for_each (desc.begin_configProperty (),
-                       desc.end_configProperty (),
-                       Property_Functor (toconfig.configProperty));
+        toconfig.configProperty.length (desc.configProperty ().size ());
+        CORBA::ULong configProperty_index {};
+        for (auto const& source_item : desc.configProperty ())
+          Property_Handler::handle_property (source_item, toconfig.configProperty[configProperty_index++]);
 
-        if (desc.id_p ())
+        ::XMLSchema::ID<char> const* id_if_set_ptr = desc.id_if_set ();
+        if (id_if_set_ptr)
           {
-            ACE_TString str (desc.id ().c_str ());
+            std::string str (id_if_set_ptr->c_str ());
             SID_Handler::IDREF.bind_next_available (str);
           }
         else
           DANCE_ERROR (DANCE_LOG_WARNING,
-            (LM_WARNING, ACE_TEXT ("Warning: SID With Name %s has no ID\n"),
+            (LM_WARNING, ACE_TEXT ("Warning: SID With Name %C has no ID\n"),
              desc.name ().c_str ()));
 
       }
 
       SubcomponentInstantiationDescription
       SID_Handler::sub_comp_inst_descr (
-        const Deployment::SubcomponentInstantiationDescription &src)
+        Deployment::SubcomponentInstantiationDescription const& src)
       {
         DANCE_TRACE ("SID_Handler::sub_comp_inst_descr - reverse");
-        SubcomponentInstantiationDescription retval (
-          ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
+        SubcomponentInstantiationDescription retval (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
 
         if (src.basePackage.length () == 1)
           retval.basePackage
@@ -107,12 +107,7 @@ namespace DAnCE
             (PCD_Handler::package_config (src.specializedConfig[0]));
         else if (src.importedPackage.length () == 1)
           {
-            ComponentPackageImport ci;
-#if 0
-            for (CORBA::ULong i = 0;
-              i < src.importedPackage[0].location.length (); ++i)
-              ci.add_location (src.importedPackage[0].location[i].in ());
-#endif
+            ComponentPackageImport const ci {};
             retval.importedPackage (ci);
           }
         else if (src.referencedPackage.length () == 1)
@@ -120,26 +115,16 @@ namespace DAnCE
             ComponentPackageReference cpr (
               Comp_Intf_Descr_Handler::comp_intf_descr (
                 src.referencedPackage[0].requiredType));
-            cpr.requiredUUID (ACE_TEXT_CHAR_TO_TCHAR (
-              src.referencedPackage[0].requiredUUID.in ()));
-            cpr.requiredName (ACE_TEXT_CHAR_TO_TCHAR (
-              src.referencedPackage[0].requiredName.in ()));
+            XMLSchema::string<char> required_uuid (src.referencedPackage[0].requiredUUID.in ());
+            cpr.requiredUUID (required_uuid);
+            XMLSchema::string<char> required_name (src.referencedPackage[0].requiredName.in ());
+            cpr.requiredName (required_name);
 
             retval.referencedPackage (cpr);
           }
-#if 0
-        for (CORBA::ULong i = 0; i < src.selectRequirement.length (); ++i)
-          retval.add_selectRequirement
-            (Req_Handler::get_requirement (src.selectRequirement[i]));
-
-        for (CORBA::ULong i = 0; i < src.configProperty.length (); ++i)
-          retval.add_configProperty
-            (Property_Handler::get_property (src.configProperty[i]));
-#endif
         // @@MAJO This is not a good way of binding reverse IDREFS.
-        std::auto_ptr <ACE_Utils::UUID> safe_uuid (
-          ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());
-        ACE_TString uuid ( ACE_TEXT_CHAR_TO_TCHAR (safe_uuid->to_string ()->c_str ()));
+        std::unique_ptr<ACE_Utils::UUID> safe_uuid (ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());
+        std::string uuid (safe_uuid->to_string ()->c_str ());
 
         SID_Handler::IDREF.bind_next_available (uuid);
 

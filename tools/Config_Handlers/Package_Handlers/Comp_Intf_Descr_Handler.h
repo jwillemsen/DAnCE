@@ -8,14 +8,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/XML_Utils/XML_Typedefs.h"
+#include "ace/XML_Utils/XMLSchema/Types.hpp"
 #include "dance/Deployment/Deployment_Packaging_DataC.h"
 #include "Package_Handlers/Packaging_Handlers_Export.h"
+#include <string_view>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 namespace DAnCE
 {
@@ -34,14 +34,13 @@ namespace DAnCE
       class Packaging_Handlers_Export Comp_Intf_Descr_Handler
       {
       public:
-        static void comp_intf_descr (const ComponentInterfaceDescription &descr,
+        static void comp_intf_descr (ComponentInterfaceDescription const& descr,
                                      ::Deployment::ComponentInterfaceDescription &toconfig);
 
-        static ComponentInterfaceDescription
-        comp_intf_descr (const ::Deployment::ComponentInterfaceDescription &src);
+        static ComponentInterfaceDescription comp_intf_descr (::Deployment::ComponentInterfaceDescription const& src);
 
       private:
-        static ComponentInterfaceDescription *resolve_cid (const ACE_TCHAR *uri);
+        static ComponentInterfaceDescription *resolve_cid (std::string_view uri);
       };
     }
   }

@@ -13,7 +13,6 @@
 #include "Config_Handlers_Export.h"
 #include "Common.h"
 #include "ace/config-lite.h"
-#include "Utils/Functors.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -43,22 +42,16 @@ namespace DAnCE
        */
       class Config_Handlers_Export IRDD_Handler {
       public:
-    IRDD_Handler (void);
-    virtual ~IRDD_Handler (void);
+    IRDD_Handler ();
+    virtual ~IRDD_Handler ();
 
-    static void handle_irdd (const InstanceResourceDeploymentDescription& desc,
-                            Deployment::InstanceResourceDeploymentDescription& toconfig)
-      /*throw (Config_Error)*/;
+    static void handle_irdd (InstanceResourceDeploymentDescription const& desc,
+                             Deployment::InstanceResourceDeploymentDescription& toconfig);
 
     static InstanceResourceDeploymentDescription
-      instance_resource_deployment_descr (const Deployment::InstanceResourceDeploymentDescription& src)
-      /*throw (Config_Error)*/;
+    instance_resource_deployment_descr (Deployment::InstanceResourceDeploymentDescription const& src);
       };
 
-      typedef Sequence_Handler < InstanceResourceDeploymentDescription,
-                 ::Deployment::InstanceResourceDeploymentDescriptions,
-                 ::Deployment::InstanceResourceDeploymentDescription,
-                 IRDD_Handler::handle_irdd > IRDD_Functor;
     }
 }
 

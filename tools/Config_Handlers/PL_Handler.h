@@ -11,8 +11,6 @@
 #include "Config_Handlers_Export.h"
 #include "ace/config-lite.h"
 
-#include "Utils/Functors.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -31,16 +29,10 @@ namespace DAnCE
     class Config_Handlers_Export PL_Handler
     {
     public:
-      static void get_PlanLocality (const PlanLocality &desc,
-                                    Deployment::PlanLocality &toconfig);
+      static void get_PlanLocality (PlanLocality const& desc, Deployment::PlanLocality &toconfig);
 
-      static PlanLocality  plan_locality (const ::Deployment::PlanLocality &src);
+      static PlanLocality plan_locality (::Deployment::PlanLocality const& src);
     };
-
-    typedef Sequence_Handler < PlanLocality,
-                               ::Deployment::PlanLocalities,
-                               ::Deployment::PlanLocality,
-                               PL_Handler::get_PlanLocality >  PL_Functor;
 
   }
 }

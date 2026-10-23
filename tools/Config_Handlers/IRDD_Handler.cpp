@@ -4,23 +4,21 @@
 #include "Property_Handler.h"
 #include "dance/Logger/Log_Macros.h"
 
-
 namespace DAnCE
 {
   namespace Config_Handlers
   {
 
-    IRDD_Handler::IRDD_Handler (void)
+    IRDD_Handler::IRDD_Handler ()
     {
     }
 
-    IRDD_Handler::~IRDD_Handler (void)
+    IRDD_Handler::~IRDD_Handler ()
     {
     }
-
 
     void
-    IRDD_Handler::handle_irdd (const InstanceResourceDeploymentDescription& desc,
+    IRDD_Handler::handle_irdd (InstanceResourceDeploymentDescription const& desc,
                                Deployment::InstanceResourceDeploymentDescription& toconfig)
     {
       DANCE_TRACE("IRDD_Handler::instance_resource_deployment_descr");
@@ -48,32 +46,29 @@ namespace DAnCE
           break;
 
         default:
-          throw Config_Error (desc.requirementName (),
-                              ACE_TEXT ("Unknown ResourceUsageKind."));
+          throw Config_Error (desc.requirementName (), "Unknown ResourceUsageKind.");
           break;
         }
 
-      toconfig.requirementName = ACE_TEXT_ALWAYS_CHAR ( desc.requirementName ().c_str ());
+      toconfig.requirementName = desc.requirementName ().c_str ();
 
-      toconfig.resourceName= ACE_TEXT_ALWAYS_CHAR ( desc.resourceName ().c_str ());
+      toconfig.resourceName = desc.resourceName ().c_str ();
 
-      toconfig.property.length (desc.count_property ());
-      std::for_each (desc.begin_property (),
-                     desc.end_property (),
-                     Property_Functor (toconfig.property));
+      toconfig.property.length (desc.property ().size ());
+      CORBA::ULong property_index {};
+      for (auto const& source_item : desc.property ())
+        Property_Handler::handle_property (source_item, toconfig.property[property_index++]);
     }
 
     InstanceResourceDeploymentDescription
-    IRDD_Handler::instance_resource_deployment_descr (const Deployment::InstanceResourceDeploymentDescription& src)
+    IRDD_Handler::instance_resource_deployment_descr (Deployment::InstanceResourceDeploymentDescription const& src)
     {
       DANCE_TRACE("IRDD_Handler::instance_resource_deployment_descr - reverse");
 
-      XMLSchema::string< ACE_TCHAR > reqname (ACE_TEXT_CHAR_TO_TCHAR (src.requirementName));
-      XMLSchema::string< ACE_TCHAR > resname (ACE_TEXT_CHAR_TO_TCHAR (src.resourceName));
+      XMLSchema::string<char> reqname (src.requirementName);
+      XMLSchema::string<char> resname (src.resourceName);
 
-      InstanceResourceDeploymentDescription irdd (ResourceUsageKind::None,
-                                                  reqname,
-                                                  resname);
+      InstanceResourceDeploymentDescription irdd (ResourceUsageKind::None, reqname, resname);
 
       switch (src.resourceUsage)
         {
@@ -98,16 +93,9 @@ namespace DAnCE
           break;
 
         default:
-          throw Config_Error (ACE_TEXT_CHAR_TO_TCHAR (src.resourceName.in ()),
-                              ACE_TEXT ("Unknown ResourceUsageKind."));
+          throw Config_Error (src.resourceName.in (), "Unknown ResourceUsageKind.");
           break;
         }
-
-      for (CORBA::ULong i = 0; i < src.property.length (); ++i)
-        {
-          //irdd.add_property (Property_Handler::get_property (src.property[i]));
-        }
-
 
       return irdd;
     }

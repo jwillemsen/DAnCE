@@ -11,24 +11,24 @@ namespace DAnCE
   namespace Config_Handlers
   {
 
-    SatisfierProperty_Handler::SatisfierProperty_Handler (void)
+    SatisfierProperty_Handler::SatisfierProperty_Handler ()
     {
       DANCE_TRACE("SatisfierProperty_Handler::constructor");
     }
 
-    SatisfierProperty_Handler::~SatisfierProperty_Handler (void)
+    SatisfierProperty_Handler::~SatisfierProperty_Handler ()
     {
       DANCE_TRACE("SatisfierProperty_Handler::destructor");
     }
 
     void
     SatisfierProperty_Handler::handle_sat_property (
-                                                 const SatisfierProperty& desc,
+                                                 SatisfierProperty const& desc,
                                                  Deployment::SatisfierProperty& toconfig)
     {
       DANCE_TRACE("SatisfierProperty_Handler::get_sat_property");
 
-      toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
+      toconfig.name = desc.name ().c_str ();
 
       switch (desc.kind ().integral ())
         {
@@ -57,10 +57,8 @@ namespace DAnCE
           break;
 
         default:
-          DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
-            (LM_ERROR, ACE_TEXT ("Unknown SatisfierPropertyKind\n")));
-          throw Config_Error (desc.name (),
-            ACE_TEXT ("Unknown SatisfierPropertyKind"));
+          DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("Unknown SatisfierPropertyKind\n")));
+          throw Config_Error (desc.name (), "Unknown SatisfierPropertyKind");
 
         }
 
@@ -68,8 +66,7 @@ namespace DAnCE
 
       try
         {
-          Any_Handler::extract_into_any (desc.value (),
-                                         toconfig.value);
+          Any_Handler::extract_into_any (desc.value (), toconfig.value);
         }
       catch (Config_Error &ex)
         {
@@ -78,15 +75,13 @@ namespace DAnCE
         }
     }
 
-    SatisfierProperty
-    SatisfierProperty_Handler::get_sat_property (
-                                                 const Deployment::SatisfierProperty& src)
+    SatisfierProperty SatisfierProperty_Handler::get_sat_property (Deployment::SatisfierProperty const& src)
     {
       DANCE_TRACE("SatisfierProperty_Handler::get_sat_property - reverse");
 
-      ::XMLSchema::string< ACE_TCHAR > name (ACE_TEXT_CHAR_TO_TCHAR ((src.name)));
+      XMLSchema::string<char> name (src.name);
 
-      const SatisfierPropertyKind *spk = 0;
+      SatisfierPropertyKind const* spk {};
 
       switch (src.kind)
         {
@@ -107,7 +102,7 @@ namespace DAnCE
           break;
 
         default:
-          throw Plan_Error (ACE_TEXT ("Invalid SatisfierPropertyKind"));
+          throw Plan_Error ("Invalid SatisfierPropertyKind");
         }
 
       bool dynamic = src.dynamic;

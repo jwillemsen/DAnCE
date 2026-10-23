@@ -15,7 +15,7 @@
 #include /**/ "ace/pre.h"
 
 #include "Config_Handlers_Export.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -43,7 +43,6 @@ class Config_Handlers_Export DD_Handler
 public:
 class NoDomain {};
 
-
 /**
 * @param dmn The Domain structure
 */
@@ -53,31 +52,31 @@ DD_Handler(Domain &dmn);
 
 /**
 */
-~DD_Handler (void);
+~DD_Handler ();
 
 /**
 * @brief Returns the const IDL domain
 * @return Domain* the IDL domain pointer
 */
- ::Deployment::Domain const *domain_idl (void) const;
+ ::Deployment::Domain const *domain_idl () const;
 
 /**
 * @brief Returns the IDL domain
 * @return Domain* the IDL domain pointer
 */
- ::Deployment::Domain *domain_idl (void);
+ ::Deployment::Domain *domain_idl ();
 
 /**
 * @brief Returns the const XSC domain
 * @return Domain* the XSC domain pointer
 */
- Domain const *domain_xsc (void) const;
+ Domain const *domain_xsc () const;
 
 /**
 * @brief Returns the XSC domain
 * @return Domain* the XSC domain pointer
 */
- Domain *domain_xsc (void);
+ Domain *domain_xsc ();
 
 private:
 /**
@@ -91,14 +90,14 @@ bool build_domain ();
 bool build_xsc ();
 
 /// The Deployment Domain structure
-auto_ptr < ::Deployment::Domain > idl_domain_;
+std::unique_ptr<::Deployment::Domain> idl_domain_ {};
 
 /// The XSC Domain structure
-auto_ptr <Domain> domain_ptr_;
+std::unique_ptr<Domain> domain_ptr_ {};
 
  Domain &domain_;
 /// The return value used
-bool retval_;
+bool retval_ {};
 };
 }
 }

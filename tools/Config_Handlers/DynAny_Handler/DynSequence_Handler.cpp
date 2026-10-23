@@ -16,28 +16,30 @@ namespace DAnCE
   namespace Config_Handlers
   {
     DynamicAny::DynAny_ptr
-    DynSequence_Handler::extract_into_dynany (const DataType &type,
-                                              const DataValue &value,
+    DynSequence_Handler::extract_into_dynany (DataType const& type,
+                                              DataValue const& value,
                                               CORBA::TypeCode_ptr req_tc)
     {
       DANCE_TRACE("DynSequence_Handler::extract_into_dynany");
 
-      CORBA::TypeCode_var tc;
+      ::DAnCE::Config_Handlers::SequenceType const* sequenceType = type.sequence_if_set ();
+      if (!sequenceType)
+        throw Config_Error ("", "Expected sequence type information");
+
+      CORBA::TypeCode_var tc {};
       if (req_tc)
         tc = req_tc;
       else
         tc = DynSequence_Handler::create_typecode (type);
 
       // Make the actual DynSequence
-      DynamicAny::DynAny_var temp =
-        DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
-      DynamicAny::DynSequence_var retval =
-        DynamicAny::DynSequence::_narrow (temp.in ());
+      DynamicAny::DynAny_var const temp = DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
+      DynamicAny::DynSequence_var retval = DynamicAny::DynSequence::_narrow (temp.in ());
 
-      DynamicAny::DynAnySeq dynseq;
-      CORBA::ULong pos = 0;
+      DynamicAny::DynAnySeq dynseq {};
+      CORBA::ULong pos {};
 
-      switch (type.sequence ().elementType ().kind ().integral ())
+      switch (sequenceType->elementType ().kind ().integral ())
         {
           // ========== BASIC TYPES
         case TCKind::tk_null_l:
@@ -48,8 +50,8 @@ namespace DAnCE
         case TCKind::tk_home_l:
 
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_WARNING, "I don't know how to handle null or void types\n"));
-          throw 1;
+            (LM_WARNING, "Null and void element types are not supported in sequences\n"));
+          throw Config_Error ("", "Null or void element types are not supported in sequences");
 
         case TCKind::tk_short_l:
         case TCKind::tk_long_l:
@@ -70,28 +72,27 @@ namespace DAnCE
         case TCKind::tk_array_l:
           try
             {
-              dynseq.length (value.count_element ());
-              retval->set_length (value.count_element ());
+              dynseq.length (value.element ().size ());
+              retval->set_length (value.element ().size ());
 
-              for (DataValue::element_const_iterator i = value.begin_element ();
-                   i != value.end_element ();
-                   ++i)
+              for (auto const& element : value.element ())
                 {
-                  DynamicAny::DynAny_var dynany
-                    (DYNANY_HANDLER->extract_into_dynany (type.sequence ().elementType (),
-                                                          **i));
+                  DynamicAny::DynAny_var const dynany (
+                    DYNANY_HANDLER->extract_into_dynany (sequenceType->elementType (), element));
                   dynseq[pos++] = dynany->copy ();
                 }
 
               retval->set_elements_as_dyn_any (dynseq);
               return retval._retn ();
             }
-          catch (const DynamicAny::DynAny::InvalidValue&)
+          catch (DynamicAny::DynAny::InvalidValue const&)
             {
-              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("Invalid value provided in XML when trying to ")
-                          ACE_TEXT ("populate %ith element of a sequence\n"),
-                          pos));
-              throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Invalid value whilst populating the sequence."));
+              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+                (LM_ERROR,
+                 ACE_TEXT ("Invalid value provided in XML when trying to ")
+                 ACE_TEXT ("populate %ith element of a sequence\n"),
+                 pos));
+              throw Config_Error ("", "Invalid value whilst populating the sequence.");
             }
 
         case TCKind::tk_char_l:
@@ -113,41 +114,37 @@ namespace DAnCE
         case TCKind::tk_event_l:
           // Special case where element association in datavalue contains another datavalue.
 
-          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("DynSequence_Handler::extract_into_dynany - Type not supported\n")));
-          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Type not supported"));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR,
+             DLINFO ACE_TEXT ("DynSequence_Handler::extract_into_dynany - Type not supported\n")));
+          throw Config_Error ("", "Type not supported");
         }
 
       return retval._retn ();
     }
 
-    CORBA::TypeCode_ptr
-    DynSequence_Handler::create_typecode (const DataType &type)
+    CORBA::TypeCode_ptr DynSequence_Handler::create_typecode (DataType const& type)
     {
       DANCE_TRACE("DynSequence_Handler::create_typecode");
 
-      if (!type.sequence_p ())
+      ::DAnCE::Config_Handlers::SequenceType const* sequence_if_set_ptr = type.sequence_if_set ();
+      if (!sequence_if_set_ptr)
         {
-          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_ERROR, ACE_TEXT (
-              "ERROR: Sequence type description required")));
-          throw Config_Error (ACE_TEXT (""),
-            ACE_TEXT ("Expected <sequence> element, incorrect tc_kind."));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("ERROR: Sequence type description required")));
+          throw Config_Error ("", "Expected <sequence> element, incorrect tc_kind.");
         }
 
-      CORBA::TypeCode_var etc =
-        DYNANY_HANDLER->create_typecode (type.sequence ().elementType ());
+      CORBA::TypeCode_var etc = DYNANY_HANDLER->create_typecode (sequence_if_set_ptr->elementType ());
 
-      CORBA::ULong bound (0);
-      if (type.sequence ().bound_p ())
-        bound = type.sequence ().bound ();
+      CORBA::ULong bound {};
+      ::XMLSchema::unsignedInt const* bound_if_set_ptr = sequence_if_set_ptr->bound_if_set ();
+      if (bound_if_set_ptr)
+        bound = *bound_if_set_ptr;
 
-      CORBA::TypeCode_var tc =
-        DYNANY_HANDLER->orb ()->create_sequence_tc (bound, etc);
+      CORBA::TypeCode_var tc = DYNANY_HANDLER->orb ()->create_sequence_tc (bound, etc);
 
       return tc._retn ();
     }
   }
 }
-
-
 

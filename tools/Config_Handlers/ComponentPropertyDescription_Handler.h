@@ -45,7 +45,7 @@ public:
 /// This method maps the values from the XSC object
 /// <ComponentPropertyDescription> to the CORBA IDL type
 /// <Deployment::ComponentPropertyDescription>.
-static void   component_property_description (
+static void component_property_description (
 const ComponentPropertyDescription& desc,
 ::Deployment::ComponentPropertyDescription& toconfig);
 static ComponentPropertyDescription

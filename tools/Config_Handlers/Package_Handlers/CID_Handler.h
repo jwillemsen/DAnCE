@@ -11,13 +11,13 @@
 
 #include "IDREF_Base.h"
 #include "Package_Handlers/Packaging_Handlers_Export.h"
+#include <string_view>
 #include "tao/Basic_Types.h"
 
 namespace Deployment
 {
   struct ComponentImplementationDescription;
 }
-
 
 namespace DAnCE
 {
@@ -45,17 +45,17 @@ namespace DAnCE
         /// Maps the values from the XSC object
         /// <ComponentImplementationDescription> to the CORBA IDL type
         /// <Deployment::ComponentImplementationDescription>.
-        static void component_impl_descr (const ComponentImplementationDescription &desc,
+        static void component_impl_descr (ComponentImplementationDescription const& desc,
                                           ::Deployment::ComponentImplementationDescription &toconfig);
 
         static IDREF_Base<CORBA::ULong> IDREF;
 
         static ComponentImplementationDescription
-        component_impl_descr (const Deployment::ComponentImplementationDescription& src);
+        component_impl_descr (Deployment::ComponentImplementationDescription const& src);
 
       private:
 
-        static ComponentImplementationDescription * resolve_cid (const ACE_TCHAR *uri);
+        static ComponentImplementationDescription * resolve_cid (std::string_view uri);
       };
     }
   }
