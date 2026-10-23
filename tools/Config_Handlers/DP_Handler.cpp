@@ -134,13 +134,13 @@ namespace DAnCE
       IDD_Handler::instance_deployment_descrs (xsc_dp, this->idl_dp_->instance);
 
       this->idl_dp_->connection.length (xsc_dp.connection ().size ());
-      CORBA::ULong connection_index = 0;
+      CORBA::ULong connection_index {};
       for (auto const& source_item : xsc_dp.connection ())
         PCD_Handler::handle_PlanConnectionDescription (source_item, this->idl_dp_->connection[connection_index++]);
 
       this->idl_dp_->localityConstraint.length ( xsc_dp.localityConstraint ().size ());
 
-      CORBA::ULong localityConstraint_index = 0;
+      CORBA::ULong localityConstraint_index {};
       for (auto const& source_item : xsc_dp.localityConstraint ())
         PL_Handler::get_PlanLocality (source_item, this->idl_dp_->localityConstraint[localityConstraint_index++]);
 

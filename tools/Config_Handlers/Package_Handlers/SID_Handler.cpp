@@ -47,7 +47,7 @@ namespace DAnCE
             toconfig.importedPackage.length (1);
             toconfig.importedPackage[0].location.length ( importedPackage->location ().size ());
 
-            CORBA::ULong location_index = 0;
+            CORBA::ULong location_index {};
             for (auto const& source_item : importedPackage->location ())
               toconfig.importedPackage[0].location[location_index++] = source_item.c_str ();
           }
@@ -70,12 +70,12 @@ namespace DAnCE
           }
 
         toconfig.selectRequirement.length (desc.selectRequirement ().size ());
-        CORBA::ULong selectRequirement_index = 0;
+        CORBA::ULong selectRequirement_index {};
         for (auto const& source_item : desc.selectRequirement ())
           Req_Handler::handle_requirement (source_item, toconfig.selectRequirement[selectRequirement_index++]);
 
         toconfig.configProperty.length (desc.configProperty ().size ());
-        CORBA::ULong configProperty_index = 0;
+        CORBA::ULong configProperty_index {};
         for (auto const& source_item : desc.configProperty ())
           Property_Handler::handle_property (source_item, toconfig.configProperty[configProperty_index++]);
 

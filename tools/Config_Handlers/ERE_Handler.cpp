@@ -34,7 +34,7 @@ namespace DAnCE
       if (portName_if_set_ptr)
         dest.portName = portName_if_set_ptr->c_str ();
       dest.supportedType.length (src.supportedType ().size ());
-      CORBA::ULong supportedType_index = 0;
+      CORBA::ULong supportedType_index {};
       for (auto const& source_item : src.supportedType ())
         dest.supportedType[supportedType_index++] = source_item.c_str ();
     }

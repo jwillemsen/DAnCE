@@ -69,12 +69,12 @@ namespace DAnCE
           dest.implementationRef = tmp;
 
           dest.configProperty.length (src.configProperty ().size ());
-          CORBA::ULong configProperty_index = 0;
+          CORBA::ULong configProperty_index {};
           for (auto const& source_item : src.configProperty ())
             Property_Handler::handle_property (source_item, dest.configProperty[configProperty_index++]);
 
           dest.deployedResource.length (src.deployedResource ().size ());
-          CORBA::ULong deployedResource_index = 0;
+          CORBA::ULong deployedResource_index {};
           for (auto const& source_item : src.deployedResource ())
             IRDD_Handler::handle_irdd (source_item, dest.deployedResource[deployedResource_index++]);
 

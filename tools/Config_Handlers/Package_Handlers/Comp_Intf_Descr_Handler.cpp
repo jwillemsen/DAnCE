@@ -71,33 +71,33 @@ namespace DAnCE
           toconfig.specificType = specificType_if_set_ptr->c_str ();
 
         toconfig.supportedType.length (cid->supportedType ().size ());
-        CORBA::ULong supportedType_index = 0;
+        CORBA::ULong supportedType_index {};
         for (auto const& source_item : cid->supportedType ())
           toconfig.supportedType[supportedType_index++] = source_item.c_str ();
 
         toconfig.idlFile.length (cid->idlFile ().size ());
-        CORBA::ULong idlFile_index = 0;
+        CORBA::ULong idlFile_index {};
         for (auto const& source_item : cid->idlFile ())
           toconfig.idlFile[idlFile_index++] = source_item.c_str ();
 
         toconfig.configProperty.length (cid->configProperty ().size ());
-        CORBA::ULong configProperty_index = 0;
+        CORBA::ULong configProperty_index {};
         for (auto const& source_item : cid->configProperty ())
           Property_Handler::handle_property (source_item, toconfig.configProperty[configProperty_index++]);
 
         toconfig.port.length (cid->port ().size ());
-        CORBA::ULong port_index = 0;
+        CORBA::ULong port_index {};
         for (auto const& source_item : cid->port ())
           ::DAnCE::Config_Handlers::CPD_Handler::handle_component_port_description (
             source_item, toconfig.port[port_index++]);
 
         toconfig.property.length (cid->property ().size ());
-        CORBA::ULong property_index = 0;
+        CORBA::ULong property_index {};
         for (auto const& source_item : cid->property ())
           Comp_Prop_Handler::handle_cpd (source_item, toconfig.property[property_index++]);
 
         toconfig.infoProperty.length (cid->infoProperty ().size ());
-        CORBA::ULong infoProperty_index = 0;
+        CORBA::ULong infoProperty_index {};
         for (auto const& source_item : cid->infoProperty ())
           Property_Handler::handle_property (source_item, toconfig.infoProperty[infoProperty_index++]);
       }

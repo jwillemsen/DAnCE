@@ -37,12 +37,12 @@ namespace DAnCE
       toconfig.name = desc.name ().c_str ();
 
       toconfig.resourceType.length (desc.resourceType ().size ());
-      CORBA::ULong resourceType_index = 0;
+      CORBA::ULong resourceType_index {};
       for (auto const& source_item : desc.resourceType ())
         toconfig.resourceType[resourceType_index++] = source_item.c_str ();
 
       toconfig.property.length (desc.property ().size ());
-      CORBA::ULong property_index = 0;
+      CORBA::ULong property_index {};
       for (auto const& source_item : desc.property ())
         SatisfierProperty_Handler::handle_sat_property (source_item, toconfig.property[property_index++]);
     }
@@ -113,7 +113,7 @@ namespace DAnCE
       toconfig.name = desc.name ().c_str ();
 
       toconfig.property.length (desc.property ().size ());
-      CORBA::ULong property_index = 0;
+      CORBA::ULong property_index {};
       for (auto const& source_item : desc.property ())
         Property_Handler::handle_property (source_item, toconfig.property[property_index++]);
     }
@@ -173,23 +173,23 @@ namespace DAnCE
       DANCE_TRACE ("MID_Handler::get_mid");
 
       toconfig.nodeExecParameter.length (desc.nodeExecParameter ().size ());
-      CORBA::ULong nodeExecParameter_index = 0;
+      CORBA::ULong nodeExecParameter_index {};
       for (auto const& source_item : desc.nodeExecParameter ())
         Property_Handler::handle_property (source_item, toconfig.nodeExecParameter[nodeExecParameter_index++]);
 
       toconfig.componentExecParameter.length ( desc.componentExecParameter ().size ());
-      CORBA::ULong componentExecParameter_index = 0;
+      CORBA::ULong componentExecParameter_index {};
       for (auto const& source_item : desc.componentExecParameter ())
         Property_Handler::handle_property (
           source_item, toconfig.componentExecParameter[componentExecParameter_index++]);
 
       toconfig.deployRequirement.length (desc.deployRequirement ().size ());
-      CORBA::ULong deployRequirement_index = 0;
+      CORBA::ULong deployRequirement_index {};
       for (auto const& source_item : desc.deployRequirement ())
         IR_Handler::handle_ir (source_item, toconfig.deployRequirement[deployRequirement_index++]);
 
       toconfig.primaryArtifact.length (desc.primaryArtifact ().size ());
-      CORBA::ULong primaryArtifact_index = 0;
+      CORBA::ULong primaryArtifact_index {};
       for (auto const& source_item : desc.primaryArtifact ())
         NIA_Handler::handle_nia (source_item, toconfig.primaryArtifact[primaryArtifact_index++]);
     }
@@ -279,13 +279,13 @@ namespace DAnCE
 
         // configProperty
         toconfig.configProperty.length (cid->configProperty ().size ());
-        CORBA::ULong configProperty_index = 0;
+        CORBA::ULong configProperty_index {};
         for (auto const& source_item : cid->configProperty ())
           Property_Handler::handle_property (source_item, toconfig.configProperty[configProperty_index++]);
 
         // capability
         toconfig.capability.length (cid->capability ().size ());
-        CORBA::ULong capability_index = 0;
+        CORBA::ULong capability_index {};
         for (auto const& source_item : cid->capability ())
           Capability_Handler::handle_capability (source_item, toconfig.capability[capability_index++]);
 
@@ -297,7 +297,7 @@ namespace DAnCE
 
         // infoProperty
         toconfig.infoProperty.length (cid->infoProperty ().size ());
-        CORBA::ULong infoProperty_index = 0;
+        CORBA::ULong infoProperty_index {};
         for (auto const& source_item : cid->infoProperty ())
           Property_Handler::handle_property (source_item, toconfig.infoProperty[infoProperty_index++]);
 

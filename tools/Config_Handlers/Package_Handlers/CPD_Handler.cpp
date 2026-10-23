@@ -71,19 +71,19 @@ namespace DAnCE
 
         // Config Properties
         toconfig.configProperty.length (cpd->configProperty ().size ());
-        CORBA::ULong configProperty_index = 0;
+        CORBA::ULong configProperty_index {};
         for (auto const& source_item : cpd->configProperty ())
           Property_Handler::handle_property (source_item, toconfig.configProperty[configProperty_index++]);
 
         // Packaged Component Implementations
         toconfig.implementation.length ( cpd->implementation ().size ());
-        CORBA::ULong implementation_index = 0;
+        CORBA::ULong implementation_index {};
         for (auto const& source_item : cpd->implementation ())
           PCI_Handler::handle_pci (source_item, toconfig.implementation[implementation_index++]);
 
         // Info Properties
         toconfig.infoProperty.length (cpd->infoProperty ().size ());
-        CORBA::ULong infoProperty_index = 0;
+        CORBA::ULong infoProperty_index {};
         for (auto const& source_item : cpd->infoProperty ())
           Property_Handler::handle_property (source_item, toconfig.infoProperty[infoProperty_index++]);
       }

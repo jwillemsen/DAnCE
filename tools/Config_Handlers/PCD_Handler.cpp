@@ -45,7 +45,7 @@ namespace DAnCE
         }
 
       toconfig.deployRequirement.length (desc.deployRequirement ().size ());
-      CORBA::ULong deployRequirement_index = 0;
+      CORBA::ULong deployRequirement_index {};
       for (auto const& source_item : desc.deployRequirement ())
         Req_Handler::handle_requirement (source_item, toconfig.deployRequirement[deployRequirement_index++]);
 

@@ -110,7 +110,7 @@ namespace DAnCE
 
               //              int property_id =0;
 
-              CORBA::ULong property_index = 0;
+              CORBA::ULong property_index {};
               for (auto const& source_item : res_iter->property ())
                 SatisfierProperty_Handler::handle_sat_property (source_item,
                   this->idl_domain_->node[i].resource[res_id].property[property_index++]);

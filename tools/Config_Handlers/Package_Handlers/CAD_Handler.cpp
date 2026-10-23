@@ -60,22 +60,22 @@ namespace DAnCE
       toconfig.name = desc.name ().c_str ();
 
       toconfig.deployRequirement.length (desc.deployRequirement ().size ());
-      CORBA::ULong deployRequirement_index = 0;
+      CORBA::ULong deployRequirement_index {};
       for (auto const& source_item : desc.deployRequirement ())
         Req_Handler::handle_requirement (source_item, toconfig.deployRequirement[deployRequirement_index++]);
 
       toconfig.internalEndpoint.length (desc.internalEndpoint ().size ());
-      CORBA::ULong internalEndpoint_index = 0;
+      CORBA::ULong internalEndpoint_index {};
       for (auto const& source_item : desc.internalEndpoint ())
         SPE_Handler::handle_spe (source_item, toconfig.internalEndpoint[internalEndpoint_index++]);
 
       toconfig.externalEndpoint.length (desc.externalEndpoint ().size ());
-      CORBA::ULong externalEndpoint_index = 0;
+      CORBA::ULong externalEndpoint_index {};
       for (auto const& source_item : desc.externalEndpoint ())
         CEPE_Handler::handle_external_port_endpoint (source_item, toconfig.externalEndpoint[externalEndpoint_index++]);
 
       toconfig.externalReference.length (desc.externalReference ().size ());
-      CORBA::ULong externalReference_index = 0;
+      CORBA::ULong externalReference_index {};
       for (auto const& source_item : desc.externalReference ())
         ERE_Handler::handle_external_ref_endpoint (source_item, toconfig.externalReference[externalReference_index++]);
 
@@ -153,7 +153,7 @@ namespace DAnCE
       toconfig.externalName = desc.externalName ().c_str ();
 
       toconfig.delegatesTo.length (desc.delegatesTo ().size ());
-      CORBA::ULong delegatesTo_index = 0;
+      CORBA::ULong delegatesTo_index {};
       for (auto const& source_item : desc.delegatesTo ())
         SPR_Handler::handle_spr (source_item, toconfig.delegatesTo[delegatesTo_index++]);
     }
@@ -182,19 +182,19 @@ namespace DAnCE
         DANCE_TRACE("CAD_Handler::component_assem_descr");
 
         toconfig.instance.length (desc.instance ().size ());
-        CORBA::ULong instance_index = 0;
+        CORBA::ULong instance_index {};
         for (auto const& source_item : desc.instance ())
           SID_Handler::handle_sub_comp_inst_descr (source_item, toconfig.instance[instance_index++]);
 
         /* @@ MAJO: Implement Locality */
 
         toconfig.connection.length (desc.connection ().size ());
-        CORBA::ULong connection_index = 0;
+        CORBA::ULong connection_index {};
         for (auto const& source_item : desc.connection ())
           ACD_Handler::handle_acd (source_item, toconfig.connection[connection_index++]);
 
         toconfig.externalProperty.length (desc.externalProperty ().size ());
-        CORBA::ULong externalProperty_index = 0;
+        CORBA::ULong externalProperty_index {};
         for (auto const& source_item : desc.externalProperty ())
           APM_Handler::handle_apm (source_item, toconfig.externalProperty[externalProperty_index++]);
       }

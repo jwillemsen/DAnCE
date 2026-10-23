@@ -103,12 +103,12 @@ namespace DAnCE
         // @@ MAJO: Support other elements present here.
 
         toconfig.configProperty.length (pcd->configProperty ().size ());
-        CORBA::ULong configProperty_index = 0;
+        CORBA::ULong configProperty_index {};
         for (auto const& source_item : pcd->configProperty ())
           Property_Handler::handle_property (source_item, toconfig.configProperty[configProperty_index++]);
 
         toconfig.selectRequirement.length (pcd->selectRequirement ().size ());
-        CORBA::ULong selectRequirement_index = 0;
+        CORBA::ULong selectRequirement_index {};
         for (auto const& source_item : pcd->selectRequirement ())
           Req_Handler::handle_requirement (source_item, toconfig.selectRequirement[selectRequirement_index++]);
 

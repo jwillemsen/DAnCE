@@ -20,7 +20,7 @@ namespace DAnCE
         toconfig.specificType = specificType_if_set_ptr->c_str ();
 
       toconfig.supportedType.length (desc.supportedType ().size ());
-      CORBA::ULong supportedType_index = 0;
+      CORBA::ULong supportedType_index {};
       for (auto const& source_item : desc.supportedType ())
         toconfig.supportedType[supportedType_index++] = source_item.c_str ();
 

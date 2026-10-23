@@ -45,27 +45,27 @@ namespace DAnCE
           toconfig.UUID = UUID_if_set_ptr->c_str ();
 
         toconfig.location.length (iad->location ().size ());
-        CORBA::ULong location_index = 0;
+        CORBA::ULong location_index {};
         for (auto const& source_item : iad->location ())
           toconfig.location[location_index++] = source_item.c_str ();
 
         toconfig.dependsOn.length (iad->dependsOn ().size ());
-        CORBA::ULong dependsOn_index = 0;
+        CORBA::ULong dependsOn_index {};
         for (auto const& source_item : iad->dependsOn ())
           NIA_Handler::handle_nia (source_item, toconfig.dependsOn[dependsOn_index++]);
 
         toconfig.execParameter.length (iad->execParameter ().size ());
-        CORBA::ULong execParameter_index = 0;
+        CORBA::ULong execParameter_index {};
         for (auto const& source_item : iad->execParameter ())
           Property_Handler::handle_property (source_item, toconfig.execParameter[execParameter_index++]);
 
         toconfig.infoProperty.length (iad->infoProperty ().size ());
-        CORBA::ULong infoProperty_index = 0;
+        CORBA::ULong infoProperty_index {};
         for (auto const& source_item : iad->infoProperty ())
           Property_Handler::handle_property (source_item, toconfig.infoProperty[infoProperty_index++]);
 
         toconfig.deployRequirement.length (iad->deployRequirement ().size ());
-        CORBA::ULong deployRequirement_index = 0;
+        CORBA::ULong deployRequirement_index {};
         for (auto const& source_item : iad->deployRequirement ())
           Req_Handler::handle_requirement (source_item, toconfig.deployRequirement[deployRequirement_index++]);
       }
