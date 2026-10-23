@@ -274,7 +274,13 @@ namespace DAnCE
             CORBA::WChar wc = 0;
             if (!value.string ().empty ())
               {
-                wc = *value.string ().front ().c_str ();
+                ::XMLSchema::string<char> const& character_value = value.string ().front ();
+                if (character_value.size () != 1 ||
+                    static_cast<unsigned char> (character_value.front ()) > 0x7f)
+                  {
+                    throw Config_Error ("", "Non-ASCII wchar values are not supported");
+                  }
+                wc = character_value.front ();
               }
             retval->insert_wchar (wc);
           }
