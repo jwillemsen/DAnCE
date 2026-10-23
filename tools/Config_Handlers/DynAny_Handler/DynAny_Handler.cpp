@@ -69,6 +69,17 @@ namespace DAnCE
 
       TCKind::Value tkind = type.kind ().integral ();
 
+      if (value._cxx_short ().size () > 1 || value._cxx_long ().size () > 1 ||
+          value.ushort ().size () > 1 || value.ulong ().size () > 1 ||
+          value._cxx_float ().size () > 1 || value._cxx_double ().size () > 1 ||
+          value.boolean ().size () > 1 || value.octet ().size () > 1 ||
+          value.longlong ().size () > 1 || value.ulonglong ().size () > 1 ||
+          value.longdouble ().size () > 1 || value._cxx_enum ().size () > 1 ||
+          value.string ().size () > 1)
+        {
+          throw Config_Error ("", "Multiple scalar values provided for data type");
+        }
+
       if ((!value._cxx_short ().empty () && tkind != TCKind::tk_short_l) ||
           (!value._cxx_long ().empty () && tkind != TCKind::tk_long_l) ||
           (!value.ushort ().empty () && tkind != TCKind::tk_ushort_l ) ||
