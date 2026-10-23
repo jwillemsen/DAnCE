@@ -202,7 +202,7 @@ namespace DAnCE
               {
                 retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_boolean);
               }
-            CORBA::Boolean b = false;
+            CORBA::Boolean b {};
             if (!value.boolean ().empty ())
               {
                 b = value.boolean ().front ();
