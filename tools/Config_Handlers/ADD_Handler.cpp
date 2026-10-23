@@ -33,9 +33,9 @@ namespace DAnCE
                                               CORBA::ULong pos)
       {
         DANCE_TRACE("ADD_Handler::atrifact_deployment_descr");
-        dest.name =  src.name ().c_str ();
+        dest.name = src.name ().c_str ();
 
-        dest.node =  src.node ().c_str ();
+        dest.node = src.node ().c_str ();
 
         auto end = src.location ().end ();
 
@@ -43,7 +43,7 @@ namespace DAnCE
         CORBA::ULong len = 0;
         for (auto start = src.location ().begin (); start != end; ++start)
           {
-            dest.location[len++] =  start->c_str ();
+            dest.location[len++] = start->c_str ();
           }
 
         auto sce = src.source ().end ();
@@ -51,7 +51,7 @@ namespace DAnCE
         dest.source.length (src.source ().size ());
         for (auto scb = src.source ().begin (); scb != sce; ++scb)
           {
-            dest.source[len++] =  scb->c_str ();
+            dest.source[len++] = scb->c_str ();
           }
 
         // @@TODO: See this loop is repeated

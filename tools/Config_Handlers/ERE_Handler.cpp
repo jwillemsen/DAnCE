@@ -28,7 +28,7 @@ namespace DAnCE
                                         Deployment::ExternalReferenceEndpoint &dest)
     {
       DANCE_TRACE("ERE_Handler::external_ref_endpoint");
-      dest.location =  src.location ().c_str ();
+      dest.location = src.location ().c_str ();
       dest.provider = src.provider ();
       ::XMLSchema::string<char> const* portName_if_set_ptr = src.portName_if_set ();
       if (portName_if_set_ptr)

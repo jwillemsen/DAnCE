@@ -133,7 +133,7 @@ namespace DAnCE
 
       CORBA::TypeCode_var etc = DYNANY_HANDLER->create_typecode (array_if_set_ptr->elementType ());
 
-      CORBA::ULong const length =  array_if_set_ptr->length ();
+      CORBA::ULong const length = array_if_set_ptr->length ();
 
       CORBA::TypeCode_var tc = DYNANY_HANDLER->orb ()->create_array_tc (length, etc);
 

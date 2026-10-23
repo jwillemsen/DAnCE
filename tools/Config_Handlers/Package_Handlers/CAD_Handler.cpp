@@ -23,7 +23,7 @@ namespace DAnCE
     {
       DANCE_TRACE("SPE_Handler::get_spe");
 
-      toconfig.portName =  desc.portName ().c_str ();
+      toconfig.portName = desc.portName ().c_str ();
 
       ::XMLSchema::IDREF<char> const* instanceRef = desc.instance ().idref_if_set ();
       if (!instanceRef)
@@ -57,7 +57,7 @@ namespace DAnCE
     {
       DANCE_TRACE("ACD_Handler::get_acd");
 
-      toconfig.name =  desc.name ().c_str ();
+      toconfig.name = desc.name ().c_str ();
 
       toconfig.deployRequirement.length (desc.deployRequirement ().size ());
       CORBA::ULong deployRequirement_index = 0;
@@ -114,7 +114,7 @@ namespace DAnCE
     {
       DANCE_TRACE("SPR_Handler::get_spr");
 
-      toconfig.propertyName =  desc.propertyName ().c_str ();
+      toconfig.propertyName = desc.propertyName ().c_str ();
 
       ::XMLSchema::IDREF<char> const* instanceRef = desc.instance ().idref_if_set ();
       if (!instanceRef)
@@ -149,7 +149,7 @@ namespace DAnCE
     {
       DANCE_TRACE("APM_Handler::get_apm");
 
-      toconfig.name =  desc.name ().c_str ();
+      toconfig.name = desc.name ().c_str ();
       toconfig.externalName = desc.externalName ().c_str ();
 
       toconfig.delegatesTo.length (desc.delegatesTo ().size ());

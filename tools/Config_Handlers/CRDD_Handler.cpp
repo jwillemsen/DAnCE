@@ -27,9 +27,9 @@ namespace DAnCE
     {
       DANCE_TRACE("CRDD_Handler::get_ConnectionResourceDD");
 
-      toconfig.targetName =  desc.targetName ().c_str ();
-      toconfig.requirementName =  desc.requirementName ().c_str ();
-      toconfig.resourceName =  desc.resourceName ().c_str ();
+      toconfig.targetName = desc.targetName ().c_str ();
+      toconfig.requirementName = desc.requirementName ().c_str ();
+      toconfig.resourceName = desc.resourceName ().c_str ();
 
       CORBA::ULong property_index = 0;
       for (auto const& source_item : desc.property ())

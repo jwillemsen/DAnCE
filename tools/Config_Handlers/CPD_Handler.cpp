@@ -61,7 +61,7 @@ namespace DAnCE
       toconfig.provider = desc.provider ();
       toconfig.exclusiveProvider = desc.exclusiveProvider ();
       toconfig.exclusiveUser = desc.exclusiveUser ();
-      toconfig.optional =  desc.optional ();
+      toconfig.optional = desc.optional ();
     }
 
     ComponentPortDescription CPD_Handler::component_port_description (const Deployment::ComponentPortDescription& src)

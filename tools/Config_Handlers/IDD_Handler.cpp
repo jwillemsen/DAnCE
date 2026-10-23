@@ -39,8 +39,8 @@ namespace DAnCE
       DANCE_TRACE("IDD_Handler::instance_deployment_descr");
       try
         {
-          dest.name =  src.name ().c_str ();
-          dest.node =  src.node ().c_str ();
+          dest.name = src.name ().c_str ();
+          dest.node = src.node ().c_str ();
 
           ::XMLSchema::ID<char> const* id_if_set_ptr = src.id_if_set ();
           if (id_if_set_ptr)

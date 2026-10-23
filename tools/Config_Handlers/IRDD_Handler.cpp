@@ -50,9 +50,9 @@ namespace DAnCE
           break;
         }
 
-      toconfig.requirementName =  desc.requirementName ().c_str ();
+      toconfig.requirementName = desc.requirementName ().c_str ();
 
-      toconfig.resourceName=  desc.resourceName ().c_str ();
+      toconfig.resourceName = desc.resourceName ().c_str ();
 
       toconfig.property.length (desc.property ().size ());
       CORBA::ULong property_index = 0;

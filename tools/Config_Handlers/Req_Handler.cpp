@@ -21,8 +21,8 @@ namespace DAnCE
 
       //Map the basic string types to their Deployment::Req
       //counterparts.
-      toconfig.name =  desc.name ().c_str ();
-      toconfig.resourceType =  desc.resourceType ().c_str ();
+      toconfig.name = desc.name ().c_str ();
+      toconfig.resourceType = desc.resourceType ().c_str ();
 
       toconfig.property.length (desc.property ().size ());
       CORBA::ULong property_index = 0;

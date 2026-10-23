@@ -34,7 +34,7 @@ namespace DAnCE
     {
       DANCE_TRACE ("Capability_Handler::get_capability");
 
-      toconfig.name =  desc.name ().c_str ();
+      toconfig.name = desc.name ().c_str ();
 
       toconfig.resourceType.length (desc.resourceType ().size ());
       CORBA::ULong resourceType_index = 0;
@@ -109,8 +109,8 @@ namespace DAnCE
       if (componentPort_if_set_ptr)
         toconfig.componentPort = componentPort_if_set_ptr->c_str ();
 
-      toconfig.resourceType =  desc.resourceType ().c_str ();
-      toconfig.name =  desc.name ().c_str ();
+      toconfig.resourceType = desc.resourceType ().c_str ();
+      toconfig.name = desc.name ().c_str ();
 
       CORBA::ULong property_index = 0;
       for (auto const& source_item : desc.property ())
