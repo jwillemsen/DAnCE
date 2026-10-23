@@ -152,16 +152,16 @@ namespace DAnCE
                             this->idl_dp_->instance);
 
       this->idl_dp_->connection.length (xsc_dp.connection ().size ());
-      std::for_each (xsc_dp.connection ().begin (),
-                      xsc_dp.connection ().end (),
-                      PCD_Functor (this->idl_dp_->connection));
+      CORBA::ULong connection_index = 0;
+      for (auto const& source_item : xsc_dp.connection ())
+        PCD_Handler::handle_PlanConnectionDescription (source_item, this->idl_dp_->connection[connection_index++]);
 
       this->idl_dp_->localityConstraint.length (
         xsc_dp.localityConstraint ().size ());
 
-      std::for_each (xsc_dp.localityConstraint ().begin (),
-                      xsc_dp.localityConstraint ().end (),
-                      PL_Functor (this->idl_dp_->localityConstraint));
+      CORBA::ULong localityConstraint_index = 0;
+      for (auto const& source_item : xsc_dp.localityConstraint ())
+        PL_Handler::get_PlanLocality (source_item, this->idl_dp_->localityConstraint[localityConstraint_index++]);
 
       //PCD_Handler::get_PlanConnectionDescription (xsc_dp,
       // this->idl_dp_->connection);

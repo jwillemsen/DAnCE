@@ -12,7 +12,6 @@
 
 #include "Basic_Deployment_Data.hpp"
 #include "Config_Handlers_Common_Export.h"
-#include "Utils/Functors.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -55,12 +54,6 @@ namespace DAnCE
       static Requirement
         get_requirement (const Deployment::Requirement& src);
     };
-
-      typedef Sequence_Handler < Requirement,
-    ::Deployment::Requirements,
-    ::Deployment::Requirement,
-    Req_Handler::handle_requirement > Requirement_Functor;
-
 
     }
 }

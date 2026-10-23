@@ -78,14 +78,14 @@ namespace DAnCE
           dest.implementationRef = tmp;
 
           dest.configProperty.length (src.configProperty ().size ());
-          std::for_each (src.configProperty ().begin (),
-                         src.configProperty ().end (),
-                         Property_Functor (dest.configProperty));
+          CORBA::ULong configProperty_index = 0;
+          for (auto const& source_item : src.configProperty ())
+            Property_Handler::handle_property (source_item, dest.configProperty[configProperty_index++]);
 
           dest.deployedResource.length (src.deployedResource ().size ());
-          std::for_each (src.deployedResource ().begin (),
-                         src.deployedResource ().end (),
-                         IRDD_Functor (dest.deployedResource));
+          CORBA::ULong deployedResource_index = 0;
+          for (auto const& source_item : src.deployedResource ())
+            IRDD_Handler::handle_irdd (source_item, dest.deployedResource[deployedResource_index++]);
 
           ::DAnCE::Config_Handlers::InstanceResourceDeploymentDescription const*
             deployedSharedResource_if_set_ptr = src.deployedSharedResource_if_set ();

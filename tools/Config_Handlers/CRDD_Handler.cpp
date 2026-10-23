@@ -31,9 +31,9 @@ namespace DAnCE
       toconfig.requirementName =  desc.requirementName ().c_str ();
       toconfig.resourceName =  desc.resourceName ().c_str ();
 
-      std::for_each (desc.property ().begin (),
-                     desc.property ().end (),
-                     Property_Functor (toconfig.property));
+      CORBA::ULong property_index = 0;
+      for (auto const& source_item : desc.property ())
+        Property_Handler::handle_property (source_item, toconfig.property[property_index++]);
     }
 
     ConnectionResourceDeploymentDescription

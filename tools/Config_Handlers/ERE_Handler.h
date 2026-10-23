@@ -16,8 +16,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Utils/Functors.h"
-
 namespace Deployment
 {
   class ExternalReferenceEndpoints;
@@ -55,11 +53,6 @@ namespace DAnCE
       static void handle_external_ref_endpoint (const ExternalReferenceEndpoint &src,
                                                 Deployment::ExternalReferenceEndpoint &dest);
     };
-
-      typedef Sequence_Handler < ExternalReferenceEndpoint,
-        ::Deployment::ExternalReferenceEndpoints,
-        ::Deployment::ExternalReferenceEndpoint,
-        ERE_Handler::handle_external_ref_endpoint > ERE_Functor;
 
     }
 }

@@ -11,7 +11,6 @@
 #include /**/ "ace/pre.h"
 
 #include "Config_Handlers_Common_Export.h"
-#include "Utils/Functors.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -54,10 +53,6 @@ namespace DAnCE
                              ::Deployment::ComponentExternalPortEndpoint &dest);
     };
 
-      typedef Sequence_Handler < ComponentExternalPortEndpoint,
-    ::Deployment::ComponentExternalPortEndpoints,
-    ::Deployment::ComponentExternalPortEndpoint,
-    CEPE_Handler::handle_external_port_endpoint > CEPE_Functor;
     }
 }
 

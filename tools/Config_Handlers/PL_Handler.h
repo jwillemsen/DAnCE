@@ -11,8 +11,6 @@
 #include "Config_Handlers_Export.h"
 #include "ace/config-lite.h"
 
-#include "Utils/Functors.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -36,11 +34,6 @@ namespace DAnCE
 
       static PlanLocality  plan_locality (const ::Deployment::PlanLocality &src);
     };
-
-    typedef Sequence_Handler < PlanLocality,
-                               ::Deployment::PlanLocalities,
-                               ::Deployment::PlanLocality,
-                               PL_Handler::get_PlanLocality >  PL_Functor;
 
   }
 }

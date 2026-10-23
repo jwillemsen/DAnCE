@@ -39,9 +39,9 @@ namespace DAnCE
       if (portName_if_set_ptr)
         dest.portName = portName_if_set_ptr->c_str ();
       dest.supportedType.length (src.supportedType ().size ());
-      std::for_each (src.supportedType ().begin (),
-                     src.supportedType ().end (),
-                     String_Seq_Functor (dest.supportedType));
+      CORBA::ULong supportedType_index = 0;
+      for (auto const& source_item : src.supportedType ())
+        dest.supportedType[supportedType_index++] = source_item.c_str ();
     }
 
     ExternalReferenceEndpoint ERE_Handler::external_ref_endpoint (const Deployment::ExternalReferenceEndpoint& src)

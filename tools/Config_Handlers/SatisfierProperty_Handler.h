@@ -12,7 +12,6 @@
 #include /**/ "ace/pre.h"
 
 #include "Config_Handlers_Common_Export.h"
-#include "Utils/Functors.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -54,11 +53,6 @@ namespace DAnCE
                        ::Deployment::SatisfierProperty& toconfig);
       static SatisfierProperty get_sat_property (const ::Deployment::SatisfierProperty& src);
     };
-
-      typedef Sequence_Handler < SatisfierProperty,
-    ::Deployment::SatisfierProperties,
-    ::Deployment::SatisfierProperty,
-    SatisfierProperty_Handler::handle_sat_property> SatisfierProperty_Functor;
 
     }
 }

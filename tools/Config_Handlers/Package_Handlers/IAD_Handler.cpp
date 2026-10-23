@@ -3,7 +3,6 @@
 #include "Basic_Deployment_Data.hpp"
 #include "Property_Handler.h"
 #include "Req_Handler.h"
-#include "Utils/Functors.h"
 #include "Utils/Exceptions.h"
 #include "ace/XML_Utils/XMLSchema/Types.hpp"
 #include "ace/XML_Utils/XML_Helper.h"
@@ -46,32 +45,29 @@ namespace DAnCE
           toconfig.UUID = UUID_if_set_ptr->c_str ();
 
         toconfig.location.length (iad->location ().size ());
-        std::for_each (iad->location ().begin (),
-                       iad->location ().end (),
-                       String_Seq_Functor (toconfig.location));
+        CORBA::ULong location_index = 0;
+        for (auto const& source_item : iad->location ())
+          toconfig.location[location_index++] = source_item.c_str ();
 
         toconfig.dependsOn.length (iad->dependsOn ().size ());
-        SEQ_HAND_GCC_BUG_WORKAROUND (NIA_Handler::handle_nia,
-                                     desc.dependsOn ().front (),
-                                     toconfig.dependsOn);
-        std::for_each (iad->dependsOn ().begin (),
-                       iad->dependsOn ().end (),
-                       NIA_Functor (toconfig.dependsOn));
+        CORBA::ULong dependsOn_index = 0;
+        for (auto const& source_item : iad->dependsOn ())
+          NIA_Handler::handle_nia (source_item, toconfig.dependsOn[dependsOn_index++]);
 
         toconfig.execParameter.length (iad->execParameter ().size ());
-        std::for_each (iad->execParameter ().begin (),
-                       iad->execParameter ().end (),
-                       Property_Functor (toconfig.execParameter));
+        CORBA::ULong execParameter_index = 0;
+        for (auto const& source_item : iad->execParameter ())
+          Property_Handler::handle_property (source_item, toconfig.execParameter[execParameter_index++]);
 
         toconfig.infoProperty.length (iad->infoProperty ().size ());
-        std::for_each (iad->infoProperty ().begin (),
-                       iad->infoProperty ().end (),
-                       Property_Functor (toconfig.infoProperty));
+        CORBA::ULong infoProperty_index = 0;
+        for (auto const& source_item : iad->infoProperty ())
+          Property_Handler::handle_property (source_item, toconfig.infoProperty[infoProperty_index++]);
 
         toconfig.deployRequirement.length (iad->deployRequirement ().size ());
-        std::for_each (iad->deployRequirement ().begin (),
-                       iad->deployRequirement ().end (),
-                       Requirement_Functor (toconfig.deployRequirement ));
+        CORBA::ULong deployRequirement_index = 0;
+        for (auto const& source_item : iad->deployRequirement ())
+          Req_Handler::handle_requirement (source_item, toconfig.deployRequirement[deployRequirement_index++]);
       }
 
       ImplementationArtifactDescription

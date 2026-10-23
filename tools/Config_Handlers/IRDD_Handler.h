@@ -13,7 +13,6 @@
 #include "Config_Handlers_Export.h"
 #include "Common.h"
 #include "ace/config-lite.h"
-#include "Utils/Functors.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -55,10 +54,6 @@ namespace DAnCE
       /*throw (Config_Error)*/;
       };
 
-      typedef Sequence_Handler < InstanceResourceDeploymentDescription,
-                 ::Deployment::InstanceResourceDeploymentDescriptions,
-                 ::Deployment::InstanceResourceDeploymentDescription,
-                 IRDD_Handler::handle_irdd > IRDD_Functor;
     }
 }
 

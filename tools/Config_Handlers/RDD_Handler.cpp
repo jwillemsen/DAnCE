@@ -20,9 +20,9 @@ namespace DAnCE
 
       dest.resourceName= src.resourceName ().c_str ();
 
-      std::for_each (src.property ().begin (),
-                     src.property ().end (),
-                     Property_Functor (dest.property));
+      CORBA::ULong property_index = 0;
+      for (auto const& source_item : src.property ())
+        Property_Handler::handle_property (source_item, dest.property[property_index++]);
 
     }
 

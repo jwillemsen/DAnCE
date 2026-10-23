@@ -37,14 +37,14 @@ namespace DAnCE
       toconfig.name =  desc.name ().c_str ();
 
       toconfig.resourceType.length (desc.resourceType ().size ());
-      std::for_each (desc.resourceType ().begin (),
-             desc.resourceType ().end (),
-             String_Seq_Functor (toconfig.resourceType));
+      CORBA::ULong resourceType_index = 0;
+      for (auto const& source_item : desc.resourceType ())
+        toconfig.resourceType[resourceType_index++] = source_item.c_str ();
 
       toconfig.property.length (desc.property ().size ());
-      std::for_each (desc.property ().begin (),
-             desc.property ().end (),
-             SatisfierProperty_Functor (toconfig.property));
+      CORBA::ULong property_index = 0;
+      for (auto const& source_item : desc.property ())
+        SatisfierProperty_Handler::handle_sat_property (source_item, toconfig.property[property_index++]);
     }
 
     static Capability get_capability (const ::Deployment::Capability &src)
@@ -63,11 +63,6 @@ namespace DAnCE
       return retval;
     }
       };
-
-      typedef Sequence_Handler < Capability,
-                 ::Deployment::Capabilities,
-                 ::Deployment::Capability,
-                 Capability_Handler::handle_capability > Capability_Functor;
 
       struct IR_Handler
       {
@@ -118,9 +113,9 @@ namespace DAnCE
       toconfig.resourceType =  desc.resourceType ().c_str ();
       toconfig.name =  desc.name ().c_str ();
 
-      std::for_each (desc.property ().begin (),
-             desc.property ().end (),
-             Property_Functor (toconfig.property ));
+      CORBA::ULong property_index = 0;
+      for (auto const& source_item : desc.property ())
+        Property_Handler::handle_property (source_item, toconfig.property[property_index++]);
     }
 
     static ImplementationRequirement
@@ -171,11 +166,6 @@ namespace DAnCE
     }
       };
 
-      typedef Sequence_Handler < ImplementationRequirement,
-                 ::Deployment::ImplementationRequirements,
-                 ::Deployment::ImplementationRequirement,
-                 IR_Handler::handle_ir > IR_Functor;
-
       struct MID_Handler
       {
     static void handle_mid (const MonolithicImplementationDescription &desc,
@@ -184,33 +174,26 @@ namespace DAnCE
       DANCE_TRACE ("MID_Handler::get_mid");
 
       toconfig.nodeExecParameter.length (desc.nodeExecParameter ().size ());
-      std::for_each (desc.nodeExecParameter ().begin (),
-             desc.nodeExecParameter ().end (),
-             Property_Functor (toconfig.nodeExecParameter));
+      CORBA::ULong nodeExecParameter_index = 0;
+      for (auto const& source_item : desc.nodeExecParameter ())
+        Property_Handler::handle_property (source_item, toconfig.nodeExecParameter[nodeExecParameter_index++]);
 
       toconfig.componentExecParameter.length (
         desc.componentExecParameter ().size ());
-      std::for_each (desc.componentExecParameter ().begin (),
-             desc.componentExecParameter ().end (),
-             Property_Functor (toconfig.componentExecParameter));
+      CORBA::ULong componentExecParameter_index = 0;
+      for (auto const& source_item : desc.componentExecParameter ())
+        Property_Handler::handle_property (
+          source_item, toconfig.componentExecParameter[componentExecParameter_index++]);
 
       toconfig.deployRequirement.length (desc.deployRequirement ().size ());
-      while (0)
-        {
-          IR_Handler::handle_ir (desc.deployRequirement ().front (),
-                                 toconfig.deployRequirement[0]);
-        }
-      std::for_each (desc.deployRequirement ().begin (),
-             desc.deployRequirement ().end (),
-             IR_Functor (toconfig.deployRequirement));
+      CORBA::ULong deployRequirement_index = 0;
+      for (auto const& source_item : desc.deployRequirement ())
+        IR_Handler::handle_ir (source_item, toconfig.deployRequirement[deployRequirement_index++]);
 
       toconfig.primaryArtifact.length (desc.primaryArtifact ().size ());
-      SEQ_HAND_GCC_BUG_WORKAROUND (NIA_Handler::handle_nia,
-                                   desc.primaryArtifact ().front (),
-                                   toconfig.primaryArtifact);
-      std::for_each (desc.primaryArtifact ().begin (),
-             desc.primaryArtifact ().end (),
-             NIA_Functor (toconfig.primaryArtifact));
+      CORBA::ULong primaryArtifact_index = 0;
+      for (auto const& source_item : desc.primaryArtifact ())
+        NIA_Handler::handle_nia (source_item, toconfig.primaryArtifact[primaryArtifact_index++]);
     }
 
     static MonolithicImplementationDescription
@@ -240,11 +223,6 @@ namespace DAnCE
     }
 
       };
-
-      typedef Sequence_Handler < MonolithicImplementationDescription,
-                 ::Deployment::MonolithicImplementationDescriptions,
-                 ::Deployment::MonolithicImplementationDescription,
-                 MID_Handler::handle_mid > MID_Functor;
 
       void
       CID_Handler::component_impl_descr (
@@ -306,18 +284,15 @@ namespace DAnCE
 
         // configProperty
         toconfig.configProperty.length (cid->configProperty ().size ());
-        std::for_each (cid->configProperty ().begin (),
-                       cid->configProperty ().end (),
-                       Property_Functor (toconfig.configProperty));
+        CORBA::ULong configProperty_index = 0;
+        for (auto const& source_item : cid->configProperty ())
+          Property_Handler::handle_property (source_item, toconfig.configProperty[configProperty_index++]);
 
         // capability
         toconfig.capability.length (cid->capability ().size ());
-        SEQ_HAND_GCC_BUG_WORKAROUND (Capability_Handler::handle_capability,
-                                     cid->capability ().front (),
-                                     toconfig.capability);
-        std::for_each (cid->capability ().begin (),
-                       cid->capability ().end (),
-                       Capability_Functor (toconfig.capability));
+        CORBA::ULong capability_index = 0;
+        for (auto const& source_item : cid->capability ())
+          Capability_Handler::handle_capability (source_item, toconfig.capability[capability_index++]);
 
         // dependsOn
         toconfig.dependsOn.length (cid->dependsOn ().size ());
@@ -331,9 +306,9 @@ namespace DAnCE
 
         // infoProperty
         toconfig.infoProperty.length (cid->infoProperty ().size ());
-        std::for_each (cid->infoProperty ().begin (),
-                       cid->infoProperty ().end (),
-                       Property_Functor (toconfig.infoProperty));
+        CORBA::ULong infoProperty_index = 0;
+        for (auto const& source_item : cid->infoProperty ())
+          Property_Handler::handle_property (source_item, toconfig.infoProperty[infoProperty_index++]);
 
       }
 

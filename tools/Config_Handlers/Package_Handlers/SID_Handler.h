@@ -9,7 +9,6 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/XML_Utils/XMLSchema/Types.hpp"
-#include "Utils/Functors.h"
 #include "IDREF_Base.h"
 #include "Package_Handlers/Packaging_Handlers_Export.h"
 #include <string_view>
@@ -47,11 +46,6 @@ namespace DAnCE
         static SubcomponentInstantiationDescription *resolve_sid (std::string_view uri);
 
       };
-
-      typedef Sequence_Handler < SubcomponentInstantiationDescription,
-                                 ::Deployment::SubcomponentInstantiationDescriptions,
-                                 ::Deployment::SubcomponentInstantiationDescription,
-    SID_Handler::handle_sub_comp_inst_descr > SID_Functor;
 
     }
   }

@@ -14,13 +14,9 @@
 #include "Config_Handlers_Export.h"
 #include "ace/config-lite.h"
 
-#include "Utils/Functors.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-
 
 namespace Deployment
 {
@@ -29,7 +25,6 @@ class ImplementationDependencies;
 
 }
 
-
 namespace DAnCE
 {
 
@@ -37,7 +32,6 @@ namespace Config_Handlers
 {
 
 class ImplementationDependency;
-
 
 /*
 * @class ID_Handler
@@ -63,11 +57,6 @@ Deployment::ImplementationDependency& toconfig);
 static ImplementationDependency impl_dependency (
 const ::Deployment::ImplementationDependency& src);
 };
-
-typedef Sequence_Handler < ImplementationDependency,
-::Deployment::ImplementationDependencies,
-::Deployment::ImplementationDependency,
-ID_Handler::get_ImplementationDependency > ID_Functor;
 
 }
 }

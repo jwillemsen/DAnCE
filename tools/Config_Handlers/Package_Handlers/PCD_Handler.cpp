@@ -108,14 +108,14 @@ namespace DAnCE
         // @@ MAJO: Support other elements present here.
 
         toconfig.configProperty.length (desc.configProperty ().size ());
-        std::for_each (desc.configProperty ().begin (),
-                       desc.configProperty ().end (),
-                       Property_Functor (toconfig.configProperty));
+        CORBA::ULong configProperty_index = 0;
+        for (auto const& source_item : desc.configProperty ())
+          Property_Handler::handle_property (source_item, toconfig.configProperty[configProperty_index++]);
 
         toconfig.selectRequirement.length (desc.selectRequirement ().size ());
-        std::for_each (desc.selectRequirement ().begin (),
-                       desc.selectRequirement ().end (),
-                       Requirement_Functor (toconfig.selectRequirement));
+        CORBA::ULong selectRequirement_index = 0;
+        for (auto const& source_item : desc.selectRequirement ())
+          Req_Handler::handle_requirement (source_item, toconfig.selectRequirement[selectRequirement_index++]);
 
       }
 

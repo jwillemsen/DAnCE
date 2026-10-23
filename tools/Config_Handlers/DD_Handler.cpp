@@ -120,9 +120,10 @@ namespace DAnCE
 
               //              int property_id =0;
 
-              std::for_each (res_iter->property ().begin (),
-                             res_iter->property ().end (),
-                             SatisfierProperty_Functor (this->idl_domain_->node[i].resource[res_id].property));
+              CORBA::ULong property_index = 0;
+              for (auto const& source_item : res_iter->property ())
+                SatisfierProperty_Handler::handle_sat_property (source_item,
+                  this->idl_domain_->node[i].resource[res_id].property[property_index++]);
 
               /*
               //FOR EACH PROPERTY

@@ -12,7 +12,6 @@
 #include /**/ "ace/pre.h"
 
 #include "Config_Handlers_Common_Export.h"
-#include "Utils/Functors.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -53,11 +52,6 @@ namespace DAnCE
       static ComponentPortDescription
         component_port_description (const Deployment::ComponentPortDescription& src);
     };
-
-      typedef Sequence_Handler < ComponentPortDescription,
-                 ::Deployment::ComponentPortDescriptions,
-                 ::Deployment::ComponentPortDescription,
-                 CPD_Handler::handle_component_port_description > CPD_Functor;
 
     }
 }

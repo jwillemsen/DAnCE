@@ -12,7 +12,6 @@
 #include /**/ "ace/pre.h"
 
 #include "Config_Handlers_Common_Export.h"
-#include "Utils/Functors.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -54,12 +53,6 @@ namespace DAnCE
                        ::Deployment::Property& toconfig);
       static Property get_property (const ::Deployment::Property& src);
     };
-
-
-      typedef Sequence_Handler < Property,
-                 ::Deployment::Properties,
-                 ::Deployment::Property,
-                 Property_Handler::handle_property > Property_Functor;
 
     }
 }

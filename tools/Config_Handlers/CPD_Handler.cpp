@@ -22,9 +22,9 @@ namespace DAnCE
           specificType_if_set_ptr->c_str ();
 
       toconfig.supportedType.length (desc.supportedType ().size ());
-      std::for_each (desc.supportedType ().begin (),
-                     desc.supportedType ().end (),
-                     String_Seq_Functor (toconfig.supportedType));
+      CORBA::ULong supportedType_index = 0;
+      for (auto const& source_item : desc.supportedType ())
+        toconfig.supportedType[supportedType_index++] = source_item.c_str ();
 
       switch (desc.kind ().integral ())
         {

@@ -8,7 +8,6 @@
 
 #include /**/ "ace/pre.h"
 #include "Package_Handlers/Packaging_Handlers_Export.h"
-#include "Utils/Functors.h"
 #include "dance/Deployment/Deployment_Packaging_DataC.h"
 #include "iad.hpp"
 
@@ -49,10 +48,6 @@ namespace DAnCE
 
       };
 
-      typedef Sequence_Handler < NamedImplementationArtifact,
-                                 ::Deployment::NamedImplementationArtifacts,
-                                 ::Deployment::NamedImplementationArtifact,
-        NIA_Handler::handle_nia > NIA_Functor;
     }
   }
 }

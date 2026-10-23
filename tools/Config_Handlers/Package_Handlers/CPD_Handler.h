@@ -13,7 +13,6 @@
 
 #include <memory>
 #include "ace/XML_Utils/XMLSchema/Types.hpp"
-#include "Utils/Functors.h"
 #include "Package_Handlers/Packaging_Handlers_Export.h"
 #include <string_view>
 
@@ -57,11 +56,6 @@ namespace DAnCE
         static ComponentPackageDescription * resolve_cpd (std::string_view uri);
 
       };
-
-      typedef Sequence_Handler < ComponentPackageDescription,
-                                 ::Deployment::ComponentPackageDescriptions,
-                                 ::Deployment::ComponentPackageDescription,
-                                 CPD_Handler::handle_component_package_descr > CPD_Functor;
 
     }
 

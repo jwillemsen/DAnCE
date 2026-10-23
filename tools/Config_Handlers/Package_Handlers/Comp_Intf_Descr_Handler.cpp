@@ -3,7 +3,6 @@
 #include "ace/XML_Utils/XMLSchema/Types.hpp"
 #include "ace/XML_Utils/XML_Helper.h"
 #include "Utils/Exceptions.h"
-#include "Utils/Functors.h"
 #include "DataType_Handler.h"
 #include "Property_Handler.h"
 #include "Deployment.hpp"
@@ -40,11 +39,6 @@ namespace DAnCE
 
         };
 
-        typedef Sequence_Handler < ComponentPropertyDescription,
-                                   ::Deployment::ComponentPropertyDescriptions,
-                                   ::Deployment::ComponentPropertyDescription,
-                                   Comp_Prop_Handler::handle_cpd > Comp_Prop_Functor;
-
       void
       Comp_Intf_Descr_Handler::comp_intf_descr (
                                                 const ComponentInterfaceDescription &desc,
@@ -78,37 +72,35 @@ namespace DAnCE
           toconfig.specificType = specificType_if_set_ptr->c_str ();
 
         toconfig.supportedType.length (cid->supportedType ().size ());
-        std::for_each (cid->supportedType ().begin (),
-                       cid->supportedType ().end (),
-                       String_Seq_Functor (toconfig.supportedType));
+        CORBA::ULong supportedType_index = 0;
+        for (auto const& source_item : cid->supportedType ())
+          toconfig.supportedType[supportedType_index++] = source_item.c_str ();
 
         toconfig.idlFile.length (cid->idlFile ().size ());
-        std::for_each (cid->idlFile ().begin (),
-                       cid->idlFile ().end (),
-                       String_Seq_Functor (toconfig.idlFile));
+        CORBA::ULong idlFile_index = 0;
+        for (auto const& source_item : cid->idlFile ())
+          toconfig.idlFile[idlFile_index++] = source_item.c_str ();
 
         toconfig.configProperty.length (cid->configProperty ().size ());
-        std::for_each (cid->configProperty ().begin (),
-                       cid->configProperty ().end (),
-                       Property_Functor (toconfig.configProperty));
+        CORBA::ULong configProperty_index = 0;
+        for (auto const& source_item : cid->configProperty ())
+          Property_Handler::handle_property (source_item, toconfig.configProperty[configProperty_index++]);
 
         toconfig.port.length (cid->port ().size ());
-        std::for_each (cid->port ().begin (),
-                       cid->port ().end (),
-                       DAnCE::Config_Handlers::CPD_Functor (toconfig.port));
+        CORBA::ULong port_index = 0;
+        for (auto const& source_item : cid->port ())
+          ::DAnCE::Config_Handlers::CPD_Handler::handle_component_port_description (
+            source_item, toconfig.port[port_index++]);
 
         toconfig.property.length (cid->property ().size ());
-        SEQ_HAND_GCC_BUG_WORKAROUND (Comp_Prop_Handler::handle_cpd,
-                                     cid->property ().front (),
-                                     toconfig.property);
-        std::for_each (cid->property ().begin (),
-                       cid->property ().end (),
-                       Comp_Prop_Functor (toconfig.property));
+        CORBA::ULong property_index = 0;
+        for (auto const& source_item : cid->property ())
+          Comp_Prop_Handler::handle_cpd (source_item, toconfig.property[property_index++]);
 
         toconfig.infoProperty.length (cid->infoProperty ().size ());
-        std::for_each (cid->infoProperty ().begin (),
-                       cid->infoProperty ().end (),
-                       Property_Functor (toconfig.infoProperty));
+        CORBA::ULong infoProperty_index = 0;
+        for (auto const& source_item : cid->infoProperty ())
+          Property_Handler::handle_property (source_item, toconfig.infoProperty[infoProperty_index++]);
       }
 
       ComponentInterfaceDescription

@@ -38,11 +38,6 @@ namespace DAnCE
     }
       };
 
-      typedef Sequence_Handler < PackagedComponentImplementation,
-                 ::Deployment::PackagedComponentImplementations,
-                 ::Deployment::PackagedComponentImplementation,
-                 PCI_Handler::handle_pci > PCI_Functor;
-
       void
       CPD_Handler::handle_component_package_descr (
         const ComponentPackageDescription &desc,
@@ -78,24 +73,21 @@ namespace DAnCE
 
         // Config Properties
         toconfig.configProperty.length (desc.configProperty ().size ());
-        std::for_each (cpd->infoProperty ().begin (),
-                       cpd->infoProperty ().end (),
-                       Property_Functor (toconfig.configProperty));
+        CORBA::ULong configProperty_index = 0;
+        for (auto const& source_item : cpd->infoProperty ())
+          Property_Handler::handle_property (source_item, toconfig.configProperty[configProperty_index++]);
 
         // Packaged Component Implementations
         toconfig.implementation.length ( cpd->implementation ().size ());
-        SEQ_HAND_GCC_BUG_WORKAROUND (PCI_Handler::handle_pci,
-                                     cpd->implementation ().front (),
-                                     toconfig.implementation);
-        std::for_each (cpd->implementation ().begin (),
-                       cpd->implementation ().end (),
-                       PCI_Functor (toconfig.implementation));
+        CORBA::ULong implementation_index = 0;
+        for (auto const& source_item : cpd->implementation ())
+          PCI_Handler::handle_pci (source_item, toconfig.implementation[implementation_index++]);
 
         // Info Properties
         toconfig.infoProperty.length (cpd->infoProperty ().size ());
-        std::for_each (cpd->infoProperty ().begin (),
-                       cpd->infoProperty ().end (),
-                       Property_Functor (toconfig.infoProperty));
+        CORBA::ULong infoProperty_index = 0;
+        for (auto const& source_item : cpd->infoProperty ())
+          Property_Handler::handle_property (source_item, toconfig.infoProperty[infoProperty_index++]);
       }
 
       ComponentPackageDescription

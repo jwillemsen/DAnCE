@@ -45,9 +45,9 @@ namespace DAnCE
         }
 
       toconfig.deployRequirement.length (desc.deployRequirement ().size ());
-      std::for_each (desc.deployRequirement ().begin (),
-                     desc.deployRequirement ().end (),
-                     Requirement_Functor (toconfig.deployRequirement));
+      CORBA::ULong deployRequirement_index = 0;
+      for (auto const& source_item : desc.deployRequirement ())
+        Req_Handler::handle_requirement (source_item, toconfig.deployRequirement[deployRequirement_index++]);
 
       //Create the ComponentExternalPortEndpoint handler.
       CEPE_Handler::external_port_endpoints (desc,

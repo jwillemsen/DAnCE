@@ -52,11 +52,6 @@ namespace DAnCE
     }
       };
 
-      typedef Sequence_Handler < SubcomponentPortEndpoint,
-                 ::Deployment::SubcomponentPortEndpoints,
-                 ::Deployment::SubcomponentPortEndpoint,
-                 SPE_Handler::handle_spe > SPE_Functor;
-
       struct Packaging_Handlers_Export ACD_Handler
       {
     static void handle_acd (const AssemblyConnectionDescription &desc,
@@ -67,27 +62,24 @@ namespace DAnCE
       toconfig.name =  desc.name ().c_str ();
 
       toconfig.deployRequirement.length (desc.deployRequirement ().size ());
-      std::for_each (desc.deployRequirement ().begin (),
-             desc.deployRequirement ().end (),
-             Requirement_Functor (toconfig.deployRequirement));
+      CORBA::ULong deployRequirement_index = 0;
+      for (auto const& source_item : desc.deployRequirement ())
+        Req_Handler::handle_requirement (source_item, toconfig.deployRequirement[deployRequirement_index++]);
 
       toconfig.internalEndpoint.length (desc.internalEndpoint ().size ());
-      SEQ_HAND_GCC_BUG_WORKAROUND (SPE_Handler::handle_spe,
-                                   desc.internalEndpoint ().front (),
-                                   toconfig.internalEndpoint);
-      std::for_each (desc.internalEndpoint ().begin (),
-             desc.internalEndpoint ().end (),
-             SPE_Functor (toconfig.internalEndpoint));
+      CORBA::ULong internalEndpoint_index = 0;
+      for (auto const& source_item : desc.internalEndpoint ())
+        SPE_Handler::handle_spe (source_item, toconfig.internalEndpoint[internalEndpoint_index++]);
 
       toconfig.externalEndpoint.length (desc.externalEndpoint ().size ());
-      std::for_each (desc.externalEndpoint ().begin (),
-                     desc.externalEndpoint ().end (),
-                     CEPE_Functor (toconfig.externalEndpoint));
+      CORBA::ULong externalEndpoint_index = 0;
+      for (auto const& source_item : desc.externalEndpoint ())
+        CEPE_Handler::handle_external_port_endpoint (source_item, toconfig.externalEndpoint[externalEndpoint_index++]);
 
       toconfig.externalReference.length (desc.externalReference ().size ());
-      std::for_each (desc.externalReference ().begin (),
-             desc.externalReference ().end (),
-             ERE_Functor (toconfig.externalReference));
+      CORBA::ULong externalReference_index = 0;
+      for (auto const& source_item : desc.externalReference ())
+        ERE_Handler::handle_external_ref_endpoint (source_item, toconfig.externalReference[externalReference_index++]);
 
     }
 
@@ -116,11 +108,6 @@ namespace DAnCE
       return retval;
     }
       };
-
-      typedef Sequence_Handler < AssemblyConnectionDescription,
-                 ::Deployment::AssemblyConnectionDescriptions,
-                 ::Deployment::AssemblyConnectionDescription,
-                 ACD_Handler::handle_acd > ACD_Functor;
 
       struct Packaging_Handlers_Export SPR_Handler
       {
@@ -158,11 +145,6 @@ namespace DAnCE
 
       };
 
-      typedef Sequence_Handler < SubcomponentPropertyReference,
-                 ::Deployment::SubcomponentPropertyReferences,
-                 ::Deployment::SubcomponentPropertyReference,
-                 SPR_Handler::handle_spr > SPR_Functor;
-
       struct Packaging_Handlers_Export APM_Handler
       {
     static void handle_apm (const AssemblyPropertyMapping &desc,
@@ -175,12 +157,9 @@ namespace DAnCE
         desc.externalName ().c_str ();
 
       toconfig.delegatesTo.length (desc.delegatesTo ().size ());
-      SEQ_HAND_GCC_BUG_WORKAROUND (SPR_Handler::handle_spr,
-                                   desc.delegatesTo ().front (),
-                                   toconfig.delegatesTo);
-      std::for_each (desc.delegatesTo ().begin (),
-             desc.delegatesTo ().end (),
-             SPR_Functor (toconfig.delegatesTo));
+      CORBA::ULong delegatesTo_index = 0;
+      for (auto const& source_item : desc.delegatesTo ())
+        SPR_Handler::handle_spr (source_item, toconfig.delegatesTo[delegatesTo_index++]);
     }
 
     static AssemblyPropertyMapping
@@ -199,11 +178,6 @@ namespace DAnCE
     }
       };
 
-      typedef Sequence_Handler < AssemblyPropertyMapping,
-                 ::Deployment::AssemblyPropertyMappings,
-                 ::Deployment::AssemblyPropertyMapping,
-                 APM_Handler::handle_apm > APM_Functor;
-
       void
       CAD_Handler::component_assem_descr (
         const ComponentAssemblyDescription &desc,
@@ -212,27 +186,21 @@ namespace DAnCE
         DANCE_TRACE("CAD_Handler::component_assem_descr");
 
         toconfig.instance.length (desc.instance ().size ());
-        std::for_each (desc.instance ().begin (),
-                       desc.instance ().end (),
-                       SID_Functor (toconfig.instance));
+        CORBA::ULong instance_index = 0;
+        for (auto const& source_item : desc.instance ())
+          SID_Handler::handle_sub_comp_inst_descr (source_item, toconfig.instance[instance_index++]);
 
         /* @@ MAJO: Implement Locality */
 
         toconfig.connection.length (desc.connection ().size ());
-        SEQ_HAND_GCC_BUG_WORKAROUND (ACD_Handler::handle_acd,
-                                     desc.connection ().front (),
-                                     toconfig.connection);
-        std::for_each (desc.connection ().begin (),
-                       desc.connection ().end (),
-                       ACD_Functor (toconfig.connection));
+        CORBA::ULong connection_index = 0;
+        for (auto const& source_item : desc.connection ())
+          ACD_Handler::handle_acd (source_item, toconfig.connection[connection_index++]);
 
         toconfig.externalProperty.length (desc.externalProperty ().size ());
-        SEQ_HAND_GCC_BUG_WORKAROUND (APM_Handler::handle_apm,
-                                     desc.externalProperty ().front (),
-                                     toconfig.externalProperty);
-        std::for_each (desc.externalProperty ().begin (),
-                       desc.externalProperty ().end (),
-                       APM_Functor (toconfig.externalProperty));
+        CORBA::ULong externalProperty_index = 0;
+        for (auto const& source_item : desc.externalProperty ())
+          APM_Handler::handle_apm (source_item, toconfig.externalProperty[externalProperty_index++]);
       }
 
       ComponentAssemblyDescription

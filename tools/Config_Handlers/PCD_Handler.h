@@ -11,7 +11,6 @@
 #include /**/ "ace/pre.h"
 
 #include "Config_Handlers_Export.h"
-#include "Utils/Functors.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -60,11 +59,6 @@ namespace DAnCE
       static PlanConnectionDescription
         get_PlanConnectionDescription (const Deployment::PlanConnectionDescription &src);
     };
-
-    typedef Sequence_Handler < PlanConnectionDescription,
-                               ::Deployment::PlanConnectionDescriptions,
-                               ::Deployment::PlanConnectionDescription,
-                               PCD_Handler::handle_PlanConnectionDescription > PCD_Functor;
 
   }
 }
