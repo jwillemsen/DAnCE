@@ -35,7 +35,7 @@ namespace DAnCE
       const char* s = 0;
       if (value.count_string ())
         {
-          s = ACE_TEXT_ALWAYS_CHAR ((*value.begin_string ())->c_str ());
+          s = ACE_TEXT_ALWAYS_CHAR (value.begin_string ()->c_str ());
         }
       retval->insert_string (s);
 
@@ -57,11 +57,11 @@ namespace DAnCE
         }
 
       CORBA::ULong bound (0);
-      if (type.boundedString_p ())
+      if (type.boundedString_if_set ())
         {
-          if (type.boundedString ().count_bound ())
+          if ((*type.boundedString_if_set ()).count_bound ())
           {
-            bound = *(*type.boundedString ().begin_bound ());
+            bound = *(*type.boundedString_if_set ()).begin_bound ();
           }
         }
 

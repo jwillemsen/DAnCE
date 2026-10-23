@@ -5,7 +5,8 @@
 #include "Req_Handler.h"
 #include "Utils/Functors.h"
 #include "Utils/Exceptions.h"
-#include "ace/XML_Utils/XML_Typedefs.h"
+#include "ace/XML_Utils/XMLSchema/Types.hpp"
+#include "ace/XML_Utils/XML_Helper.h"
 
 #include "Deployment.hpp"
 #include "dance/Logger/Log_Macros.h"
@@ -26,20 +27,20 @@ namespace DAnCE
         const ImplementationArtifactDescription *iad = 0;
         std::auto_ptr <ImplementationArtifactDescription> safe_iad;
 
-        if (desc.href_p ())
+        if (desc.href_if_set ())
           {
-            safe_iad.reset (IAD_Handler::resolve_iad (desc.href ().c_str ()));
+            safe_iad.reset (IAD_Handler::resolve_iad (desc.href_if_set ()->c_str ()));
             iad = safe_iad.get ();
           }
         else
           iad = &desc;
 
 
-        if (iad->label_p ())
-          toconfig.label = ACE_TEXT_ALWAYS_CHAR ( iad->label ().c_str ());
+        if (iad->label_if_set ())
+          toconfig.label = ACE_TEXT_ALWAYS_CHAR (iad->label_if_set ()->c_str ());
 
-        if (iad->UUID_p ())
-          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR (iad->UUID ().c_str ());
+        if (iad->UUID_if_set ())
+          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR (iad->UUID_if_set ()->c_str ());
 
         toconfig.location.length (iad->count_location ());
         std::for_each (iad->begin_location (),
@@ -104,7 +105,8 @@ namespace DAnCE
       {
         DANCE_TRACE ("IAD_Handler::resolve_iad");
 
-        xercesc::DOMDocument *dom = XML::XML_Typedef::XML_HELPER.create_dom (uri);
+        XML::XML_Helper<> xml_helper;
+        xercesc::DOMDocument *dom = xml_helper.create_dom (uri);
 
         if (!dom)
           throw Parse_Error (ACE_TEXT ("Unable to create DOM for IAD"));

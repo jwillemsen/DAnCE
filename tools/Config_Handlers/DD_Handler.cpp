@@ -1,4 +1,4 @@
-#include "ace/XML_Utils/XML_Typedefs.h"
+#include "ace/XML_Utils/XMLSchema/Types.hpp"
 #include "SatisfierProperty_Handler.h"
 #include "DD_Handler.h"
 #include "Any_Handler.h"
@@ -14,7 +14,7 @@ namespace DAnCE
   {
     /*
     DD_Handler::DD_Handler (const ACE_TCHAR *file) :
-      idl_domain_(0),
+      idl_domain_ (nullptr),
       domain_ptr_ (0),
       retval_ (false)
     {
@@ -39,7 +39,7 @@ namespace DAnCE
     */
 
     DD_Handler::DD_Handler (Domain *dmn):
-      idl_domain_(0),
+      idl_domain_ (nullptr),
       domain_ptr_ (dmn),
       domain_ (*dmn),
       retval_(false)
@@ -50,7 +50,7 @@ namespace DAnCE
     }
 
     DD_Handler::DD_Handler (Domain &dmn):
-      idl_domain_(0),
+      idl_domain_ (nullptr),
       domain_ (dmn),
       retval_(false)
     {
@@ -82,13 +82,13 @@ namespace DAnCE
 
       // Read in the name
       // Check if the label is there or not
-      if (domain_.label_p ())
+      if (domain_.label_if_set ())
         this->idl_domain_->label =
-          CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (domain_.label ().c_str ()));
+          CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (domain_.label_if_set ()->c_str ()));
 
-      if (domain_.UUID_p ())
+      if (domain_.UUID_if_set ())
         this->idl_domain_->UUID =
-          CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (domain_.UUID ().c_str ()));
+          CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (domain_.UUID_if_set ()->c_str ()));
 
       CORBA::ULong len = domain_.count_node ();
       this->idl_domain_->node.length (len);
@@ -102,56 +102,56 @@ namespace DAnCE
         {
           // Node* thisNode = (Node*)iter;
           this->idl_domain_->node[i].name =
-            CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ((*iter)->name ().c_str ()));
+            CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (iter->name ().c_str ()));
 
-          if ((*iter)->label_p ())
+          if (iter->label_if_set ())
             this->idl_domain_->node[i].label =
-              CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ((*iter)->label ().c_str ()));
+              CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (iter->label_if_set ()->c_str ()));
 
           // length is hard-coded for now ...
           // here iterate over the resources ...
-          CORBA::ULong res_len = (*iter)->count_resource ();
+          CORBA::ULong res_len = iter->count_resource ();
           this->idl_domain_->node[i].resource.length (res_len);
 
           int res_id=0;
           // FOR EACH RESOURCE ....
-          for (Node::resource_const_iterator res_iter = (*iter)->begin_resource ();
-               res_iter != (*iter)->end_resource ();
+          for (Node::resource_const_iterator res_iter = iter->begin_resource ();
+               res_iter != iter->end_resource ();
                res_iter++, res_id++)
             {
 
               this->idl_domain_->node[i].resource[res_id].name =
-                CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ((*res_iter)->name ().c_str ()));
+                CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (res_iter->name ().c_str ()));
 
-              CORBA::ULong resource_type_len = (*res_iter)->count_resourceType ();
+              CORBA::ULong resource_type_len = res_iter->count_resourceType ();
               this->idl_domain_->node[i].resource[res_id].resourceType.length (resource_type_len);
 
               int res_type_id =0;
 
               // FOR EACH RESOURCE TYPE
               for (Resource::resourceType_const_iterator res_type_iter =
-                     (*res_iter)->begin_resourceType ();
-                   res_type_iter != (*res_iter)->end_resourceType ();
+                     res_iter->begin_resourceType ();
+                   res_type_iter != res_iter->end_resourceType ();
                    res_type_iter++, res_type_id++)
                 {
                   this->idl_domain_->node[i].resource[res_id].resourceType[res_type_id] =
-                    CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ((*res_type_iter)->c_str ()));
+                    CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (res_type_iter->c_str ()));
                 }
 
-              CORBA::ULong property_len = (*res_iter)->count_property ();
+              CORBA::ULong property_len = res_iter->count_property ();
               this->idl_domain_->node[i].resource[res_id].property.length (property_len);
 
               //              int property_id =0;
 
-              std::for_each ((*res_iter)->begin_property (),
-                             (*res_iter)->end_property (),
+              std::for_each (res_iter->begin_property (),
+                             res_iter->end_property (),
                              SatisfierProperty_Functor (this->idl_domain_->node[i].resource[res_id].property));
 
               /*
               //FOR EACH PROPERTY
               for (Resource::property_const_iterator property_iter =
-              (*res_iter)->begin_property ();
-              property_iter != (*res_iter)->end_property ();
+              res_iter->begin_property ();
+              property_iter != res_iter->end_property ();
               property_iter++, property_id++)
               {
               this->idl_domain_->node[i].resource[res_id].property[property_id ].name =

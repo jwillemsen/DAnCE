@@ -25,7 +25,7 @@ namespace DAnCE
              aci_e != aci_b;
              ++aci_b)
           {
-            ADD_Handler::artifact_deployment_descr (*(*aci_b),
+            ADD_Handler::artifact_deployment_descr (*aci_b,
                                                     dest[pos],
                                                     pos);
             pos++;
@@ -54,7 +54,7 @@ namespace DAnCE
              start != end;
              ++start)
           {
-            dest.location[len++] = ACE_TEXT_ALWAYS_CHAR ( (*start)->c_str ());
+            dest.location[len++] = ACE_TEXT_ALWAYS_CHAR ( start->c_str ());
           }
 
         ArtifactDeploymentDescription::source_const_iterator sce =
@@ -66,7 +66,7 @@ namespace DAnCE
              scb != sce;
              ++scb)
           {
-            dest.source[len++] = ACE_TEXT_ALWAYS_CHAR ( (*scb)->c_str ());
+            dest.source[len++] = ACE_TEXT_ALWAYS_CHAR ( scb->c_str ());
           }
 
         // @@TODO: See this loop is repeated
@@ -79,13 +79,13 @@ namespace DAnCE
              adcb != adce;
              ++adcb)
           {
-            Property_Handler::handle_property (*(*adcb),
+            Property_Handler::handle_property (*adcb,
                                                dest.execParameter[len++]);
           }
 
-        if (src.id_p ())
+        if (src.id_if_set ())
           {
-            ACE_TString cstr (src.id ().c_str ());
+            ACE_TString cstr (src.id_if_set ()->c_str ());
 
             ADD_Handler::IDREF.bind_ref (cstr,pos);
           }
@@ -98,7 +98,7 @@ namespace DAnCE
 
 #if 0
         // @@ MAJO: Don't know how to handle this.
-        if (src.deployRequirement_p ())
+        if (src.deployRequirement_if_set ())
           {
             Req_Handler handler;
             add.deployRequirement.length (
@@ -108,7 +108,7 @@ namespace DAnCE
                                      src.deployRequirement ());
           }
 
-        if (src.deployedResource_p ())
+        if (src.deployedResource_if_set ())
           {
             RDD_Handler handler;
             add.deployedResource.length (

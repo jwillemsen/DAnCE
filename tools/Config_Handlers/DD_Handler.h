@@ -15,7 +15,7 @@
 #include /**/ "ace/pre.h"
 
 #include "Config_Handlers_Export.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -91,10 +91,10 @@ bool build_domain ();
 bool build_xsc ();
 
 /// The Deployment Domain structure
-auto_ptr < ::Deployment::Domain > idl_domain_;
+std::unique_ptr<::Deployment::Domain> idl_domain_;
 
 /// The XSC Domain structure
-auto_ptr <Domain> domain_ptr_;
+std::unique_ptr<Domain> domain_ptr_;
 
  Domain &domain_;
 /// The return value used

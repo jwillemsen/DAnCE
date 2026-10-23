@@ -26,45 +26,45 @@ namespace DAnCE
         DANCE_TRACE ("SID_Handler::sub_comp_inst_descr");
         toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
 
-        if (desc.basePackage_p ())
+        if (desc.basePackage_if_set ())
           {
             toconfig.basePackage.length (1);
-            CPD_Handler::handle_component_package_descr (desc.basePackage (),
+            CPD_Handler::handle_component_package_descr (*desc.basePackage_if_set (),
                                                   toconfig.basePackage[0]);
           }
-        else if (desc.specializedConfig_p ())
+        else if (desc.specializedConfig_if_set ())
           {
             toconfig.specializedConfig.length (1);
-            PCD_Handler::package_config (desc.specializedConfig (),
+            PCD_Handler::package_config (*desc.specializedConfig_if_set (),
                                          toconfig.specializedConfig[0]);
           }
-        else if (desc.importedPackage_p ())
+        else if (desc.importedPackage_if_set ())
           {
             toconfig.importedPackage.length (1);
             toconfig.importedPackage[0].location.length (
-              desc.importedPackage ().count_location ());
+              desc.importedPackage_if_set ()->count_location ());
 
-            std::for_each (desc.importedPackage ().begin_location (),
-                           desc.importedPackage ().end_location (),
+            std::for_each (desc.importedPackage_if_set ()->begin_location (),
+                           desc.importedPackage_if_set ()->end_location (),
                            String_Seq_Functor (
                              toconfig.importedPackage[0].location));
           }
-        else if (desc.referencedPackage_p ())
+        else if (desc.referencedPackage_if_set ())
           {
             toconfig.referencedPackage.length (1);
 
-            if (desc.referencedPackage ().requiredUUID_p ())
+            if (desc.referencedPackage_if_set ()->requiredUUID_if_set ())
               toconfig.referencedPackage[0].requiredUUID =
                 ACE_TEXT_ALWAYS_CHAR (
-                  desc.referencedPackage ().requiredUUID ().c_str ());
+                  desc.referencedPackage_if_set ()->requiredUUID_if_set ()->c_str ());
 
-            if (desc.referencedPackage ().requiredName_p ())
+            if (desc.referencedPackage_if_set ()->requiredName_if_set ())
               toconfig.referencedPackage[0].requiredName =
                 ACE_TEXT_ALWAYS_CHAR (
-                  desc.referencedPackage ().requiredName ().c_str ());
+                  desc.referencedPackage_if_set ()->requiredName_if_set ()->c_str ());
 
             Comp_Intf_Descr_Handler::comp_intf_descr (
-              desc.referencedPackage ().requiredType (),
+              desc.referencedPackage_if_set ()->requiredType (),
               toconfig.referencedPackage[0].requiredType);
 
           }
@@ -79,9 +79,9 @@ namespace DAnCE
                        desc.end_configProperty (),
                        Property_Functor (toconfig.configProperty));
 
-        if (desc.id_p ())
+        if (desc.id_if_set ())
           {
-            ACE_TString str (desc.id ().c_str ());
+            ACE_TString str (desc.id_if_set ()->c_str ());
             SID_Handler::IDREF.bind_next_available (str);
           }
         else

@@ -29,7 +29,7 @@ namespace DAnCE
            idd_b != idd_e;
            ++idd_b)
         {
-          IDD_Handler::instance_deployment_descr (*(*idd_b),
+          IDD_Handler::instance_deployment_descr (*idd_b,
                                                   dest[pos], pos);
           pos++;
         }
@@ -47,9 +47,9 @@ namespace DAnCE
           dest.name = ACE_TEXT_ALWAYS_CHAR ( src.name ().c_str ());
           dest.node = ACE_TEXT_ALWAYS_CHAR ( src.node ().c_str ());
 
-          if (src.id_p ())
+          if (src.id_if_set ())
             {
-              ACE_TString cstr (src.id ().c_str ());
+              ACE_TString cstr (src.id_if_set ()->c_str ());
               IDD_Handler::IDREF.bind_ref (cstr, pos);
             }
           else
@@ -65,7 +65,8 @@ namespace DAnCE
             ACE_TEXT_ALWAYS_CHAR (src.source ().c_str ());
 
           CORBA::ULong tmp = 0;
-          MDD_Handler::IDREF.find_ref (ACE_TString (src.implementation ().idref ().id ().c_str ()), tmp);
+          MDD_Handler::IDREF.find_ref (
+            ACE_TString (src.implementation ().idref_if_set ()->id ().c_str ()), tmp);
 
           dest.implementationRef = tmp;
 
@@ -79,10 +80,10 @@ namespace DAnCE
                          src.end_deployedResource (),
                          IRDD_Functor (dest.deployedResource));
 
-          if (src.deployedSharedResource_p ())
+          if (src.deployedSharedResource_if_set ())
             {
               dest.deployedSharedResource.length (1);
-              IRDD_Handler::handle_irdd (src.deployedSharedResource (),
+              IRDD_Handler::handle_irdd (*src.deployedSharedResource_if_set (),
                                          dest.deployedSharedResource[0]);
             }
 

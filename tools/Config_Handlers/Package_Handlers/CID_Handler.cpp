@@ -10,7 +10,8 @@
 
 #include "Basic_Deployment_Data.hpp"
 #include "dance/Deployment/Deployment_DataC.h"
-#include "ace/XML_Utils/XML_Typedefs.h"
+#include "ace/XML_Utils/XMLSchema/Types.hpp"
+#include "ace/XML_Utils/XML_Helper.h"
 #include "Utils/Exceptions.h"
 
 #include "Deployment.hpp"
@@ -75,9 +76,9 @@ namespace DAnCE
     {
       DANCE_TRACE ("IR_Handler::get_ir");
 
-      if (desc.resourceUsage_p ())
+      if (desc.resourceUsage_if_set ())
         {
-          switch (desc.resourceUsage ().integral ())
+          switch (desc.resourceUsage_if_set ()->integral ())
         {
         case ResourceUsageKind::None_l:
           toconfig.resourceUsage = Deployment::None;
@@ -106,11 +107,11 @@ namespace DAnCE
         }
         }
 
-      if (desc.resourcePort_p ())
-        toconfig.resourcePort = ACE_TEXT_ALWAYS_CHAR ( desc.resourcePort ().c_str ());
+      if (desc.resourcePort_if_set ())
+        toconfig.resourcePort = ACE_TEXT_ALWAYS_CHAR (desc.resourcePort_if_set ()->c_str ());
 
-      if (desc.componentPort_p  ())
-        toconfig.componentPort = ACE_TEXT_ALWAYS_CHAR ( desc.componentPort ().c_str ());
+      if (desc.componentPort_if_set  ())
+        toconfig.componentPort = ACE_TEXT_ALWAYS_CHAR (desc.componentPort_if_set ()->c_str ());
 
       toconfig.resourceType = ACE_TEXT_ALWAYS_CHAR ( desc.resourceType ().c_str ());
       toconfig.name = ACE_TEXT_ALWAYS_CHAR ( desc.name ().c_str ());
@@ -195,7 +196,7 @@ namespace DAnCE
       toconfig.deployRequirement.length (desc.count_deployRequirement ());
       while (0)
         {
-          IR_Handler::handle_ir (*(*desc.begin_deployRequirement ()),
+          IR_Handler::handle_ir (*desc.begin_deployRequirement (),
                                  toconfig.deployRequirement[0]);
         }
       std::for_each (desc.begin_deployRequirement (),
@@ -256,38 +257,38 @@ namespace DAnCE
         const ComponentImplementationDescription *cid = 0;
         std::auto_ptr <ComponentImplementationDescription> xsc_cid;
 
-        if (desc.href_p ())
+        if (desc.href_if_set ())
           {
-            xsc_cid.reset (CID_Handler::resolve_cid ((desc.href ().c_str ())));
+            xsc_cid.reset (CID_Handler::resolve_cid (desc.href_if_set ()->c_str ()));
             cid = xsc_cid.get ();
           }
         else
           cid = &desc;
 
-        if (cid->label_p ())
-          toconfig.label = ACE_TEXT_ALWAYS_CHAR ( cid->label ().c_str ());
+        if (cid->label_if_set ())
+          toconfig.label = ACE_TEXT_ALWAYS_CHAR (cid->label_if_set ()->c_str ());
 
-        if (cid->UUID_p ())
-          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR ( cid->UUID ().c_str ());
+        if (cid->UUID_if_set ())
+          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR (cid->UUID_if_set ()->c_str ());
 
-        if (cid->implements_p ())
+        if (cid->implements_if_set ())
           {
             // MAJO: We should be able to assume this exists,
             //fix broken interpeters..
-            Comp_Intf_Descr_Handler::comp_intf_descr (cid->implements (),
+            Comp_Intf_Descr_Handler::comp_intf_descr (*cid->implements_if_set (),
                                                       toconfig.implements);
           }
 
-        if (cid->assemblyImpl_p ())
+        if (cid->assemblyImpl_if_set ())
           {
             toconfig.assemblyImpl.length (1);
-            CAD_Handler::component_assem_descr (cid->assemblyImpl (),
+            CAD_Handler::component_assem_descr (*cid->assemblyImpl_if_set (),
                                                 toconfig.assemblyImpl[0]);
           }
-        else if (cid->monolithicImpl_p ())
+        else if (cid->monolithicImpl_if_set ())
           {
             toconfig.monolithicImpl.length (1);
-            MID_Handler::handle_mid (cid->monolithicImpl (),
+            MID_Handler::handle_mid (*cid->monolithicImpl_if_set (),
                      toconfig.monolithicImpl[0]);
           }
         else
@@ -318,7 +319,7 @@ namespace DAnCE
              i != cid->end_dependsOn ();
              ++i)
           toconfig.dependsOn[pos++].requiredType =
-            ACE_TEXT_ALWAYS_CHAR ( (*i)->requiredType ().c_str ());
+            ACE_TEXT_ALWAYS_CHAR ( i->requiredType ().c_str ());
 
         // infoProperty
         toconfig.infoProperty.length (cid->count_infoProperty ());
@@ -388,7 +389,8 @@ namespace DAnCE
       {
         DANCE_TRACE ("CID_Handler::resolve_cid");
 
-        xercesc::DOMDocument *dom = XML::XML_Typedef::XML_HELPER.create_dom (uri);
+        XML::XML_Helper<> xml_helper;
+        xercesc::DOMDocument *dom = xml_helper.create_dom (uri);
 
         if (!dom)
           throw Parse_Error (ACE_TEXT ("Unable to create DOM for CID"));

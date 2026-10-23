@@ -1,7 +1,8 @@
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "dance/Logger/Log_Macros.h"
 #include "dance/Deployment/Deployment_Packaging_DataC.h"
-#include "ace/XML_Utils/XML_Typedefs.h"
+#include "ace/XML_Utils/XMLSchema/Types.hpp"
+#include "ace/XML_Utils/XML_Helper.h"
 #include "ace/XML_Utils/XercesString.h"
 #include "Utils/Exceptions.h"
 #include "Package_Handlers/PCD_Handler.h"
@@ -23,7 +24,8 @@ namespace DAnCE
       PCD_Handler::package_config (const ACE_TCHAR *uri,
                                    ::Deployment::PackageConfiguration &toconfig)
       {
-        XERCES_CPP_NAMESPACE::DOMDocument *dom = XML::XML_Typedef::XML_HELPER.create_dom (uri);
+        XML::XML_Helper<> xml_helper;
+        XERCES_CPP_NAMESPACE::DOMDocument *dom = xml_helper.create_dom (uri);
 
         if (dom == 0)
           {
@@ -41,7 +43,7 @@ namespace DAnCE
 
             tpd = reader::topLevelPackageDescription (dom);
 
-            PCD_Handler::package_config (*(*tpd.begin_package ()),
+            PCD_Handler::package_config (*tpd.begin_package (),
                                          toconfig);
           }
         else if (root == XML::XStr (
@@ -76,27 +78,27 @@ namespace DAnCE
 
         const PackageConfiguration *pcd;
 
-        if (desc.contentLocation_p ())
+        if (desc.contentLocation_if_set ())
           {
             // Take ownership of the resolved pcd
-            xsc_pcd.reset (PCD_Handler::resolve_package_config (desc.contentLocation ().c_str ()));
+            xsc_pcd.reset (PCD_Handler::resolve_package_config (desc.contentLocation_if_set ()->c_str ()));
             pcd = xsc_pcd.get ();
           }
         else
           pcd = &desc;
 
-        if (pcd->label_p ())
+        if (pcd->label_if_set ())
           toconfig.label =
-            ACE_TEXT_ALWAYS_CHAR (pcd->label ().c_str ());
+            ACE_TEXT_ALWAYS_CHAR (pcd->label_if_set ()->c_str ());
 
-        if (pcd->UUID_p ())
+        if (pcd->UUID_if_set ())
           toconfig.UUID =
-            ACE_TEXT_ALWAYS_CHAR (pcd->UUID ().c_str ());
+            ACE_TEXT_ALWAYS_CHAR (pcd->UUID_if_set ()->c_str ());
 
-        if (pcd->basePackage_p ())
+        if (pcd->basePackage_if_set ())
           {
             toconfig.basePackage.length (1);
-            CPD_Handler::handle_component_package_descr (pcd->basePackage (),
+            CPD_Handler::handle_component_package_descr (*pcd->basePackage_if_set (),
                                                          toconfig.basePackage [0]);
           }
 
@@ -144,8 +146,9 @@ namespace DAnCE
 
       PackageConfiguration * PCD_Handler::resolve_package_config (const ACE_TCHAR *uri)
       {
+        XML::XML_Helper<> xml_helper;
         xercesc::DOMDocument* dom =
-          XML::XML_Typedef::XML_HELPER.create_dom (uri);
+          xml_helper.create_dom (uri);
 
         if (!dom)
           throw Parse_Error (ACE_TEXT ("Unable to create DOM for PackageConfiguration"));

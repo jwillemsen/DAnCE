@@ -94,19 +94,19 @@ namespace DAnCE
       this->idl_dp_.reset (tmp);
 
       // Read in the label, if present, since minoccurs = 0
-      if (xsc_dp.label_p ())
+      if (xsc_dp.label_if_set ())
         {
           this->idl_dp_->label =
             CORBA::string_dup (
-              ACE_TEXT_ALWAYS_CHAR (xsc_dp.label ().c_str ()));
+              ACE_TEXT_ALWAYS_CHAR (xsc_dp.label_if_set ()->c_str ()));
         }
 
       // Read in the UUID, if present
-      if (xsc_dp.UUID_p ())
+      if (xsc_dp.UUID_if_set ())
         {
           this->idl_dp_->UUID =
             CORBA::string_dup (
-              ACE_TEXT_ALWAYS_CHAR  (xsc_dp.UUID ().c_str ()));
+              ACE_TEXT_ALWAYS_CHAR (xsc_dp.UUID_if_set ()->c_str ()));
         }
 
       // Similar thing for dependsOn
@@ -117,7 +117,7 @@ namespace DAnCE
         {
           CORBA::ULong len = this->idl_dp_->dependsOn.length ();
           this->idl_dp_->dependsOn.length (len + 1);
-          ID_Handler::get_ImplementationDependency (*(*dstart),
+          ID_Handler::get_ImplementationDependency (*dstart,
             this->idl_dp_->dependsOn [len]);
 
         }
@@ -133,15 +133,15 @@ namespace DAnCE
 
           this->idl_dp_->infoProperty.length (len + 1);
 
-          Property_Handler::handle_property (*(*pstart),
+          Property_Handler::handle_property (*pstart,
                             this->idl_dp_->infoProperty [len]);
         }
 
       // Read in the realizes, if present
-      if (xsc_dp.realizes_p ())
+      if (xsc_dp.realizes_if_set ())
         {
           CCD_Handler::component_interface_descr (
-                            xsc_dp.realizes (),
+                            *xsc_dp.realizes_if_set (),
                             this->idl_dp_->realizes);
         }
 
@@ -241,7 +241,7 @@ namespace DAnCE
       // @@ in ../dance/Deployment/Deployment_Data.idl
       // @@ so we can check for length
       this->xsc_dp_->realizes(CCD_Handler::component_interface_descr(plan.realizes));
-      if (!this->xsc_dp_->realizes_p())
+      if (!this->xsc_dp_->realizes_if_set())
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR,
                       "(%P|%t) DP_Handler: "

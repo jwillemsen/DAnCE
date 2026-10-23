@@ -16,9 +16,9 @@ namespace DAnCE
       toconfig.name =
         ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
 
-      if (desc.specificType_p ())
+      if (desc.specificType_if_set ())
         toconfig.specificType =
-          ACE_TEXT_ALWAYS_CHAR (desc.specificType ().c_str ());
+          ACE_TEXT_ALWAYS_CHAR (desc.specificType_if_set ()->c_str ());
 
       toconfig.supportedType.length (desc.count_supportedType ());
       std::for_each (desc.begin_supportedType (),

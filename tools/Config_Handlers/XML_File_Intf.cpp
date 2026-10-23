@@ -1,5 +1,5 @@
 #include "XML_File_Intf.h"
-#include "ace/XML_Utils/XML_Typedefs.h"
+#include "ace/XML_Utils/XMLSchema/Types.hpp"
 #include "Deployment.hpp"
 #include "DP_Handler.h"
 #include "DD_Handler.h"
@@ -16,7 +16,7 @@ namespace DAnCE
   {
     XML_File_Intf::XML_File_Intf (const ACE_TCHAR *file)
       : file_ (file),
-        idl_dp_ (0)
+        idl_dp_ (nullptr)
     {
       DANCE_TRACE("XML_File_Intf::constructor");
     }
@@ -35,14 +35,14 @@ namespace DAnCE
 
       try
         {
-          if (!XML_Helper_type::XML_HELPER.is_initialized ())
+          if (!xml_helper_.is_initialized ())
             return false;
 
           DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
             (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_plan - ")
                        ACE_TEXT ("Constructing DOM\n")));
           XERCES_CPP_NAMESPACE::DOMDocument *dom =
-            XML_Helper_type::XML_HELPER.create_dom ((file));
+            xml_helper_.create_dom ((file));
 
           if (dom == 0)
             {
@@ -108,14 +108,14 @@ namespace DAnCE
 
       try
         {
-          if (!XML_Helper_type::XML_HELPER.is_initialized ())
+          if (!xml_helper_.is_initialized ())
             return false;
 
           DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE,
             DLINFO ACE_TEXT ("XML_File_Intf::read_process_domain - ")
                        ACE_TEXT ("Constructing DOM\n")));
           XERCES_CPP_NAMESPACE::DOMDocument *dom =
-            XML_Helper_type::XML_HELPER.create_dom ((file));
+            xml_helper_.create_dom ((file));
 
           if (dom == 0)
             {
@@ -222,7 +222,7 @@ namespace DAnCE
                                     const ACE_TCHAR *relpath)
     {
       DANCE_TRACE("XML_File_Intf::add_search_path");
-      XML_Helper_type::XML_HELPER.get_resolver ().get_resolver ().add_path (environment, relpath);
+      xml_helper_.get_resolver ().get_resolver ().add_path (environment, relpath);
     }
 
   }

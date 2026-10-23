@@ -1,5 +1,5 @@
 #include "STD_PC_Intf.h"
-#include "Utils/XML_Helper.h"
+#include "ace/XML_Utils/XML_Helper.h"
 #include "Deployment.hpp"
 #include "STD_PCD_Handler.h"
 #include "ciao/Packaging_DataC.h"
@@ -20,7 +20,7 @@ namespace DAnCE
     {
       DANCE_TRACE("STD_PC_Intf::prepare_PC");
 
-      ACE_Auto_Ptr<XML_Helper> helper (new XML_Helper);
+      std::unique_ptr<XML::XML_Helper<>> helper (new XML::XML_Helper<>);
 
       if (!helper->is_initialized ())
         return false;
@@ -49,7 +49,7 @@ namespace DAnCE
       Deployment::PackageConfiguration *p_idl_pc =
         new Deployment::PackageConfiguration (idl_pc);
 
-      // let ACE_Auto_Ptr take over
+      // let idl_pc_ take ownership
       this->idl_pc_.reset (p_idl_pc);
 
       if (this->idl_pc_.get ())

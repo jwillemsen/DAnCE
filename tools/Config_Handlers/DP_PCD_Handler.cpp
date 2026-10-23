@@ -51,12 +51,11 @@ namespace DAnCE
       dest.name =
         src.name ().c_str ();
 
-      if (src.source_p ())
+      if (src.source_if_set ())
         {
           // There will be only one as per the schema
           dest.source.length (1);
-          dest.source[0] =
-            src.source ().c_str ();
+          dest.source[0] = src.source_if_set ()->c_str ();
         }
 
 
@@ -70,7 +69,7 @@ namespace DAnCE
 
 #if 0
       // @@MAJO: Need to figure how to use this.
-      if (desc.deployedResource_p ())
+      if (desc.deployedResource_if_set ())
         {
           CRDD_Handler crddhandler;
 
@@ -82,7 +81,7 @@ namespace DAnCE
             desc.deployedResource ());
         }
 
-      if (desc.deployRequirement_p ())
+      if (desc.deployRequirement_if_set ())
         {
 
           // @@ MAJO: Not sure how to use this

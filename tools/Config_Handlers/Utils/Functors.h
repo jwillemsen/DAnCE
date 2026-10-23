@@ -29,9 +29,9 @@ namespace DAnCE
       {
       }
 
-      void operator() (const ACE_Refcounted_Auto_Ptr <Source, ACE_Null_Mutex> &src)
+      void operator() (const Source &src)
       {
-        Func (*src, dest_[pos_++]);
+        Func (src, dest_[pos_++]);
       }
 
     private:
@@ -51,7 +51,7 @@ namespace DAnCE
      */
 #define SEQ_HAND_GCC_BUG_WORKAROUND(W, X, Y)    \
     while(0) { \
-      W (*X, Y[0]);  \
+      W (X, Y[0]);  \
     }
 
 
@@ -64,9 +64,9 @@ namespace DAnCE
       {
       }
 
-      void operator() (const ACE_Refcounted_Auto_Ptr < ::XMLSchema::string<ACE_TCHAR>, ACE_Null_Mutex>  &src)
+      void operator() (::XMLSchema::string<ACE_TCHAR> const& src)
       {
-        dest_[pos_++] = ACE_TEXT_ALWAYS_CHAR (src->c_str ());
+        dest_[pos_++] = ACE_TEXT_ALWAYS_CHAR (src.c_str ());
       }
 
     private:

@@ -1,6 +1,7 @@
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "Comp_Intf_Descr_Handler.h"
-#include "ace/XML_Utils/XML_Typedefs.h"
+#include "ace/XML_Utils/XMLSchema/Types.hpp"
+#include "ace/XML_Utils/XML_Helper.h"
 #include "Utils/Exceptions.h"
 #include "Utils/Functors.h"
 #include "DataType_Handler.h"
@@ -54,23 +55,23 @@ namespace DAnCE
         const ComponentInterfaceDescription *cid = 0;
         std::auto_ptr <ComponentInterfaceDescription> safe_cid;
 
-        if (desc.href_p ())
+        if (desc.href_if_set ())
           {
-            safe_cid.reset (Comp_Intf_Descr_Handler::resolve_cid (desc.href ().c_str ()));
+            safe_cid.reset (Comp_Intf_Descr_Handler::resolve_cid (desc.href_if_set ()->c_str ()));
             cid = safe_cid.get ();
           }
         else
           cid = &desc;
 
-        if (cid->label_p ())
-          toconfig.label = ACE_TEXT_ALWAYS_CHAR (cid->label ().c_str ());
+        if (cid->label_if_set ())
+          toconfig.label = ACE_TEXT_ALWAYS_CHAR (cid->label_if_set ()->c_str ());
 
-        if (cid->UUID_p ())
-          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR (cid->UUID ().c_str ());
+        if (cid->UUID_if_set ())
+          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR (cid->UUID_if_set ()->c_str ());
 
         // MAJO: SpecificType should be required.
-        if (cid->specificType_p ())
-          toconfig.specificType = ACE_TEXT_ALWAYS_CHAR (cid->specificType ().c_str ());
+        if (cid->specificType_if_set ())
+          toconfig.specificType = ACE_TEXT_ALWAYS_CHAR (cid->specificType_if_set ()->c_str ());
 
         toconfig.supportedType.length (cid->count_supportedType ());
         std::for_each (cid->begin_supportedType (),
@@ -147,7 +148,8 @@ namespace DAnCE
       {
         DANCE_TRACE ("Comp_Intf_Descr_Handler::resolve_cid");
 
-        xercesc::DOMDocument *dom = XML::XML_Typedef::XML_HELPER.create_dom (uri);
+        XML::XML_Helper<> xml_helper;
+        xercesc::DOMDocument *dom = xml_helper.create_dom (uri);
 
         if (!dom)
           throw Parse_Error (ACE_TEXT ("Unable to create DOM for Component Interface Description."));

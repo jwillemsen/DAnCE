@@ -12,7 +12,7 @@
 
 #include "Config_Handlers_Export.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 
 namespace Deployment
@@ -47,7 +47,7 @@ namespace DAnCE
       bool prepare_PC (const char *file);
 
     private:
-      ACE_Auto_Ptr< ::Deployment::PackageConfiguration> idl_pc_;
+      std::unique_ptr<::Deployment::PackageConfiguration> idl_pc_;
     };
   }
 }

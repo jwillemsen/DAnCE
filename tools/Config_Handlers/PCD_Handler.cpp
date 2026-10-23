@@ -36,11 +36,11 @@ namespace DAnCE
       //to the first position in the IDL type's sequence. We
       //make sure that the source is present before lengthening
       //the sequence.
-      if (desc.source_p ())
+      if (desc.source_if_set ())
         {
           // Only one.....
           toconfig.source.length (1);
-          toconfig.source[0] = ACE_TEXT_ALWAYS_CHAR ( desc.source ().c_str ());
+          toconfig.source[0] = ACE_TEXT_ALWAYS_CHAR (desc.source_if_set ()->c_str ());
         }
 
       toconfig.deployRequirement.length (desc.count_deployRequirement ());
@@ -71,7 +71,7 @@ namespace DAnCE
           res++)
         {
           crddhandler.get_ConnectionResourceDeploymentDescription (toconfig.deployedResource[pos++],
-                                                                   *(*res));
+                                                                   *res);
         }
 
     }

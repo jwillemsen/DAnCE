@@ -112,7 +112,7 @@ namespace DAnCE
             CORBA::Short s = 0;
             if (value.count_short ())
               {
-                s = *(*value.begin_short ());
+                s = *value.begin_short ();
               }
             retval->insert_short (s);
           }
@@ -127,7 +127,7 @@ namespace DAnCE
             CORBA::Long l = 0;
             if (value.count_long ())
               {
-                l = *(*value.begin_long ());
+                l = *value.begin_long ();
               }
             retval->insert_long (l);
           }
@@ -142,7 +142,7 @@ namespace DAnCE
             CORBA::UShort us = 0;
             if (value.count_ushort ())
               {
-                us = *(*value.begin_ushort ());
+                us = *value.begin_ushort ();
               }
             retval->insert_ushort (us);
           }
@@ -157,7 +157,7 @@ namespace DAnCE
             CORBA::ULong ul = 0;
             if (value.count_ulong ())
               {
-                ul = *(*value.begin_ulong ());
+                ul = *value.begin_ulong ();
               }
             retval->insert_ulong (ul);
           }
@@ -172,7 +172,7 @@ namespace DAnCE
             CORBA::Float f = 0.0f;
             if (value.count_float ())
               {
-                f = *(*value.begin_float ());
+                f = *value.begin_float ();
               }
             retval->insert_float (f);
           }
@@ -187,7 +187,7 @@ namespace DAnCE
             CORBA::Double d = 0.0;
             if (value.count_double ())
               {
-                d = *(*value.begin_double ());
+                d = *value.begin_double ();
               }
             retval->insert_double (d);
           }
@@ -202,7 +202,7 @@ namespace DAnCE
             CORBA::Boolean b = false;
             if (value.count_boolean ())
               {
-                b = *(*value.begin_boolean ());
+                b = *value.begin_boolean ();
               }
             retval->insert_boolean (b);
           }
@@ -217,7 +217,7 @@ namespace DAnCE
             CORBA::Octet o = 0;
             if (value.count_octet ())
               {
-                o = *(*(value.begin_octet ()));
+                o = *value.begin_octet ();
               }
             retval->insert_octet (o);
           }
@@ -232,7 +232,7 @@ namespace DAnCE
             CORBA::LongLong ll = 0;
             if (value.count_longlong ())
               {
-                ll = *(*value.begin_longlong ());
+                ll = *value.begin_longlong ();
               }
             retval->insert_longlong (ll);
           }
@@ -247,7 +247,7 @@ namespace DAnCE
             CORBA::ULongLong ull = 0;
             if (value.count_ulonglong ())
               {
-                ull = *(*value.begin_ulonglong ());
+                ull = *value.begin_ulonglong ();
               }
             retval->insert_ulonglong (ull);
           }
@@ -265,7 +265,7 @@ namespace DAnCE
             CORBA::Char c = 0;
             if (value.count_string ())
               {
-                c = *(*value.begin_string ())->c_str ();
+                c = *value.begin_string ()->c_str ();
               }
             retval->insert_char (c);
           }
@@ -280,7 +280,7 @@ namespace DAnCE
             CORBA::WChar wc = 0;
             if (value.count_string ())
               {
-                wc = *(*value.begin_string ())->c_str ();
+                wc = *value.begin_string ()->c_str ();
               }
             retval->insert_wchar (wc);
           }

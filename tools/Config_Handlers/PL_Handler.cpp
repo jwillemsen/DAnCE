@@ -38,7 +38,7 @@ namespace DAnCE
            ++i)
         {
           CORBA::ULong tmp = 0;
-          IDD_Handler::IDREF.find_ref ((*i)->idref ().id ().c_str (), tmp);
+          IDD_Handler::IDREF.find_ref (i->idref_if_set ()->id ().c_str (), tmp);
 
           toconfig.constrainedInstanceRef[pos] = tmp;
           ++pos;

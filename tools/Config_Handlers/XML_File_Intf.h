@@ -11,24 +11,19 @@
 #include /**/ "ace/pre.h"
 
 #include "Config_Handlers_Export.h"
+#include "ace/XML_Utils/XML_Helper.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Auto_Ptr.h"
-
+#include <memory>
 #include <string>
 
 namespace Deployment
 {
   struct DeploymentPlan;
   struct Domain;
-}
-
-namespace XML
-{
-  class XML_Typedef;
 }
 
 namespace DAnCE
@@ -59,9 +54,9 @@ namespace DAnCE
 
     private:
       std::basic_string <ACE_TCHAR> file_;
-      ACE_Auto_Ptr< ::Deployment::DeploymentPlan> idl_dp_;
-      ACE_Auto_Ptr< ::Deployment::Domain> idl_domain_;
-      typedef XML::XML_Typedef XML_Helper_type;
+      XML::XML_Helper<XML::XML_Schema_Resolver<XML::Environment_Resolver>> xml_helper_;
+      std::unique_ptr<::Deployment::DeploymentPlan> idl_dp_;
+      std::unique_ptr<::Deployment::Domain> idl_domain_;
     };
   }
 }

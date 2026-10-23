@@ -22,7 +22,7 @@ namespace DAnCE
            erep_b != erep_e;
            ++erep_b)
         {
-          ERE_Handler::handle_external_ref_endpoint (*(*erep_b),
+          ERE_Handler::handle_external_ref_endpoint (*erep_b,
                                                      dest[pos++]);
         }
     }
@@ -35,8 +35,8 @@ namespace DAnCE
       DANCE_TRACE("ERE_Handler::external_ref_endpoint");
       dest.location = ACE_TEXT_ALWAYS_CHAR ( src.location ().c_str ());
       dest.provider = src.provider ();
-      if (src.portName_p ())
-        dest.portName = ACE_TEXT_ALWAYS_CHAR ( src.portName ().c_str ());
+      if (src.portName_if_set ())
+        dest.portName = ACE_TEXT_ALWAYS_CHAR (src.portName_if_set ()->c_str ());
       dest.supportedType.length (src.count_supportedType ());
       std::for_each (src.begin_supportedType (),
                      src.end_supportedType (),

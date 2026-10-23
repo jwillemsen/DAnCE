@@ -28,7 +28,7 @@ namespace DAnCE
            imp_b != imp_e;
            ++imp_b)
         {
-          MDD_Handler::mono_deployment_description (*(*imp_b),
+          MDD_Handler::mono_deployment_description (*imp_b,
                                                     dest[pos],
                                                     pos);
           pos++;
@@ -56,7 +56,7 @@ namespace DAnCE
            ++se)
         {
           toconfig.source[len++] =
-            CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ((*se)->c_str ()));
+            CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (se->c_str ()));
         }
 
       MonolithicDeploymentDescription::artifact_const_iterator ae =
@@ -70,7 +70,7 @@ namespace DAnCE
         {
           CORBA::ULong tmp = 0;
 
-          ADD_Handler::IDREF.find_ref (ACE_TString ((*ab)->idref ().id ().c_str ()),
+          ADD_Handler::IDREF.find_ref (ACE_TString (ab->idref_if_set ()->id ().c_str ()),
                                        tmp);
 
           toconfig.artifactRef[len++] = tmp;
@@ -85,7 +85,7 @@ namespace DAnCE
            epcb != epce;
            ++epcb)
         {
-          Property_Handler::handle_property (*(*epcb),
+          Property_Handler::handle_property (*epcb,
                                              toconfig.execParameter[len++]);
         }
 
@@ -95,9 +95,9 @@ namespace DAnCE
                      Requirement_Functor (toconfig.deployRequirement));
 
       // Handle the idref
-      if (desc.id_p ())
+      if (desc.id_if_set ())
         {
-          ACE_TString cstr (desc.id ().c_str ());
+          ACE_TString cstr (desc.id_if_set ()->c_str ());
 
           MDD_Handler::IDREF.bind_ref (cstr, pos);
         }

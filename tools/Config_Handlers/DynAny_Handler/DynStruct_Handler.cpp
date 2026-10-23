@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include "DynStruct_Handler.h"
 #include "DynAny_Handler.h"
 #include "dance/Logger/Log_Macros.h"
@@ -19,10 +21,10 @@ namespace DAnCE
       DANCE_TRACE("Config_Handlers::create_type_map");
 
       for (StructType::member_const_iterator i =
-             type.struct_ ().begin_member ();
-           i != type.struct_ ().end_member (); ++i)
+             (*type.struct__if_set ()).begin_member ();
+           i != (*type.struct__if_set ()).end_member (); ++i)
         {
-          dt_map[(*i)->name ()] = &((*i)->type ());
+          dt_map[i->name ()] = &(i->type ());
         }
     }
 
@@ -59,10 +61,10 @@ namespace DAnCE
                i != value.end_member (); ++i)
             {
               values[pos].id =
-                ACE_TEXT_ALWAYS_CHAR ((*i)->name ().c_str ());
+                ACE_TEXT_ALWAYS_CHAR (i->name ().c_str ());
               values[pos].value =
-                DYNANY_HANDLER->extract_into_dynany (*dt_map[(*i)->name ()],
-                                                     (*i)->value ());
+                DYNANY_HANDLER->extract_into_dynany (*dt_map[i->name ()],
+                                                     i->value ());
               ++pos;
             }
 
@@ -72,13 +74,13 @@ namespace DAnCE
         }
       catch (Config_Error &ex)
         {
-          if (type.struct_p ())
-            ex.add_name (type.struct_ ().typeId ());
+          if (type.struct__if_set ())
+            ex.add_name ((*type.struct__if_set ()).typeId ());
           throw ex;
         }
       catch (...)
         {
-          throw Config_Error (type.struct_ ().typeId (),
+          throw Config_Error ((*type.struct__if_set ()).typeId (),
                               ACE_TEXT ("Unknown exception"));
         }
     }
@@ -89,7 +91,7 @@ namespace DAnCE
     {
       DANCE_TRACE("DynStruct_Handler::create_typecode");
 
-      if (!type.struct_p ())
+      if (!type.struct__if_set ())
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR,
@@ -99,19 +101,19 @@ namespace DAnCE
                       "incorrect\n"));
         }
 
-      std::basic_string<ACE_TCHAR> rid (type.struct_ ().typeId ());
-      std::basic_string<ACE_TCHAR> name (type.struct_ ().name ());
+      std::basic_string<ACE_TCHAR> rid ((*type.struct__if_set ()).typeId ());
+      std::basic_string<ACE_TCHAR> name ((*type.struct__if_set ()).name ());
 
       CORBA::StructMemberSeq members;
-      members.length (type.struct_ ().count_member ());
+      members.length ((*type.struct__if_set ()).count_member ());
       CORBA::ULong pos (0);
 
       for (StructType::member_const_iterator i =
-        type.struct_ ().begin_member ();
-           i != type.struct_ ().end_member (); ++i)
+        (*type.struct__if_set ()).begin_member ();
+           i != (*type.struct__if_set ()).end_member (); ++i)
         {
-          members[pos].name = ACE_TEXT_ALWAYS_CHAR ((*i)->name ().c_str ());
-          members[pos].type = DYNANY_HANDLER->create_typecode ((*i)->type ());
+          members[pos].name = ACE_TEXT_ALWAYS_CHAR (i->name ().c_str ());
+          members[pos].type = DYNANY_HANDLER->create_typecode (i->type ());
           ++pos;
         }
 
@@ -121,7 +123,7 @@ namespace DAnCE
           ACE_TEXT_ALWAYS_CHAR (name.c_str ()),
           members);
 
-      DYNANY_HANDLER->register_typecode (type.struct_ ().typeId (), tc.in ());
+      DYNANY_HANDLER->register_typecode ((*type.struct__if_set ()).typeId (), tc.in ());
 
       return tc._retn ();
     }

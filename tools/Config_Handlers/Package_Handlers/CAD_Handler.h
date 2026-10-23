@@ -8,7 +8,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/XML_Utils/XML_Typedefs.h"
+#include "ace/XML_Utils/XMLSchema/Types.hpp"
 #include "dance/Deployment/DeploymentC.h"
 #include "Package_Handlers/Packaging_Handlers_Export.h"
 

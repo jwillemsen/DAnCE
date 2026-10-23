@@ -30,7 +30,7 @@ namespace DAnCE
             tc = DynAlias_Handler::create_typecode (type);
 
           DynamicAny::DynAny_var alias = DYNANY_HANDLER->extract_into_dynany (
-            type.alias ().elementType (), value, tc);
+            (*type.alias_if_set ()).elementType (), value, tc);
           return alias._retn ();
         }
       catch (const DynamicAny::DynAny::InvalidValue&)
@@ -39,16 +39,16 @@ namespace DAnCE
             (LM_ERROR,
               ACE_TEXT ("Invalid value provided in XML when trying to ")
               ACE_TEXT ("initialize an instance of enumerated type %s\n"),
-              type.alias ().typeId ().c_str ()));
-          throw Config_Error (type.alias ().typeId (),
+              (*type.alias_if_set ()).typeId ().c_str ()));
+          throw Config_Error ((*type.alias_if_set ()).typeId (),
               ACE_TEXT ("Invalid value provided in XML"));
         }
       catch (Config_Error &ex)
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, ACE_TEXT ("DynAlias_Handler caught Config_Error\n")));
-          if (type.alias_p ())
-            ex.add_name (type.alias ().typeId ());
+          if (type.alias_if_set ())
+            ex.add_name ((*type.alias_if_set ()).typeId ());
 
           throw ex;
         }
@@ -56,7 +56,7 @@ namespace DAnCE
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR,
             ACE_TEXT ("DynAlias_Handler caught unknown exception\n")));
-          throw Config_Error (type.alias ().typeId (),
+          throw Config_Error ((*type.alias_if_set ()).typeId (),
                               ACE_TEXT ("Unknown exception"));
         }
     }
@@ -66,7 +66,7 @@ namespace DAnCE
     {
       DANCE_TRACE("DynAlias_Handler::create_typecode");
 
-      if (!type.alias_p ())
+      if (!type.alias_if_set ())
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, ACE_TEXT ("ERROR: Alias type description required")));
@@ -77,11 +77,11 @@ namespace DAnCE
 
       CORBA::TypeCode_var tc =
         DYNANY_HANDLER->orb ()->create_alias_tc
-        (ACE_TEXT_ALWAYS_CHAR (type.alias ().typeId ().c_str ()),
-         ACE_TEXT_ALWAYS_CHAR (type.alias ().name ().c_str ()),
-         DYNANY_HANDLER->create_typecode (type.alias ().elementType ()));
+        (ACE_TEXT_ALWAYS_CHAR ((*type.alias_if_set ()).typeId ().c_str ()),
+         ACE_TEXT_ALWAYS_CHAR ((*type.alias_if_set ()).name ().c_str ()),
+         DYNANY_HANDLER->create_typecode ((*type.alias_if_set ()).elementType ()));
 
-      DYNANY_HANDLER->register_typecode (type.alias ().typeId (),
+      DYNANY_HANDLER->register_typecode ((*type.alias_if_set ()).typeId (),
                                          tc.in ());
 
       return tc._retn ();

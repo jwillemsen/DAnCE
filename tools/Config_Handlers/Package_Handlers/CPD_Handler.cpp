@@ -6,6 +6,7 @@
 #include "dance/Deployment/Deployment_Packaging_DataC.h"
 #include "Deployment.hpp"
 #include "Utils/Exceptions.h"
+#include "ace/XML_Utils/XML_Helper.h"
 #include "Property_Handler.h"
 
 namespace DAnCE
@@ -49,26 +50,26 @@ namespace DAnCE
       {
         DANCE_TRACE ("CPD_Handler::component_package_descr");
 
-        auto_ptr < ComponentPackageDescription > xsc_cpd;
+        std::unique_ptr<ComponentPackageDescription> xsc_cpd;
         const ComponentPackageDescription *cpd = 0;
 
-        if (desc.href_p ())
+        if (desc.href_if_set ())
           {
-            xsc_cpd.reset (CPD_Handler::resolve_cpd (desc.href ().c_str ()));
+            xsc_cpd.reset (CPD_Handler::resolve_cpd (desc.href_if_set ()->c_str ()));
             cpd = xsc_cpd.get ();
           }
         else
           cpd = &desc;
 
-        if (cpd->label_p ())
-          toconfig.label = ACE_TEXT_ALWAYS_CHAR (cpd->label ().c_str ());
+        if (cpd->label_if_set ())
+          toconfig.label = ACE_TEXT_ALWAYS_CHAR (cpd->label_if_set ()->c_str ());
 
-        if (cpd->UUID_p ())
-          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR  (cpd->UUID ().c_str ());
+        if (cpd->UUID_if_set ())
+          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR (cpd->UUID_if_set ()->c_str ());
 
         // CID
-        if (cpd->realizes_p ())
-          Comp_Intf_Descr_Handler::comp_intf_descr (cpd->realizes (),
+        if (cpd->realizes_if_set ())
+          Comp_Intf_Descr_Handler::comp_intf_descr (*cpd->realizes_if_set (),
                                                     toconfig.realizes);
 
         // Config Properties
@@ -136,11 +137,12 @@ namespace DAnCE
         const ACE_TCHAR *uri)
       {
         DANCE_TRACE ("CPD_Handler::resolve_cpd");
-        if (!XML::XML_Typedef::XML_HELPER.is_initialized ())
+        XML::XML_Helper<> xml_helper;
+        if (!xml_helper.is_initialized ())
           return 0;
 
         xercesc::DOMDocument* dom =
-          XML::XML_Typedef::XML_HELPER.create_dom (uri);
+          xml_helper.create_dom (uri);
 
         if (!dom)
           throw Parse_Error ( ACE_TEXT (

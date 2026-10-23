@@ -25,7 +25,7 @@ namespace DAnCE
 
       toconfig.portName = ACE_TEXT_ALWAYS_CHAR ( desc.portName ().c_str ());
 
-      ACE_TString str (desc.instance ().idref ().id ().c_str ());
+      ACE_TString str (desc.instance ().idref_if_set ()->id ().c_str ());
       CORBA::ULong pos (0);
 
       SID_Handler::IDREF.find_ref (str, pos);
@@ -128,7 +128,7 @@ namespace DAnCE
 
       toconfig.propertyName = ACE_TEXT_ALWAYS_CHAR ( desc.propertyName ().c_str ());
 
-      ACE_TString str (desc.instance ().idref ().id ().c_str ());
+      ACE_TString str (desc.instance ().idref_if_set ()->id ().c_str ());
       CORBA::ULong pos (0);
 
       SID_Handler::IDREF.find_ref (str, pos);

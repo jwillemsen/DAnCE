@@ -12,7 +12,7 @@
 #include /**/ "ace/pre.h"
 
 #include <memory>
-#include "ace/XML_Utils/XML_Typedefs.h"
+#include "ace/XML_Utils/XMLSchema/Types.hpp"
 #include "Utils/Functors.h"
 #include "Package_Handlers/Packaging_Handlers_Export.h"
 

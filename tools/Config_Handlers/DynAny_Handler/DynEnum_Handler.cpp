@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include "DynEnum_Handler.h"
 #include "DynAny_Handler.h"
 #include "dance/Logger/Log_Macros.h"
@@ -36,8 +38,8 @@ namespace DAnCE
           DynamicAny::DynEnum_var retval = DynamicAny::DynEnum::_narrow (
             temp.in ());
 
-          retval->set_as_string (ACE_TEXT_ALWAYS_CHAR ((
-            *value.begin_enum ())->c_str ()));
+          retval->set_as_string (ACE_TEXT_ALWAYS_CHAR (
+            value.begin_enum ()->c_str ()));
 
           return retval._retn ();
         }
@@ -47,16 +49,16 @@ namespace DAnCE
             (LM_ERROR,
               ACE_TEXT ("Invalid value provided in XML when trying to ")
               ACE_TEXT ("initialize an instance of enumerated type %s\n"),
-              type.enum_ ().typeId ().c_str ()));
-          throw Config_Error (type.enum_ ().typeId (),
+              (*type.enum__if_set ()).typeId ().c_str ()));
+          throw Config_Error ((*type.enum__if_set ()).typeId (),
                               ACE_TEXT ("Invalid value provided in XML"));
         }
       catch (Config_Error &ex)
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, ACE_TEXT ("DynEnum_Handler caught Config_Error\n")));
-          if (type.enum_p ())
-            ex.add_name (type.enum_ ().typeId ());
+          if (type.enum__if_set ())
+            ex.add_name ((*type.enum__if_set ()).typeId ());
 
           throw ex;
         }
@@ -64,7 +66,7 @@ namespace DAnCE
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, ACE_TEXT ("DynEnum_Handler caught unknown exception\n")));
-          throw Config_Error (type.enum_ ().typeId (),
+          throw Config_Error ((*type.enum__if_set ()).typeId (),
                               ACE_TEXT ("Unknown exception"));
         }
     }
@@ -74,7 +76,7 @@ namespace DAnCE
     {
       DANCE_TRACE("DynEnum_Handler::create_typecode");
 
-      if (!type.enum_p ())
+      if (!type.enum__if_set ())
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, ACE_TEXT ("ERROR: Enum type description required")));
@@ -85,24 +87,24 @@ namespace DAnCE
 
       // Construct TypeCode for the enum
       CORBA::EnumMemberSeq members;
-      members.length (type.enum_ ().count_member ());
+      members.length ((*type.enum__if_set ()).count_member ());
       CORBA::ULong index (0);
 
-      for (EnumType::member_const_iterator i = type.enum_ ().begin_member ();
-           i != type.enum_ ().end_member ();
+      for (EnumType::member_const_iterator i = (*type.enum__if_set ()).begin_member ();
+           i != (*type.enum__if_set ()).end_member ();
            ++i)
         {
           members[index++] = CORBA::string_dup (
-            ACE_TEXT_ALWAYS_CHAR ((*i)->c_str ()));
+            ACE_TEXT_ALWAYS_CHAR (i->c_str ()));
         }
 
       CORBA::TypeCode_var tc =
         DYNANY_HANDLER->orb ()->create_enum_tc (
-          ACE_TEXT_ALWAYS_CHAR (type.enum_ ().typeId ().c_str ()),
-          ACE_TEXT_ALWAYS_CHAR (type.enum_ ().name ().c_str ()),
+          ACE_TEXT_ALWAYS_CHAR ((*type.enum__if_set ()).typeId ().c_str ()),
+          ACE_TEXT_ALWAYS_CHAR ((*type.enum__if_set ()).name ().c_str ()),
           members);
 
-      DYNANY_HANDLER->register_typecode ((type.enum_ ().typeId ()),
+      DYNANY_HANDLER->register_typecode (((*type.enum__if_set ()).typeId ()),
                                          tc.in ());
 
       return tc._retn ();

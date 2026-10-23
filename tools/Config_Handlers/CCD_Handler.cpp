@@ -18,20 +18,20 @@ namespace DAnCE
                                             Deployment::ComponentInterfaceDescription& toconfig)
     {
       DANCE_TRACE("CCD_Handler::component_interface_descr");
-      if (desc.UUID_p ())
+      if (desc.UUID_if_set ())
         toconfig.UUID =
-          CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (desc.UUID ().c_str ()));
+          CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (desc.UUID_if_set ()->c_str ()));
 
-      if (desc.label_p ())
+      if (desc.label_if_set ())
         {
           toconfig.label =
-            CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (desc.label ().c_str ()));
+            CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (desc.label_if_set ()->c_str ()));
         }
 
-      if (desc.specificType_p ())
+      if (desc.specificType_if_set ())
         {
           toconfig.specificType =
-            CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (desc.specificType ().c_str ()));
+            CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (desc.specificType_if_set ()->c_str ()));
         }
 
       ComponentInterfaceDescription::supportedType_const_iterator
@@ -44,7 +44,7 @@ namespace DAnCE
            s != end;
            ++s)
         {
-          toconfig.supportedType[pos++] = ACE_TEXT_ALWAYS_CHAR ((*s)->c_str ());
+          toconfig.supportedType[pos++] = ACE_TEXT_ALWAYS_CHAR (s->c_str ());
         }
 
       ComponentInterfaceDescription::idlFile_const_iterator
@@ -56,7 +56,7 @@ namespace DAnCE
            sidl != eidl;
            ++sidl)
         {
-          toconfig.idlFile [pos++] = ACE_TEXT_ALWAYS_CHAR ((*sidl)->c_str ());
+          toconfig.idlFile [pos++] = ACE_TEXT_ALWAYS_CHAR (sidl->c_str ());
         }
 
       ComponentInterfaceDescription::configProperty_const_iterator pend =
@@ -68,7 +68,7 @@ namespace DAnCE
            pstart != pend;
            ++pstart)
         {
-          Property_Handler::handle_property (*(*pstart),
+          Property_Handler::handle_property (*pstart,
                                              toconfig.configProperty [pos++]);
         }
 
@@ -79,7 +79,7 @@ namespace DAnCE
            port != desc.end_port ();
            ++port)
         {
-          CPD_Handler::handle_component_port_description (*(*port),
+          CPD_Handler::handle_component_port_description (*port,
                                                           toconfig.port[pos++]);
         }
 
@@ -91,7 +91,7 @@ namespace DAnCE
           prop != desc.end_property();
           prop++)
         {
-          ComponentPropertyDescription_Handler::component_property_description (*(*prop),
+          ComponentPropertyDescription_Handler::component_property_description (*prop,
                                                                                 toconfig.property[pos++]);
         }
 
@@ -102,7 +102,7 @@ namespace DAnCE
             infoProp != desc.end_infoProperty();
             infoProp++)
         {
-          Property_Handler::handle_property (*(*infoProp),
+          Property_Handler::handle_property (*infoProp,
                                              toconfig.infoProperty[pos]);
         }
     }

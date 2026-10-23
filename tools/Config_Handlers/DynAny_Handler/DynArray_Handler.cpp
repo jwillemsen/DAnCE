@@ -37,7 +37,7 @@ namespace DAnCE
       DynamicAny::DynAnySeq dynseq;
       CORBA::ULong pos = 0;
 
-      switch (type.array ().elementType ().kind ().integral ())
+      switch ((*type.array_if_set ()).elementType ().kind ().integral ())
         {
           // ========== BASIC TYPES
         case TCKind::tk_null_l:
@@ -77,8 +77,8 @@ namespace DAnCE
                    ++i)
                 {
                   DynamicAny::DynAny_var dynany
-                    (DYNANY_HANDLER->extract_into_dynany (type.array ().elementType (),
-                                                          **i));
+                    (DYNANY_HANDLER->extract_into_dynany ((*type.array_if_set ()).elementType (),
+                                                          *i));
                   dynseq[pos++] = dynany->copy ();
                 }
 
@@ -123,7 +123,7 @@ namespace DAnCE
     {
       DANCE_TRACE("DynArray_Handler::create_typecode");
 
-      if (!type.array_p ())
+      if (!type.array_if_set ())
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, ACE_TEXT (
@@ -133,9 +133,9 @@ namespace DAnCE
         }
 
       CORBA::TypeCode_var etc =
-        DYNANY_HANDLER->create_typecode (type.array ().elementType ());
+        DYNANY_HANDLER->create_typecode ((*type.array_if_set ()).elementType ());
 
-      CORBA::ULong const length =  type.array ().length ();
+      CORBA::ULong const length =  (*type.array_if_set ()).length ();
 
       CORBA::TypeCode_var tc =
         DYNANY_HANDLER->orb ()->create_array_tc (length, etc);
