@@ -259,8 +259,7 @@ namespace DAnCE
 
       }
 
-      ComponentAssemblyDescription *
-      CAD_Handler::resolve_cad (std::string_view)
+      ComponentAssemblyDescription * CAD_Handler::resolve_cad (std::string_view)
       {
         DANCE_TRACE("CAD_Handler::resolve_cad");
 

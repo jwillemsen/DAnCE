@@ -28,8 +28,7 @@ namespace DAnCE
       //      XML_Helper::XML_HELPER.terminate_parser ();
     }
 
-    bool
-    XML_File_Intf::read_process_plan (const ACE_TCHAR *file)
+    bool XML_File_Intf::read_process_plan (const ACE_TCHAR *file)
     {
       DANCE_TRACE("XML_File_Intf::read_process_plan");
 
@@ -101,8 +100,7 @@ namespace DAnCE
       return false;
     }
 
-    bool
-    XML_File_Intf::read_process_domain (const ACE_TCHAR *file)
+    bool XML_File_Intf::read_process_domain (const ACE_TCHAR *file)
     {
       DANCE_TRACE("XML_File_Intf::read_process_domain");
 
@@ -186,8 +184,7 @@ namespace DAnCE
       return this->idl_dp_.get ();
     }
 
-    ::Deployment::DeploymentPlan *
-    XML_File_Intf::release_plan (void)
+    ::Deployment::DeploymentPlan * XML_File_Intf::release_plan (void)
     {
       DANCE_TRACE("XML_File_Intf::get_plan");
 
@@ -207,8 +204,7 @@ namespace DAnCE
       return this->idl_domain_.get ();
     }
 
-    ::Deployment::Domain *
-    XML_File_Intf::release_domain (void)
+    ::Deployment::Domain * XML_File_Intf::release_domain (void)
     {
       DANCE_TRACE("XML_File_Intf::get_domain");
 
@@ -217,9 +213,7 @@ namespace DAnCE
       return this->idl_domain_.release ();
     }
 
-    void
-    XML_File_Intf::add_search_path (const ACE_TCHAR *environment,
-                                    const ACE_TCHAR *relpath)
+    void XML_File_Intf::add_search_path (const ACE_TCHAR *environment, const ACE_TCHAR *relpath)
     {
       DANCE_TRACE("XML_File_Intf::add_search_path");
       xml_helper_.get_resolver ().get_resolver ().add_path (environment, relpath);

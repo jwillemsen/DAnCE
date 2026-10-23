@@ -33,9 +33,7 @@ namespace DAnCE
         }
     }
 
-    PlanConnectionDescription
-    DP_PCD_Handler::plan_connection_descr (
-    const Deployment::PlanConnectionDescription &src)
+    PlanConnectionDescription DP_PCD_Handler::plan_connection_descr (const Deployment::PlanConnectionDescription &src)
     {
       DANCE_TRACE("DP_PCD_Handler::plan_connection_descr");
       PlanConnectionDescription pcd = PCD_Handler::get_PlanConnectionDescription(src);

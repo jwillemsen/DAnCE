@@ -21,9 +21,7 @@ namespace DAnCE
   {
     namespace Packaging
     {
-      void
-      PCD_Handler::package_config (const ACE_TCHAR *uri,
-                                   ::Deployment::PackageConfiguration &toconfig)
+      void PCD_Handler::package_config (const ACE_TCHAR *uri, ::Deployment::PackageConfiguration &toconfig)
       {
         XML::XML_Helper<> xml_helper;
         XERCES_CPP_NAMESPACE::DOMDocument *dom = xml_helper.create_dom (uri);
@@ -71,9 +69,7 @@ namespace DAnCE
           }
       }
 
-      void
-      PCD_Handler::package_config (const PackageConfiguration &desc,
-                                   ::Deployment::PackageConfiguration &toconfig)
+      void PCD_Handler::package_config (const PackageConfiguration &desc, ::Deployment::PackageConfiguration &toconfig)
       {
         DANCE_TRACE ("PCD_Handler::package_config");
         std::unique_ptr<PackageConfiguration> xsc_pcd;
@@ -127,8 +123,7 @@ namespace DAnCE
 
       }
 
-      PackageConfiguration
-      PCD_Handler::package_config (const Deployment::PackageConfiguration& src)
+      PackageConfiguration PCD_Handler::package_config (const Deployment::PackageConfiguration& src)
       {
         DANCE_TRACE ("PCD_Handler::package_config - reverse");
         PackageConfiguration pcd = PackageConfiguration ();

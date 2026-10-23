@@ -24,9 +24,7 @@ namespace DAnCE
       DANCE_TRACE("Any_Handler::destructor");
     }
 
-    void
-    Any_Handler::extract_into_any (const Any& desc,
-                                   CORBA::Any& toconfig)
+    void Any_Handler::extract_into_any (const Any& desc, CORBA::Any& toconfig)
     {
       DANCE_TRACE("Any_Handler::extract_into_any");
       try

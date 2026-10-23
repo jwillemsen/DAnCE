@@ -68,9 +68,7 @@ namespace DAnCE
       toconfig.optional =  desc.optional ();
     }
 
-    ComponentPortDescription
-    CPD_Handler::component_port_description (
-                                             const Deployment::ComponentPortDescription& src)
+    ComponentPortDescription CPD_Handler::component_port_description (const Deployment::ComponentPortDescription& src)
     {
       DANCE_TRACE("CPD_Handler::component_port_description - reverse");
       XMLSchema::string<char> name (src.name);

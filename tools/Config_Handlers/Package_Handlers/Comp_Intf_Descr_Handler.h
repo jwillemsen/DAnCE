@@ -38,8 +38,7 @@ namespace DAnCE
         static void comp_intf_descr (const ComponentInterfaceDescription &descr,
                                      ::Deployment::ComponentInterfaceDescription &toconfig);
 
-        static ComponentInterfaceDescription
-        comp_intf_descr (const ::Deployment::ComponentInterfaceDescription &src);
+        static ComponentInterfaceDescription comp_intf_descr (const ::Deployment::ComponentInterfaceDescription &src);
 
       private:
         static ComponentInterfaceDescription *resolve_cid (std::string_view uri);

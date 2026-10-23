@@ -44,9 +44,7 @@ namespace DAnCE
                      String_Seq_Functor (dest.supportedType));
     }
 
-    ExternalReferenceEndpoint
-    ERE_Handler::external_ref_endpoint (
-                                        const Deployment::ExternalReferenceEndpoint& src)
+    ExternalReferenceEndpoint ERE_Handler::external_ref_endpoint (const Deployment::ExternalReferenceEndpoint& src)
     {
       DANCE_TRACE("ERE_Handler::external_ref_endpoint - reverse");
       XMLSchema::string<char> loc (src.location);

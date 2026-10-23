@@ -78,8 +78,7 @@ namespace DAnCE
         }
     }
 
-    CORBA::TypeCode_ptr
-    DynEnum_Handler::create_typecode (const DataType &type)
+    CORBA::TypeCode_ptr DynEnum_Handler::create_typecode (const DataType &type)
     {
       DANCE_TRACE("DynEnum_Handler::create_typecode");
 

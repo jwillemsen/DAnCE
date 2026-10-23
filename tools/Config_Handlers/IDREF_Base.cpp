@@ -10,8 +10,7 @@ namespace DAnCE
     namespace Config_Handlers
     {
       template <typename T>
-      void
-      IDREF_Base<T>::bind_ref (std::string& id, T value)
+      void IDREF_Base<T>::bind_ref (std::string& id, T value)
       {
         DANCE_TRACE("IDREF_Base<T>::bind_ref");
 
@@ -26,8 +25,7 @@ namespace DAnCE
       }
 
       template <typename T>
-      void
-      IDREF_Base<T>::bind_next_available (std::string &id)
+      void IDREF_Base<T>::bind_next_available (std::string &id)
       {
         // Note:  For this function to compile and work properly,
         // T must have the postincrement operator defined.
@@ -49,8 +47,7 @@ namespace DAnCE
       }
 
       template <typename T>
-      void
-      IDREF_Base<T>::find_ref (const std::string& id, T& val)
+      void IDREF_Base<T>::find_ref (const std::string& id, T& val)
       {
         DANCE_TRACE("IDREF_Base<T>::find_ref(C_String, T)");
 
@@ -63,8 +60,7 @@ namespace DAnCE
       }
 
       template <typename T>
-      void
-      IDREF_Base<T>::find_ref (const T& value, std::string& id)
+      void IDREF_Base<T>::find_ref (const T& value, std::string& id)
       {
         DANCE_TRACE("IDREF_Base<T>::find_ref (T, CString)");
 
@@ -80,8 +76,7 @@ namespace DAnCE
       }
 
       template <typename T>
-      bool
-      IDREF_Base<T>::unbind_refs (void)
+      bool IDREF_Base<T>::unbind_refs (void)
       {
         DANCE_TRACE("IDREF_Base<T>::unbind_refs");
 

@@ -50,8 +50,7 @@ namespace DAnCE
     {
     }
 
-    bool
-    DD_Handler::build_domain ()
+    bool DD_Handler::build_domain ()
     {
       DANCE_TRACE("DP_PCD_Handler::build_domain");
       this->idl_domain_.reset ( new ::Deployment::Domain );
@@ -156,8 +155,7 @@ namespace DAnCE
 
     }
 
-    bool
-    DD_Handler::build_xsc ()
+    bool DD_Handler::build_xsc ()
     {
       return true;
     }
@@ -172,8 +170,7 @@ namespace DAnCE
       return this->idl_domain_.get();
     }
 
-    ::Deployment::Domain *
-    DD_Handler::domain_idl ()
+    ::Deployment::Domain * DD_Handler::domain_idl ()
     {
       if(!this->idl_domain_.get())
         throw NoDomain();
@@ -192,8 +189,7 @@ namespace DAnCE
       return this->domain_ptr_.get();
     }
 
-    Domain *
-    DD_Handler::domain_xsc ()
+    Domain * DD_Handler::domain_xsc ()
     {
       if(!this->domain_ptr_.get())
         throw NoDomain ();

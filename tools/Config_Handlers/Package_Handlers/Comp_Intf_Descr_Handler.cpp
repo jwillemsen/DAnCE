@@ -151,8 +151,7 @@ namespace DAnCE
         return retval;
       }
 
-      ComponentInterfaceDescription *
-      Comp_Intf_Descr_Handler::resolve_cid (std::string_view uri)
+      ComponentInterfaceDescription * Comp_Intf_Descr_Handler::resolve_cid (std::string_view uri)
       {
         DANCE_TRACE ("Comp_Intf_Descr_Handler::resolve_cid");
 

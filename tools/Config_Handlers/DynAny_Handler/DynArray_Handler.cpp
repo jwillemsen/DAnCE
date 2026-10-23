@@ -128,8 +128,7 @@ namespace DAnCE
       return retval._retn ();
     }
 
-    CORBA::TypeCode_ptr
-    DynArray_Handler::create_typecode (const DataType &type)
+    CORBA::TypeCode_ptr DynArray_Handler::create_typecode (const DataType &type)
     {
       DANCE_TRACE("DynArray_Handler::create_typecode");
 

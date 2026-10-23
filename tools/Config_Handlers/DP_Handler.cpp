@@ -53,8 +53,7 @@ namespace DAnCE
       throw NoPlan ();
     }
 
-    deploymentPlan *
-    DP_Handler::xsc (void)
+    deploymentPlan * DP_Handler::xsc (void)
     {
       DANCE_TRACE("DP_Handler::xsc");
       if (this->retval_ && this->xsc_dp_.get () != 0)
@@ -73,8 +72,7 @@ namespace DAnCE
       throw NoPlan ();
     }
 
-    ::Deployment::DeploymentPlan *
-    DP_Handler::plan (void)
+    ::Deployment::DeploymentPlan * DP_Handler::plan (void)
     {
       DANCE_TRACE("DP_Handler::plan");
       if (this->retval_ && this->idl_dp_.get () != 0)
@@ -83,8 +81,7 @@ namespace DAnCE
       throw NoPlan ();
     }
 
-    bool
-    DP_Handler::resolve_plan (deploymentPlan &xsc_dp)
+    bool DP_Handler::resolve_plan (deploymentPlan &xsc_dp)
     {
       DANCE_TRACE ("DP_Handler::resolve_plan");
 
@@ -172,8 +169,7 @@ namespace DAnCE
       return true;
     }
 
-    bool
-    DP_Handler::build_xsc (const ::Deployment::DeploymentPlan &plan)
+    bool DP_Handler::build_xsc (const ::Deployment::DeploymentPlan &plan)
     {
       DANCE_TRACE ("DP_Handler::build_xsc");
 

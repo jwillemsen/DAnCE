@@ -52,8 +52,7 @@ namespace DAnCE
         static void handle_component_package_descr (const ComponentPackageDescription &desc,
                                              ::Deployment::ComponentPackageDescription &toconfig);
 
-        static ComponentPackageDescription
-      component_package_descr (const Deployment::ComponentPackageDescription& src);
+        static ComponentPackageDescription component_package_descr (const Deployment::ComponentPackageDescription& src);
       private:
         static ComponentPackageDescription * resolve_cpd (std::string_view uri);
 

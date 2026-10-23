@@ -15,9 +15,7 @@ namespace DAnCE
     {
     }
 
-    void
-    Req_Handler::handle_requirement (const Requirement& desc,
-                     Deployment::Requirement& toconfig)
+    void Req_Handler::handle_requirement (const Requirement& desc, Deployment::Requirement& toconfig)
     {
       DANCE_TRACE("Req_Handler::get_Requirement");
 
@@ -32,8 +30,7 @@ namespace DAnCE
                      Property_Functor (toconfig.property));
     }
 
-    Requirement
-    Req_Handler::get_requirement (const Deployment::Requirement& src)
+    Requirement Req_Handler::get_requirement (const Deployment::Requirement& src)
     {
       DANCE_TRACE("Req_Handler::get_requirement - reverse");
 

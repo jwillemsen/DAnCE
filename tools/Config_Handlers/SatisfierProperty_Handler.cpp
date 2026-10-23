@@ -78,9 +78,7 @@ namespace DAnCE
         }
     }
 
-    SatisfierProperty
-    SatisfierProperty_Handler::get_sat_property (
-                                                 const Deployment::SatisfierProperty& src)
+    SatisfierProperty SatisfierProperty_Handler::get_sat_property (const Deployment::SatisfierProperty& src)
     {
       DANCE_TRACE("SatisfierProperty_Handler::get_sat_property - reverse");
 

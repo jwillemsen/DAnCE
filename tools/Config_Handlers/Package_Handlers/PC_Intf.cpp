@@ -15,8 +15,7 @@ namespace DAnCE
         throw;
     }
 
-    bool
-    STD_PC_Intf::prepare_PC (const char *file)
+    bool STD_PC_Intf::prepare_PC (const char *file)
     {
       DANCE_TRACE("STD_PC_Intf::prepare_PC");
 
@@ -64,8 +63,7 @@ namespace DAnCE
       return this->idl_pc_.get ();
     }
 
-    ::Deployment::PackageConfiguration *
-    STD_PC_Intf::get_PC (void)
+    ::Deployment::PackageConfiguration * STD_PC_Intf::get_PC (void)
     {
       return this->idl_pc_.release ();
     }

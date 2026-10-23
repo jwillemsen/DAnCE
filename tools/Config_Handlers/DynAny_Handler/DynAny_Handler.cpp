@@ -43,16 +43,14 @@ namespace DAnCE
       DANCE_TRACE("DynAny_Handler::destructor");
     }
 
-    CORBA::ORB_ptr
-    DynAny_Handler::orb ()
+    CORBA::ORB_ptr DynAny_Handler::orb ()
     {
       DANCE_TRACE("DynAny_Handler::orb");
 
       return orb_.in ();
     }
 
-    DynamicAny::DynAnyFactory_ptr
-    DynAny_Handler::daf ()
+    DynamicAny::DynAnyFactory_ptr DynAny_Handler::daf ()
     {
       DANCE_TRACE("DynAny_Handler::daf");
 
@@ -328,8 +326,7 @@ namespace DAnCE
       return retval._retn ();
     }
 
-    Any
-    DynAny_Handler::extract_from_dynany (const CORBA::Any &any)
+    Any DynAny_Handler::extract_from_dynany (const CORBA::Any &any)
     {
       DANCE_TRACE("DynAny_Handler::extract_from_dynany");
 
@@ -340,8 +337,7 @@ namespace DAnCE
       return retval;
     }
 
-    CORBA::TypeCode_ptr
-    DynAny_Handler::create_typecode (const DataType &type)
+    CORBA::TypeCode_ptr DynAny_Handler::create_typecode (const DataType &type)
     {
       DANCE_TRACE("DynAny_Handler::create_typecode");
 
@@ -442,10 +438,7 @@ namespace DAnCE
       return 0;
     }
 
-    void
-    DynAny_Handler::register_typecode (
-      std::string_view typeID,
-      CORBA::TypeCode_ptr tc)
+    void DynAny_Handler::register_typecode (std::string_view typeID, CORBA::TypeCode_ptr tc)
     {
       DANCE_TRACE("DynAny_Handler::register_typecode");
 
@@ -453,8 +446,7 @@ namespace DAnCE
     }
 
 
-    CORBA::TypeCode_ptr
-    DynAny_Handler::get_typecode (std::string_view typeID)
+    CORBA::TypeCode_ptr DynAny_Handler::get_typecode (std::string_view typeID)
     {
       DANCE_TRACE("DynAny_Handler::get_typecode");
 

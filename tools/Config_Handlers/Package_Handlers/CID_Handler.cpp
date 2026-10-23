@@ -403,8 +403,7 @@ namespace DAnCE
         return retval;
       }
 
-      ComponentImplementationDescription *
-      CID_Handler::resolve_cid (std::string_view uri)
+      ComponentImplementationDescription * CID_Handler::resolve_cid (std::string_view uri)
       {
         DANCE_TRACE ("CID_Handler::resolve_cid");
 

@@ -65,8 +65,7 @@ namespace DAnCE
         }
     }
 
-    CORBA::TypeCode_ptr
-    DynAlias_Handler::create_typecode (const DataType &type)
+    CORBA::TypeCode_ptr DynAlias_Handler::create_typecode (const DataType &type)
     {
       DANCE_TRACE("DynAlias_Handler::create_typecode");
 
