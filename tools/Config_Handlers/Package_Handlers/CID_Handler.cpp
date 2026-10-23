@@ -261,7 +261,7 @@ namespace DAnCE
         DANCE_TRACE ("CID_Handler::component_impl_descr");
 
         const ComponentImplementationDescription *cid = 0;
-        std::auto_ptr <ComponentImplementationDescription> xsc_cid;
+        std::unique_ptr<ComponentImplementationDescription> xsc_cid;
 
 
         ::XMLSchema::string<char> const* href_if_set_ptr = desc.href_if_set ();

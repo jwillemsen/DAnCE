@@ -76,7 +76,7 @@ namespace DAnCE
                                    ::Deployment::PackageConfiguration &toconfig)
       {
         DANCE_TRACE ("PCD_Handler::package_config");
-        std::auto_ptr < PackageConfiguration > xsc_pcd;
+        std::unique_ptr<PackageConfiguration> xsc_pcd;
 
         const PackageConfiguration *pcd;
 

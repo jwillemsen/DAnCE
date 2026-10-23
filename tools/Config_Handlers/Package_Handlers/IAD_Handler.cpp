@@ -25,7 +25,7 @@ namespace DAnCE
         DANCE_TRACE ("IAD_Handler::impl_artifact_descr");
 
         const ImplementationArtifactDescription *iad = 0;
-        std::auto_ptr <ImplementationArtifactDescription> safe_iad;
+        std::unique_ptr<ImplementationArtifactDescription> safe_iad;
 
 
         ::XMLSchema::string<char> const* href_if_set_ptr = desc.href_if_set ();

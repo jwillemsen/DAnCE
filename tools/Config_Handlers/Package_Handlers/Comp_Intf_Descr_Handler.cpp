@@ -53,7 +53,7 @@ namespace DAnCE
         DANCE_TRACE ("Comp_Intf_Descr_Handler::comp_intf_descr");
 
         const ComponentInterfaceDescription *cid = 0;
-        std::auto_ptr <ComponentInterfaceDescription> safe_cid;
+        std::unique_ptr<ComponentInterfaceDescription> safe_cid;
 
 
         ::XMLSchema::string<char> const* href_if_set_ptr = desc.href_if_set ();

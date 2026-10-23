@@ -150,7 +150,7 @@ namespace DAnCE
             (Property_Handler::get_property (src.configProperty[i]));
 #endif
         // @@MAJO This is not a good way of binding reverse IDREFS.
-        std::auto_ptr <ACE_Utils::UUID> safe_uuid (
+        std::unique_ptr<ACE_Utils::UUID> safe_uuid (
           ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());
         std::string uuid ( safe_uuid->to_string ()->c_str ());
 

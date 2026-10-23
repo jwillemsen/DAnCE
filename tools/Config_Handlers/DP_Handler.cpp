@@ -18,8 +18,8 @@ namespace DAnCE
   namespace Config_Handlers
   {
     DP_Handler::DP_Handler (deploymentPlan &dp)
-      :   xsc_dp_ (0)
-      , idl_dp_ (0)
+      : xsc_dp_ {}
+      , idl_dp_ {}
       , retval_ (true)
     {
       DANCE_TRACE("DP_Handler::constructor");
@@ -28,8 +28,8 @@ namespace DAnCE
     }
 
     DP_Handler::DP_Handler (const ::Deployment::DeploymentPlan &plan)
-      : xsc_dp_ (new deploymentPlan),
-        idl_dp_ (0),
+      : xsc_dp_ (std::make_unique<deploymentPlan> ()),
+        idl_dp_ {},
         retval_ (0)
     {
       DANCE_TRACE("DP_Handler::constructor");
@@ -88,10 +88,7 @@ namespace DAnCE
     {
       DANCE_TRACE ("DP_Handler::resolve_plan");
 
-      ::Deployment::DeploymentPlan *tmp =
-          new Deployment::DeploymentPlan;
-
-      this->idl_dp_.reset (tmp);
+      this->idl_dp_ = std::make_unique<Deployment::DeploymentPlan> ();
 
       // Read in the label, if present, since minoccurs = 0
       ::XMLSchema::string<char> const* label_if_set_ptr = xsc_dp.label_if_set ();

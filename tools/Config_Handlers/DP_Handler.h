@@ -12,7 +12,6 @@
 
 #include "Config_Handlers_Export.h"
 #include <memory>
-using std::auto_ptr;
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -72,9 +71,9 @@ namespace DAnCE
           bool build_xsc (const ::Deployment::DeploymentPlan &plan);
 
         private:
-          auto_ptr< deploymentPlan > xsc_dp_;
+          std::unique_ptr<deploymentPlan> xsc_dp_;
 
-          auto_ptr< ::Deployment::DeploymentPlan> idl_dp_;
+          std::unique_ptr<::Deployment::DeploymentPlan> idl_dp_;
 
           bool retval_;
         };
