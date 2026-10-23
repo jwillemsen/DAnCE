@@ -88,7 +88,7 @@ namespace DAnCE
         // Packaged Component Implementations
         toconfig.implementation.length ( cpd->implementation ().size ());
         SEQ_HAND_GCC_BUG_WORKAROUND (PCI_Handler::handle_pci,
-                                     (*cpd->implementation ().begin ()),
+                                     cpd->implementation ().front (),
                                      toconfig.implementation);
         std::for_each (cpd->implementation ().begin (),
                        cpd->implementation ().end (),

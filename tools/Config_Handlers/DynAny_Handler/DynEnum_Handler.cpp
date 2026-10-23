@@ -24,10 +24,14 @@ namespace DAnCE
       DANCE_TRACE("DynEnum_Handler::extract_into_dynany");
 
       ::DAnCE::Config_Handlers::EnumType const* enumType =
-        type.enum__if_set ();
+        type._cxx_enum_if_set ();
       if (!enumType)
         throw Config_Error (ACE_TEXT (""),
                             ACE_TEXT ("Expected enum type information"));
+
+      ::DAnCE::Config_Handlers::DataValue::enum_container_type const& enum_values = value._cxx_enum ();
+      if (enum_values.empty ())
+        throw Config_Error (enumType->typeId (), ACE_TEXT ("Enum value required"));
 
       try
         {
@@ -44,8 +48,7 @@ namespace DAnCE
           DynamicAny::DynEnum_var retval = DynamicAny::DynEnum::_narrow (
             temp.in ());
 
-          retval->set_as_string (
-            value.enum_ ().begin ()->c_str ());
+          retval->set_as_string (enum_values.front ().c_str ());
 
           return retval._retn ();
         }
@@ -81,7 +84,7 @@ namespace DAnCE
       DANCE_TRACE("DynEnum_Handler::create_typecode");
 
 
-      ::DAnCE::Config_Handlers::EnumType const* enum__if_set_ptr_2 = type.enum__if_set ();
+      ::DAnCE::Config_Handlers::EnumType const* enum__if_set_ptr_2 = type._cxx_enum_if_set ();
       if (!enum__if_set_ptr_2)
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,

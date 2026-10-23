@@ -74,12 +74,12 @@ namespace DAnCE
 
       TCKind::Value tkind = type.kind ().integral ();
 
-      if ((!value.short_ ().empty () && tkind != TCKind::tk_short_l) ||
-          (!value.long_ ().empty () && tkind != TCKind::tk_long_l) ||
+      if ((!value._cxx_short ().empty () && tkind != TCKind::tk_short_l) ||
+          (!value._cxx_long ().empty () && tkind != TCKind::tk_long_l) ||
           (!value.ushort ().empty () && tkind != TCKind::tk_ushort_l ) ||
           (!value.ulong ().empty () && tkind != TCKind::tk_ulong_l) ||
-          (!value.float_ ().empty () && tkind != TCKind::tk_float_l) ||
-          (!value.double_ ().empty () && tkind != TCKind::tk_double_l) ||
+          (!value._cxx_float ().empty () && tkind != TCKind::tk_float_l) ||
+          (!value._cxx_double ().empty () && tkind != TCKind::tk_double_l) ||
           (!value.boolean ().empty () && tkind != TCKind::tk_boolean_l) ||
           (!value.octet ().empty () && tkind != TCKind::tk_octet_l) ||
           (!value.longlong ().empty () && tkind != TCKind::tk_longlong_l) ||
@@ -110,9 +110,9 @@ namespace DAnCE
                 retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_short);
               }
             CORBA::Short s = 0;
-            if (!value.short_ ().empty ())
+            if (!value._cxx_short ().empty ())
               {
-                s = *value.short_ ().begin ();
+                s = value._cxx_short ().front ();
               }
             retval->insert_short (s);
           }
@@ -125,9 +125,9 @@ namespace DAnCE
                 retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_long);
               }
             CORBA::Long l = 0;
-            if (!value.long_ ().empty ())
+            if (!value._cxx_long ().empty ())
               {
-                l = *value.long_ ().begin ();
+                l = value._cxx_long ().front ();
               }
             retval->insert_long (l);
           }
@@ -142,7 +142,7 @@ namespace DAnCE
             CORBA::UShort us = 0;
             if (!value.ushort ().empty ())
               {
-                us = *value.ushort ().begin ();
+                us = value.ushort ().front ();
               }
             retval->insert_ushort (us);
           }
@@ -157,7 +157,7 @@ namespace DAnCE
             CORBA::ULong ul = 0;
             if (!value.ulong ().empty ())
               {
-                ul = *value.ulong ().begin ();
+                ul = value.ulong ().front ();
               }
             retval->insert_ulong (ul);
           }
@@ -170,9 +170,9 @@ namespace DAnCE
                 retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_float);
               }
             CORBA::Float f = 0.0f;
-            if (!value.float_ ().empty ())
+            if (!value._cxx_float ().empty ())
               {
-                f = *value.float_ ().begin ();
+                f = value._cxx_float ().front ();
               }
             retval->insert_float (f);
           }
@@ -185,9 +185,9 @@ namespace DAnCE
                 retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_double);
               }
             CORBA::Double d = 0.0;
-            if (!value.double_ ().empty ())
+            if (!value._cxx_double ().empty ())
               {
-                d = *value.double_ ().begin ();
+                d = value._cxx_double ().front ();
               }
             retval->insert_double (d);
           }
@@ -202,7 +202,7 @@ namespace DAnCE
             CORBA::Boolean b = false;
             if (!value.boolean ().empty ())
               {
-                b = *value.boolean ().begin ();
+                b = value.boolean ().front ();
               }
             retval->insert_boolean (b);
           }
@@ -217,7 +217,7 @@ namespace DAnCE
             CORBA::Octet o = 0;
             if (!value.octet ().empty ())
               {
-                o = *value.octet ().begin ();
+                o = value.octet ().front ();
               }
             retval->insert_octet (o);
           }
@@ -232,7 +232,7 @@ namespace DAnCE
             CORBA::LongLong ll = 0;
             if (!value.longlong ().empty ())
               {
-                ll = *value.longlong ().begin ();
+                ll = value.longlong ().front ();
               }
             retval->insert_longlong (ll);
           }
@@ -247,7 +247,7 @@ namespace DAnCE
             CORBA::ULongLong ull = 0;
             if (!value.ulonglong ().empty ())
               {
-                ull = *value.ulonglong ().begin ();
+                ull = value.ulonglong ().front ();
               }
             retval->insert_ulonglong (ull);
           }
@@ -265,7 +265,7 @@ namespace DAnCE
             CORBA::Char c = 0;
             if (!value.string ().empty ())
               {
-                c = *value.string ().begin ()->c_str ();
+                c = *value.string ().front ().c_str ();
               }
             retval->insert_char (c);
           }
@@ -280,7 +280,7 @@ namespace DAnCE
             CORBA::WChar wc = 0;
             if (!value.string ().empty ())
               {
-                wc = *value.string ().begin ()->c_str ();
+                wc = *value.string ().front ().c_str ();
               }
             retval->insert_wchar (wc);
           }

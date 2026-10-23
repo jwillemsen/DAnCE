@@ -21,7 +21,7 @@ namespace DAnCE
       DANCE_TRACE("Config_Handlers::create_type_map");
 
       ::DAnCE::Config_Handlers::StructType const* structType =
-        type.struct__if_set ();
+        type._cxx_struct_if_set ();
       if (!structType)
         throw Config_Error (ACE_TEXT (""),
                             ACE_TEXT ("Expected struct type information"));
@@ -42,7 +42,7 @@ namespace DAnCE
       DANCE_TRACE("DynStruct_Handler::extract_into_dynany");
 
       ::DAnCE::Config_Handlers::StructType const* structType =
-        type.struct__if_set ();
+        type._cxx_struct_if_set ();
       if (!structType)
         throw Config_Error (ACE_TEXT (""),
                             ACE_TEXT ("Expected struct type information"));
@@ -103,7 +103,7 @@ namespace DAnCE
       DANCE_TRACE("DynStruct_Handler::create_typecode");
 
 
-      ::DAnCE::Config_Handlers::StructType const* struct__if_set_ptr_2 = type.struct__if_set ();
+      ::DAnCE::Config_Handlers::StructType const* struct__if_set_ptr_2 = type._cxx_struct_if_set ();
       if (!struct__if_set_ptr_2)
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,

@@ -102,7 +102,7 @@ namespace DAnCE
 
         toconfig.property.length (cid->property ().size ());
         SEQ_HAND_GCC_BUG_WORKAROUND (Comp_Prop_Handler::handle_cpd,
-                                     (*cid->property ().begin ()),
+                                     cid->property ().front (),
                                      toconfig.property);
         std::for_each (cid->property ().begin (),
                        cid->property ().end (),

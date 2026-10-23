@@ -75,7 +75,7 @@ namespace DAnCE
 
       toconfig.internalEndpoint.length (desc.internalEndpoint ().size ());
       SEQ_HAND_GCC_BUG_WORKAROUND (SPE_Handler::handle_spe,
-                                   (*desc.internalEndpoint ().begin ()),
+                                   desc.internalEndpoint ().front (),
                                    toconfig.internalEndpoint);
       std::for_each (desc.internalEndpoint ().begin (),
              desc.internalEndpoint ().end (),
@@ -181,7 +181,7 @@ namespace DAnCE
 
       toconfig.delegatesTo.length (desc.delegatesTo ().size ());
       SEQ_HAND_GCC_BUG_WORKAROUND (SPR_Handler::handle_spr,
-                                   (*desc.delegatesTo ().begin ()),
+                                   desc.delegatesTo ().front (),
                                    toconfig.delegatesTo);
       std::for_each (desc.delegatesTo ().begin (),
              desc.delegatesTo ().end (),
@@ -225,7 +225,7 @@ namespace DAnCE
 
         toconfig.connection.length (desc.connection ().size ());
         SEQ_HAND_GCC_BUG_WORKAROUND (ACD_Handler::handle_acd,
-                                     (*desc.connection ().begin ()),
+                                     desc.connection ().front (),
                                      toconfig.connection);
         std::for_each (desc.connection ().begin (),
                        desc.connection ().end (),
@@ -233,7 +233,7 @@ namespace DAnCE
 
         toconfig.externalProperty.length (desc.externalProperty ().size ());
         SEQ_HAND_GCC_BUG_WORKAROUND (APM_Handler::handle_apm,
-                                     (*desc.externalProperty ().begin ()),
+                                     desc.externalProperty ().front (),
                                      toconfig.externalProperty);
         std::for_each (desc.externalProperty ().begin (),
                        desc.externalProperty ().end (),

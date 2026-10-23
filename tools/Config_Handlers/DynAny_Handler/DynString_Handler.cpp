@@ -35,7 +35,7 @@ namespace DAnCE
       const char* s = 0;
       if (!value.string ().empty ())
         {
-          s = value.string ().begin ()->c_str ();
+          s = value.string ().front ().c_str ();
         }
       retval->insert_string (s);
 
@@ -62,7 +62,7 @@ namespace DAnCE
         {
           if (!boundedString_if_set_ptr->bound ().empty ())
           {
-            bound = *boundedString_if_set_ptr->bound ().begin ();
+            bound = boundedString_if_set_ptr->bound ().front ();
           }
         }
 

@@ -43,7 +43,10 @@ namespace DAnCE
 
             tpd = reader::topLevelPackageDescription (dom);
 
-            PCD_Handler::package_config (*tpd.package ().begin (),
+            if (tpd.package ().empty ())
+              throw Plan_Error (ACE_TEXT ("Top-level package description contains no package"));
+
+            PCD_Handler::package_config (tpd.package ().front (),
                                          toconfig);
           }
         else if (root == XML::XStr (

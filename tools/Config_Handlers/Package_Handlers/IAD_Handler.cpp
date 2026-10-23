@@ -56,7 +56,7 @@ namespace DAnCE
 
         toconfig.dependsOn.length (iad->dependsOn ().size ());
         SEQ_HAND_GCC_BUG_WORKAROUND (NIA_Handler::handle_nia,
-                                     (*desc.dependsOn ().begin ()),
+                                     desc.dependsOn ().front (),
                                      toconfig.dependsOn);
         std::for_each (iad->dependsOn ().begin (),
                        iad->dependsOn ().end (),

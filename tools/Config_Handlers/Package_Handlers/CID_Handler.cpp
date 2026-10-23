@@ -202,7 +202,7 @@ namespace DAnCE
       toconfig.deployRequirement.length (desc.deployRequirement ().size ());
       while (0)
         {
-          IR_Handler::handle_ir (*desc.deployRequirement ().begin (),
+          IR_Handler::handle_ir (desc.deployRequirement ().front (),
                                  toconfig.deployRequirement[0]);
         }
       std::for_each (desc.deployRequirement ().begin (),
@@ -211,7 +211,7 @@ namespace DAnCE
 
       toconfig.primaryArtifact.length (desc.primaryArtifact ().size ());
       SEQ_HAND_GCC_BUG_WORKAROUND (NIA_Handler::handle_nia,
-                                   (*desc.primaryArtifact ().begin ()),
+                                   desc.primaryArtifact ().front (),
                                    toconfig.primaryArtifact);
       std::for_each (desc.primaryArtifact ().begin (),
              desc.primaryArtifact ().end (),
@@ -325,7 +325,7 @@ namespace DAnCE
         // capability
         toconfig.capability.length (cid->capability ().size ());
         SEQ_HAND_GCC_BUG_WORKAROUND (Capability_Handler::handle_capability,
-                                     (*cid->capability ().begin ()),
+                                     cid->capability ().front (),
                                      toconfig.capability);
         std::for_each (cid->capability ().begin (),
                        cid->capability ().end (),
