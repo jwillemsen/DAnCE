@@ -11,6 +11,7 @@
 #include "ace/XML_Utils/XMLSchema/Types.hpp"
 #include "dance/Deployment/Deployment_Packaging_DataC.h"
 #include "Package_Handlers/Packaging_Handlers_Export.h"
+#include <string_view>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,7 +42,7 @@ namespace DAnCE
         comp_intf_descr (const ::Deployment::ComponentInterfaceDescription &src);
 
       private:
-        static ComponentInterfaceDescription *resolve_cid (const char *uri);
+        static ComponentInterfaceDescription *resolve_cid (std::string_view uri);
       };
     }
   }

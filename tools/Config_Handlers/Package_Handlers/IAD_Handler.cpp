@@ -10,6 +10,7 @@
 
 #include "Deployment.hpp"
 #include "dance/Logger/Log_Macros.h"
+#include <string>
 
 namespace DAnCE
 {
@@ -108,12 +109,13 @@ namespace DAnCE
         return retval;
       }
 
-      ImplementationArtifactDescription *  IAD_Handler::resolve_iad (const char *uri)
+      ImplementationArtifactDescription * IAD_Handler::resolve_iad (std::string_view uri)
       {
         DANCE_TRACE ("IAD_Handler::resolve_iad");
 
         XML::XML_Helper<> xml_helper;
-        xercesc::DOMDocument *dom = xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri));
+        const std::string uri_string (uri);
+        xercesc::DOMDocument *dom = xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri_string.c_str()));
 
         if (!dom)
           throw Parse_Error ("Unable to create DOM for IAD");

@@ -13,6 +13,7 @@
 #include "Utils/Functors.h"
 #include "IDREF_Base.h"
 #include "Package_Handlers/Packaging_Handlers_Export.h"
+#include <string_view>
 
 namespace Deployment
 {
@@ -44,7 +45,7 @@ namespace DAnCE
         static IDREF_Base< CORBA::ULong > IDREF;
 
       private:
-        static SubcomponentInstantiationDescription *resolve_sid (const char *uri);
+        static SubcomponentInstantiationDescription *resolve_sid (std::string_view uri);
 
       };
 

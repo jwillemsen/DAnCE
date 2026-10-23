@@ -10,6 +10,7 @@
 #include "Package_Handlers/CPD_Handler.h"
 #include "tools/Config_Handlers/CPD_Handler.h"
 #include "dance/Logger/Log_Macros.h"
+#include <string>
 namespace DAnCE
 {
   namespace Config_Handlers
@@ -151,12 +152,13 @@ namespace DAnCE
       }
 
       ComponentInterfaceDescription *
-      Comp_Intf_Descr_Handler::resolve_cid (const char *uri)
+      Comp_Intf_Descr_Handler::resolve_cid (std::string_view uri)
       {
         DANCE_TRACE ("Comp_Intf_Descr_Handler::resolve_cid");
 
         XML::XML_Helper<> xml_helper;
-        xercesc::DOMDocument *dom = xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri));
+        const std::string uri_string (uri);
+        xercesc::DOMDocument *dom = xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri_string.c_str()));
 
         if (!dom)
           throw Parse_Error ("Unable to create DOM for Component Interface Description.");

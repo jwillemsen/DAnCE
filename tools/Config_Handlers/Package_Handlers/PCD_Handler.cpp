@@ -13,6 +13,7 @@
 #include "Req_Handler.h"
 
 #include <memory>
+#include <string>
 
 namespace DAnCE
 {
@@ -46,8 +47,7 @@ namespace DAnCE
             if (tpd.package ().empty ())
               throw Plan_Error ("Top-level package description contains no package");
 
-            PCD_Handler::package_config (ACE_TEXT_CHAR_TO_TCHAR (tpd.package ().front ().c_str ()),
-                                         toconfig);
+            PCD_Handler::package_config (tpd.package ().front (), toconfig);
           }
         else if (root == XML::XStr (
           ACE_TEXT ("Deployment:packageConfiguration")))
@@ -155,11 +155,12 @@ namespace DAnCE
 
       }
 
-      PackageConfiguration * PCD_Handler::resolve_package_config (const char *uri)
+      PackageConfiguration * PCD_Handler::resolve_package_config (std::string_view uri)
       {
         XML::XML_Helper<> xml_helper;
+        const std::string uri_string (uri);
         xercesc::DOMDocument* dom =
-          xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri));
+          xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri_string.c_str()));
 
         if (!dom)
           throw Parse_Error ("Unable to create DOM for PackageConfiguration");

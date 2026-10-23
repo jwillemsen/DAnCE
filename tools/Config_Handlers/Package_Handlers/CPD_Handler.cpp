@@ -8,6 +8,7 @@
 #include "Utils/Exceptions.h"
 #include "ace/XML_Utils/XML_Helper.h"
 #include "Property_Handler.h"
+#include <string>
 
 namespace DAnCE
 {
@@ -141,15 +142,16 @@ namespace DAnCE
       }
 
       ComponentPackageDescription * CPD_Handler::resolve_cpd (
-        const char *uri)
+        std::string_view uri)
       {
         DANCE_TRACE ("CPD_Handler::resolve_cpd");
         XML::XML_Helper<> xml_helper;
         if (!xml_helper.is_initialized ())
           return 0;
 
+        const std::string uri_string (uri);
         xercesc::DOMDocument* dom =
-          xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri));
+          xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri_string.c_str()));
 
         if (!dom)
           throw Parse_Error ( "Unable to create DOM for component package description");

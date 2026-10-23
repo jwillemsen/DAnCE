@@ -11,6 +11,7 @@
 #include "ace/XML_Utils/XMLSchema/Types.hpp"
 #include "dance/Deployment/DeploymentC.h"
 #include "Package_Handlers/Packaging_Handlers_Export.h"
+#include <string_view>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -45,7 +46,7 @@ namespace DAnCE
         component_assem_descr (const ::Deployment::ComponentAssemblyDescription &src);
 
       private:
-        static ComponentAssemblyDescription * resolve_cad (const char *uri);
+        static ComponentAssemblyDescription * resolve_cad (std::string_view uri);
       };
 
     }

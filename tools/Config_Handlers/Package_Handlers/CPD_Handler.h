@@ -15,6 +15,7 @@
 #include "ace/XML_Utils/XMLSchema/Types.hpp"
 #include "Utils/Functors.h"
 #include "Package_Handlers/Packaging_Handlers_Export.h"
+#include <string_view>
 
 namespace Deployment
 {
@@ -54,7 +55,7 @@ namespace DAnCE
         static ComponentPackageDescription
       component_package_descr (const Deployment::ComponentPackageDescription& src);
       private:
-        static ComponentPackageDescription * resolve_cpd (const char *uri);
+        static ComponentPackageDescription * resolve_cpd (std::string_view uri);
 
       };
 

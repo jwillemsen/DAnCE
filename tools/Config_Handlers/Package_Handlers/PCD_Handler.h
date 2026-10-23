@@ -12,6 +12,7 @@
 #include /**/ "ace/pre.h"
 
 #include "Packaging_Handlers_Export.h"
+#include <string_view>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -56,7 +57,7 @@ namespace DAnCE
         static PackageConfiguration package_config (const Deployment::PackageConfiguration& src);
 
       private:
-         static PackageConfiguration *resolve_package_config (const char *uri);
+         static PackageConfiguration *resolve_package_config (std::string_view uri);
       };
     }
 

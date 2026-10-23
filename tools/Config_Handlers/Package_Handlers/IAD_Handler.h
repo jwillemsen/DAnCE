@@ -12,6 +12,7 @@
 #include /**/ "ace/pre.h"
 
 #include "Package_Handlers/Packaging_Handlers_Export.h"
+#include <string_view>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -54,7 +55,7 @@ namespace DAnCE
         static ImplementationArtifactDescription
         impl_artifact_descr (const Deployment::ImplementationArtifactDescription& src);
 
-        static ImplementationArtifactDescription * resolve_iad (const char *uri);
+        static ImplementationArtifactDescription * resolve_iad (std::string_view uri);
       };
     }
   }

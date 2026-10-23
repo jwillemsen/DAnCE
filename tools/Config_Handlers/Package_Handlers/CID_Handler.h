@@ -11,6 +11,7 @@
 
 #include "IDREF_Base.h"
 #include "Package_Handlers/Packaging_Handlers_Export.h"
+#include <string_view>
 #include "tao/Basic_Types.h"
 
 namespace Deployment
@@ -55,7 +56,7 @@ namespace DAnCE
 
       private:
 
-        static ComponentImplementationDescription * resolve_cid (const char *uri);
+        static ComponentImplementationDescription * resolve_cid (std::string_view uri);
       };
     }
   }

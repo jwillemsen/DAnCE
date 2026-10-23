@@ -16,6 +16,7 @@
 
 #include "Deployment.hpp"
 #include "Property_Handler.h"
+#include <string>
 
 
 namespace DAnCE
@@ -405,12 +406,13 @@ namespace DAnCE
       }
 
       ComponentImplementationDescription *
-      CID_Handler::resolve_cid (const char *uri)
+      CID_Handler::resolve_cid (std::string_view uri)
       {
         DANCE_TRACE ("CID_Handler::resolve_cid");
 
         XML::XML_Helper<> xml_helper;
-        xercesc::DOMDocument *dom = xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri));
+        const std::string uri_string (uri);
+        xercesc::DOMDocument *dom = xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri_string.c_str()));
 
         if (!dom)
           throw Parse_Error ("Unable to create DOM for CID");
