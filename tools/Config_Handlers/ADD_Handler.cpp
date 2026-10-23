@@ -22,7 +22,7 @@ namespace DAnCE
         for (auto aci_b = src.artifact ().begin (); aci_e != aci_b; ++aci_b)
           {
             ADD_Handler::artifact_deployment_descr (*aci_b, dest[pos], pos);
-            pos++;
+            ++pos;
           }
       }
 

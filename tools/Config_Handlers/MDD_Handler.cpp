@@ -25,7 +25,7 @@ namespace DAnCE
       for (auto imp_b = src.implementation ().begin (); imp_b != imp_e; ++imp_b)
         {
           MDD_Handler::mono_deployment_description (*imp_b, dest[pos], pos);
-          pos++;
+          ++pos;
         }
     }
 

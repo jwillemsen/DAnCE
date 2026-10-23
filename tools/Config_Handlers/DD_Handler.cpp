@@ -68,7 +68,7 @@ namespace DAnCE
 
           int res_id {};
           // FOR EACH RESOURCE ....
-          for (auto res_iter = iter->resource ().begin (); res_iter != iter->resource ().end (); res_iter++, res_id++)
+          for (auto res_iter = iter->resource ().begin (); res_iter != iter->resource ().end (); ++res_iter, ++res_id)
             {
 
               this->idl_domain_->node[i].resource[res_id].name = CORBA::string_dup (res_iter->name ().c_str ());
@@ -82,7 +82,7 @@ namespace DAnCE
               for (auto res_type_iter =
                      res_iter->resourceType ().begin ();
                    res_type_iter != res_iter->resourceType ().end ();
-                   res_type_iter++, res_type_id++)
+                   ++res_type_iter, ++res_type_id)
                 {
                   this->idl_domain_->node[i].resource[res_id].resourceType[res_type_id] =
                     CORBA::string_dup (res_type_iter->c_str ());

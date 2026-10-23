@@ -20,7 +20,7 @@ namespace DAnCE
       for (auto esd_b = src.instance ().begin (); esd_b != esd_e; ++esd_b)
         {
           ESD_Handler::instance_deployment_descr ((*esd_b), dest[pos], pos);
-          pos++;
+          ++pos;
         }
     }
 

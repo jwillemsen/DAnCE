@@ -71,14 +71,14 @@ namespace DAnCE
       pos = 0;
       CORBA::ULong const len = desc.property ().size ();
       toconfig.property.length (len );
-      for(auto prop (desc.property ().begin ()); prop != desc.property ().end (); prop++)
+      for(auto prop (desc.property ().begin ()); prop != desc.property ().end (); ++prop)
         {
           ComponentPropertyDescription_Handler::component_property_description (*prop, toconfig.property[pos++]);
         }
 
       pos = 0;
       toconfig.infoProperty.length (desc.infoProperty ().size ());
-      for (auto infoProp (desc.infoProperty ().begin ()); infoProp != desc.infoProperty ().end (); infoProp++)
+      for (auto infoProp (desc.infoProperty ().begin ()); infoProp != desc.infoProperty ().end (); ++infoProp)
         {
           Property_Handler::handle_property (*infoProp, toconfig.infoProperty[pos]);
         }

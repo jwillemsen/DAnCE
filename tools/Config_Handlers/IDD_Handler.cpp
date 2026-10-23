@@ -26,7 +26,7 @@ namespace DAnCE
       for (auto idd_b = src.instance ().begin (); idd_b != idd_e; ++idd_b)
         {
           IDD_Handler::instance_deployment_descr (*idd_b, dest[pos], pos);
-          pos++;
+          ++pos;
         }
     }
 
