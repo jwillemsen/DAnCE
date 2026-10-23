@@ -172,7 +172,7 @@ namespace DAnCE
               {
                 retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_float);
               }
-            CORBA::Float f = 0.0f;
+            CORBA::Float f {};
             if (!value._cxx_float ().empty ())
               {
                 f = value._cxx_float ().front ();
@@ -187,7 +187,7 @@ namespace DAnCE
               {
                 retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_double);
               }
-            CORBA::Double d = 0.0;
+            CORBA::Double d {};
             if (!value._cxx_double ().empty ())
               {
                 d = value._cxx_double ().front ();
