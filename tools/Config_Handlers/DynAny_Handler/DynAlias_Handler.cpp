@@ -46,8 +46,7 @@ namespace DAnCE
               ACE_TEXT ("Invalid value provided in XML when trying to ")
               ACE_TEXT ("initialize an instance of enumerated type %s\n"),
               aliasType->typeId ().c_str ()));
-          throw Config_Error (aliasType->typeId (),
-              ACE_TEXT ("Invalid value provided in XML"));
+          throw Config_Error (aliasType->typeId (), ACE_TEXT ("Invalid value provided in XML"));
         }
       catch (Config_Error &ex)
         {
