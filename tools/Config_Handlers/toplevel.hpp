@@ -38,8 +38,8 @@ namespace DAnCE
 
       public:
       using package_container_type = std::list<::DAnCE::Config_Handlers::PackageConfiguration>;
-      package_container_type& package_values () noexcept;
-      package_container_type const& package_values () const noexcept;
+      package_container_type& package () noexcept;
+      package_container_type const& package () const noexcept;
 
       protected:
       package_container_type package_;

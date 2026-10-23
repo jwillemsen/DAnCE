@@ -113,8 +113,8 @@ namespace DAnCE
 
       // Similar thing for dependsOn
       for (auto dstart
-                  = xsc_dp.dependsOn_values ().begin ();
-            dstart != xsc_dp.dependsOn_values ().end ();
+                  = xsc_dp.dependsOn ().begin ();
+            dstart != xsc_dp.dependsOn ().end ();
             ++dstart)
         {
           CORBA::ULong len = this->idl_dp_->dependsOn.length ();
@@ -126,8 +126,8 @@ namespace DAnCE
 
       // ... An the property stuff
       for (auto pstart
-                  = xsc_dp.infoProperty_values ().begin ();
-            pstart != xsc_dp.infoProperty_values ().end ();
+                  = xsc_dp.infoProperty ().begin ();
+            pstart != xsc_dp.infoProperty ().end ();
             ++pstart)
         {
           CORBA::ULong len =
@@ -157,16 +157,16 @@ namespace DAnCE
       IDD_Handler::instance_deployment_descrs (xsc_dp,
                             this->idl_dp_->instance);
 
-      this->idl_dp_->connection.length (xsc_dp.connection_values ().size ());
-      std::for_each (xsc_dp.connection_values ().begin (),
-                      xsc_dp.connection_values ().end (),
+      this->idl_dp_->connection.length (xsc_dp.connection ().size ());
+      std::for_each (xsc_dp.connection ().begin (),
+                      xsc_dp.connection ().end (),
                       PCD_Functor (this->idl_dp_->connection));
 
       this->idl_dp_->localityConstraint.length (
-        xsc_dp.localityConstraint_values ().size ());
+        xsc_dp.localityConstraint ().size ());
 
-      std::for_each (xsc_dp.localityConstraint_values ().begin (),
-                      xsc_dp.localityConstraint_values ().end (),
+      std::for_each (xsc_dp.localityConstraint ().begin (),
+                      xsc_dp.localityConstraint ().end (),
                       PL_Functor (this->idl_dp_->localityConstraint));
 
       //PCD_Handler::get_PlanConnectionDescription (xsc_dp,

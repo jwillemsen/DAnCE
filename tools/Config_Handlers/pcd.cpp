@@ -17,11 +17,11 @@ namespace DAnCE
 {
   namespace Config_Handlers
   {
-    ComponentPackageImport::location_container_type& ComponentPackageImport::location_values () noexcept
+    ComponentPackageImport::location_container_type& ComponentPackageImport::location () noexcept
     {
       return location_;
     }
-    ComponentPackageImport::location_container_type const& ComponentPackageImport::location_values () const noexcept
+    ComponentPackageImport::location_container_type const& ComponentPackageImport::location () const noexcept
     {
       return location_;
     }
@@ -199,19 +199,19 @@ namespace DAnCE
         referencedPackage_ = std::make_unique<::DAnCE::Config_Handlers::ComponentPackageReference> (e);
       }
     }
-    PackageConfiguration::selectRequirement_container_type& PackageConfiguration::selectRequirement_values () noexcept
+    PackageConfiguration::selectRequirement_container_type& PackageConfiguration::selectRequirement () noexcept
     {
       return selectRequirement_;
     }
-    PackageConfiguration::selectRequirement_container_type const& PackageConfiguration::selectRequirement_values () const noexcept
+    PackageConfiguration::selectRequirement_container_type const& PackageConfiguration::selectRequirement () const noexcept
     {
       return selectRequirement_;
     }
-    PackageConfiguration::configProperty_container_type& PackageConfiguration::configProperty_values () noexcept
+    PackageConfiguration::configProperty_container_type& PackageConfiguration::configProperty () noexcept
     {
       return configProperty_;
     }
-    PackageConfiguration::configProperty_container_type const& PackageConfiguration::configProperty_values () const noexcept
+    PackageConfiguration::configProperty_container_type const& PackageConfiguration::configProperty () const noexcept
     {
       return configProperty_;
     }

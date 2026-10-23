@@ -17,11 +17,11 @@ namespace DAnCE
         DANCE_TRACE("ADD_Handler::atrifact_deployment_descrs");
 
         auto aci_e =
-          src.artifact_values ().end ();
-        dest.length (src.artifact_values ().size ());
+          src.artifact ().end ();
+        dest.length (src.artifact ().size ());
         CORBA::ULong pos = 0;
         for (auto aci_b =
-               src.artifact_values ().begin ();
+               src.artifact ().begin ();
              aci_e != aci_b;
              ++aci_b)
           {
@@ -45,12 +45,12 @@ namespace DAnCE
         dest.node =  src.node ().c_str ();
 
         auto end =
-          src.location_values ().end ();
+          src.location ().end ();
 
-        dest.location.length (src.location_values ().size ());
+        dest.location.length (src.location ().size ());
         CORBA::ULong len = 0;
         for (auto
-               start = src.location_values ().begin ();
+               start = src.location ().begin ();
              start != end;
              ++start)
           {
@@ -58,11 +58,11 @@ namespace DAnCE
           }
 
         auto sce =
-          src.source_values ().end ();
+          src.source ().end ();
         len = 0;
-        dest.source.length (src.source_values ().size ());
+        dest.source.length (src.source ().size ());
         for (auto
-               scb = src.source_values ().begin ();
+               scb = src.source ().begin ();
              scb != sce;
              ++scb)
           {
@@ -71,11 +71,11 @@ namespace DAnCE
 
         // @@TODO: See this loop is repeated
         auto adce =
-          src.execParameter_values ().end ();
+          src.execParameter ().end ();
         len = 0;
-        dest.execParameter.length (src.execParameter_values ().size ());
+        dest.execParameter.length (src.execParameter ().size ());
         for (auto adcb =
-               src.execParameter_values ().begin ();
+               src.execParameter ().begin ();
              adcb != adce;
              ++adcb)
           {

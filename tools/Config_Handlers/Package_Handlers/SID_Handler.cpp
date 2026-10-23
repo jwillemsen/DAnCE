@@ -51,10 +51,10 @@ namespace DAnCE
           {
             toconfig.importedPackage.length (1);
             toconfig.importedPackage[0].location.length (
-              importedPackage->location_values ().size ());
+              importedPackage->location ().size ());
 
-            std::for_each (importedPackage->location_values ().begin (),
-                           importedPackage->location_values ().end (),
+            std::for_each (importedPackage->location ().begin (),
+                           importedPackage->location ().end (),
                            String_Seq_Functor (
                              toconfig.importedPackage[0].location));
           }
@@ -80,14 +80,14 @@ namespace DAnCE
 
           }
 
-        toconfig.selectRequirement.length (desc.selectRequirement_values ().size ());
-        std::for_each (desc.selectRequirement_values ().begin (),
-                       desc.selectRequirement_values ().end (),
+        toconfig.selectRequirement.length (desc.selectRequirement ().size ());
+        std::for_each (desc.selectRequirement ().begin (),
+                       desc.selectRequirement ().end (),
                        Requirement_Functor (toconfig.selectRequirement));
 
-        toconfig.configProperty.length (desc.configProperty_values ().size ());
-        std::for_each (desc.configProperty_values ().begin (),
-                       desc.configProperty_values ().end (),
+        toconfig.configProperty.length (desc.configProperty ().size ());
+        std::for_each (desc.configProperty ().begin (),
+                       desc.configProperty ().end (),
                        Property_Functor (toconfig.configProperty));
 
 

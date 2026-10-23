@@ -13,12 +13,12 @@ namespace DAnCE
     {
       DANCE_TRACE("CEOE_Handler::external_port_endpoints");
       auto eeci_e =
-        src.externalEndpoint_values ().end ();
+        src.externalEndpoint ().end ();
 
       CORBA::ULong pos = 0;
-      dest.length (src.externalEndpoint_values ().size ());
+      dest.length (src.externalEndpoint ().size ());
       for (auto eeci_b =
-             src.externalEndpoint_values ().begin ();
+             src.externalEndpoint ().begin ();
            eeci_b != eeci_e;
            ++eeci_b)
         {

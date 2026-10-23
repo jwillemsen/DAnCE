@@ -41,8 +41,8 @@ namespace DAnCE
 
       public:
       using location_container_type = std::list<::XMLSchema::string<char>>;
-      location_container_type& location_values () noexcept;
-      location_container_type const& location_values () const noexcept;
+      location_container_type& location () noexcept;
+      location_container_type const& location () const noexcept;
 
       protected:
       location_container_type location_;
@@ -117,16 +117,16 @@ namespace DAnCE
 
       public:
       using selectRequirement_container_type = std::list<::DAnCE::Config_Handlers::Requirement>;
-      selectRequirement_container_type& selectRequirement_values () noexcept;
-      selectRequirement_container_type const& selectRequirement_values () const noexcept;
+      selectRequirement_container_type& selectRequirement () noexcept;
+      selectRequirement_container_type const& selectRequirement () const noexcept;
 
       protected:
       selectRequirement_container_type selectRequirement_;
 
       public:
       using configProperty_container_type = std::list<::DAnCE::Config_Handlers::Property>;
-      configProperty_container_type& configProperty_values () noexcept;
-      configProperty_container_type const& configProperty_values () const noexcept;
+      configProperty_container_type& configProperty () noexcept;
+      configProperty_container_type const& configProperty () const noexcept;
 
       protected:
       configProperty_container_type configProperty_;

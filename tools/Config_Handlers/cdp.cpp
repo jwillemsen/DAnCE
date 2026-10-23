@@ -98,11 +98,11 @@ namespace DAnCE
     {
       *name_ = e;
     }
-    PlanPropertyMapping::source_container_type& PlanPropertyMapping::source_values () noexcept
+    PlanPropertyMapping::source_container_type& PlanPropertyMapping::source () noexcept
     {
       return source_;
     }
-    PlanPropertyMapping::source_container_type const& PlanPropertyMapping::source_values () const noexcept
+    PlanPropertyMapping::source_container_type const& PlanPropertyMapping::source () const noexcept
     {
       return source_;
     }
@@ -114,11 +114,11 @@ namespace DAnCE
     {
       *externalName_ = e;
     }
-    PlanPropertyMapping::delegatesTo_container_type& PlanPropertyMapping::delegatesTo_values () noexcept
+    PlanPropertyMapping::delegatesTo_container_type& PlanPropertyMapping::delegatesTo () noexcept
     {
       return delegatesTo_;
     }
-    PlanPropertyMapping::delegatesTo_container_type const& PlanPropertyMapping::delegatesTo_values () const noexcept
+    PlanPropertyMapping::delegatesTo_container_type const& PlanPropertyMapping::delegatesTo () const noexcept
     {
       return delegatesTo_;
     }
@@ -233,67 +233,67 @@ namespace DAnCE
         realizes_ = std::make_unique<::DAnCE::Config_Handlers::ComponentInterfaceDescription> (e);
       }
     }
-    deploymentPlan::implementation_container_type& deploymentPlan::implementation_values () noexcept
+    deploymentPlan::implementation_container_type& deploymentPlan::implementation () noexcept
     {
       return implementation_;
     }
-    deploymentPlan::implementation_container_type const& deploymentPlan::implementation_values () const noexcept
+    deploymentPlan::implementation_container_type const& deploymentPlan::implementation () const noexcept
     {
       return implementation_;
     }
-    deploymentPlan::instance_container_type& deploymentPlan::instance_values () noexcept
+    deploymentPlan::instance_container_type& deploymentPlan::instance () noexcept
     {
       return instance_;
     }
-    deploymentPlan::instance_container_type const& deploymentPlan::instance_values () const noexcept
+    deploymentPlan::instance_container_type const& deploymentPlan::instance () const noexcept
     {
       return instance_;
     }
-    deploymentPlan::connection_container_type& deploymentPlan::connection_values () noexcept
+    deploymentPlan::connection_container_type& deploymentPlan::connection () noexcept
     {
       return connection_;
     }
-    deploymentPlan::connection_container_type const& deploymentPlan::connection_values () const noexcept
+    deploymentPlan::connection_container_type const& deploymentPlan::connection () const noexcept
     {
       return connection_;
     }
-    deploymentPlan::externalProperty_container_type& deploymentPlan::externalProperty_values () noexcept
+    deploymentPlan::externalProperty_container_type& deploymentPlan::externalProperty () noexcept
     {
       return externalProperty_;
     }
-    deploymentPlan::externalProperty_container_type const& deploymentPlan::externalProperty_values () const noexcept
+    deploymentPlan::externalProperty_container_type const& deploymentPlan::externalProperty () const noexcept
     {
       return externalProperty_;
     }
-    deploymentPlan::dependsOn_container_type& deploymentPlan::dependsOn_values () noexcept
+    deploymentPlan::dependsOn_container_type& deploymentPlan::dependsOn () noexcept
     {
       return dependsOn_;
     }
-    deploymentPlan::dependsOn_container_type const& deploymentPlan::dependsOn_values () const noexcept
+    deploymentPlan::dependsOn_container_type const& deploymentPlan::dependsOn () const noexcept
     {
       return dependsOn_;
     }
-    deploymentPlan::artifact_container_type& deploymentPlan::artifact_values () noexcept
+    deploymentPlan::artifact_container_type& deploymentPlan::artifact () noexcept
     {
       return artifact_;
     }
-    deploymentPlan::artifact_container_type const& deploymentPlan::artifact_values () const noexcept
+    deploymentPlan::artifact_container_type const& deploymentPlan::artifact () const noexcept
     {
       return artifact_;
     }
-    deploymentPlan::infoProperty_container_type& deploymentPlan::infoProperty_values () noexcept
+    deploymentPlan::infoProperty_container_type& deploymentPlan::infoProperty () noexcept
     {
       return infoProperty_;
     }
-    deploymentPlan::infoProperty_container_type const& deploymentPlan::infoProperty_values () const noexcept
+    deploymentPlan::infoProperty_container_type const& deploymentPlan::infoProperty () const noexcept
     {
       return infoProperty_;
     }
-    deploymentPlan::localityConstraint_container_type& deploymentPlan::localityConstraint_values () noexcept
+    deploymentPlan::localityConstraint_container_type& deploymentPlan::localityConstraint () noexcept
     {
       return localityConstraint_;
     }
-    deploymentPlan::localityConstraint_container_type const& deploymentPlan::localityConstraint_values () const noexcept
+    deploymentPlan::localityConstraint_container_type const& deploymentPlan::localityConstraint () const noexcept
     {
       return localityConstraint_;
     }

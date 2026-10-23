@@ -80,24 +80,24 @@ namespace DAnCE
                                                     toconfig.realizes);
 
         // Config Properties
-        toconfig.configProperty.length (desc.configProperty_values ().size ());
-        std::for_each (cpd->infoProperty_values ().begin (),
-                       cpd->infoProperty_values ().end (),
+        toconfig.configProperty.length (desc.configProperty ().size ());
+        std::for_each (cpd->infoProperty ().begin (),
+                       cpd->infoProperty ().end (),
                        Property_Functor (toconfig.configProperty));
 
         // Packaged Component Implementations
-        toconfig.implementation.length ( cpd->implementation_values ().size ());
+        toconfig.implementation.length ( cpd->implementation ().size ());
         SEQ_HAND_GCC_BUG_WORKAROUND (PCI_Handler::handle_pci,
-                                     (*cpd->implementation_values ().begin ()),
+                                     (*cpd->implementation ().begin ()),
                                      toconfig.implementation);
-        std::for_each (cpd->implementation_values ().begin (),
-                       cpd->implementation_values ().end (),
+        std::for_each (cpd->implementation ().begin (),
+                       cpd->implementation ().end (),
                        PCI_Functor (toconfig.implementation));
 
         // Info Properties
-        toconfig.infoProperty.length (cpd->infoProperty_values ().size ());
-        std::for_each (cpd->infoProperty_values ().begin (),
-                       cpd->infoProperty_values ().end (),
+        toconfig.infoProperty.length (cpd->infoProperty ().size ());
+        std::for_each (cpd->infoProperty ().begin (),
+                       cpd->infoProperty ().end (),
                        Property_Functor (toconfig.infoProperty));
       }
 

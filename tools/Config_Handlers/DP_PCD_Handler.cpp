@@ -19,12 +19,12 @@ namespace DAnCE
     {
       DANCE_TRACE("DP_PCD_Handler::plan_connection_descrs");
       auto cci_e =
-        src.connection_values ().end ();
+        src.connection ().end ();
 
       CORBA::ULong pos = 0;
-      dest.length (src.connection_values ().size ());
+      dest.length (src.connection ().size ());
       for (auto cci_b =
-             src.connection_values ().begin ();
+             src.connection ().begin ();
            cci_b != cci_e;
            ++cci_b)
         {

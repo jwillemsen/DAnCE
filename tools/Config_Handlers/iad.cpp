@@ -144,43 +144,43 @@ namespace DAnCE
         UUID_ = std::make_unique<::XMLSchema::string<char>> (e);
       }
     }
-    ImplementationArtifactDescription::location_container_type& ImplementationArtifactDescription::location_values () noexcept
+    ImplementationArtifactDescription::location_container_type& ImplementationArtifactDescription::location () noexcept
     {
       return location_;
     }
-    ImplementationArtifactDescription::location_container_type const& ImplementationArtifactDescription::location_values () const noexcept
+    ImplementationArtifactDescription::location_container_type const& ImplementationArtifactDescription::location () const noexcept
     {
       return location_;
     }
-    ImplementationArtifactDescription::dependsOn_container_type& ImplementationArtifactDescription::dependsOn_values () noexcept
+    ImplementationArtifactDescription::dependsOn_container_type& ImplementationArtifactDescription::dependsOn () noexcept
     {
       return dependsOn_;
     }
-    ImplementationArtifactDescription::dependsOn_container_type const& ImplementationArtifactDescription::dependsOn_values () const noexcept
+    ImplementationArtifactDescription::dependsOn_container_type const& ImplementationArtifactDescription::dependsOn () const noexcept
     {
       return dependsOn_;
     }
-    ImplementationArtifactDescription::execParameter_container_type& ImplementationArtifactDescription::execParameter_values () noexcept
+    ImplementationArtifactDescription::execParameter_container_type& ImplementationArtifactDescription::execParameter () noexcept
     {
       return execParameter_;
     }
-    ImplementationArtifactDescription::execParameter_container_type const& ImplementationArtifactDescription::execParameter_values () const noexcept
+    ImplementationArtifactDescription::execParameter_container_type const& ImplementationArtifactDescription::execParameter () const noexcept
     {
       return execParameter_;
     }
-    ImplementationArtifactDescription::infoProperty_container_type& ImplementationArtifactDescription::infoProperty_values () noexcept
+    ImplementationArtifactDescription::infoProperty_container_type& ImplementationArtifactDescription::infoProperty () noexcept
     {
       return infoProperty_;
     }
-    ImplementationArtifactDescription::infoProperty_container_type const& ImplementationArtifactDescription::infoProperty_values () const noexcept
+    ImplementationArtifactDescription::infoProperty_container_type const& ImplementationArtifactDescription::infoProperty () const noexcept
     {
       return infoProperty_;
     }
-    ImplementationArtifactDescription::deployRequirement_container_type& ImplementationArtifactDescription::deployRequirement_values () noexcept
+    ImplementationArtifactDescription::deployRequirement_container_type& ImplementationArtifactDescription::deployRequirement () noexcept
     {
       return deployRequirement_;
     }
-    ImplementationArtifactDescription::deployRequirement_container_type const& ImplementationArtifactDescription::deployRequirement_values () const noexcept
+    ImplementationArtifactDescription::deployRequirement_container_type const& ImplementationArtifactDescription::deployRequirement () const noexcept
     {
       return deployRequirement_;
     }

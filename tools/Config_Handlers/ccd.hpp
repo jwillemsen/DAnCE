@@ -65,48 +65,48 @@ namespace DAnCE
 
       public:
       using supportedType_container_type = std::list<::XMLSchema::string<char>>;
-      supportedType_container_type& supportedType_values () noexcept;
-      supportedType_container_type const& supportedType_values () const noexcept;
+      supportedType_container_type& supportedType () noexcept;
+      supportedType_container_type const& supportedType () const noexcept;
 
       protected:
       supportedType_container_type supportedType_;
 
       public:
       using idlFile_container_type = std::list<::XMLSchema::string<char>>;
-      idlFile_container_type& idlFile_values () noexcept;
-      idlFile_container_type const& idlFile_values () const noexcept;
+      idlFile_container_type& idlFile () noexcept;
+      idlFile_container_type const& idlFile () const noexcept;
 
       protected:
       idlFile_container_type idlFile_;
 
       public:
       using configProperty_container_type = std::list<::DAnCE::Config_Handlers::Property>;
-      configProperty_container_type& configProperty_values () noexcept;
-      configProperty_container_type const& configProperty_values () const noexcept;
+      configProperty_container_type& configProperty () noexcept;
+      configProperty_container_type const& configProperty () const noexcept;
 
       protected:
       configProperty_container_type configProperty_;
 
       public:
       using port_container_type = std::list<::DAnCE::Config_Handlers::ComponentPortDescription>;
-      port_container_type& port_values () noexcept;
-      port_container_type const& port_values () const noexcept;
+      port_container_type& port () noexcept;
+      port_container_type const& port () const noexcept;
 
       protected:
       port_container_type port_;
 
       public:
       using property_container_type = std::list<::DAnCE::Config_Handlers::ComponentPropertyDescription>;
-      property_container_type& property_values () noexcept;
-      property_container_type const& property_values () const noexcept;
+      property_container_type& property () noexcept;
+      property_container_type const& property () const noexcept;
 
       protected:
       property_container_type property_;
 
       public:
       using infoProperty_container_type = std::list<::DAnCE::Config_Handlers::Property>;
-      infoProperty_container_type& infoProperty_values () noexcept;
-      infoProperty_container_type const& infoProperty_values () const noexcept;
+      infoProperty_container_type& infoProperty () noexcept;
+      infoProperty_container_type const& infoProperty () const noexcept;
 
       protected:
       infoProperty_container_type infoProperty_;

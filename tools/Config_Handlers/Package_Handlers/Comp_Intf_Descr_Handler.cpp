@@ -80,37 +80,37 @@ namespace DAnCE
         if (specificType_if_set_ptr)
           toconfig.specificType = specificType_if_set_ptr->c_str ();
 
-        toconfig.supportedType.length (cid->supportedType_values ().size ());
-        std::for_each (cid->supportedType_values ().begin (),
-                       cid->supportedType_values ().end (),
+        toconfig.supportedType.length (cid->supportedType ().size ());
+        std::for_each (cid->supportedType ().begin (),
+                       cid->supportedType ().end (),
                        String_Seq_Functor (toconfig.supportedType));
 
-        toconfig.idlFile.length (cid->idlFile_values ().size ());
-        std::for_each (cid->idlFile_values ().begin (),
-                       cid->idlFile_values ().end (),
+        toconfig.idlFile.length (cid->idlFile ().size ());
+        std::for_each (cid->idlFile ().begin (),
+                       cid->idlFile ().end (),
                        String_Seq_Functor (toconfig.idlFile));
 
-        toconfig.configProperty.length (cid->configProperty_values ().size ());
-        std::for_each (cid->configProperty_values ().begin (),
-                       cid->configProperty_values ().end (),
+        toconfig.configProperty.length (cid->configProperty ().size ());
+        std::for_each (cid->configProperty ().begin (),
+                       cid->configProperty ().end (),
                        Property_Functor (toconfig.configProperty));
 
-        toconfig.port.length (cid->port_values ().size ());
-        std::for_each (cid->port_values ().begin (),
-                       cid->port_values ().end (),
+        toconfig.port.length (cid->port ().size ());
+        std::for_each (cid->port ().begin (),
+                       cid->port ().end (),
                        DAnCE::Config_Handlers::CPD_Functor (toconfig.port));
 
-        toconfig.property.length (cid->property_values ().size ());
+        toconfig.property.length (cid->property ().size ());
         SEQ_HAND_GCC_BUG_WORKAROUND (Comp_Prop_Handler::handle_cpd,
-                                     (*cid->property_values ().begin ()),
+                                     (*cid->property ().begin ()),
                                      toconfig.property);
-        std::for_each (cid->property_values ().begin (),
-                       cid->property_values ().end (),
+        std::for_each (cid->property ().begin (),
+                       cid->property ().end (),
                        Comp_Prop_Functor (toconfig.property));
 
-        toconfig.infoProperty.length (cid->infoProperty_values ().size ());
-        std::for_each (cid->infoProperty_values ().begin (),
-                       cid->infoProperty_values ().end (),
+        toconfig.infoProperty.length (cid->infoProperty ().size ());
+        std::for_each (cid->infoProperty ().begin (),
+                       cid->infoProperty ().end (),
                        Property_Functor (toconfig.infoProperty));
       }
 

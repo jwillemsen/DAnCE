@@ -20,11 +20,11 @@ namespace DAnCE
       DANCE_TRACE("MDD_Handler::mono_deployment_descriptions");
 
       auto imp_e =
-        src.implementation_values ().end ();
+        src.implementation ().end ();
       CORBA::ULong pos = 0;
-      dest.length (src.implementation_values ().size ());
+      dest.length (src.implementation ().size ());
       for (auto imp_b =
-             src.implementation_values ().begin ();
+             src.implementation ().begin ();
            imp_b != imp_e;
            ++imp_b)
         {
@@ -46,12 +46,12 @@ namespace DAnCE
         CORBA::string_dup (desc.name ().c_str ());
 
       auto me =
-        desc.source_values ().end ();
+        desc.source ().end ();
 
       CORBA::ULong len = 0;
-      toconfig.source.length (desc.source_values ().size ());
+      toconfig.source.length (desc.source ().size ());
       for (auto se =
-             desc.source_values ().begin ();
+             desc.source ().begin ();
            se != me;
            ++se)
         {
@@ -60,11 +60,11 @@ namespace DAnCE
         }
 
       auto ae =
-        desc.artifact_values ().end ();
+        desc.artifact ().end ();
       len = 0;
-      toconfig.artifactRef.length (desc.artifact_values ().size ());
+      toconfig.artifactRef.length (desc.artifact ().size ());
       for (auto
-             ab = desc.artifact_values ().begin ();
+             ab = desc.artifact ().begin ();
            ae != ab;
            ++ab)
         {
@@ -81,11 +81,11 @@ namespace DAnCE
         }
 
       auto epce =
-        desc.execParameter_values ().end ();
+        desc.execParameter ().end ();
       len = 0;
-      toconfig.execParameter.length (desc.execParameter_values ().size ());
+      toconfig.execParameter.length (desc.execParameter ().size ());
       for (auto epcb =
-             desc.execParameter_values ().begin ();
+             desc.execParameter ().begin ();
            epcb != epce;
            ++epcb)
         {
@@ -93,9 +93,9 @@ namespace DAnCE
                                              toconfig.execParameter[len++]);
         }
 
-      toconfig.deployRequirement.length (desc.deployRequirement_values ().size ());
-      std::for_each (desc.deployRequirement_values ().begin (),
-                     desc.deployRequirement_values ().end (),
+      toconfig.deployRequirement.length (desc.deployRequirement ().size ());
+      std::for_each (desc.deployRequirement ().begin (),
+                     desc.deployRequirement ().end (),
                      Requirement_Functor (toconfig.deployRequirement));
 
       // Handle the idref

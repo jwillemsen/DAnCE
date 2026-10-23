@@ -40,12 +40,12 @@ namespace DAnCE
         }
 
       auto
-        end = desc.supportedType_values ().end ();
+        end = desc.supportedType ().end ();
 
       CORBA::ULong pos = 0;
-      toconfig.supportedType.length (desc.supportedType_values ().size ());
+      toconfig.supportedType.length (desc.supportedType ().size ());
       for (auto s =
-             desc.supportedType_values ().begin ();
+             desc.supportedType ().begin ();
            s != end;
            ++s)
         {
@@ -53,11 +53,11 @@ namespace DAnCE
         }
 
       auto
-        eidl = desc.idlFile_values ().end ();
+        eidl = desc.idlFile ().end ();
       pos = 0;
-      toconfig.idlFile.length (desc.idlFile_values ().size ());
+      toconfig.idlFile.length (desc.idlFile ().size ());
       for (auto sidl=
-             desc.idlFile_values ().begin ();
+             desc.idlFile ().begin ();
            sidl != eidl;
            ++sidl)
         {
@@ -65,11 +65,11 @@ namespace DAnCE
         }
 
       auto pend =
-        desc.configProperty_values ().end ();
+        desc.configProperty ().end ();
       pos = 0;
-      toconfig.configProperty.length (desc.configProperty_values ().size ());
+      toconfig.configProperty.length (desc.configProperty ().size ());
       for (auto pstart =
-             desc.configProperty_values ().begin ();
+             desc.configProperty ().begin ();
            pstart != pend;
            ++pstart)
         {
@@ -78,10 +78,10 @@ namespace DAnCE
         }
 
       pos = 0;
-      toconfig.port.length (desc.port_values ().size ());
+      toconfig.port.length (desc.port ().size ());
       for (auto
-             port (desc.port_values ().begin ());
-           port != desc.port_values ().end ();
+             port (desc.port ().begin ());
+           port != desc.port ().end ();
            ++port)
         {
           CPD_Handler::handle_component_port_description (*port,
@@ -89,11 +89,11 @@ namespace DAnCE
         }
 
       pos = 0;
-      CORBA::ULong len = desc.property_values ().size ();
+      CORBA::ULong len = desc.property ().size ();
       toconfig.property.length ( len );
       for(auto
-            prop (desc.property_values ().begin ());
-          prop != desc.property_values ().end ();
+            prop (desc.property ().begin ());
+          prop != desc.property ().end ();
           prop++)
         {
           ComponentPropertyDescription_Handler::component_property_description (*prop,
@@ -101,10 +101,10 @@ namespace DAnCE
         }
 
       pos = 0;
-      toconfig.infoProperty.length (desc.infoProperty_values ().size ());
+      toconfig.infoProperty.length (desc.infoProperty ().size ());
       for ( auto
-              infoProp (desc.infoProperty_values ().begin ());
-            infoProp != desc.infoProperty_values ().end ();
+              infoProp (desc.infoProperty ().begin ());
+            infoProp != desc.infoProperty ().end ();
             infoProp++)
         {
           Property_Handler::handle_property (*infoProp,

@@ -317,123 +317,123 @@ namespace DAnCE
       }
     }
 
-    DataValue::short_container_type& DataValue::short_values () noexcept
+    DataValue::short_container_type& DataValue::short_ () noexcept
     {
       return short__;
     }
-    DataValue::short_container_type const& DataValue::short_values () const noexcept
+    DataValue::short_container_type const& DataValue::short_ () const noexcept
     {
       return short__;
     }
-    DataValue::long_container_type& DataValue::long_values () noexcept
+    DataValue::long_container_type& DataValue::long_ () noexcept
     {
       return long__;
     }
-    DataValue::long_container_type const& DataValue::long_values () const noexcept
+    DataValue::long_container_type const& DataValue::long_ () const noexcept
     {
       return long__;
     }
-    DataValue::ushort_container_type& DataValue::ushort_values () noexcept
+    DataValue::ushort_container_type& DataValue::ushort () noexcept
     {
       return ushort_;
     }
-    DataValue::ushort_container_type const& DataValue::ushort_values () const noexcept
+    DataValue::ushort_container_type const& DataValue::ushort () const noexcept
     {
       return ushort_;
     }
-    DataValue::ulong_container_type& DataValue::ulong_values () noexcept
+    DataValue::ulong_container_type& DataValue::ulong () noexcept
     {
       return ulong_;
     }
-    DataValue::ulong_container_type const& DataValue::ulong_values () const noexcept
+    DataValue::ulong_container_type const& DataValue::ulong () const noexcept
     {
       return ulong_;
     }
-    DataValue::float_container_type& DataValue::float_values () noexcept
+    DataValue::float_container_type& DataValue::float_ () noexcept
     {
       return float__;
     }
-    DataValue::float_container_type const& DataValue::float_values () const noexcept
+    DataValue::float_container_type const& DataValue::float_ () const noexcept
     {
       return float__;
     }
-    DataValue::double_container_type& DataValue::double_values () noexcept
+    DataValue::double_container_type& DataValue::double_ () noexcept
     {
       return double__;
     }
-    DataValue::double_container_type const& DataValue::double_values () const noexcept
+    DataValue::double_container_type const& DataValue::double_ () const noexcept
     {
       return double__;
     }
-    DataValue::boolean_container_type& DataValue::boolean_values () noexcept
+    DataValue::boolean_container_type& DataValue::boolean () noexcept
     {
       return boolean_;
     }
-    DataValue::boolean_container_type const& DataValue::boolean_values () const noexcept
+    DataValue::boolean_container_type const& DataValue::boolean () const noexcept
     {
       return boolean_;
     }
-    DataValue::octet_container_type& DataValue::octet_values () noexcept
+    DataValue::octet_container_type& DataValue::octet () noexcept
     {
       return octet_;
     }
-    DataValue::octet_container_type const& DataValue::octet_values () const noexcept
+    DataValue::octet_container_type const& DataValue::octet () const noexcept
     {
       return octet_;
     }
-    DataValue::enum_container_type& DataValue::enum_values () noexcept
+    DataValue::enum_container_type& DataValue::enum_ () noexcept
     {
       return enum__;
     }
-    DataValue::enum_container_type const& DataValue::enum_values () const noexcept
+    DataValue::enum_container_type const& DataValue::enum_ () const noexcept
     {
       return enum__;
     }
-    DataValue::string_container_type& DataValue::string_values () noexcept
+    DataValue::string_container_type& DataValue::string () noexcept
     {
       return string_;
     }
-    DataValue::string_container_type const& DataValue::string_values () const noexcept
+    DataValue::string_container_type const& DataValue::string () const noexcept
     {
       return string_;
     }
-    DataValue::longlong_container_type& DataValue::longlong_values () noexcept
+    DataValue::longlong_container_type& DataValue::longlong () noexcept
     {
       return longlong_;
     }
-    DataValue::longlong_container_type const& DataValue::longlong_values () const noexcept
+    DataValue::longlong_container_type const& DataValue::longlong () const noexcept
     {
       return longlong_;
     }
-    DataValue::ulonglong_container_type& DataValue::ulonglong_values () noexcept
+    DataValue::ulonglong_container_type& DataValue::ulonglong () noexcept
     {
       return ulonglong_;
     }
-    DataValue::ulonglong_container_type const& DataValue::ulonglong_values () const noexcept
+    DataValue::ulonglong_container_type const& DataValue::ulonglong () const noexcept
     {
       return ulonglong_;
     }
-    DataValue::longdouble_container_type& DataValue::longdouble_values () noexcept
+    DataValue::longdouble_container_type& DataValue::longdouble () noexcept
     {
       return longdouble_;
     }
-    DataValue::longdouble_container_type const& DataValue::longdouble_values () const noexcept
+    DataValue::longdouble_container_type const& DataValue::longdouble () const noexcept
     {
       return longdouble_;
     }
-    DataValue::element_container_type& DataValue::element_values () noexcept
+    DataValue::element_container_type& DataValue::element () noexcept
     {
       return element_;
     }
-    DataValue::element_container_type const& DataValue::element_values () const noexcept
+    DataValue::element_container_type const& DataValue::element () const noexcept
     {
       return element_;
     }
-    DataValue::member_container_type& DataValue::member_values () noexcept
+    DataValue::member_container_type& DataValue::member () noexcept
     {
       return member_;
     }
-    DataValue::member_container_type const& DataValue::member_values () const noexcept
+    DataValue::member_container_type const& DataValue::member () const noexcept
     {
       return member_;
     }
@@ -537,20 +537,20 @@ namespace DAnCE
     {
       *typeId_ = e;
     }
-    EnumType::member_container_type& EnumType::member_values () noexcept
+    EnumType::member_container_type& EnumType::member () noexcept
     {
       return member_;
     }
-    EnumType::member_container_type const& EnumType::member_values () const noexcept
+    EnumType::member_container_type const& EnumType::member () const noexcept
     {
       return member_;
     }
 
-    BoundedStringType::bound_container_type& BoundedStringType::bound_values () noexcept
+    BoundedStringType::bound_container_type& BoundedStringType::bound () noexcept
     {
       return bound_;
     }
-    BoundedStringType::bound_container_type const& BoundedStringType::bound_values () const noexcept
+    BoundedStringType::bound_container_type const& BoundedStringType::bound () const noexcept
     {
       return bound_;
     }
@@ -598,11 +598,11 @@ namespace DAnCE
     {
       *typeId_ = e;
     }
-    StructType::member_container_type& StructType::member_values () noexcept
+    StructType::member_container_type& StructType::member () noexcept
     {
       return member_;
     }
-    StructType::member_container_type const& StructType::member_values () const noexcept
+    StructType::member_container_type const& StructType::member () const noexcept
     {
       return member_;
     }
@@ -717,11 +717,11 @@ namespace DAnCE
     {
       *baseType_ = e;
     }
-    ValueType::member_container_type& ValueType::member_values () noexcept
+    ValueType::member_container_type& ValueType::member () noexcept
     {
       return member_;
     }
-    ValueType::member_container_type const& ValueType::member_values () const noexcept
+    ValueType::member_container_type const& ValueType::member () const noexcept
     {
       return member_;
     }
@@ -1115,19 +1115,19 @@ namespace DAnCE
     {
       *name_ = e;
     }
-    Resource::resourceType_container_type& Resource::resourceType_values () noexcept
+    Resource::resourceType_container_type& Resource::resourceType () noexcept
     {
       return resourceType_;
     }
-    Resource::resourceType_container_type const& Resource::resourceType_values () const noexcept
+    Resource::resourceType_container_type const& Resource::resourceType () const noexcept
     {
       return resourceType_;
     }
-    Resource::property_container_type& Resource::property_values () noexcept
+    Resource::property_container_type& Resource::property () noexcept
     {
       return property_;
     }
-    Resource::property_container_type const& Resource::property_values () const noexcept
+    Resource::property_container_type const& Resource::property () const noexcept
     {
       return property_;
     }
@@ -1175,11 +1175,11 @@ namespace DAnCE
     {
       *resourceType_ = e;
     }
-    Requirement::property_container_type& Requirement::property_values () noexcept
+    Requirement::property_container_type& Requirement::property () noexcept
     {
       return property_;
     }
-    Requirement::property_container_type const& Requirement::property_values () const noexcept
+    Requirement::property_container_type const& Requirement::property () const noexcept
     {
       return property_;
     }
@@ -1227,11 +1227,11 @@ namespace DAnCE
     {
       *resourceName_ = e;
     }
-    ResourceDeploymentDescription::property_container_type& ResourceDeploymentDescription::property_values () noexcept
+    ResourceDeploymentDescription::property_container_type& ResourceDeploymentDescription::property () noexcept
     {
       return property_;
     }
-    ResourceDeploymentDescription::property_container_type const& ResourceDeploymentDescription::property_values () const noexcept
+    ResourceDeploymentDescription::property_container_type const& ResourceDeploymentDescription::property () const noexcept
     {
       return property_;
     }
@@ -1287,11 +1287,11 @@ namespace DAnCE
     {
       *name_ = e;
     }
-    ArtifactDeploymentDescription::source_container_type& ArtifactDeploymentDescription::source_values () noexcept
+    ArtifactDeploymentDescription::source_container_type& ArtifactDeploymentDescription::source () noexcept
     {
       return source_;
     }
-    ArtifactDeploymentDescription::source_container_type const& ArtifactDeploymentDescription::source_values () const noexcept
+    ArtifactDeploymentDescription::source_container_type const& ArtifactDeploymentDescription::source () const noexcept
     {
       return source_;
     }
@@ -1303,35 +1303,35 @@ namespace DAnCE
     {
       *node_ = e;
     }
-    ArtifactDeploymentDescription::location_container_type& ArtifactDeploymentDescription::location_values () noexcept
+    ArtifactDeploymentDescription::location_container_type& ArtifactDeploymentDescription::location () noexcept
     {
       return location_;
     }
-    ArtifactDeploymentDescription::location_container_type const& ArtifactDeploymentDescription::location_values () const noexcept
+    ArtifactDeploymentDescription::location_container_type const& ArtifactDeploymentDescription::location () const noexcept
     {
       return location_;
     }
-    ArtifactDeploymentDescription::execParameter_container_type& ArtifactDeploymentDescription::execParameter_values () noexcept
+    ArtifactDeploymentDescription::execParameter_container_type& ArtifactDeploymentDescription::execParameter () noexcept
     {
       return execParameter_;
     }
-    ArtifactDeploymentDescription::execParameter_container_type const& ArtifactDeploymentDescription::execParameter_values () const noexcept
+    ArtifactDeploymentDescription::execParameter_container_type const& ArtifactDeploymentDescription::execParameter () const noexcept
     {
       return execParameter_;
     }
-    ArtifactDeploymentDescription::deployRequirement_container_type& ArtifactDeploymentDescription::deployRequirement_values () noexcept
+    ArtifactDeploymentDescription::deployRequirement_container_type& ArtifactDeploymentDescription::deployRequirement () noexcept
     {
       return deployRequirement_;
     }
-    ArtifactDeploymentDescription::deployRequirement_container_type const& ArtifactDeploymentDescription::deployRequirement_values () const noexcept
+    ArtifactDeploymentDescription::deployRequirement_container_type const& ArtifactDeploymentDescription::deployRequirement () const noexcept
     {
       return deployRequirement_;
     }
-    ArtifactDeploymentDescription::deployedResource_container_type& ArtifactDeploymentDescription::deployedResource_values () noexcept
+    ArtifactDeploymentDescription::deployedResource_container_type& ArtifactDeploymentDescription::deployedResource () noexcept
     {
       return deployedResource_;
     }
-    ArtifactDeploymentDescription::deployedResource_container_type const& ArtifactDeploymentDescription::deployedResource_values () const noexcept
+    ArtifactDeploymentDescription::deployedResource_container_type const& ArtifactDeploymentDescription::deployedResource () const noexcept
     {
       return deployedResource_;
     }
@@ -1398,35 +1398,35 @@ namespace DAnCE
     {
       *name_ = e;
     }
-    MonolithicDeploymentDescription::source_container_type& MonolithicDeploymentDescription::source_values () noexcept
+    MonolithicDeploymentDescription::source_container_type& MonolithicDeploymentDescription::source () noexcept
     {
       return source_;
     }
-    MonolithicDeploymentDescription::source_container_type const& MonolithicDeploymentDescription::source_values () const noexcept
+    MonolithicDeploymentDescription::source_container_type const& MonolithicDeploymentDescription::source () const noexcept
     {
       return source_;
     }
-    MonolithicDeploymentDescription::artifact_container_type& MonolithicDeploymentDescription::artifact_values () noexcept
+    MonolithicDeploymentDescription::artifact_container_type& MonolithicDeploymentDescription::artifact () noexcept
     {
       return artifact_;
     }
-    MonolithicDeploymentDescription::artifact_container_type const& MonolithicDeploymentDescription::artifact_values () const noexcept
+    MonolithicDeploymentDescription::artifact_container_type const& MonolithicDeploymentDescription::artifact () const noexcept
     {
       return artifact_;
     }
-    MonolithicDeploymentDescription::execParameter_container_type& MonolithicDeploymentDescription::execParameter_values () noexcept
+    MonolithicDeploymentDescription::execParameter_container_type& MonolithicDeploymentDescription::execParameter () noexcept
     {
       return execParameter_;
     }
-    MonolithicDeploymentDescription::execParameter_container_type const& MonolithicDeploymentDescription::execParameter_values () const noexcept
+    MonolithicDeploymentDescription::execParameter_container_type const& MonolithicDeploymentDescription::execParameter () const noexcept
     {
       return execParameter_;
     }
-    MonolithicDeploymentDescription::deployRequirement_container_type& MonolithicDeploymentDescription::deployRequirement_values () noexcept
+    MonolithicDeploymentDescription::deployRequirement_container_type& MonolithicDeploymentDescription::deployRequirement () noexcept
     {
       return deployRequirement_;
     }
-    MonolithicDeploymentDescription::deployRequirement_container_type const& MonolithicDeploymentDescription::deployRequirement_values () const noexcept
+    MonolithicDeploymentDescription::deployRequirement_container_type const& MonolithicDeploymentDescription::deployRequirement () const noexcept
     {
       return deployRequirement_;
     }
@@ -1522,11 +1522,11 @@ namespace DAnCE
     {
       *resourceName_ = e;
     }
-    InstanceResourceDeploymentDescription::property_container_type& InstanceResourceDeploymentDescription::property_values () noexcept
+    InstanceResourceDeploymentDescription::property_container_type& InstanceResourceDeploymentDescription::property () noexcept
     {
       return property_;
     }
-    InstanceResourceDeploymentDescription::property_container_type const& InstanceResourceDeploymentDescription::property_values () const noexcept
+    InstanceResourceDeploymentDescription::property_container_type const& InstanceResourceDeploymentDescription::property () const noexcept
     {
       return property_;
     }
@@ -1613,19 +1613,19 @@ namespace DAnCE
     {
       *implementation_ = e;
     }
-    InstanceDeploymentDescription::configProperty_container_type& InstanceDeploymentDescription::configProperty_values () noexcept
+    InstanceDeploymentDescription::configProperty_container_type& InstanceDeploymentDescription::configProperty () noexcept
     {
       return configProperty_;
     }
-    InstanceDeploymentDescription::configProperty_container_type const& InstanceDeploymentDescription::configProperty_values () const noexcept
+    InstanceDeploymentDescription::configProperty_container_type const& InstanceDeploymentDescription::configProperty () const noexcept
     {
       return configProperty_;
     }
-    InstanceDeploymentDescription::deployedResource_container_type& InstanceDeploymentDescription::deployedResource_values () noexcept
+    InstanceDeploymentDescription::deployedResource_container_type& InstanceDeploymentDescription::deployedResource () noexcept
     {
       return deployedResource_;
     }
-    InstanceDeploymentDescription::deployedResource_container_type const& InstanceDeploymentDescription::deployedResource_values () const noexcept
+    InstanceDeploymentDescription::deployedResource_container_type const& InstanceDeploymentDescription::deployedResource () const noexcept
     {
       return deployedResource_;
     }
@@ -1767,11 +1767,11 @@ namespace DAnCE
         specificType_ = std::make_unique<::XMLSchema::string<char>> (e);
       }
     }
-    ComponentPortDescription::supportedType_container_type& ComponentPortDescription::supportedType_values () noexcept
+    ComponentPortDescription::supportedType_container_type& ComponentPortDescription::supportedType () noexcept
     {
       return supportedType_;
     }
-    ComponentPortDescription::supportedType_container_type const& ComponentPortDescription::supportedType_values () const noexcept
+    ComponentPortDescription::supportedType_container_type const& ComponentPortDescription::supportedType () const noexcept
     {
       return supportedType_;
     }
@@ -1815,11 +1815,11 @@ namespace DAnCE
     {
       *kind_ = e;
     }
-    ComponentPortDescription::templateParam_container_type& ComponentPortDescription::templateParam_values () noexcept
+    ComponentPortDescription::templateParam_container_type& ComponentPortDescription::templateParam () noexcept
     {
       return templateParam_;
     }
-    ComponentPortDescription::templateParam_container_type const& ComponentPortDescription::templateParam_values () const noexcept
+    ComponentPortDescription::templateParam_container_type const& ComponentPortDescription::templateParam () const noexcept
     {
       return templateParam_;
     }
@@ -2040,11 +2040,11 @@ namespace DAnCE
         portName_ = std::make_unique<::XMLSchema::string<char>> (e);
       }
     }
-    ExternalReferenceEndpoint::supportedType_container_type& ExternalReferenceEndpoint::supportedType_values () noexcept
+    ExternalReferenceEndpoint::supportedType_container_type& ExternalReferenceEndpoint::supportedType () noexcept
     {
       return supportedType_;
     }
-    ExternalReferenceEndpoint::supportedType_container_type const& ExternalReferenceEndpoint::supportedType_values () const noexcept
+    ExternalReferenceEndpoint::supportedType_container_type const& ExternalReferenceEndpoint::supportedType () const noexcept
     {
       return supportedType_;
     }
@@ -2105,11 +2105,11 @@ namespace DAnCE
     {
       *resourceName_ = e;
     }
-    ConnectionResourceDeploymentDescription::property_container_type& ConnectionResourceDeploymentDescription::property_values () noexcept
+    ConnectionResourceDeploymentDescription::property_container_type& ConnectionResourceDeploymentDescription::property () noexcept
     {
       return property_;
     }
-    ConnectionResourceDeploymentDescription::property_container_type const& ConnectionResourceDeploymentDescription::property_values () const noexcept
+    ConnectionResourceDeploymentDescription::property_container_type const& ConnectionResourceDeploymentDescription::property () const noexcept
     {
       return property_;
     }
@@ -2181,43 +2181,43 @@ namespace DAnCE
         source_ = std::make_unique<::XMLSchema::string<char>> (e);
       }
     }
-    PlanConnectionDescription::deployRequirement_container_type& PlanConnectionDescription::deployRequirement_values () noexcept
+    PlanConnectionDescription::deployRequirement_container_type& PlanConnectionDescription::deployRequirement () noexcept
     {
       return deployRequirement_;
     }
-    PlanConnectionDescription::deployRequirement_container_type const& PlanConnectionDescription::deployRequirement_values () const noexcept
+    PlanConnectionDescription::deployRequirement_container_type const& PlanConnectionDescription::deployRequirement () const noexcept
     {
       return deployRequirement_;
     }
-    PlanConnectionDescription::externalEndpoint_container_type& PlanConnectionDescription::externalEndpoint_values () noexcept
+    PlanConnectionDescription::externalEndpoint_container_type& PlanConnectionDescription::externalEndpoint () noexcept
     {
       return externalEndpoint_;
     }
-    PlanConnectionDescription::externalEndpoint_container_type const& PlanConnectionDescription::externalEndpoint_values () const noexcept
+    PlanConnectionDescription::externalEndpoint_container_type const& PlanConnectionDescription::externalEndpoint () const noexcept
     {
       return externalEndpoint_;
     }
-    PlanConnectionDescription::internalEndpoint_container_type& PlanConnectionDescription::internalEndpoint_values () noexcept
+    PlanConnectionDescription::internalEndpoint_container_type& PlanConnectionDescription::internalEndpoint () noexcept
     {
       return internalEndpoint_;
     }
-    PlanConnectionDescription::internalEndpoint_container_type const& PlanConnectionDescription::internalEndpoint_values () const noexcept
+    PlanConnectionDescription::internalEndpoint_container_type const& PlanConnectionDescription::internalEndpoint () const noexcept
     {
       return internalEndpoint_;
     }
-    PlanConnectionDescription::externalReference_container_type& PlanConnectionDescription::externalReference_values () noexcept
+    PlanConnectionDescription::externalReference_container_type& PlanConnectionDescription::externalReference () noexcept
     {
       return externalReference_;
     }
-    PlanConnectionDescription::externalReference_container_type const& PlanConnectionDescription::externalReference_values () const noexcept
+    PlanConnectionDescription::externalReference_container_type const& PlanConnectionDescription::externalReference () const noexcept
     {
       return externalReference_;
     }
-    PlanConnectionDescription::deployedResource_container_type& PlanConnectionDescription::deployedResource_values () noexcept
+    PlanConnectionDescription::deployedResource_container_type& PlanConnectionDescription::deployedResource () noexcept
     {
       return deployedResource_;
     }
-    PlanConnectionDescription::deployedResource_container_type const& PlanConnectionDescription::deployedResource_values () const noexcept
+    PlanConnectionDescription::deployedResource_container_type const& PlanConnectionDescription::deployedResource () const noexcept
     {
       return deployedResource_;
     }
@@ -2283,19 +2283,19 @@ namespace DAnCE
     {
       *name_ = e;
     }
-    Capability::resourceType_container_type& Capability::resourceType_values () noexcept
+    Capability::resourceType_container_type& Capability::resourceType () noexcept
     {
       return resourceType_;
     }
-    Capability::resourceType_container_type const& Capability::resourceType_values () const noexcept
+    Capability::resourceType_container_type const& Capability::resourceType () const noexcept
     {
       return resourceType_;
     }
-    Capability::property_container_type& Capability::property_values () noexcept
+    Capability::property_container_type& Capability::property () noexcept
     {
       return property_;
     }
-    Capability::property_container_type const& Capability::property_values () const noexcept
+    Capability::property_container_type const& Capability::property () const noexcept
     {
       return property_;
     }
@@ -2418,11 +2418,11 @@ namespace DAnCE
     {
       *name_ = e;
     }
-    ImplementationRequirement::property_container_type& ImplementationRequirement::property_values () noexcept
+    ImplementationRequirement::property_container_type& ImplementationRequirement::property () noexcept
     {
       return property_;
     }
-    ImplementationRequirement::property_container_type const& ImplementationRequirement::property_values () const noexcept
+    ImplementationRequirement::property_container_type const& ImplementationRequirement::property () const noexcept
     {
       return property_;
     }
@@ -2507,35 +2507,35 @@ namespace DAnCE
     {
       *name_ = e;
     }
-    AssemblyConnectionDescription::deployRequirement_container_type& AssemblyConnectionDescription::deployRequirement_values () noexcept
+    AssemblyConnectionDescription::deployRequirement_container_type& AssemblyConnectionDescription::deployRequirement () noexcept
     {
       return deployRequirement_;
     }
-    AssemblyConnectionDescription::deployRequirement_container_type const& AssemblyConnectionDescription::deployRequirement_values () const noexcept
+    AssemblyConnectionDescription::deployRequirement_container_type const& AssemblyConnectionDescription::deployRequirement () const noexcept
     {
       return deployRequirement_;
     }
-    AssemblyConnectionDescription::internalEndpoint_container_type& AssemblyConnectionDescription::internalEndpoint_values () noexcept
+    AssemblyConnectionDescription::internalEndpoint_container_type& AssemblyConnectionDescription::internalEndpoint () noexcept
     {
       return internalEndpoint_;
     }
-    AssemblyConnectionDescription::internalEndpoint_container_type const& AssemblyConnectionDescription::internalEndpoint_values () const noexcept
+    AssemblyConnectionDescription::internalEndpoint_container_type const& AssemblyConnectionDescription::internalEndpoint () const noexcept
     {
       return internalEndpoint_;
     }
-    AssemblyConnectionDescription::externalEndpoint_container_type& AssemblyConnectionDescription::externalEndpoint_values () noexcept
+    AssemblyConnectionDescription::externalEndpoint_container_type& AssemblyConnectionDescription::externalEndpoint () noexcept
     {
       return externalEndpoint_;
     }
-    AssemblyConnectionDescription::externalEndpoint_container_type const& AssemblyConnectionDescription::externalEndpoint_values () const noexcept
+    AssemblyConnectionDescription::externalEndpoint_container_type const& AssemblyConnectionDescription::externalEndpoint () const noexcept
     {
       return externalEndpoint_;
     }
-    AssemblyConnectionDescription::externalReference_container_type& AssemblyConnectionDescription::externalReference_values () noexcept
+    AssemblyConnectionDescription::externalReference_container_type& AssemblyConnectionDescription::externalReference () noexcept
     {
       return externalReference_;
     }
-    AssemblyConnectionDescription::externalReference_container_type const& AssemblyConnectionDescription::externalReference_values () const noexcept
+    AssemblyConnectionDescription::externalReference_container_type const& AssemblyConnectionDescription::externalReference () const noexcept
     {
       return externalReference_;
     }
@@ -2588,11 +2588,11 @@ namespace DAnCE
     {
       *constraint_ = e;
     }
-    PlanLocality::constrainedInstance_container_type& PlanLocality::constrainedInstance_values () noexcept
+    PlanLocality::constrainedInstance_container_type& PlanLocality::constrainedInstance () noexcept
     {
       return constrainedInstance_;
     }
-    PlanLocality::constrainedInstance_container_type const& PlanLocality::constrainedInstance_values () const noexcept
+    PlanLocality::constrainedInstance_container_type const& PlanLocality::constrainedInstance () const noexcept
     {
       return constrainedInstance_;
     }

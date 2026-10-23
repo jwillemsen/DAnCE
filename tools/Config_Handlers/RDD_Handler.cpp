@@ -20,8 +20,8 @@ namespace DAnCE
 
       dest.resourceName= src.resourceName ().c_str ();
 
-      std::for_each (src.property_values ().begin (),
-                     src.property_values ().end (),
+      std::for_each (src.property ().begin (),
+                     src.property ().end (),
                      Property_Functor (dest.property));
 
     }

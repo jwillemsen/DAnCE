@@ -93,13 +93,13 @@ namespace DAnCE
         this->idl_domain_->UUID =
           CORBA::string_dup (UUID_if_set_ptr->c_str ());
 
-      CORBA::ULong len = domain_.node_values ().size ();
+      CORBA::ULong len = domain_.node ().size ();
       this->idl_domain_->node.length (len);
 
       //Resource _resource;
       int i =0;
-      for (auto iter = domain_.node_values ().begin ();
-           iter != domain_.node_values ().end ();
+      for (auto iter = domain_.node ().begin ();
+           iter != domain_.node ().end ();
            ++iter,++i
            )
         {
@@ -115,48 +115,48 @@ namespace DAnCE
 
           // length is hard-coded for now ...
           // here iterate over the resources ...
-          CORBA::ULong res_len = iter->resource_values ().size ();
+          CORBA::ULong res_len = iter->resource ().size ();
           this->idl_domain_->node[i].resource.length (res_len);
 
           int res_id=0;
           // FOR EACH RESOURCE ....
-          for (auto res_iter = iter->resource_values ().begin ();
-               res_iter != iter->resource_values ().end ();
+          for (auto res_iter = iter->resource ().begin ();
+               res_iter != iter->resource ().end ();
                res_iter++, res_id++)
             {
 
               this->idl_domain_->node[i].resource[res_id].name =
                 CORBA::string_dup (res_iter->name ().c_str ());
 
-              CORBA::ULong resource_type_len = res_iter->resourceType_values ().size ();
+              CORBA::ULong resource_type_len = res_iter->resourceType ().size ();
               this->idl_domain_->node[i].resource[res_id].resourceType.length (resource_type_len);
 
               int res_type_id =0;
 
               // FOR EACH RESOURCE TYPE
               for (auto res_type_iter =
-                     res_iter->resourceType_values ().begin ();
-                   res_type_iter != res_iter->resourceType_values ().end ();
+                     res_iter->resourceType ().begin ();
+                   res_type_iter != res_iter->resourceType ().end ();
                    res_type_iter++, res_type_id++)
                 {
                   this->idl_domain_->node[i].resource[res_id].resourceType[res_type_id] =
                     CORBA::string_dup (res_type_iter->c_str ());
                 }
 
-              CORBA::ULong property_len = res_iter->property_values ().size ();
+              CORBA::ULong property_len = res_iter->property ().size ();
               this->idl_domain_->node[i].resource[res_id].property.length (property_len);
 
               //              int property_id =0;
 
-              std::for_each (res_iter->property_values ().begin (),
-                             res_iter->property_values ().end (),
+              std::for_each (res_iter->property ().begin (),
+                             res_iter->property ().end (),
                              SatisfierProperty_Functor (this->idl_domain_->node[i].resource[res_id].property));
 
               /*
               //FOR EACH PROPERTY
               for (auto property_iter =
-              res_iter->property_values ().begin ();
-              property_iter != res_iter->property_values ().end ();
+              res_iter->property ().begin ();
+              property_iter != res_iter->property ().end ();
               property_iter++, property_id++)
               {
               this->idl_domain_->node[i].resource[res_id].property[property_id ].name =

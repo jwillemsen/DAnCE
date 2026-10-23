@@ -13,12 +13,12 @@ namespace DAnCE
         Deployment::EventServiceDeploymentDescriptions& dest)
     {
       DANCE_TRACE("ESD_Handler::instance_deployment_descrs");
-      auto esd_e = src.instance_values ().end ();
+      auto esd_e = src.instance ().end ();
 
       CORBA::ULong pos = 0;
-      dest.length (src.instance_values ().size ());
+      dest.length (src.instance ().size ());
       for (auto esd_b =
-             src.instance_values ().begin ();
+             src.instance ().begin ();
            esd_b != esd_e;
            ++esd_b)
         {

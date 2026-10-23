@@ -13,12 +13,12 @@ namespace DAnCE
     {
       DANCE_TRACE("ERE_Handler::external_ref_endpoints");
       auto erep_e =
-        src.externalReference_values ().end ();
+        src.externalReference ().end ();
 
       CORBA::ULong pos = 0;
-      dest.length (src.externalReference_values ().size ());
+      dest.length (src.externalReference ().size ());
       for (auto erep_b =
-             src.externalReference_values ().begin ();
+             src.externalReference ().begin ();
            erep_b != erep_e;
            ++erep_b)
         {
@@ -38,9 +38,9 @@ namespace DAnCE
       ::XMLSchema::string<char> const* portName_if_set_ptr = src.portName_if_set ();
       if (portName_if_set_ptr)
         dest.portName = portName_if_set_ptr->c_str ();
-      dest.supportedType.length (src.supportedType_values ().size ());
-      std::for_each (src.supportedType_values ().begin (),
-                     src.supportedType_values ().end (),
+      dest.supportedType.length (src.supportedType ().size ());
+      std::for_each (src.supportedType ().begin (),
+                     src.supportedType ().end (),
                      String_Seq_Functor (dest.supportedType));
     }
 

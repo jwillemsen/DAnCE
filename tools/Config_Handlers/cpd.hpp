@@ -98,24 +98,24 @@ namespace DAnCE
 
       public:
       using configProperty_container_type = std::list<::DAnCE::Config_Handlers::Property>;
-      configProperty_container_type& configProperty_values () noexcept;
-      configProperty_container_type const& configProperty_values () const noexcept;
+      configProperty_container_type& configProperty () noexcept;
+      configProperty_container_type const& configProperty () const noexcept;
 
       protected:
       configProperty_container_type configProperty_;
 
       public:
       using implementation_container_type = std::list<::DAnCE::Config_Handlers::PackagedComponentImplementation>;
-      implementation_container_type& implementation_values () noexcept;
-      implementation_container_type const& implementation_values () const noexcept;
+      implementation_container_type& implementation () noexcept;
+      implementation_container_type const& implementation () const noexcept;
 
       protected:
       implementation_container_type implementation_;
 
       public:
       using infoProperty_container_type = std::list<::DAnCE::Config_Handlers::Property>;
-      infoProperty_container_type& infoProperty_values () noexcept;
-      infoProperty_container_type const& infoProperty_values () const noexcept;
+      infoProperty_container_type& infoProperty () noexcept;
+      infoProperty_container_type const& infoProperty () const noexcept;
 
       protected:
       infoProperty_container_type infoProperty_;
@@ -172,24 +172,24 @@ namespace DAnCE
 
       public:
       using configProperty_container_type = std::list<::DAnCE::Config_Handlers::Property>;
-      configProperty_container_type& configProperty_values () noexcept;
-      configProperty_container_type const& configProperty_values () const noexcept;
+      configProperty_container_type& configProperty () noexcept;
+      configProperty_container_type const& configProperty () const noexcept;
 
       protected:
       configProperty_container_type configProperty_;
 
       public:
       using implementation_container_type = std::list<::DAnCE::Config_Handlers::ConnectorImplementationDescription>;
-      implementation_container_type& implementation_values () noexcept;
-      implementation_container_type const& implementation_values () const noexcept;
+      implementation_container_type& implementation () noexcept;
+      implementation_container_type const& implementation () const noexcept;
 
       protected:
       implementation_container_type implementation_;
 
       public:
       using infoProperty_container_type = std::list<::DAnCE::Config_Handlers::Property>;
-      infoProperty_container_type& infoProperty_values () noexcept;
-      infoProperty_container_type const& infoProperty_values () const noexcept;
+      infoProperty_container_type& infoProperty () noexcept;
+      infoProperty_container_type const& infoProperty () const noexcept;
 
       protected:
       infoProperty_container_type infoProperty_;

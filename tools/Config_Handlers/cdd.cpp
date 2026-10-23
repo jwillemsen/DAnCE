@@ -98,43 +98,43 @@ namespace DAnCE
         label_ = std::make_unique<::XMLSchema::string<char>> (e);
       }
     }
-    Domain::node_container_type& Domain::node_values () noexcept
+    Domain::node_container_type& Domain::node () noexcept
     {
       return node_;
     }
-    Domain::node_container_type const& Domain::node_values () const noexcept
+    Domain::node_container_type const& Domain::node () const noexcept
     {
       return node_;
     }
-    Domain::interconnect_container_type& Domain::interconnect_values () noexcept
+    Domain::interconnect_container_type& Domain::interconnect () noexcept
     {
       return interconnect_;
     }
-    Domain::interconnect_container_type const& Domain::interconnect_values () const noexcept
+    Domain::interconnect_container_type const& Domain::interconnect () const noexcept
     {
       return interconnect_;
     }
-    Domain::bridge_container_type& Domain::bridge_values () noexcept
+    Domain::bridge_container_type& Domain::bridge () noexcept
     {
       return bridge_;
     }
-    Domain::bridge_container_type const& Domain::bridge_values () const noexcept
+    Domain::bridge_container_type const& Domain::bridge () const noexcept
     {
       return bridge_;
     }
-    Domain::sharedResource_container_type& Domain::sharedResource_values () noexcept
+    Domain::sharedResource_container_type& Domain::sharedResource () noexcept
     {
       return sharedResource_;
     }
-    Domain::sharedResource_container_type const& Domain::sharedResource_values () const noexcept
+    Domain::sharedResource_container_type const& Domain::sharedResource () const noexcept
     {
       return sharedResource_;
     }
-    Domain::infoProperty_container_type& Domain::infoProperty_values () noexcept
+    Domain::infoProperty_container_type& Domain::infoProperty () noexcept
     {
       return infoProperty_;
     }
-    Domain::infoProperty_container_type const& Domain::infoProperty_values () const noexcept
+    Domain::infoProperty_container_type const& Domain::infoProperty () const noexcept
     {
       return infoProperty_;
     }
@@ -199,19 +199,19 @@ namespace DAnCE
         label_ = std::make_unique<::XMLSchema::string<char>> (e);
       }
     }
-    Bridge::connect_container_type& Bridge::connect_values () noexcept
+    Bridge::connect_container_type& Bridge::connect () noexcept
     {
       return connect_;
     }
-    Bridge::connect_container_type const& Bridge::connect_values () const noexcept
+    Bridge::connect_container_type const& Bridge::connect () const noexcept
     {
       return connect_;
     }
-    Bridge::resource_container_type& Bridge::resource_values () noexcept
+    Bridge::resource_container_type& Bridge::resource () noexcept
     {
       return resource_;
     }
-    Bridge::resource_container_type const& Bridge::resource_values () const noexcept
+    Bridge::resource_container_type const& Bridge::resource () const noexcept
     {
       return resource_;
     }
@@ -279,27 +279,27 @@ namespace DAnCE
         label_ = std::make_unique<::XMLSchema::string<char>> (e);
       }
     }
-    Interconnect::connection_container_type& Interconnect::connection_values () noexcept
+    Interconnect::connection_container_type& Interconnect::connection () noexcept
     {
       return connection_;
     }
-    Interconnect::connection_container_type const& Interconnect::connection_values () const noexcept
+    Interconnect::connection_container_type const& Interconnect::connection () const noexcept
     {
       return connection_;
     }
-    Interconnect::connect_container_type& Interconnect::connect_values () noexcept
+    Interconnect::connect_container_type& Interconnect::connect () noexcept
     {
       return connect_;
     }
-    Interconnect::connect_container_type const& Interconnect::connect_values () const noexcept
+    Interconnect::connect_container_type const& Interconnect::connect () const noexcept
     {
       return connect_;
     }
-    Interconnect::resource_container_type& Interconnect::resource_values () noexcept
+    Interconnect::resource_container_type& Interconnect::resource () noexcept
     {
       return resource_;
     }
-    Interconnect::resource_container_type const& Interconnect::resource_values () const noexcept
+    Interconnect::resource_container_type const& Interconnect::resource () const noexcept
     {
       return resource_;
     }
@@ -365,27 +365,27 @@ namespace DAnCE
         label_ = std::make_unique<::XMLSchema::string<char>> (e);
       }
     }
-    Node::connection_container_type& Node::connection_values () noexcept
+    Node::connection_container_type& Node::connection () noexcept
     {
       return connection_;
     }
-    Node::connection_container_type const& Node::connection_values () const noexcept
+    Node::connection_container_type const& Node::connection () const noexcept
     {
       return connection_;
     }
-    Node::sharedResource_container_type& Node::sharedResource_values () noexcept
+    Node::sharedResource_container_type& Node::sharedResource () noexcept
     {
       return sharedResource_;
     }
-    Node::sharedResource_container_type const& Node::sharedResource_values () const noexcept
+    Node::sharedResource_container_type const& Node::sharedResource () const noexcept
     {
       return sharedResource_;
     }
-    Node::resource_container_type& Node::resource_values () noexcept
+    Node::resource_container_type& Node::resource () noexcept
     {
       return resource_;
     }
-    Node::resource_container_type const& Node::resource_values () const noexcept
+    Node::resource_container_type const& Node::resource () const noexcept
     {
       return resource_;
     }

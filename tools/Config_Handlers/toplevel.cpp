@@ -17,11 +17,11 @@ namespace DAnCE
 {
   namespace Config_Handlers
   {
-    TopLevelPackageDescription::package_container_type& TopLevelPackageDescription::package_values () noexcept
+    TopLevelPackageDescription::package_container_type& TopLevelPackageDescription::package () noexcept
     {
       return package_;
     }
-    TopLevelPackageDescription::package_container_type const& TopLevelPackageDescription::package_values () const noexcept
+    TopLevelPackageDescription::package_container_type const& TopLevelPackageDescription::package () const noexcept
     {
       return package_;
     }
