@@ -264,8 +264,8 @@ namespace DAnCE
         // dependsOn
         toconfig.dependsOn.length (cid->dependsOn ().size ());
         CORBA::ULong pos {};
-        for (auto i = cid->dependsOn ().begin (); i != cid->dependsOn ().end (); ++i)
-          toconfig.dependsOn[pos++].requiredType = i->requiredType ().c_str ();
+        for (auto const& dependency : cid->dependsOn ())
+          toconfig.dependsOn[pos++].requiredType = dependency.requiredType ().c_str ();
 
         // infoProperty
         toconfig.infoProperty.length (cid->infoProperty ().size ());

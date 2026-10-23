@@ -18,14 +18,10 @@ namespace DAnCE
         Deployment::PlanConnectionDescriptions& dest)
     {
       DANCE_TRACE("DP_PCD_Handler::plan_connection_descrs");
-      auto cci_e = src.connection ().end ();
-
       CORBA::ULong pos {};
       dest.length (src.connection ().size ());
-      for (auto cci_b = src.connection ().begin (); cci_b != cci_e; ++cci_b)
-        {
-          DP_PCD_Handler::plan_connection_descr (*(cci_b), dest[pos++]);
-        }
+      for (auto const& source_item : src.connection ())
+        DP_PCD_Handler::plan_connection_descr (source_item, dest[pos++]);
     }
 
     PlanConnectionDescription DP_PCD_Handler::plan_connection_descr (Deployment::PlanConnectionDescription const& src)

@@ -19,12 +19,11 @@ namespace DAnCE
     {
       DANCE_TRACE("MDD_Handler::mono_deployment_descriptions");
 
-      auto imp_e = src.implementation ().end ();
       CORBA::ULong pos {};
       dest.length (src.implementation ().size ());
-      for (auto imp_b = src.implementation ().begin (); imp_b != imp_e; ++imp_b)
+      for (auto const& source_item : src.implementation ())
         {
-          MDD_Handler::mono_deployment_description (*imp_b, dest[pos], pos);
+          MDD_Handler::mono_deployment_description (source_item, dest[pos], pos);
           ++pos;
         }
     }
@@ -38,23 +37,18 @@ namespace DAnCE
 
       toconfig.name = CORBA::string_dup (desc.name ().c_str ());
 
-      auto me = desc.source ().end ();
-
       CORBA::ULong len {};
       toconfig.source.length (desc.source ().size ());
-      for (auto se = desc.source ().begin (); se != me; ++se)
-        {
-          toconfig.source[len++] = CORBA::string_dup (se->c_str ());
-        }
+      for (auto const& source_item : desc.source ())
+        toconfig.source[len++] = CORBA::string_dup (source_item.c_str ());
 
-      auto ae = desc.artifact ().end ();
       len = 0;
       toconfig.artifactRef.length (desc.artifact ().size ());
-      for (auto ab = desc.artifact ().begin (); ae != ab; ++ab)
+      for (auto const& artifact : desc.artifact ())
         {
           CORBA::ULong tmp {};
 
-          ::XMLSchema::IDREF<char> const* artifactRef = ab->idref_if_set ();
+          ::XMLSchema::IDREF<char> const* artifactRef = artifact.idref_if_set ();
           if (!artifactRef)
             throw Config_Error ("", "Artifact reference has no IDREF");
 
@@ -63,13 +57,10 @@ namespace DAnCE
           toconfig.artifactRef[len++] = tmp;
         }
 
-      auto epce = desc.execParameter ().end ();
       len = 0;
       toconfig.execParameter.length (desc.execParameter ().size ());
-      for (auto epcb = desc.execParameter ().begin (); epcb != epce; ++epcb)
-        {
-          Property_Handler::handle_property (*epcb, toconfig.execParameter[len++]);
-        }
+      for (auto const& source_item : desc.execParameter ())
+        Property_Handler::handle_property (source_item, toconfig.execParameter[len++]);
 
       toconfig.deployRequirement.length (desc.deployRequirement ().size ());
       CORBA::ULong deployRequirement_index {};

@@ -14,14 +14,11 @@ namespace DAnCE
     {
       DANCE_TRACE("PSPE_Handler::sub_component_port_endpoints");
 
-      auto iei_e = src.internalEndpoint ().end ();
       CORBA::ULong pos {};
       dest.length (src.internalEndpoint ().size ());
 
-      for (auto iei_b = src.internalEndpoint ().begin (); iei_b != iei_e; ++iei_b)
-        {
-          PSPE_Handler::sub_component_port_endpoint (*iei_b, dest[pos++]);
-        }
+      for (auto const& source_item : src.internalEndpoint ())
+        PSPE_Handler::sub_component_port_endpoint (source_item, dest[pos++]);
     }
 
     void

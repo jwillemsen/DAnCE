@@ -16,12 +16,11 @@ namespace DAnCE
       {
         DANCE_TRACE("ADD_Handler::atrifact_deployment_descrs");
 
-        auto aci_e = src.artifact ().end ();
         dest.length (src.artifact ().size ());
         CORBA::ULong pos {};
-        for (auto aci_b = src.artifact ().begin (); aci_e != aci_b; ++aci_b)
+        for (auto const& source_item : src.artifact ())
           {
-            ADD_Handler::artifact_deployment_descr (*aci_b, dest[pos], pos);
+            ADD_Handler::artifact_deployment_descr (source_item, dest[pos], pos);
             ++pos;
           }
       }
@@ -37,31 +36,21 @@ namespace DAnCE
 
         dest.node = src.node ().c_str ();
 
-        auto end = src.location ().end ();
-
         dest.location.length (src.location ().size ());
         CORBA::ULong len {};
-        for (auto start = src.location ().begin (); start != end; ++start)
-          {
-            dest.location[len++] = start->c_str ();
-          }
+        for (auto const& location : src.location ())
+          dest.location[len++] = location.c_str ();
 
-        auto sce = src.source ().end ();
         len = 0;
         dest.source.length (src.source ().size ());
-        for (auto scb = src.source ().begin (); scb != sce; ++scb)
-          {
-            dest.source[len++] = scb->c_str ();
-          }
+        for (auto const& source_item : src.source ())
+          dest.source[len++] = source_item.c_str ();
 
         // @@TODO: See this loop is repeated
-        auto adce = src.execParameter ().end ();
         len = 0;
         dest.execParameter.length (src.execParameter ().size ());
-        for (auto adcb = src.execParameter ().begin (); adcb != adce; ++adcb)
-          {
-            Property_Handler::handle_property (*adcb, dest.execParameter[len++]);
-          }
+        for (auto const& source_item : src.execParameter ())
+          Property_Handler::handle_property (source_item, dest.execParameter[len++]);
 
         ::XMLSchema::ID<char> const* id_if_set_ptr = src.id_if_set ();
         if (id_if_set_ptr)

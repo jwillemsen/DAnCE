@@ -12,14 +12,10 @@ namespace DAnCE
                                          Deployment::ExternalReferenceEndpoints &dest)
     {
       DANCE_TRACE("ERE_Handler::external_ref_endpoints");
-      auto erep_e = src.externalReference ().end ();
-
       CORBA::ULong pos {};
       dest.length (src.externalReference ().size ());
-      for (auto erep_b = src.externalReference ().begin (); erep_b != erep_e; ++erep_b)
-        {
-          ERE_Handler::handle_external_ref_endpoint (*erep_b, dest[pos++]);
-        }
+      for (auto const& source_item : src.externalReference ())
+        ERE_Handler::handle_external_ref_endpoint (source_item, dest[pos++]);
     }
 
     void

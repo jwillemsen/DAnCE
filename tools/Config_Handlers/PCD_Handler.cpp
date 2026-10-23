@@ -62,10 +62,8 @@ namespace DAnCE
       CRDD_Handler crddhandler {};
       CORBA::ULong pos {};
       toconfig.deployedResource.length (desc.deployedResource ().size ());
-      for(auto res = desc.deployedResource ().begin (); res != desc.deployedResource ().end (); ++res)
-        {
-          crddhandler.get_ConnectionResourceDeploymentDescription (toconfig.deployedResource[pos++], *res);
-        }
+      for (auto const& resource : desc.deployedResource ())
+        crddhandler.get_ConnectionResourceDeploymentDescription (toconfig.deployedResource[pos++], resource);
 
     }
 

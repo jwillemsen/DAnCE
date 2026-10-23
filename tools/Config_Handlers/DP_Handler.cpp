@@ -99,22 +99,22 @@ namespace DAnCE
         }
 
       // Similar thing for dependsOn
-      for (auto dstart = xsc_dp.dependsOn ().begin (); dstart != xsc_dp.dependsOn ().end (); ++dstart)
+      for (auto const& source_item : xsc_dp.dependsOn ())
         {
           CORBA::ULong const len = this->idl_dp_->dependsOn.length ();
           this->idl_dp_->dependsOn.length (len + 1);
-          ID_Handler::get_ImplementationDependency (*dstart, this->idl_dp_->dependsOn [len]);
+          ID_Handler::get_ImplementationDependency (source_item, this->idl_dp_->dependsOn [len]);
 
         }
 
       // ... An the property stuff
-      for (auto pstart = xsc_dp.infoProperty ().begin (); pstart != xsc_dp.infoProperty ().end (); ++pstart)
+      for (auto const& source_item : xsc_dp.infoProperty ())
         {
           CORBA::ULong const len = this->idl_dp_->infoProperty.length ();
 
           this->idl_dp_->infoProperty.length (len + 1);
 
-          Property_Handler::handle_property (*pstart, this->idl_dp_->infoProperty [len]);
+          Property_Handler::handle_property (source_item, this->idl_dp_->infoProperty [len]);
         }
 
       // Read in the realizes, if present

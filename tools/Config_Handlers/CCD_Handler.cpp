@@ -34,54 +34,36 @@ namespace DAnCE
           toconfig.specificType = CORBA::string_dup (specificType_if_set_ptr->c_str ());
         }
 
-      auto
-        end = desc.supportedType ().end ();
-
       CORBA::ULong pos {};
       toconfig.supportedType.length (desc.supportedType ().size ());
-      for (auto s = desc.supportedType ().begin (); s != end; ++s)
-        {
-          toconfig.supportedType[pos++] = s->c_str ();
-        }
+      for (auto const& source_item : desc.supportedType ())
+        toconfig.supportedType[pos++] = source_item.c_str ();
 
-      auto
-        eidl = desc.idlFile ().end ();
       pos = 0;
       toconfig.idlFile.length (desc.idlFile ().size ());
-      for (auto sidl = desc.idlFile ().begin (); sidl != eidl; ++sidl)
-        {
-          toconfig.idlFile [pos++] = sidl->c_str ();
-        }
+      for (auto const& source_item : desc.idlFile ())
+        toconfig.idlFile[pos++] = source_item.c_str ();
 
-      auto pend = desc.configProperty ().end ();
       pos = 0;
       toconfig.configProperty.length (desc.configProperty ().size ());
-      for (auto pstart = desc.configProperty ().begin (); pstart != pend; ++pstart)
-        {
-          Property_Handler::handle_property (*pstart, toconfig.configProperty [pos++]);
-        }
+      for (auto const& source_item : desc.configProperty ())
+        Property_Handler::handle_property (source_item, toconfig.configProperty[pos++]);
 
       pos = 0;
       toconfig.port.length (desc.port ().size ());
-      for (auto port (desc.port ().begin ()); port != desc.port ().end (); ++port)
-        {
-          CPD_Handler::handle_component_port_description (*port, toconfig.port[pos++]);
-        }
+      for (auto const& source_item : desc.port ())
+        CPD_Handler::handle_component_port_description (source_item, toconfig.port[pos++]);
 
       pos = 0;
       CORBA::ULong const len = desc.property ().size ();
       toconfig.property.length (len );
-      for(auto prop (desc.property ().begin ()); prop != desc.property ().end (); ++prop)
-        {
-          ComponentPropertyDescription_Handler::component_property_description (*prop, toconfig.property[pos++]);
-        }
+      for (auto const& source_item : desc.property ())
+        ComponentPropertyDescription_Handler::component_property_description (source_item, toconfig.property[pos++]);
 
       pos = 0;
       toconfig.infoProperty.length (desc.infoProperty ().size ());
-      for (auto infoProp (desc.infoProperty ().begin ()); infoProp != desc.infoProperty ().end (); ++infoProp)
-        {
-          Property_Handler::handle_property (*infoProp, toconfig.infoProperty[pos]);
-        }
+      for (auto const& source_item : desc.infoProperty ())
+        Property_Handler::handle_property (source_item, toconfig.infoProperty[pos++]);
     }
 
     ComponentInterfaceDescription

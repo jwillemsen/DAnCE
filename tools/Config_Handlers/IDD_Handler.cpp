@@ -19,13 +19,11 @@ namespace DAnCE
                                              Deployment::InstanceDeploymentDescriptions& dest)
     {
       DANCE_TRACE("IDD_Handler::instance_deployment_descrs");
-      auto idd_e = src.instance ().end ();
-
       CORBA::ULong pos {};
       dest.length (src.instance ().size ());
-      for (auto idd_b = src.instance ().begin (); idd_b != idd_e; ++idd_b)
+      for (auto const& instance : src.instance ())
         {
-          IDD_Handler::instance_deployment_descr (*idd_b, dest[pos], pos);
+          IDD_Handler::instance_deployment_descr (instance, dest[pos], pos);
           ++pos;
         }
     }

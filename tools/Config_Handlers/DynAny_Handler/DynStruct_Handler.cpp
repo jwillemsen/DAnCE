@@ -24,10 +24,8 @@ namespace DAnCE
       if (!structType)
         throw Config_Error ("", "Expected struct type information");
 
-      for (auto i = structType->member ().begin (); i != structType->member ().end (); ++i)
-        {
-          dt_map[i->name ()] = &(i->type ());
-        }
+      for (auto const& member : structType->member ())
+        dt_map[member.name ()] = &(member.type ());
     }
 
     DynamicAny::DynAny_ptr
@@ -61,10 +59,10 @@ namespace DAnCE
           DynamicAny::NameDynAnyPairSeq values {};
           values.length (value.member ().size ());
 
-          for (auto i = value.member ().begin (); i != value.member ().end (); ++i)
+          for (auto const& member : value.member ())
             {
-              values[pos].id = i->name ().c_str ();
-              values[pos].value = DYNANY_HANDLER->extract_into_dynany (*dt_map[i->name ()], i->value ());
+              values[pos].id = member.name ().c_str ();
+              values[pos].value = DYNANY_HANDLER->extract_into_dynany (*dt_map[member.name ()], member.value ());
               ++pos;
             }
 
@@ -101,10 +99,10 @@ namespace DAnCE
       members.length (struct_type->member ().size ());
       CORBA::ULong pos {};
 
-      for (auto i = struct_type->member ().begin (); i != struct_type->member ().end (); ++i)
+      for (auto const& member : struct_type->member ())
         {
-          members[pos].name = i->name ().c_str ();
-          members[pos].type = DYNANY_HANDLER->create_typecode (i->type ());
+          members[pos].name = member.name ().c_str ();
+          members[pos].type = DYNANY_HANDLER->create_typecode (member.type ());
           ++pos;
         }
 

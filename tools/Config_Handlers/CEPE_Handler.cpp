@@ -12,14 +12,10 @@ namespace DAnCE
                                            ::Deployment::ComponentExternalPortEndpoints &dest)
     {
       DANCE_TRACE("CEOE_Handler::external_port_endpoints");
-      auto eeci_e = src.externalEndpoint ().end ();
-
       CORBA::ULong pos {};
       dest.length (src.externalEndpoint ().size ());
-      for (auto eeci_b = src.externalEndpoint ().begin (); eeci_b != eeci_e; ++eeci_b)
-        {
-          CEPE_Handler::handle_external_port_endpoint (*eeci_b, dest[pos++]);
-        }
+      for (auto const& source_item : src.externalEndpoint ())
+        CEPE_Handler::handle_external_port_endpoint (source_item, dest[pos++]);
     }
 
     void

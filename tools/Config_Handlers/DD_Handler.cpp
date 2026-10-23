@@ -52,50 +52,46 @@ namespace DAnCE
       CORBA::ULong const len = domain_.node ().size ();
       this->idl_domain_->node.length (len);
 
-      int i {};
-      for (auto iter = domain_.node ().begin (); iter != domain_.node ().end (); ++iter,++i )
+      CORBA::ULong node_index {};
+      for (auto const& node : domain_.node ())
         {
-          this->idl_domain_->node[i].name = CORBA::string_dup (iter->name ().c_str ());
+          this->idl_domain_->node[node_index].name = CORBA::string_dup (node.name ().c_str ());
 
-          ::XMLSchema::string<char> const* node_label_if_set_ptr = iter->label_if_set ();
+          ::XMLSchema::string<char> const* node_label_if_set_ptr = node.label_if_set ();
           if (node_label_if_set_ptr)
-            this->idl_domain_->node[i].label = CORBA::string_dup (node_label_if_set_ptr->c_str ());
+            this->idl_domain_->node[node_index].label = CORBA::string_dup (node_label_if_set_ptr->c_str ());
 
           // length is hard-coded for now ...
           // here iterate over the resources ...
-          CORBA::ULong const res_len = iter->resource ().size ();
-          this->idl_domain_->node[i].resource.length (res_len);
+          CORBA::ULong const res_len = node.resource ().size ();
+          this->idl_domain_->node[node_index].resource.length (res_len);
 
-          int res_id {};
-          // FOR EACH RESOURCE ....
-          for (auto res_iter = iter->resource ().begin (); res_iter != iter->resource ().end (); ++res_iter, ++res_id)
+          CORBA::ULong resource_index {};
+          for (auto const& resource : node.resource ())
             {
+              this->idl_domain_->node[node_index].resource[resource_index].name =
+                CORBA::string_dup (resource.name ().c_str ());
 
-              this->idl_domain_->node[i].resource[res_id].name = CORBA::string_dup (res_iter->name ().c_str ());
+              CORBA::ULong const resource_type_len = resource.resourceType ().size ();
+              this->idl_domain_->node[node_index].resource[resource_index].resourceType.length (resource_type_len);
 
-              CORBA::ULong const resource_type_len = res_iter->resourceType ().size ();
-              this->idl_domain_->node[i].resource[res_id].resourceType.length (resource_type_len);
-
-              int res_type_id {};
-
-              // FOR EACH RESOURCE TYPE
-              for (auto res_type_iter =
-                     res_iter->resourceType ().begin ();
-                   res_type_iter != res_iter->resourceType ().end ();
-                   ++res_type_iter, ++res_type_id)
+              CORBA::ULong resource_type_index {};
+              for (auto const& resource_type : resource.resourceType ())
                 {
-                  this->idl_domain_->node[i].resource[res_id].resourceType[res_type_id] =
-                    CORBA::string_dup (res_type_iter->c_str ());
+                  this->idl_domain_->node[node_index].resource[resource_index].resourceType[resource_type_index++] =
+                    CORBA::string_dup (resource_type.c_str ());
                 }
 
-              CORBA::ULong const property_len = res_iter->property ().size ();
-              this->idl_domain_->node[i].resource[res_id].property.length (property_len);
+              CORBA::ULong const property_len = resource.property ().size ();
+              this->idl_domain_->node[node_index].resource[resource_index].property.length (property_len);
 
               CORBA::ULong property_index {};
-              for (auto const& source_item : res_iter->property ())
+              for (auto const& source_item : resource.property ())
                 SatisfierProperty_Handler::handle_sat_property (source_item,
-                  this->idl_domain_->node[i].resource[res_id].property[property_index++]);
+                  this->idl_domain_->node[node_index].resource[resource_index].property[property_index++]);
+              ++resource_index;
             }
+          ++node_index;
         }
 
       return true;
