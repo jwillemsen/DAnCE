@@ -57,7 +57,7 @@ namespace DAnCE
           DynamicAny::DynAny_var temp = DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
           DynamicAny::DynStruct_var retval = DynamicAny::DynStruct::_narrow (temp.in ());
 
-          CORBA::ULong pos (0);
+          CORBA::ULong pos {};
           DynamicAny::NameDynAnyPairSeq values;
           values.length (value.member ().size ());
 
@@ -87,21 +87,21 @@ namespace DAnCE
     {
       DANCE_TRACE("DynStruct_Handler::create_typecode");
 
-      ::DAnCE::Config_Handlers::StructType const* struct__if_set_ptr_2 = type._cxx_struct_if_set ();
-      if (!struct__if_set_ptr_2)
+      ::DAnCE::Config_Handlers::StructType const* struct_type = type._cxx_struct_if_set ();
+      if (!struct_type)
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("ERROR: Struct type description required\n")));
           throw Config_Error ("", ACE_TEXT ("Expected struct type information, tc_kind may be" "incorrect\n"));
         }
 
-      std::string rid (struct__if_set_ptr_2->typeId ());
-      std::string name (struct__if_set_ptr_2->name ());
+      const std::string rid (struct_type->typeId ());
+      const std::string name (struct_type->name ());
 
       CORBA::StructMemberSeq members;
-      members.length (struct__if_set_ptr_2->member ().size ());
-      CORBA::ULong pos (0);
+      members.length (struct_type->member ().size ());
+      CORBA::ULong pos {};
 
-      for (auto i = struct__if_set_ptr_2->member ().begin (); i != struct__if_set_ptr_2->member ().end (); ++i)
+      for (auto i = struct_type->member ().begin (); i != struct_type->member ().end (); ++i)
         {
           members[pos].name = i->name ().c_str ();
           members[pos].type = DYNANY_HANDLER->create_typecode (i->type ());
@@ -110,7 +110,7 @@ namespace DAnCE
 
       CORBA::TypeCode_var tc = DYNANY_HANDLER->orb ()->create_struct_tc ( rid.c_str (), name.c_str (), members);
 
-      DYNANY_HANDLER->register_typecode (struct__if_set_ptr_2->typeId (), tc.in ());
+      DYNANY_HANDLER->register_typecode (struct_type->typeId (), tc.in ());
 
       return tc._retn ();
     }

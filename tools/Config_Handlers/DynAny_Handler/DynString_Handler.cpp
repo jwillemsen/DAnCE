@@ -31,7 +31,7 @@ namespace DAnCE
       // Make the actual DynAny
       DynamicAny::DynAny_var retval = DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
 
-      const char* s = 0;
+      const char* s = nullptr;
       if (!value.string ().empty ())
         {
           s = value.string ().front ().c_str ();

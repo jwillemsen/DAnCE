@@ -29,8 +29,8 @@ namespace DAnCE
       if (!instanceRef)
         throw Config_Error ("", "Subcomponent port endpoint has no instance IDREF");
 
-      std::string str (instanceRef->id ().c_str ());
-      CORBA::ULong pos (0);
+      const std::string str (instanceRef->id ().c_str ());
+      CORBA::ULong pos {};
 
       SID_Handler::IDREF.find_ref (str, pos);
       toconfig.instanceRef = pos;
@@ -120,8 +120,8 @@ namespace DAnCE
       if (!instanceRef)
         throw Config_Error ("", "Subcomponent property reference has no instance IDREF");
 
-      std::string str (instanceRef->id ().c_str ());
-      CORBA::ULong pos (0);
+      const std::string str (instanceRef->id ().c_str ());
+      CORBA::ULong pos {};
 
       SID_Handler::IDREF.find_ref (str, pos);
       toconfig.instanceRef = pos;

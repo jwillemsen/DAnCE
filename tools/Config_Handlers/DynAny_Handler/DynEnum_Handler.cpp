@@ -75,8 +75,8 @@ namespace DAnCE
     {
       DANCE_TRACE("DynEnum_Handler::create_typecode");
 
-      ::DAnCE::Config_Handlers::EnumType const* enum__if_set_ptr_2 = type._cxx_enum_if_set ();
-      if (!enum__if_set_ptr_2)
+      ::DAnCE::Config_Handlers::EnumType const* enum_type = type._cxx_enum_if_set ();
+      if (!enum_type)
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("ERROR: Enum type description required")));
           throw Config_Error ("", ACE_TEXT ("Did not find expected enum type description," "tk_kind may be wrong."));
@@ -84,21 +84,21 @@ namespace DAnCE
 
       // Construct TypeCode for the enum
       CORBA::EnumMemberSeq members;
-      members.length (enum__if_set_ptr_2->member ().size ());
+      members.length (enum_type->member ().size ());
       CORBA::ULong index (0);
 
-      for (auto i = enum__if_set_ptr_2->member ().begin (); i != enum__if_set_ptr_2->member ().end (); ++i)
+      for (auto i = enum_type->member ().begin (); i != enum_type->member ().end (); ++i)
         {
           members[index++] = CORBA::string_dup ( i->c_str ());
         }
 
       CORBA::TypeCode_var tc =
         DYNANY_HANDLER->orb ()->create_enum_tc (
-          enum__if_set_ptr_2->typeId ().c_str (),
-          enum__if_set_ptr_2->name ().c_str (),
+          enum_type->typeId ().c_str (),
+          enum_type->name ().c_str (),
           members);
 
-      DYNANY_HANDLER->register_typecode ((enum__if_set_ptr_2->typeId ()), tc.in ());
+      DYNANY_HANDLER->register_typecode (enum_type->typeId (), tc.in ());
 
       return tc._retn ();
     }

@@ -75,8 +75,7 @@ namespace DAnCE
 
               for (auto i = value.element ().begin (); i != value.element ().end (); ++i)
                 {
-                  DynamicAny::DynAny_var dynany
-                    (DYNANY_HANDLER->extract_into_dynany (arrayType->elementType (), *i));
+                  DynamicAny::DynAny_var dynany (DYNANY_HANDLER->extract_into_dynany (arrayType->elementType (), *i));
                   dynseq[pos++] = dynany->copy ();
                 }
 
