@@ -49,8 +49,9 @@ namespace DAnCE
         case TCKind::tk_component_l:
         case TCKind::tk_home_l:
 
-          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_WARNING, "I don't know how to handle null or void types\n"));
-          throw 1;
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_WARNING, "Null and void element types are not supported in arrays\n"));
+          throw Config_Error ("", "Null or void element types are not supported in arrays");
 
         case TCKind::tk_short_l:
         case TCKind::tk_long_l:

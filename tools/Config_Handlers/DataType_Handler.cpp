@@ -1,4 +1,5 @@
 #include "DataType_Handler.h"
+#include "Common.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "dance/Logger/Log_Macros.h"
@@ -103,7 +104,7 @@ namespace DAnCE
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR,
             "DataType_Handler::data_type, Invalid typecode in any\n"));
-          throw 1;
+          throw Config_Error ("", "Invalid typecode in data type description");
         }
 
       //   This case used to be supported...is it not in the schema?
@@ -155,9 +156,8 @@ namespace DAnCE
         default:
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, "DataType_Handler::data_type, Invalid typecode\n"));
-          throw 1;
+          throw Config_Error ("", "Unsupported CORBA typecode in data type conversion");
         }
-      throw 1;
     }
   }
 }

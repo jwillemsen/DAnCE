@@ -1,5 +1,6 @@
 #include "CPD_Handler.h"
 #include "Basic_Deployment_Data.hpp"
+#include "Common.h"
 #include "dance/Deployment/Deployment_DataC.h"
 #include "dance/Logger/Log_Macros.h"
 
@@ -54,7 +55,7 @@ namespace DAnCE
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, "Invalid port type in connection %C\n",
              desc.name ().c_str ()));
-          throw 1;
+          throw Config_Error (desc.name ().c_str (), "Invalid port type");
         }
 
       /* @@BUG: We need to consider how to handle booleans. */
