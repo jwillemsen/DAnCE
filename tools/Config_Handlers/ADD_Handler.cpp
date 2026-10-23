@@ -39,10 +39,10 @@ namespace DAnCE
                                               CORBA::ULong pos)
       {
         DANCE_TRACE("ADD_Handler::atrifact_deployment_descr");
-        dest.name = ACE_TEXT_ALWAYS_CHAR ( src.name ().c_str ());
+        dest.name =  src.name ().c_str ();
 
 
-        dest.node = ACE_TEXT_ALWAYS_CHAR ( src.node ().c_str ());
+        dest.node =  src.node ().c_str ();
 
         ArtifactDeploymentDescription::location_const_iterator end =
           src.end_location ();
@@ -54,7 +54,7 @@ namespace DAnCE
              start != end;
              ++start)
           {
-            dest.location[len++] = ACE_TEXT_ALWAYS_CHAR ( start->c_str ());
+            dest.location[len++] =  start->c_str ();
           }
 
         ArtifactDeploymentDescription::source_const_iterator sce =
@@ -66,7 +66,7 @@ namespace DAnCE
              scb != sce;
              ++scb)
           {
-            dest.source[len++] = ACE_TEXT_ALWAYS_CHAR ( scb->c_str ());
+            dest.source[len++] =  scb->c_str ();
           }
 
         // @@TODO: See this loop is repeated
@@ -85,7 +85,7 @@ namespace DAnCE
 
         if (src.id_if_set ())
           {
-            ACE_TString cstr (src.id_if_set ()->c_str ());
+            std::string cstr (src.id_if_set ()->c_str ());
 
             ADD_Handler::IDREF.bind_ref (cstr,pos);
           }
@@ -93,7 +93,7 @@ namespace DAnCE
           {
             DANCE_DEBUG (DANCE_LOG_NONFATAL_ERROR, (LM_ERROR,
                         "(%P|%t) Warning: ADD %s has no idref.\n",
-                        ACE_TEXT_ALWAYS_CHAR (src.name ().c_str ())));
+                        src.name ().c_str ()));
           }
 
 #if 0
@@ -126,8 +126,8 @@ namespace DAnCE
       {
         DANCE_TRACE("ADD_Handler::atrifact_deployment_descr - reverse");
         //Get the name and node and store them in the add
-        XMLSchema::string< ACE_TCHAR > name (ACE_TEXT_CHAR_TO_TCHAR (src.name));
-        XMLSchema::string< ACE_TCHAR > node (ACE_TEXT_CHAR_TO_TCHAR (src.node));
+        XMLSchema::string<char> name (src.name);
+        XMLSchema::string<char> node (src.node);
 
         ArtifactDeploymentDescription add (name,node);
 
@@ -135,7 +135,7 @@ namespace DAnCE
         size_t total = src.location.length ();
         for (size_t i = 0; i < total; ++i)
           {
-            XMLSchema::string< ACE_TCHAR > curr (ACE_TEXT_CHAR_TO_TCHAR (src.location[i]));
+            XMLSchema::string<char> curr (src.location[i]);
             //add.add_location (curr);
           }
 
@@ -143,7 +143,7 @@ namespace DAnCE
         total = src.source.length ();
         for (size_t j = 0; j < total; ++j)
           {
-            XMLSchema::string< ACE_TCHAR > curr (ACE_TEXT_CHAR_TO_TCHAR (src.source[j]));
+            XMLSchema::string<char> curr (src.source[j]);
             //add.add_source (curr);
           }
 
@@ -157,10 +157,10 @@ namespace DAnCE
         // Generate a UUID to use for the IDREF.
         ACE_Utils::UUID uuid;
         ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
-        ACE_TString add_id (ACE_TEXT ("_"));
-        add_id += ACE_TEXT_CHAR_TO_TCHAR (uuid.to_string ()->c_str ());
+        std::string add_id ("_");
+        add_id += uuid.to_string ()->c_str ();
 
-        XMLSchema::ID< ACE_TCHAR > xml_id (add_id.c_str ());
+        XMLSchema::ID<char> xml_id (add_id.c_str ());
 
         // Bind the ref and set it in the IDD
         ADD_Handler::IDREF.bind_next_available (add_id);

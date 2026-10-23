@@ -80,9 +80,9 @@ namespace DAnCE
     {
       DANCE_TRACE("ESD_Handler::es_deployment_descr - reverse");
       //Get all the string
-      XMLSchema::string < ACE_TCHAR > name ((src.name));
-      XMLSchema::string < ACE_TCHAR > node ((src.node));
-      XMLSchema::string < ACE_TCHAR > svc_cfg_file ((src.svc_cfg_file));
+      XMLSchema::string<char> name ((src.name));
+      XMLSchema::string<char> node ((src.node));
+      XMLSchema::string<char> svc_cfg_file ((src.svc_cfg_file));
 
       // Instantiate the IDD
       EventServiceDeploymentDescription esd (

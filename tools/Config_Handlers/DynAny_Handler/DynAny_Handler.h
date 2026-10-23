@@ -60,10 +60,10 @@ namespace DAnCE
 
       CORBA::TypeCode_ptr create_typecode (const DataType &type);
 
-      void register_typecode (const std::basic_string<ACE_TCHAR> typeID,
+      void register_typecode (const std::string typeID,
                               CORBA::TypeCode_ptr tc);
 
-      CORBA::TypeCode_ptr get_typecode (const std::basic_string<ACE_TCHAR> typeID);
+      CORBA::TypeCode_ptr get_typecode (const std::string typeID);
 
     private:
 
@@ -71,7 +71,7 @@ namespace DAnCE
 
       DynamicAny::DynAnyFactory_var daf_;
 
-      std::map <std::basic_string<ACE_TCHAR>, CORBA::TypeCode_ptr> typecode_map_;
+      std::map <std::string, CORBA::TypeCode_ptr> typecode_map_;
     };
 
     typedef ACE_Singleton<DynAny_Handler, ACE_Null_Mutex> DynAny_Singleton;

@@ -84,11 +84,11 @@ namespace DAnCE
       // Check if the label is there or not
       if (domain_.label_if_set ())
         this->idl_domain_->label =
-          CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (domain_.label_if_set ()->c_str ()));
+          CORBA::string_dup (domain_.label_if_set ()->c_str ());
 
       if (domain_.UUID_if_set ())
         this->idl_domain_->UUID =
-          CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (domain_.UUID_if_set ()->c_str ()));
+          CORBA::string_dup (domain_.UUID_if_set ()->c_str ());
 
       CORBA::ULong len = domain_.count_node ();
       this->idl_domain_->node.length (len);
@@ -102,11 +102,11 @@ namespace DAnCE
         {
           // Node* thisNode = (Node*)iter;
           this->idl_domain_->node[i].name =
-            CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (iter->name ().c_str ()));
+            CORBA::string_dup (iter->name ().c_str ());
 
           if (iter->label_if_set ())
             this->idl_domain_->node[i].label =
-              CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (iter->label_if_set ()->c_str ()));
+              CORBA::string_dup (iter->label_if_set ()->c_str ());
 
           // length is hard-coded for now ...
           // here iterate over the resources ...
@@ -121,7 +121,7 @@ namespace DAnCE
             {
 
               this->idl_domain_->node[i].resource[res_id].name =
-                CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (res_iter->name ().c_str ()));
+                CORBA::string_dup (res_iter->name ().c_str ());
 
               CORBA::ULong resource_type_len = res_iter->count_resourceType ();
               this->idl_domain_->node[i].resource[res_id].resourceType.length (resource_type_len);
@@ -135,7 +135,7 @@ namespace DAnCE
                    res_type_iter++, res_type_id++)
                 {
                   this->idl_domain_->node[i].resource[res_id].resourceType[res_type_id] =
-                    CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (res_type_iter->c_str ()));
+                    CORBA::string_dup (res_type_iter->c_str ());
                 }
 
               CORBA::ULong property_len = res_iter->count_property ();
@@ -155,7 +155,7 @@ namespace DAnCE
               property_iter++, property_id++)
               {
               this->idl_domain_->node[i].resource[res_id].property[property_id ].name =
-              CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (property_iter->name ().c_str ()));
+              CORBA::string_dup (property_iter->name ().c_str ());
 
 
               this->idl_domain_->node[i].resource[res_id].property[property_id].kind =

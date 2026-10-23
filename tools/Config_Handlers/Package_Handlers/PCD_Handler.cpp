@@ -89,11 +89,11 @@ namespace DAnCE
 
         if (pcd->label_if_set ())
           toconfig.label =
-            ACE_TEXT_ALWAYS_CHAR (pcd->label_if_set ()->c_str ());
+            pcd->label_if_set ()->c_str ();
 
         if (pcd->UUID_if_set ())
           toconfig.UUID =
-            ACE_TEXT_ALWAYS_CHAR (pcd->UUID_if_set ()->c_str ());
+            pcd->UUID_if_set ()->c_str ();
 
         if (pcd->basePackage_if_set ())
           {

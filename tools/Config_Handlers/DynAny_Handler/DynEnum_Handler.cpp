@@ -38,8 +38,8 @@ namespace DAnCE
           DynamicAny::DynEnum_var retval = DynamicAny::DynEnum::_narrow (
             temp.in ());
 
-          retval->set_as_string (ACE_TEXT_ALWAYS_CHAR (
-            value.begin_enum ()->c_str ()));
+          retval->set_as_string (
+            value.begin_enum ()->c_str ());
 
           return retval._retn ();
         }
@@ -95,13 +95,13 @@ namespace DAnCE
            ++i)
         {
           members[index++] = CORBA::string_dup (
-            ACE_TEXT_ALWAYS_CHAR (i->c_str ()));
+            i->c_str ());
         }
 
       CORBA::TypeCode_var tc =
         DYNANY_HANDLER->orb ()->create_enum_tc (
-          ACE_TEXT_ALWAYS_CHAR ((*type.enum__if_set ()).typeId ().c_str ()),
-          ACE_TEXT_ALWAYS_CHAR ((*type.enum__if_set ()).name ().c_str ()),
+          (*type.enum__if_set ()).typeId ().c_str (),
+          (*type.enum__if_set ()).name ().c_str (),
           members);
 
       DYNANY_HANDLER->register_typecode (((*type.enum__if_set ()).typeId ()),

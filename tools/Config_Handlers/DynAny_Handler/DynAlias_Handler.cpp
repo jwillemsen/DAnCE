@@ -77,8 +77,8 @@ namespace DAnCE
 
       CORBA::TypeCode_var tc =
         DYNANY_HANDLER->orb ()->create_alias_tc
-        (ACE_TEXT_ALWAYS_CHAR ((*type.alias_if_set ()).typeId ().c_str ()),
-         ACE_TEXT_ALWAYS_CHAR ((*type.alias_if_set ()).name ().c_str ()),
+        ((*type.alias_if_set ()).typeId ().c_str (),
+         (*type.alias_if_set ()).name ().c_str (),
          DYNANY_HANDLER->create_typecode ((*type.alias_if_set ()).elementType ()));
 
       DYNANY_HANDLER->register_typecode ((*type.alias_if_set ()).typeId (),

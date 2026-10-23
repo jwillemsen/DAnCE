@@ -98,7 +98,7 @@ namespace DAnCE
         {
           this->idl_dp_->label =
             CORBA::string_dup (
-              ACE_TEXT_ALWAYS_CHAR (xsc_dp.label_if_set ()->c_str ()));
+              xsc_dp.label_if_set ()->c_str ());
         }
 
       // Read in the UUID, if present
@@ -106,7 +106,7 @@ namespace DAnCE
         {
           this->idl_dp_->UUID =
             CORBA::string_dup (
-              ACE_TEXT_ALWAYS_CHAR (xsc_dp.UUID_if_set ()->c_str ()));
+              xsc_dp.UUID_if_set ()->c_str ());
         }
 
       // Similar thing for dependsOn
@@ -191,16 +191,16 @@ namespace DAnCE
       // Read in the label, if present, since minoccurs = 0
       if (plan.label != 0)
         {
-          XMLSchema::string< ACE_TCHAR > i (
-            ACE_TEXT_CHAR_TO_TCHAR (plan.label));
+          XMLSchema::string<char> i (
+            plan.label);
           this->xsc_dp_->label(i);
         }
 
       // Read in the UUID, if present
       if (plan.UUID != 0)
         {
-          XMLSchema::string< ACE_TCHAR > j (
-            ACE_TEXT_CHAR_TO_TCHAR(plan.UUID));
+          XMLSchema::string<char> j (
+            plan.UUID);
           this->xsc_dp_->UUID(j);
         }
 

@@ -33,10 +33,10 @@ namespace DAnCE
                                         Deployment::ExternalReferenceEndpoint &dest)
     {
       DANCE_TRACE("ERE_Handler::external_ref_endpoint");
-      dest.location = ACE_TEXT_ALWAYS_CHAR ( src.location ().c_str ());
+      dest.location =  src.location ().c_str ();
       dest.provider = src.provider ();
       if (src.portName_if_set ())
-        dest.portName = ACE_TEXT_ALWAYS_CHAR (src.portName_if_set ()->c_str ());
+        dest.portName = src.portName_if_set ()->c_str ();
       dest.supportedType.length (src.count_supportedType ());
       std::for_each (src.begin_supportedType (),
                      src.end_supportedType (),
@@ -48,9 +48,9 @@ namespace DAnCE
                                         const Deployment::ExternalReferenceEndpoint& src)
     {
       DANCE_TRACE("ERE_Handler::external_ref_endpoint - reverse");
-      XMLSchema::string< ACE_TCHAR > loc (ACE_TEXT_CHAR_TO_TCHAR (src.location));
+      XMLSchema::string<char> loc (src.location);
       //      XMLSchema::string< char > provider ((src.provider));
-      XMLSchema::string< ACE_TCHAR > pn (ACE_TEXT_CHAR_TO_TCHAR (src.portName));
+      XMLSchema::string<char> pn (src.portName);
       //      XMLSchema::string< char > st ((src.supportedType));
       ExternalReferenceEndpoint erp (loc, src.provider);
       return erp;

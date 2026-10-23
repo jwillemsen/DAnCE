@@ -15,7 +15,7 @@ namespace DAnCE
   namespace Config_Handlers
   {
     void create_type_map (const DataType &type,
-                          std::map <std::basic_string <ACE_TCHAR>,
+                          std::map <std::string,
                           DataType const *> &dt_map)
     {
       DANCE_TRACE("Config_Handlers::create_type_map");
@@ -44,7 +44,7 @@ namespace DAnCE
           else
             tc = DynStruct_Handler::create_typecode (type);
 
-          std::map <std::basic_string<ACE_TCHAR>, DataType const*> dt_map;
+          std::map <std::string, DataType const*> dt_map;
           create_type_map (type, dt_map);
 
           // Make the actual DynStruct
@@ -61,7 +61,7 @@ namespace DAnCE
                i != value.end_member (); ++i)
             {
               values[pos].id =
-                ACE_TEXT_ALWAYS_CHAR (i->name ().c_str ());
+                i->name ().c_str ();
               values[pos].value =
                 DYNANY_HANDLER->extract_into_dynany (*dt_map[i->name ()],
                                                      i->value ());
@@ -101,8 +101,8 @@ namespace DAnCE
                       "incorrect\n"));
         }
 
-      std::basic_string<ACE_TCHAR> rid ((*type.struct__if_set ()).typeId ());
-      std::basic_string<ACE_TCHAR> name ((*type.struct__if_set ()).name ());
+      std::string rid ((*type.struct__if_set ()).typeId ());
+      std::string name ((*type.struct__if_set ()).name ());
 
       CORBA::StructMemberSeq members;
       members.length ((*type.struct__if_set ()).count_member ());
@@ -112,15 +112,15 @@ namespace DAnCE
         (*type.struct__if_set ()).begin_member ();
            i != (*type.struct__if_set ()).end_member (); ++i)
         {
-          members[pos].name = ACE_TEXT_ALWAYS_CHAR (i->name ().c_str ());
+          members[pos].name = i->name ().c_str ();
           members[pos].type = DYNANY_HANDLER->create_typecode (i->type ());
           ++pos;
         }
 
       CORBA::TypeCode_var tc =
         DYNANY_HANDLER->orb ()->create_struct_tc (
-          ACE_TEXT_ALWAYS_CHAR (rid.c_str ()),
-          ACE_TEXT_ALWAYS_CHAR (name.c_str ()),
+          rid.c_str (),
+          name.c_str (),
           members);
 
       DYNANY_HANDLER->register_typecode ((*type.struct__if_set ()).typeId (), tc.in ());

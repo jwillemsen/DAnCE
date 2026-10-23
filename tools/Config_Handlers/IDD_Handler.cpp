@@ -44,29 +44,29 @@ namespace DAnCE
       DANCE_TRACE("IDD_Handler::instance_deployment_descr");
       try
         {
-          dest.name = ACE_TEXT_ALWAYS_CHAR ( src.name ().c_str ());
-          dest.node = ACE_TEXT_ALWAYS_CHAR ( src.node ().c_str ());
+          dest.name =  src.name ().c_str ();
+          dest.node =  src.node ().c_str ();
 
           if (src.id_if_set ())
             {
-              ACE_TString cstr (src.id_if_set ()->c_str ());
+              std::string cstr (src.id_if_set ()->c_str ());
               IDD_Handler::IDREF.bind_ref (cstr, pos);
             }
           else
             {
               DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR, (LM_WARNING,
                                "(%P|%t) Warning:  IDD %s has no idref\n",
-                               ACE_TEXT_ALWAYS_CHAR (src.name ().c_str ())));
+                               src.name ().c_str ()));
             }
 
           // We know there should be only one element
           dest.source.length (1);
           dest.source [0] =
-            ACE_TEXT_ALWAYS_CHAR (src.source ().c_str ());
+            src.source ().c_str ();
 
           CORBA::ULong tmp = 0;
           MDD_Handler::IDREF.find_ref (
-            ACE_TString (src.implementation ().idref_if_set ()->id ().c_str ()), tmp);
+            std::string (src.implementation ().idref_if_set ()->id ().c_str ()), tmp);
 
           dest.implementationRef = tmp;
 
@@ -110,18 +110,18 @@ namespace DAnCE
     {
       DANCE_TRACE("IDD_Handler::instance_deployment_descr - reverse");
       //Get all the string/IDREFs
-      XMLSchema::string < ACE_TCHAR > name (ACE_TEXT_CHAR_TO_TCHAR (src.name));
-      XMLSchema::string < ACE_TCHAR > node (ACE_TEXT_CHAR_TO_TCHAR (src.node));
-      XMLSchema::string < ACE_TCHAR > source (ACE_TEXT (""));
+      XMLSchema::string<char> name (src.name);
+      XMLSchema::string<char> node (src.node);
+      XMLSchema::string<char> source ("");
       if (src.source.length () > 0)
         {
-          XMLSchema::string < ACE_TCHAR > source_detail (
-            ACE_TEXT_CHAR_TO_TCHAR (src.source[0]));
+          XMLSchema::string<char> source_detail (
+            src.source[0]);
           source = source_detail;
         }
-      ACE_TString temp;
+      std::string temp;
       MDD_Handler::IDREF.find_ref(src.implementationRef, temp);
-      XMLSchema::IDREF< ACE_TCHAR > implementation ((temp.c_str()));
+      XMLSchema::IDREF<char> implementation ((temp.c_str()));
 
       // Instantiate the IDD
       IdRef xid;
@@ -153,10 +153,10 @@ namespace DAnCE
       // Generate a UUID to use for the IDREF.
       ACE_Utils::UUID uuid;
       ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
-      ACE_TString idd_id (ACE_TEXT ("_"));
-      idd_id += ACE_TEXT_CHAR_TO_TCHAR (uuid.to_string ()->c_str ());
+      std::string idd_id ("_");
+      idd_id += uuid.to_string ()->c_str ();
 
-      XMLSchema::ID< ACE_TCHAR > xml_id (idd_id.c_str ());
+      XMLSchema::ID<char> xml_id (idd_id.c_str ());
 
       // Bind the ref and set it in the IDD
       IDD_Handler::IDREF.bind_next_available (idd_id);

@@ -35,7 +35,7 @@ namespace DAnCE
       const char* s = 0;
       if (value.count_string ())
         {
-          s = ACE_TEXT_ALWAYS_CHAR (value.begin_string ()->c_str ());
+          s = value.begin_string ()->c_str ();
         }
       retval->insert_string (s);
 

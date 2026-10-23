@@ -11,7 +11,7 @@ namespace DAnCE
     {
       template <typename T>
       void
-      IDREF_Base<T>::bind_ref (ACE_TString& id, T value)
+      IDREF_Base<T>::bind_ref (std::string& id, T value)
       {
         DANCE_TRACE("IDREF_Base<T>::bind_ref");
 
@@ -21,13 +21,13 @@ namespace DAnCE
         pos_map_.bind (value,id);
 
         if (retval < 0)
-          throw Config_Error (id.c_str (),
+          throw Config_Error (ACE_TEXT_CHAR_TO_TCHAR (id.c_str ()),
                               ACE_TEXT ("Failed to bind an IDRef.  This likely indicates a name clash."));
       }
 
       template <typename T>
       void
-      IDREF_Base<T>::bind_next_available (ACE_TString &id)
+      IDREF_Base<T>::bind_next_available (std::string &id)
       {
         // Note:  For this function to compile and work properly,
         // T must have the postincrement operator defined.
@@ -43,14 +43,14 @@ namespace DAnCE
         ++this->next_;
 
         if (retval < 0 || pos_retval < 0)
-          throw Config_Error (id.c_str (),
+          throw Config_Error (ACE_TEXT_CHAR_TO_TCHAR (id.c_str ()),
                               ACE_TEXT ("Failed to bind an IDRef.  This likely indicates a name clash"));
 
       }
 
       template <typename T>
       void
-      IDREF_Base<T>::find_ref (const ACE_TString& id, T& val)
+      IDREF_Base<T>::find_ref (const std::string& id, T& val)
       {
         DANCE_TRACE("IDREF_Base<T>::find_ref(C_String, T)");
 
@@ -58,13 +58,13 @@ namespace DAnCE
           idref_map_.find (id, val);
 
         if (retval < 0)
-          throw Config_Error (id.c_str (),
+          throw Config_Error (ACE_TEXT_CHAR_TO_TCHAR (id.c_str ()),
                               ACE_TEXT ("Unable to look up an IDRef."));
       }
 
       template <typename T>
       void
-      IDREF_Base<T>::find_ref (const T& value, ACE_TString& id)
+      IDREF_Base<T>::find_ref (const T& value, std::string& id)
       {
         DANCE_TRACE("IDREF_Base<T>::find_ref (T, CString)");
 
@@ -76,7 +76,7 @@ namespace DAnCE
 
         if (retval < 0)
           throw Config_Error (ACE_TEXT ("No location information for reverse IDREF lookup"),
-                              id.c_str ());
+                              ACE_TEXT_CHAR_TO_TCHAR (id.c_str ()));
       }
 
       template <typename T>

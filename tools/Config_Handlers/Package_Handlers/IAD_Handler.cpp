@@ -37,10 +37,10 @@ namespace DAnCE
 
 
         if (iad->label_if_set ())
-          toconfig.label = ACE_TEXT_ALWAYS_CHAR (iad->label_if_set ()->c_str ());
+          toconfig.label = iad->label_if_set ()->c_str ();
 
         if (iad->UUID_if_set ())
-          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR (iad->UUID_if_set ()->c_str ());
+          toconfig.UUID = iad->UUID_if_set ()->c_str ();
 
         toconfig.location.length (iad->count_location ());
         std::for_each (iad->begin_location (),

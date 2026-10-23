@@ -447,7 +447,7 @@ namespace DAnCE
 
     void
     DynAny_Handler::register_typecode (
-      const std::basic_string<ACE_TCHAR> typeID,
+      const std::string typeID,
       CORBA::TypeCode_ptr tc)
     {
       DANCE_TRACE("DynAny_Handler::register_typecode");
@@ -457,7 +457,7 @@ namespace DAnCE
 
 
     CORBA::TypeCode_ptr
-    DynAny_Handler::get_typecode (const std::basic_string<ACE_TCHAR> typeID)
+    DynAny_Handler::get_typecode (const std::string typeID)
     {
       DANCE_TRACE("DynAny_Handler::get_typecode");
 

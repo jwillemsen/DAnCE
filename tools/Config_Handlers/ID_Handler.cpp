@@ -23,7 +23,7 @@ namespace DAnCE
       DANCE_TRACE("ID_Handler::get_ImplementationDependency");
 
       toconfig.requiredType=
-        CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (desc.requiredType ().c_str ()));
+        CORBA::string_dup (desc.requiredType ().c_str ());
     }
 
     ImplementationDependency
@@ -31,7 +31,7 @@ namespace DAnCE
                                  const ::Deployment::ImplementationDependency& src)
     {
       DANCE_TRACE("ID_Handler::get_ImplementationDependency - reverse");
-      XMLSchema::string< ACE_TCHAR > reqtype (ACE_TEXT_CHAR_TO_TCHAR (src.requiredType));
+      XMLSchema::string<char> reqtype (src.requiredType);
 
       ImplementationDependency id (reqtype);
 

@@ -34,7 +34,7 @@ namespace DAnCE
     {
       DANCE_TRACE ("Capability_Handler::get_capability");
 
-      toconfig.name = ACE_TEXT_ALWAYS_CHAR ( desc.name ().c_str ());
+      toconfig.name =  desc.name ().c_str ();
 
       toconfig.resourceType.length (desc.count_resourceType ());
       std::for_each (desc.begin_resourceType (),
@@ -108,13 +108,13 @@ namespace DAnCE
         }
 
       if (desc.resourcePort_if_set ())
-        toconfig.resourcePort = ACE_TEXT_ALWAYS_CHAR (desc.resourcePort_if_set ()->c_str ());
+        toconfig.resourcePort = desc.resourcePort_if_set ()->c_str ();
 
       if (desc.componentPort_if_set  ())
-        toconfig.componentPort = ACE_TEXT_ALWAYS_CHAR (desc.componentPort_if_set ()->c_str ());
+        toconfig.componentPort = desc.componentPort_if_set ()->c_str ();
 
-      toconfig.resourceType = ACE_TEXT_ALWAYS_CHAR ( desc.resourceType ().c_str ());
-      toconfig.name = ACE_TEXT_ALWAYS_CHAR ( desc.name ().c_str ());
+      toconfig.resourceType =  desc.resourceType ().c_str ();
+      toconfig.name =  desc.name ().c_str ();
 
       std::for_each (desc.begin_property (),
              desc.end_property (),
@@ -266,10 +266,10 @@ namespace DAnCE
           cid = &desc;
 
         if (cid->label_if_set ())
-          toconfig.label = ACE_TEXT_ALWAYS_CHAR (cid->label_if_set ()->c_str ());
+          toconfig.label = cid->label_if_set ()->c_str ();
 
         if (cid->UUID_if_set ())
-          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR (cid->UUID_if_set ()->c_str ());
+          toconfig.UUID = cid->UUID_if_set ()->c_str ();
 
         if (cid->implements_if_set ())
           {
@@ -319,7 +319,7 @@ namespace DAnCE
              i != cid->end_dependsOn ();
              ++i)
           toconfig.dependsOn[pos++].requiredType =
-            ACE_TEXT_ALWAYS_CHAR ( i->requiredType ().c_str ());
+             i->requiredType ().c_str ();
 
         // infoProperty
         toconfig.infoProperty.length (cid->count_infoProperty ());

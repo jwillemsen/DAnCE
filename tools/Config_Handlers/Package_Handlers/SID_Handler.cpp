@@ -24,7 +24,7 @@ namespace DAnCE
          ::Deployment::SubcomponentInstantiationDescription &toconfig)
       {
         DANCE_TRACE ("SID_Handler::sub_comp_inst_descr");
-        toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
+        toconfig.name = desc.name ().c_str ();
 
         if (desc.basePackage_if_set ())
           {
@@ -55,13 +55,13 @@ namespace DAnCE
 
             if (desc.referencedPackage_if_set ()->requiredUUID_if_set ())
               toconfig.referencedPackage[0].requiredUUID =
-                ACE_TEXT_ALWAYS_CHAR (
-                  desc.referencedPackage_if_set ()->requiredUUID_if_set ()->c_str ());
+
+                  desc.referencedPackage_if_set ()->requiredUUID_if_set ()->c_str ();
 
             if (desc.referencedPackage_if_set ()->requiredName_if_set ())
               toconfig.referencedPackage[0].requiredName =
-                ACE_TEXT_ALWAYS_CHAR (
-                  desc.referencedPackage_if_set ()->requiredName_if_set ()->c_str ());
+
+                  desc.referencedPackage_if_set ()->requiredName_if_set ()->c_str ();
 
             Comp_Intf_Descr_Handler::comp_intf_descr (
               desc.referencedPackage_if_set ()->requiredType (),
@@ -81,7 +81,7 @@ namespace DAnCE
 
         if (desc.id_if_set ())
           {
-            ACE_TString str (desc.id_if_set ()->c_str ());
+            std::string str (desc.id_if_set ()->c_str ());
             SID_Handler::IDREF.bind_next_available (str);
           }
         else
@@ -139,7 +139,7 @@ namespace DAnCE
         // @@MAJO This is not a good way of binding reverse IDREFS.
         std::auto_ptr <ACE_Utils::UUID> safe_uuid (
           ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());
-        ACE_TString uuid ( ACE_TEXT_CHAR_TO_TCHAR (safe_uuid->to_string ()->c_str ()));
+        std::string uuid ( safe_uuid->to_string ()->c_str ());
 
         SID_Handler::IDREF.bind_next_available (uuid);
 

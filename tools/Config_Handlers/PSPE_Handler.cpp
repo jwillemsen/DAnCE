@@ -36,11 +36,11 @@ namespace DAnCE
     {
       DANCE_TRACE("PSPE_Handler::sub_component_port_endpoint");
       dest.portName =
-        ACE_TEXT_ALWAYS_CHAR (src.portName ().c_str ());
+        src.portName ().c_str ();
 
       if (src.provider_if_set ())
         {
-          dest.provider = *src.provider_if_set () == ACE_TEXT ("true");
+          dest.provider = *src.provider_if_set () == "true";
         }
       else
         {
@@ -50,7 +50,7 @@ namespace DAnCE
       CORBA::ULong tmp = 0;
 
       IDD_Handler::IDREF.find_ref (
-        ACE_TString (src.instance ().idref_if_set ()->id ().c_str ()), tmp);
+        std::string (src.instance ().idref_if_set ()->id ().c_str ()), tmp);
 
       dest.instanceRef = tmp;
 
@@ -92,13 +92,13 @@ namespace DAnCE
       const Deployment::PlanSubcomponentPortEndpoint &src)
     { // @@MAJO
       DANCE_TRACE("PSPE_Handler::sub_component_port_endpoint - reverse");
-      XMLSchema::string< ACE_TCHAR > pname (
-        ACE_TEXT_CHAR_TO_TCHAR (src.portName));
-      XMLSchema::string< ACE_TCHAR > tval  (ACE_TEXT ("true"));
-      XMLSchema::string< ACE_TCHAR > prov  (ACE_TEXT (""));
-      ACE_TString id;
+      XMLSchema::string<char> pname (
+        src.portName);
+      XMLSchema::string<char> tval  ("true");
+      XMLSchema::string<char> prov  ("");
+      std::string id;
       IDD_Handler::IDREF.find_ref(src.instanceRef, id);
-      XMLSchema::IDREF < ACE_TCHAR > idref(id.c_str());
+      XMLSchema::IDREF<char> idref(id.c_str());
 
       if (src.provider)
         prov = tval;

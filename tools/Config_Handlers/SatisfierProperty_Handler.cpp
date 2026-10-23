@@ -28,7 +28,7 @@ namespace DAnCE
     {
       DANCE_TRACE("SatisfierProperty_Handler::get_sat_property");
 
-      toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
+      toconfig.name = desc.name ().c_str ();
 
       switch (desc.kind ().integral ())
         {
@@ -84,7 +84,7 @@ namespace DAnCE
     {
       DANCE_TRACE("SatisfierProperty_Handler::get_sat_property - reverse");
 
-      ::XMLSchema::string< ACE_TCHAR > name (ACE_TEXT_CHAR_TO_TCHAR ((src.name)));
+      XMLSchema::string<char> name (src.name);
 
       const SatisfierPropertyKind *spk = 0;
 

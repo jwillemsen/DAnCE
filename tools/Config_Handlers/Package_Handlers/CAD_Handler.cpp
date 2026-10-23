@@ -23,9 +23,9 @@ namespace DAnCE
     {
       DANCE_TRACE("SPE_Handler::get_spe");
 
-      toconfig.portName = ACE_TEXT_ALWAYS_CHAR ( desc.portName ().c_str ());
+      toconfig.portName =  desc.portName ().c_str ();
 
-      ACE_TString str (desc.instance ().idref_if_set ()->id ().c_str ());
+      std::string str (desc.instance ().idref_if_set ()->id ().c_str ());
       CORBA::ULong pos (0);
 
       SID_Handler::IDREF.find_ref (str, pos);
@@ -36,7 +36,7 @@ namespace DAnCE
     get_spe (const ::Deployment::SubcomponentPortEndpoint &src)
     {
       DANCE_TRACE("SPE_Handler::get_spe - reverse");
-      ACE_TString str;
+      std::string str;
       SID_Handler::IDREF.find_ref (src.instanceRef, str);
 
       IdRef xid;
@@ -60,7 +60,7 @@ namespace DAnCE
     {
       DANCE_TRACE("ACD_Handler::get_acd");
 
-      toconfig.name = ACE_TEXT_ALWAYS_CHAR ( desc.name ().c_str ());
+      toconfig.name =  desc.name ().c_str ();
 
       toconfig.deployRequirement.length (desc.count_deployRequirement ());
       std::for_each (desc.begin_deployRequirement (),
@@ -126,9 +126,9 @@ namespace DAnCE
     {
       DANCE_TRACE("SPR_Handler::get_spr");
 
-      toconfig.propertyName = ACE_TEXT_ALWAYS_CHAR ( desc.propertyName ().c_str ());
+      toconfig.propertyName =  desc.propertyName ().c_str ();
 
-      ACE_TString str (desc.instance ().idref_if_set ()->id ().c_str ());
+      std::string str (desc.instance ().idref_if_set ()->id ().c_str ());
       CORBA::ULong pos (0);
 
       SID_Handler::IDREF.find_ref (str, pos);
@@ -140,7 +140,7 @@ namespace DAnCE
     get_spr (const ::Deployment::SubcomponentPropertyReference &src)
     {
       DANCE_TRACE("SPR_HAndler::get_spr - reverse");
-      ACE_TString str;
+      std::string str;
       SID_Handler::IDREF.find_ref (src.instanceRef, str);
 
       IdRef xid;
@@ -163,9 +163,9 @@ namespace DAnCE
     {
       DANCE_TRACE("APM_Handler::get_apm");
 
-      toconfig.name = ACE_TEXT_ALWAYS_CHAR ( desc.name ().c_str ());
+      toconfig.name =  desc.name ().c_str ();
       toconfig.externalName =
-        ACE_TEXT_ALWAYS_CHAR (desc.externalName ().c_str ());
+        desc.externalName ().c_str ();
 
       toconfig.delegatesTo.length (desc.count_delegatesTo ());
       SEQ_HAND_GCC_BUG_WORKAROUND (SPR_Handler::handle_spr,

@@ -64,9 +64,9 @@ namespace DAnCE
       {
       }
 
-      void operator() (::XMLSchema::string<ACE_TCHAR> const& src)
+      void operator() (XMLSchema::string<char> const& src)
       {
-        dest_[pos_++] = ACE_TEXT_ALWAYS_CHAR (src.c_str ());
+        dest_[pos_++] = src.c_str ();
       }
 
     private:

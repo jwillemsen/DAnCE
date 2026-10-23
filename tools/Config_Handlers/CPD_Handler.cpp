@@ -14,11 +14,11 @@ namespace DAnCE
     {
       DANCE_TRACE("CPD_Handler::component_port_description");
       toconfig.name =
-        ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
+        desc.name ().c_str ();
 
       if (desc.specificType_if_set ())
         toconfig.specificType =
-          ACE_TEXT_ALWAYS_CHAR (desc.specificType_if_set ()->c_str ());
+          desc.specificType_if_set ()->c_str ();
 
       toconfig.supportedType.length (desc.count_supportedType ());
       std::for_each (desc.begin_supportedType (),
@@ -71,11 +71,11 @@ namespace DAnCE
                                              const Deployment::ComponentPortDescription& src)
     {
       DANCE_TRACE("CPD_Handler::component_port_description - reverse");
-      ::XMLSchema::string< ACE_TCHAR > name (ACE_TEXT_CHAR_TO_TCHAR (src.name));
-      ::XMLSchema::string< ACE_TCHAR > stype (ACE_TEXT_CHAR_TO_TCHAR (src.specificType));
+      XMLSchema::string<char> name (src.name);
+      XMLSchema::string<char> stype (src.specificType);
 
-      ::XMLSchema::string< ACE_TCHAR > tval (ACE_TEXT ("true"));
-      ::XMLSchema::string< ACE_TCHAR > fval (ACE_TEXT ("false"));
+      XMLSchema::string<char> tval ("true");
+      XMLSchema::string<char> fval ("false");
       XMLSchema::boolean provider;
       XMLSchema::boolean  exclusiveProvider;
       XMLSchema::boolean exclusiveUser;
@@ -142,7 +142,7 @@ namespace DAnCE
 
       for (CORBA::ULong i = 0; i < src.supportedType.length (); ++i)
         {
-          //cpd.add_supportedType (XMLSchema::string< ACE_TCHAR > ((src.supportedType[i])));
+          //cpd.add_supportedType (XMLSchema::string<char> ((src.supportedType[i])));
         }
 
       return cpd;

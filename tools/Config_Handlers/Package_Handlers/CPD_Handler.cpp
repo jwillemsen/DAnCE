@@ -21,7 +21,7 @@ namespace DAnCE
                 ::Deployment::PackagedComponentImplementation &toconfig)
     {
       DANCE_TRACE ("PCI_Handler::get_pci");
-      toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
+      toconfig.name = desc.name ().c_str ();
 
       CID_Handler::component_impl_descr (desc.referencedImplementation (),
                          toconfig.referencedImplementation);
@@ -62,10 +62,10 @@ namespace DAnCE
           cpd = &desc;
 
         if (cpd->label_if_set ())
-          toconfig.label = ACE_TEXT_ALWAYS_CHAR (cpd->label_if_set ()->c_str ());
+          toconfig.label = cpd->label_if_set ()->c_str ();
 
         if (cpd->UUID_if_set ())
-          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR (cpd->UUID_if_set ()->c_str ());
+          toconfig.UUID = cpd->UUID_if_set ()->c_str ();
 
         // CID
         if (cpd->realizes_if_set ())

@@ -36,7 +36,7 @@ namespace DAnCE
         static void handle_nia (const NamedImplementationArtifact &desc,
                              ::Deployment::NamedImplementationArtifact &toconfig)
         {
-          toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
+          toconfig.name = desc.name ().c_str ();
           IAD_Handler::impl_artifact_descr (desc.referencedArtifact (),
                                             toconfig.referencedArtifact);
         }

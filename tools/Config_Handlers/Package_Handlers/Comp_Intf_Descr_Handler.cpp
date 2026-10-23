@@ -23,7 +23,7 @@ namespace DAnCE
           {
             DANCE_TRACE ("Comp_Prop_Handler::get_cpd");
 
-            toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
+            toconfig.name = desc.name ().c_str ();
             DataType_Handler::data_type (desc.type (),
                                          toconfig.type);
           }
@@ -64,14 +64,14 @@ namespace DAnCE
           cid = &desc;
 
         if (cid->label_if_set ())
-          toconfig.label = ACE_TEXT_ALWAYS_CHAR (cid->label_if_set ()->c_str ());
+          toconfig.label = cid->label_if_set ()->c_str ();
 
         if (cid->UUID_if_set ())
-          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR (cid->UUID_if_set ()->c_str ());
+          toconfig.UUID = cid->UUID_if_set ()->c_str ();
 
         // MAJO: SpecificType should be required.
         if (cid->specificType_if_set ())
-          toconfig.specificType = ACE_TEXT_ALWAYS_CHAR (cid->specificType_if_set ()->c_str ());
+          toconfig.specificType = cid->specificType_if_set ()->c_str ();
 
         toconfig.supportedType.length (cid->count_supportedType ());
         std::for_each (cid->begin_supportedType (),

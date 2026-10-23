@@ -43,7 +43,7 @@ namespace DAnCE
       DANCE_TRACE("MDD_Handler::mono_deployment_description");
 
       toconfig.name =
-        CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ()));
+        CORBA::string_dup (desc.name ().c_str ());
 
       MonolithicDeploymentDescription::source_const_iterator me =
         desc.end_source ();
@@ -56,7 +56,7 @@ namespace DAnCE
            ++se)
         {
           toconfig.source[len++] =
-            CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (se->c_str ()));
+            CORBA::string_dup (se->c_str ());
         }
 
       MonolithicDeploymentDescription::artifact_const_iterator ae =
@@ -70,7 +70,7 @@ namespace DAnCE
         {
           CORBA::ULong tmp = 0;
 
-          ADD_Handler::IDREF.find_ref (ACE_TString (ab->idref_if_set ()->id ().c_str ()),
+          ADD_Handler::IDREF.find_ref (std::string (ab->idref_if_set ()->id ().c_str ()),
                                        tmp);
 
           toconfig.artifactRef[len++] = tmp;
@@ -97,7 +97,7 @@ namespace DAnCE
       // Handle the idref
       if (desc.id_if_set ())
         {
-          ACE_TString cstr (desc.id_if_set ()->c_str ());
+          std::string cstr (desc.id_if_set ()->c_str ());
 
           MDD_Handler::IDREF.bind_ref (cstr, pos);
         }
@@ -117,16 +117,16 @@ namespace DAnCE
       DANCE_TRACE("mono_deployment_description - reverse");
 
       //Get the name and instantiate the mdd
-      XMLSchema::string < ACE_TCHAR > name (
-        ACE_TEXT_CHAR_TO_TCHAR (src.name));
+      XMLSchema::string<char> name (
+        src.name);
       MonolithicDeploymentDescription mdd (name);
 
       //Get the source(s) from the IDL and store them
       size_t total = src.source.length();
       for(size_t i = 0; i < total; i++)
         {
-          XMLSchema::string< ACE_TCHAR > curr (
-            ACE_TEXT_CHAR_TO_TCHAR(src.source[i]));
+          XMLSchema::string<char> curr (
+            src.source[i]);
           //mdd.add_source(curr);
         }
 
@@ -134,7 +134,7 @@ namespace DAnCE
       total = src.artifactRef.length();
       for(size_t j = 0; j < total; j++)
         {
-          ACE_TString tmp;
+          std::string tmp;
           ADD_Handler::IDREF.find_ref(src.artifactRef[j], tmp);
           IdRef idref;
           idref.idref (tmp.c_str ());
@@ -160,10 +160,10 @@ namespace DAnCE
       // Generate a UUID to use for the IDREF.
       ACE_Utils::UUID uuid;
       ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
-      ACE_TString mdd_id (ACE_TEXT ("_"));
-      mdd_id += ACE_TEXT_CHAR_TO_TCHAR (uuid.to_string ()->c_str ());
+      std::string mdd_id ("_");
+      mdd_id += uuid.to_string ()->c_str ();
 
-      XMLSchema::ID< ACE_TCHAR > xml_id (mdd_id.c_str ());
+      XMLSchema::ID<char> xml_id (mdd_id.c_str ());
 
       // Bind the ref and set it in the IDD
       MDD_Handler::IDREF.bind_next_available (mdd_id);
