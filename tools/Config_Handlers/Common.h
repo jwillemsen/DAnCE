@@ -8,6 +8,7 @@
 #define CONFIG_HANDLERS_COMMON_H
 #include <string>
 #include <string_view>
+#include <utility>
 
 namespace DAnCE
 {
@@ -20,10 +21,10 @@ namespace DAnCE
     class Config_Error
     {
     public:
-      Config_Error (const std::string &name,
-                    const std::string &error) :
-        name_ (name),
-        error_ (error)
+      Config_Error (std::string name,
+                    std::string error) :
+        name_ (std::move (name)),
+        error_ (std::move (error))
       {};
 
       void add_name (std::string_view name)

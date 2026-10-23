@@ -5,6 +5,7 @@
  * Defines exceptions that may be thrown during the XSC<=>IDL translation process.
  */
 #include <string>
+#include <string_view>
 
 namespace DAnCE
 {
@@ -12,7 +13,7 @@ namespace DAnCE
   {
     struct Parse_Error
     {
-      Parse_Error (const std::string &reason)
+      Parse_Error (std::string_view reason)
         : reason_ (reason)
       {
       }
@@ -22,7 +23,7 @@ namespace DAnCE
 
     struct Plan_Error
     {
-      Plan_Error (const std::string &reason)
+      Plan_Error (std::string_view reason)
         : reason_ (reason)
       {
       }
