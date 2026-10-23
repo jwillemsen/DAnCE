@@ -69,7 +69,7 @@ namespace DAnCE
       }
 
       template <typename T>
-      bool IDREF_Base<T>::unbind_refs (void)
+      bool IDREF_Base<T>::unbind_refs ()
       {
         DANCE_TRACE("IDREF_Base<T>::unbind_refs");
 

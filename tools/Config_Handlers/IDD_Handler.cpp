@@ -135,7 +135,7 @@ namespace DAnCE
         }
 
       // Get and store the deployedResource(s)
-      size_t dp_total = src.deployedResource.length ();
+      size_t const dp_total = src.deployedResource.length ();
       for (size_t k = 0; k < dp_total; k++)
         {
           //idd.add_deployedResource (IRDD_Handler::

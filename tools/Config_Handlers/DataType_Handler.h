@@ -40,8 +40,8 @@ class Config_Handlers_Common_Export DataType_Handler {
 
 public:
 
-DataType_Handler (void);
-virtual ~DataType_Handler (void);
+DataType_Handler ();
+virtual ~DataType_Handler ();
 
 ////This method takes a <DAnCE::Config_Handlers::DataType>
 ///and returns the corresponding CORBA::TypeCode.

@@ -15,13 +15,12 @@ namespace DAnCE
   namespace Config_Handlers
   {
     XML_File_Intf::XML_File_Intf (ACE_TCHAR const* file)
-      : file_ (file),
-        idl_dp_ (nullptr)
+      : file_ (file)
     {
       DANCE_TRACE("XML_File_Intf::constructor");
     }
 
-    XML_File_Intf::~XML_File_Intf (void)
+    XML_File_Intf::~XML_File_Intf ()
     {
       DANCE_TRACE("XML_File_Intf::destructor");
 
@@ -168,7 +167,7 @@ namespace DAnCE
     }
 
     ::Deployment::DeploymentPlan const *
-    XML_File_Intf::get_plan (void)
+    XML_File_Intf::get_plan ()
     {
       DANCE_TRACE("get_plan");
 
@@ -178,7 +177,7 @@ namespace DAnCE
       return this->idl_dp_.get ();
     }
 
-    ::Deployment::DeploymentPlan * XML_File_Intf::release_plan (void)
+    ::Deployment::DeploymentPlan * XML_File_Intf::release_plan ()
     {
       DANCE_TRACE("XML_File_Intf::get_plan");
 
@@ -188,7 +187,7 @@ namespace DAnCE
     }
 
     ::Deployment::Domain const *
-    XML_File_Intf::get_domain (void)
+    XML_File_Intf::get_domain ()
     {
       DANCE_TRACE("get_domain");
 
@@ -198,7 +197,7 @@ namespace DAnCE
       return this->idl_domain_.get ();
     }
 
-    ::Deployment::Domain * XML_File_Intf::release_domain (void)
+    ::Deployment::Domain * XML_File_Intf::release_domain ()
     {
       DANCE_TRACE("XML_File_Intf::get_domain");
 

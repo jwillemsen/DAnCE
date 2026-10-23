@@ -18,9 +18,7 @@ namespace DAnCE
   namespace Config_Handlers
   {
     DP_Handler::DP_Handler (deploymentPlan &dp)
-      : xsc_dp_ {}
-      , idl_dp_ {}
-      , retval_ (true)
+      : retval_ (true)
     {
       DANCE_TRACE("DP_Handler::constructor");
       if (!this->resolve_plan (dp))
@@ -29,22 +27,21 @@ namespace DAnCE
 
     DP_Handler::DP_Handler (::Deployment::DeploymentPlan const& plan)
       : xsc_dp_ (std::make_unique<deploymentPlan> ()),
-        idl_dp_ {},
-        retval_ (0)
+        retval_ (false)
     {
       DANCE_TRACE("DP_Handler::constructor");
       if (!this->build_xsc (plan))
         throw;
     }
 
-    DP_Handler::~DP_Handler (void)
+    DP_Handler::~DP_Handler ()
       throw ()
     {
       DANCE_TRACE("DP_Handler::destructor");
     }
 
     deploymentPlan const *
-    DP_Handler::xsc (void) const
+    DP_Handler::xsc () const
     {
       DANCE_TRACE("DP_Handler::xsc const");
       if (this->retval_ && this->xsc_dp_.get () != 0)
@@ -53,7 +50,7 @@ namespace DAnCE
       throw NoPlan ();
     }
 
-    deploymentPlan * DP_Handler::xsc (void)
+    deploymentPlan * DP_Handler::xsc ()
     {
       DANCE_TRACE("DP_Handler::xsc");
       if (this->retval_ && this->xsc_dp_.get () != 0)
@@ -63,7 +60,7 @@ namespace DAnCE
     }
 
     ::Deployment::DeploymentPlan const *
-    DP_Handler::plan (void) const
+    DP_Handler::plan () const
     {
       DANCE_TRACE("DP_Handler::plan const");
       if (this->retval_ && this->idl_dp_.get () != 0)
@@ -72,7 +69,7 @@ namespace DAnCE
       throw NoPlan ();
     }
 
-    ::Deployment::DeploymentPlan * DP_Handler::plan (void)
+    ::Deployment::DeploymentPlan * DP_Handler::plan ()
     {
       DANCE_TRACE("DP_Handler::plan");
       if (this->retval_ && this->idl_dp_.get () != 0)
@@ -104,7 +101,7 @@ namespace DAnCE
       // Similar thing for dependsOn
       for (auto dstart = xsc_dp.dependsOn ().begin (); dstart != xsc_dp.dependsOn ().end (); ++dstart)
         {
-          CORBA::ULong len = this->idl_dp_->dependsOn.length ();
+          CORBA::ULong const len = this->idl_dp_->dependsOn.length ();
           this->idl_dp_->dependsOn.length (len + 1);
           ID_Handler::get_ImplementationDependency (*dstart, this->idl_dp_->dependsOn [len]);
 
@@ -113,7 +110,7 @@ namespace DAnCE
       // ... An the property stuff
       for (auto pstart = xsc_dp.infoProperty ().begin (); pstart != xsc_dp.infoProperty ().end (); ++pstart)
         {
-          CORBA::ULong len = this->idl_dp_->infoProperty.length ();
+          CORBA::ULong const len = this->idl_dp_->infoProperty.length ();
 
           this->idl_dp_->infoProperty.length (len + 1);
 
@@ -211,8 +208,8 @@ namespace DAnCE
       // @@ so we can check for length
       this->xsc_dp_->realizes(CCD_Handler::component_interface_descr(plan.realizes));
       ::DAnCE::Config_Handlers::ComponentInterfaceDescription const*
-        realizes_if_set_ptr_2 = this->xsc_dp_->realizes_if_set ();
-      if (!realizes_if_set_ptr_2)
+        resolved_realizes_if_set_ptr = this->xsc_dp_->realizes_if_set ();
+      if (!resolved_realizes_if_set_ptr)
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR,
                       "(%P|%t) DP_Handler: "

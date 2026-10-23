@@ -47,8 +47,8 @@ class Config_Handlers_Export ID_Handler
 {
 public:
 
-ID_Handler (void);
-virtual ~ID_Handler (void);
+ID_Handler ();
+virtual ~ID_Handler ();
 
 static void get_ImplementationDependency (
 ImplementationDependency const& desc,

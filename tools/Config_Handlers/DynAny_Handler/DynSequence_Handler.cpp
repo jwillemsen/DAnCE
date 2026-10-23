@@ -33,7 +33,7 @@ namespace DAnCE
         tc = DynSequence_Handler::create_typecode (type);
 
       // Make the actual DynSequence
-      DynamicAny::DynAny_var temp = DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
+      DynamicAny::DynAny_var const temp = DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
       DynamicAny::DynSequence_var retval = DynamicAny::DynSequence::_narrow (temp.in ());
 
       DynamicAny::DynAnySeq dynseq;
@@ -76,7 +76,7 @@ namespace DAnCE
 
               for (auto i = value.element ().begin (); i != value.element ().end (); ++i)
                 {
-                  DynamicAny::DynAny_var dynany
+                  DynamicAny::DynAny_var const dynany
                     (DYNANY_HANDLER->extract_into_dynany (sequenceType->elementType (), *i));
                   dynseq[pos++] = dynany->copy ();
                 }

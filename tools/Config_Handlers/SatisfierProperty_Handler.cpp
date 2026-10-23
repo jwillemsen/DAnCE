@@ -11,12 +11,12 @@ namespace DAnCE
   namespace Config_Handlers
   {
 
-    SatisfierProperty_Handler::SatisfierProperty_Handler (void)
+    SatisfierProperty_Handler::SatisfierProperty_Handler ()
     {
       DANCE_TRACE("SatisfierProperty_Handler::constructor");
     }
 
-    SatisfierProperty_Handler::~SatisfierProperty_Handler (void)
+    SatisfierProperty_Handler::~SatisfierProperty_Handler ()
     {
       DANCE_TRACE("SatisfierProperty_Handler::destructor");
     }

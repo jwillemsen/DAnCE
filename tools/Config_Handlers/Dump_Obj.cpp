@@ -9,7 +9,6 @@ namespace Deployment
   std::map<std::string, CORBA::Any> Dump_Obj::desc_map_;
 
   Dump_Obj::Dump_Obj(char const* caption)
-    : desc_()
   {
     DANCE_TRACE ("Dump_Obj::constructor");
 

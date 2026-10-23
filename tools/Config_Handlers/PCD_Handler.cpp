@@ -13,11 +13,11 @@ namespace DAnCE
   namespace Config_Handlers
   {
 
-    PCD_Handler::PCD_Handler (void)
+    PCD_Handler::PCD_Handler ()
     {
     }
 
-    PCD_Handler::~PCD_Handler (void)
+    PCD_Handler::~PCD_Handler ()
     {
     }
 

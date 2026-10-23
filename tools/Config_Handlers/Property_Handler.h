@@ -43,8 +43,8 @@ namespace DAnCE
       class Config_Handlers_Common_Export Property_Handler
     {
     public:
-      Property_Handler (void);
-      virtual ~Property_Handler (void);
+      Property_Handler ();
+      virtual ~Property_Handler ();
 
       /// This method maps the values from the XSC object
       /// <DAnCE::Config_Handlers::Property> to the CORBA IDL type

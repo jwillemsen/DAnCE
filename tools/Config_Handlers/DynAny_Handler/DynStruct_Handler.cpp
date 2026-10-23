@@ -54,7 +54,7 @@ namespace DAnCE
           create_type_map (type, dt_map);
 
           // Make the actual DynStruct
-          DynamicAny::DynAny_var temp = DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
+          DynamicAny::DynAny_var const temp = DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
           DynamicAny::DynStruct_var retval = DynamicAny::DynStruct::_narrow (temp.in ());
 
           CORBA::ULong pos {};

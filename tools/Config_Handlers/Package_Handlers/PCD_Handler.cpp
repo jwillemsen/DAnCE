@@ -33,7 +33,7 @@ namespace DAnCE
             throw Parse_Error (error);
           }
 
-        XML::XStr root = dom->getDocumentElement ()->getTagName ();
+        XML::XStr const root = dom->getDocumentElement ()->getTagName ();
 
         if (root == XML::XStr (
                     ACE_TEXT ("Deployment:topLevelPackageDescription")))

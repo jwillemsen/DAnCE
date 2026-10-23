@@ -46,21 +46,21 @@ namespace DAnCE
           /// the IDL->XSC mapping
           DP_Handler (::Deployment::DeploymentPlan const& plan);
 
-          ~DP_Handler (void)
+          ~DP_Handler ()
             throw ();
 
           /// Generates the IDL->XSC mapping.  returns
           /// null if the method fails or if the class was
           /// constructed with the wrong source.
-          deploymentPlan const *xsc (void) const;
+          deploymentPlan const *xsc () const;
 
-          deploymentPlan *xsc (void);
+          deploymentPlan *xsc ();
 
           /// Generates the XSC->IDL mapping.  returns null
           /// if the method fails or the class was constructed
-          ::Deployment::DeploymentPlan const *plan (void) const;
+          ::Deployment::DeploymentPlan const *plan () const;
 
-          ::Deployment::DeploymentPlan *plan (void);
+          ::Deployment::DeploymentPlan *plan ();
 
         private:
 
@@ -69,11 +69,11 @@ namespace DAnCE
           bool build_xsc (::Deployment::DeploymentPlan const& plan);
 
         private:
-          std::unique_ptr<deploymentPlan> xsc_dp_;
+          std::unique_ptr<deploymentPlan> xsc_dp_ {};
 
-          std::unique_ptr<::Deployment::DeploymentPlan> idl_dp_;
+          std::unique_ptr<::Deployment::DeploymentPlan> idl_dp_ {};
 
-          bool retval_;
+          bool retval_ {};
         };
     }
 }

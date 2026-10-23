@@ -41,7 +41,7 @@ namespace DAnCE
             tc = DynEnum_Handler::create_typecode (type);
 
           // Make the actual DynEnum
-          DynamicAny::DynAny_var temp = DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
+          DynamicAny::DynAny_var const temp = DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
           DynamicAny::DynEnum_var retval = DynamicAny::DynEnum::_narrow (temp.in ());
 
           retval->set_as_string (enum_values.front ().c_str ());

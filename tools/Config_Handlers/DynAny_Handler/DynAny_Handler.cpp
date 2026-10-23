@@ -15,9 +15,7 @@ namespace DAnCE
 {
   namespace Config_Handlers
   {
-    DynAny_Handler::DynAny_Handler (void) :
-      orb_ (0),
-      daf_ (0)
+    DynAny_Handler::DynAny_Handler ()
     {
       DANCE_TRACE("DynAny_Handler::constructor");
 
@@ -26,7 +24,7 @@ namespace DAnCE
 
       orb_ = CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var temp = orb_->resolve_initial_references ("DynAnyFactory");
+      CORBA::Object_var const temp = orb_->resolve_initial_references ("DynAnyFactory");
       daf_ = DynamicAny::DynAnyFactory::_narrow (temp.in ());
 
       if (CORBA::is_nil (daf_.in ()))
@@ -36,7 +34,7 @@ namespace DAnCE
         }
     }
 
-    DynAny_Handler::~DynAny_Handler (void)
+    DynAny_Handler::~DynAny_Handler ()
     {
       DANCE_TRACE("DynAny_Handler::destructor");
     }
@@ -67,7 +65,7 @@ namespace DAnCE
       if (req_tc)
         retval = this->daf_->create_dyn_any_from_type_code (req_tc);
 
-      TCKind::Value tkind = type.kind ().integral ();
+      TCKind::Value const tkind = type.kind ().integral ();
 
       if (value._cxx_short ().size () > 1 || value._cxx_long ().size () > 1 ||
           value.ushort ().size () > 1 || value.ulong ().size () > 1 ||
@@ -345,9 +343,9 @@ namespace DAnCE
     {
       DANCE_TRACE("DynAny_Handler::extract_from_dynany");
 
-      DynamicAny::DynAny_var dyn = this->daf_->create_dyn_any (any);
+      DynamicAny::DynAny_var const dyn = this->daf_->create_dyn_any (any);
 
-      DataValue val;
+      DataValue const val;
       Any retval (TCKind::tk_char, val);
       return retval;
     }

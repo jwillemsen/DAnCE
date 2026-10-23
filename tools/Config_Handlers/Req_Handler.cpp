@@ -7,11 +7,11 @@ namespace DAnCE
   namespace Config_Handlers
   {
 
-    Req_Handler::Req_Handler (void)
+    Req_Handler::Req_Handler ()
     {
     }
 
-    Req_Handler::~Req_Handler (void)
+    Req_Handler::~Req_Handler ()
     {
     }
 
@@ -35,8 +35,8 @@ namespace DAnCE
       DANCE_TRACE("Req_Handler::get_requirement - reverse");
 
       //Get the values for name and res
-      XMLSchema::string<char> name (src.name);
-      XMLSchema::string<char> res (src.resourceType);
+      XMLSchema::string<char> const name (src.name);
+      XMLSchema::string<char> const res (src.resourceType);
 
       //Instantiate the Requirement
       Requirement req (name,res);

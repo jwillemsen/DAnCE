@@ -31,7 +31,7 @@ namespace DAnCE
     public:
       static void get_PlanLocality (PlanLocality const& desc, Deployment::PlanLocality &toconfig);
 
-      static PlanLocality  plan_locality (::Deployment::PlanLocality const& src);
+      static PlanLocality plan_locality (::Deployment::PlanLocality const& src);
     };
 
   }

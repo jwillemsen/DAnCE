@@ -69,7 +69,7 @@ namespace DAnCE
         }
 
       pos = 0;
-      CORBA::ULong len = desc.property ().size ();
+      CORBA::ULong const len = desc.property ().size ();
       toconfig.property.length (len );
       for(auto prop (desc.property ().begin ()); prop != desc.property ().end (); prop++)
         {
@@ -92,9 +92,9 @@ namespace DAnCE
       ComponentInterfaceDescription cid;
 
       //Load up the basic string members
-      XMLSchema::string<char> uuid (src.UUID);
-      XMLSchema::string<char> label (src.label);
-      XMLSchema::string<char> specifict (src.specificType);
+      XMLSchema::string<char> const uuid (src.UUID);
+      XMLSchema::string<char> const label (src.label);
+      XMLSchema::string<char> const specifict (src.specificType);
 
       //Then put them in the CID
       cid.UUID (uuid);

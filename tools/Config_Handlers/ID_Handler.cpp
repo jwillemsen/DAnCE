@@ -6,11 +6,11 @@ namespace DAnCE
 {
   namespace Config_Handlers
   {
-    ID_Handler::ID_Handler (void)
+    ID_Handler::ID_Handler ()
     {
     }
 
-    ID_Handler::~ID_Handler (void)
+    ID_Handler::~ID_Handler ()
     {
     }
 

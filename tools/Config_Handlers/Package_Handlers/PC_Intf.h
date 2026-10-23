@@ -39,14 +39,14 @@ namespace DAnCE
     public:
       STD_PC_Intf (char const* file);
 
-      ::Deployment::PackageConfiguration const *get_PC (void) const;
-      ::Deployment::PackageConfiguration *get_PC (void);
+      ::Deployment::PackageConfiguration const *get_PC () const;
+      ::Deployment::PackageConfiguration *get_PC ();
 
     protected:
       bool prepare_PC (char const* file);
 
     private:
-      std::unique_ptr<::Deployment::PackageConfiguration> idl_pc_;
+      std::unique_ptr<::Deployment::PackageConfiguration> idl_pc_ {};
     };
   }
 }

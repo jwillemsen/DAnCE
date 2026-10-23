@@ -42,8 +42,8 @@ namespace DAnCE
        */
       class Config_Handlers_Export IRDD_Handler {
       public:
-    IRDD_Handler (void);
-    virtual ~IRDD_Handler (void);
+    IRDD_Handler ();
+    virtual ~IRDD_Handler ();
 
     static void handle_irdd (InstanceResourceDeploymentDescription const& desc,
                             Deployment::InstanceResourceDeploymentDescription& toconfig)

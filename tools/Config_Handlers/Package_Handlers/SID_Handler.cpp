@@ -107,7 +107,7 @@ namespace DAnCE
             (PCD_Handler::package_config (src.specializedConfig[0]));
         else if (src.importedPackage.length () == 1)
           {
-            ComponentPackageImport ci;
+            ComponentPackageImport const ci;
 #if 0
             for (CORBA::ULong i = 0; i < src.importedPackage[0].location.length (); ++i)
               ci.add_location (src.importedPackage[0].location[i].in ());

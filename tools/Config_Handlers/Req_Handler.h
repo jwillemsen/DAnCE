@@ -43,8 +43,8 @@ namespace DAnCE
     {
     public:
 
-      Req_Handler (void);
-      virtual ~Req_Handler (void);
+      Req_Handler ();
+      virtual ~Req_Handler ();
 
       ///This method takes a <Deployment::Requirement>
       ///and maps the values from the passed in XSC

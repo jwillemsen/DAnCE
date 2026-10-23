@@ -50,12 +50,12 @@ namespace DAnCE
     }
 
     ::Deployment::PackageConfiguration const *
-    STD_PC_Intf::get_PC (void) const
+    STD_PC_Intf::get_PC () const
     {
       return this->idl_pc_.get ();
     }
 
-    ::Deployment::PackageConfiguration * STD_PC_Intf::get_PC (void)
+    ::Deployment::PackageConfiguration * STD_PC_Intf::get_PC ()
     {
       return this->idl_pc_.release ();
     }

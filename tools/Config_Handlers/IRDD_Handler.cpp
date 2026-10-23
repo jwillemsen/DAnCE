@@ -9,11 +9,11 @@ namespace DAnCE
   namespace Config_Handlers
   {
 
-    IRDD_Handler::IRDD_Handler (void)
+    IRDD_Handler::IRDD_Handler ()
     {
     }
 
-    IRDD_Handler::~IRDD_Handler (void)
+    IRDD_Handler::~IRDD_Handler ()
     {
     }
 

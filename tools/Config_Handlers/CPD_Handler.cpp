@@ -73,7 +73,7 @@ namespace DAnCE
       XMLSchema::string<char> tval ("true");
       XMLSchema::string<char> fval ("false");
       XMLSchema::boolean provider;
-      XMLSchema::boolean  exclusiveProvider;
+      XMLSchema::boolean exclusiveProvider;
       XMLSchema::boolean exclusiveUser;
       XMLSchema::boolean optional;
 

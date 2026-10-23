@@ -35,13 +35,13 @@ namespace DAnCE
     public:
       XML_File_Intf (ACE_TCHAR const* file);
 
-      ~XML_File_Intf (void);
+      ~XML_File_Intf ();
 
-      ::Deployment::DeploymentPlan const *get_plan (void);
-      ::Deployment::DeploymentPlan *release_plan (void);
+      ::Deployment::DeploymentPlan const *get_plan ();
+      ::Deployment::DeploymentPlan *release_plan ();
 
-      ::Deployment::Domain const *get_domain (void);
-      ::Deployment::Domain *release_domain (void);
+      ::Deployment::Domain const *get_domain ();
+      ::Deployment::Domain *release_domain ();
 
       void add_search_path (ACE_TCHAR const* environment, ACE_TCHAR const* relpath);
 
@@ -52,10 +52,10 @@ namespace DAnCE
       bool read_process_domain (ACE_TCHAR const* file);
 
     private:
-      std::basic_string <ACE_TCHAR> file_;
-      XML::XML_Helper<XML::XML_Schema_Resolver<XML::Environment_Resolver>> xml_helper_;
-      std::unique_ptr<::Deployment::DeploymentPlan> idl_dp_;
-      std::unique_ptr<::Deployment::Domain> idl_domain_;
+      std::basic_string <ACE_TCHAR> file_ {};
+      XML::XML_Helper<XML::XML_Schema_Resolver<XML::Environment_Resolver>> xml_helper_ {};
+      std::unique_ptr<::Deployment::DeploymentPlan> idl_dp_ {};
+      std::unique_ptr<::Deployment::Domain> idl_domain_ {};
     };
   }
 }

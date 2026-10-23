@@ -43,8 +43,8 @@ namespace DAnCE
       class Config_Handlers_Common_Export SatisfierProperty_Handler
     {
     public:
-      SatisfierProperty_Handler (void);
-      virtual ~SatisfierProperty_Handler (void);
+      SatisfierProperty_Handler ();
+      virtual ~SatisfierProperty_Handler ();
 
       /// This method maps the values from the XSC object
       /// <DAnCE::Config_Handlers::SatisfierProperty> to the CORBA IDL type

@@ -49,9 +49,9 @@ namespace DAnCE
     public:
       DynAny_Handler ();
 
-      ~DynAny_Handler (void);
+      ~DynAny_Handler ();
 
-      DynamicAny::DynAny_ptr  extract_into_dynany (DataType const& type,
+      DynamicAny::DynAny_ptr extract_into_dynany (DataType const& type,
                                                    DataValue const& value,
                                                    CORBA::TypeCode_ptr = CORBA::TypeCode::_nil ());
 
@@ -69,12 +69,12 @@ namespace DAnCE
 
     private:
 
-      CORBA::ORB_var orb_;
+      CORBA::ORB_var orb_ {};
 
-      DynamicAny::DynAnyFactory_var daf_;
+      DynamicAny::DynAnyFactory_var daf_ {};
 
       using TypecodeMap = std::map <std::string, CORBA::TypeCode_ptr, std::less<>>;
-      TypecodeMap typecode_map_;
+      TypecodeMap typecode_map_ {};
     };
 
     typedef ACE_Singleton<DynAny_Handler, ACE_Null_Mutex> DynAny_Singleton;

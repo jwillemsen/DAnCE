@@ -44,8 +44,8 @@ namespace DAnCE
 
     public:
 
-      PCD_Handler (void);
-      virtual ~PCD_Handler (void);
+      PCD_Handler ();
+      virtual ~PCD_Handler ();
 
       ///This method takes a <Deployment::PlanConnectionDescription>
       ///and maps the values from the passed in XSC

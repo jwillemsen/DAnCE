@@ -37,9 +37,7 @@ template <typename T>
 class IDREF_Base
 {
 public:
-IDREF_Base ()
-{
-}
+IDREF_Base () = default;
 
 IDREF_Base (T start_point)
 : next_ (start_point)
@@ -59,7 +57,7 @@ void bind_next_available (std::string &id);
 
 /// Unbind all IDREFS
 bool
-unbind_refs (void);
+unbind_refs ();
 
 typedef ACE_Hash_Map_Manager<std::string,
 T,
@@ -71,12 +69,12 @@ ACE_Null_Mutex> POS_MAP;
 protected:
 /// The map used to store and look up the indexes of elements
 /// referenced by their IDREF.
-IDREF_MAP idref_map_;
+IDREF_MAP idref_map_ {};
 /// The map used to store and look up the IDREFS of elements
 /// referenced by their index.
-POS_MAP pos_map_;
+POS_MAP pos_map_ {};
 
-T next_;
+T next_ {};
 };
 
 }

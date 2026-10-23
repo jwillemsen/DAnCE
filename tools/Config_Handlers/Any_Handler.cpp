@@ -14,12 +14,12 @@ namespace DAnCE
   namespace Config_Handlers
   {
 
-    Any_Handler::Any_Handler (void)
+    Any_Handler::Any_Handler ()
     {
       DANCE_TRACE("Any_Handler::constructor");
     }
 
-    Any_Handler::~Any_Handler (void)
+    Any_Handler::~Any_Handler ()
     {
       DANCE_TRACE("Any_Handler::destructor");
     }
@@ -29,7 +29,7 @@ namespace DAnCE
       DANCE_TRACE("Any_Handler::extract_into_any");
       try
         {
-          DynamicAny::DynAny_var dyn = DYNANY_HANDLER->extract_into_dynany (desc.type (), desc.value ());
+          DynamicAny::DynAny_var const dyn = DYNANY_HANDLER->extract_into_dynany (desc.type (), desc.value ());
           CORBA::Any_var any_safe (dyn->to_any ());
           toconfig = *any_safe;
 

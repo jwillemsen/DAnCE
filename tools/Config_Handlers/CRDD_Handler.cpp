@@ -11,19 +11,20 @@ namespace DAnCE
   namespace Config_Handlers
   {
 
-    CRDD_Handler::CRDD_Handler (void)
+    CRDD_Handler::CRDD_Handler ()
     {
     }
 
-    CRDD_Handler::~CRDD_Handler (void)
+    CRDD_Handler::~CRDD_Handler ()
     {
     }
 
     ///This method takes a <Deployment::ConnectionResourceDeploymentDescription>
     ///and maps the values from the passed in XSC
     ///ConnectionResourceDeploymentDescription to its members.
-    void CRDD_Handler::get_ConnectionResourceDeploymentDescription (Deployment::ConnectionResourceDeploymentDescription& toconfig,
-                                                                    ConnectionResourceDeploymentDescription const& desc)
+    void CRDD_Handler::get_ConnectionResourceDeploymentDescription (
+      Deployment::ConnectionResourceDeploymentDescription& toconfig,
+      ConnectionResourceDeploymentDescription const& desc)
     {
       DANCE_TRACE("CRDD_Handler::get_ConnectionResourceDD");
 

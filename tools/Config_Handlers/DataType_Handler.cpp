@@ -7,11 +7,11 @@ namespace DAnCE
   namespace Config_Handlers
   {
 
-    DataType_Handler::DataType_Handler (void)
+    DataType_Handler::DataType_Handler ()
     {
       DANCE_TRACE("DataType_Handler::constructor");
     }
-    DataType_Handler::~DataType_Handler (void)
+    DataType_Handler::~DataType_Handler ()
     {
       DANCE_TRACE("DataType_Handler::destructor");
     }

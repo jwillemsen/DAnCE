@@ -8,11 +8,11 @@ namespace DAnCE
   namespace Config_Handlers
   {
 
-    Property_Handler::Property_Handler (void)
+    Property_Handler::Property_Handler ()
     {
     }
 
-    Property_Handler::~Property_Handler (void)
+    Property_Handler::~Property_Handler ()
     {
     }
 

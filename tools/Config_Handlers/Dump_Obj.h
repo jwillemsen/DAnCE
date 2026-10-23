@@ -47,7 +47,7 @@ class Config_Handlers_Export Dump_Obj
   Dump_Obj (const char* caption, CORBA::Any &val);
 
   /// Destructor
-  ~Dump_Obj (void) ACE_NOEXCEPT_FALSE;
+  ~Dump_Obj () ACE_NOEXCEPT_FALSE;
 
   /// return the indent string
   static const char* indent()
@@ -69,7 +69,7 @@ private:
 
   /// descriptor - used by destructor for deleting the
   /// correct descriptor from the map
-  std::string desc_;
+  std::string desc_ {};
 };
 }
 
