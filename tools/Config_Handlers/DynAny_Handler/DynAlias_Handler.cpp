@@ -67,7 +67,7 @@ namespace DAnCE
       if (!alias_type)
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("ERROR: Alias type description required")));
-          throw Config_Error ("", ACE_TEXT ("Did not find expected alias type description, tk_kind" "may be wrong."));
+          throw Config_Error ("", ACE_TEXT ("Did not find expected alias type description, tk_kind may be wrong."));
         }
 
       CORBA::TypeCode_var tc =

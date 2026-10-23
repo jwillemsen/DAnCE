@@ -79,7 +79,7 @@ namespace DAnCE
       if (!enum_type)
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("ERROR: Enum type description required")));
-          throw Config_Error ("", ACE_TEXT ("Did not find expected enum type description," "tk_kind may be wrong."));
+          throw Config_Error ("", ACE_TEXT ("Did not find expected enum type description, tk_kind may be wrong."));
         }
 
       // Construct TypeCode for the enum

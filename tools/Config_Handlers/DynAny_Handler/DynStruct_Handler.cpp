@@ -91,7 +91,7 @@ namespace DAnCE
       if (!struct_type)
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("ERROR: Struct type description required\n")));
-          throw Config_Error ("", ACE_TEXT ("Expected struct type information, tc_kind may be" "incorrect\n"));
+          throw Config_Error ("", ACE_TEXT ("Expected struct type information, tc_kind may be incorrect\n"));
         }
 
       std::string const rid (struct_type->typeId ());
