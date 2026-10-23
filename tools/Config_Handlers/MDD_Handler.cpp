@@ -19,18 +19,12 @@ namespace DAnCE
     {
       DANCE_TRACE("MDD_Handler::mono_deployment_descriptions");
 
-      auto imp_e =
-        src.implementation ().end ();
+      auto imp_e = src.implementation ().end ();
       CORBA::ULong pos = 0;
       dest.length (src.implementation ().size ());
-      for (auto imp_b =
-             src.implementation ().begin ();
-           imp_b != imp_e;
-           ++imp_b)
+      for (auto imp_b = src.implementation ().begin (); imp_b != imp_e; ++imp_b)
         {
-          MDD_Handler::mono_deployment_description (*imp_b,
-                                                    dest[pos],
-                                                    pos);
+          MDD_Handler::mono_deployment_description (*imp_b, dest[pos], pos);
           pos++;
         }
     }
@@ -42,55 +36,39 @@ namespace DAnCE
     {
       DANCE_TRACE("MDD_Handler::mono_deployment_description");
 
-      toconfig.name =
-        CORBA::string_dup (desc.name ().c_str ());
+      toconfig.name = CORBA::string_dup (desc.name ().c_str ());
 
-      auto me =
-        desc.source ().end ();
+      auto me = desc.source ().end ();
 
       CORBA::ULong len = 0;
       toconfig.source.length (desc.source ().size ());
-      for (auto se =
-             desc.source ().begin ();
-           se != me;
-           ++se)
+      for (auto se = desc.source ().begin (); se != me; ++se)
         {
-          toconfig.source[len++] =
-            CORBA::string_dup (se->c_str ());
+          toconfig.source[len++] = CORBA::string_dup (se->c_str ());
         }
 
-      auto ae =
-        desc.artifact ().end ();
+      auto ae = desc.artifact ().end ();
       len = 0;
       toconfig.artifactRef.length (desc.artifact ().size ());
-      for (auto
-             ab = desc.artifact ().begin ();
-           ae != ab;
-           ++ab)
+      for (auto ab = desc.artifact ().begin (); ae != ab; ++ab)
         {
           CORBA::ULong tmp = 0;
 
           ::XMLSchema::IDREF<char> const* artifactRef = ab->idref_if_set ();
           if (!artifactRef)
-            throw Config_Error ("",
-                                "Artifact reference has no IDREF");
+            throw Config_Error ("", "Artifact reference has no IDREF");
 
           ADD_Handler::IDREF.find_ref (artifactRef->id ().c_str (), tmp);
 
           toconfig.artifactRef[len++] = tmp;
         }
 
-      auto epce =
-        desc.execParameter ().end ();
+      auto epce = desc.execParameter ().end ();
       len = 0;
       toconfig.execParameter.length (desc.execParameter ().size ());
-      for (auto epcb =
-             desc.execParameter ().begin ();
-           epcb != epce;
-           ++epcb)
+      for (auto epcb = desc.execParameter ().begin (); epcb != epce; ++epcb)
         {
-          Property_Handler::handle_property (*epcb,
-                                             toconfig.execParameter[len++]);
+          Property_Handler::handle_property (*epcb, toconfig.execParameter[len++]);
         }
 
       toconfig.deployRequirement.length (desc.deployRequirement ().size ());
@@ -121,16 +99,14 @@ namespace DAnCE
       DANCE_TRACE("mono_deployment_description - reverse");
 
       //Get the name and instantiate the mdd
-      XMLSchema::string<char> name (
-        src.name);
+      XMLSchema::string<char> name ( src.name);
       MonolithicDeploymentDescription mdd (name);
 
       //Get the source(s) from the IDL and store them
       size_t total = src.source.length();
       for(size_t i = 0; i < total; i++)
         {
-          XMLSchema::string<char> curr (
-            src.source[i]);
+          XMLSchema::string<char> curr ( src.source[i]);
           //mdd.add_source(curr);
         }
 

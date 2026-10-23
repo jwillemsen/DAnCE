@@ -46,9 +46,7 @@ namespace DAnCE
       IdRef xid;
       xid.idref (str.c_str ());
 
-      return SubcomponentPortEndpoint (
-        ACE_TEXT_CHAR_TO_TCHAR (src.portName.in ()),
-                                       xid);
+      return SubcomponentPortEndpoint ( ACE_TEXT_CHAR_TO_TCHAR (src.portName.in ()), xid);
     }
       };
 
@@ -139,8 +137,7 @@ namespace DAnCE
 
       IdRef xid;
       xid.idref (str.c_str ());
-      return SubcomponentPropertyReference (ACE_TEXT_CHAR_TO_TCHAR (src.propertyName.in ()),
-                                            xid);
+      return SubcomponentPropertyReference (ACE_TEXT_CHAR_TO_TCHAR (src.propertyName.in ()), xid);
     }
 
       };
@@ -153,8 +150,7 @@ namespace DAnCE
       DANCE_TRACE("APM_Handler::get_apm");
 
       toconfig.name =  desc.name ().c_str ();
-      toconfig.externalName =
-        desc.externalName ().c_str ();
+      toconfig.externalName = desc.externalName ().c_str ();
 
       toconfig.delegatesTo.length (desc.delegatesTo ().size ());
       CORBA::ULong delegatesTo_index = 0;
@@ -219,8 +215,7 @@ namespace DAnCE
           retval.add_connection (ACD_Handler::get_acd (src.connection[i]));
 
         for (CORBA::ULong i = 0; i < src.externalProperty.length (); ++i)
-          retval.add_externalProperty (
-            APM_Handler::get_apm (src.externalProperty[i]));
+          retval.add_externalProperty ( APM_Handler::get_apm (src.externalProperty[i]));
 #endif
         return retval;
 

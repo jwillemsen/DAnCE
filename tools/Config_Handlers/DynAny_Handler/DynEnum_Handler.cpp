@@ -23,11 +23,9 @@ namespace DAnCE
     {
       DANCE_TRACE("DynEnum_Handler::extract_into_dynany");
 
-      ::DAnCE::Config_Handlers::EnumType const* enumType =
-        type._cxx_enum_if_set ();
+      ::DAnCE::Config_Handlers::EnumType const* enumType = type._cxx_enum_if_set ();
       if (!enumType)
-        throw Config_Error ("",
-                            "Expected enum type information");
+        throw Config_Error ("", "Expected enum type information");
 
       ::DAnCE::Config_Handlers::DataValue::enum_container_type const& enum_values = value._cxx_enum ();
       if (enum_values.empty ())
@@ -43,10 +41,8 @@ namespace DAnCE
             tc = DynEnum_Handler::create_typecode (type);
 
           // Make the actual DynEnum
-          DynamicAny::DynAny_var temp =
-            DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
-          DynamicAny::DynEnum_var retval = DynamicAny::DynEnum::_narrow (
-            temp.in ());
+          DynamicAny::DynAny_var temp = DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
+          DynamicAny::DynEnum_var retval = DynamicAny::DynEnum::_narrow ( temp.in ());
 
           retval->set_as_string (enum_values.front ().c_str ());
 
@@ -63,18 +59,15 @@ namespace DAnCE
         }
       catch (Config_Error &ex)
         {
-          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_ERROR, ACE_TEXT ("DynEnum_Handler caught Config_Error\n")));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("DynEnum_Handler caught Config_Error\n")));
           ex.add_name (enumType->typeId ());
 
           throw ex;
         }
       catch (...)
         {
-          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_ERROR, ACE_TEXT ("DynEnum_Handler caught unknown exception\n")));
-          throw Config_Error (enumType->typeId (),
-                              "Unknown exception");
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("DynEnum_Handler caught unknown exception\n")));
+          throw Config_Error (enumType->typeId (), "Unknown exception");
         }
     }
 
@@ -85,11 +78,8 @@ namespace DAnCE
       ::DAnCE::Config_Handlers::EnumType const* enum__if_set_ptr_2 = type._cxx_enum_if_set ();
       if (!enum__if_set_ptr_2)
         {
-          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_ERROR, ACE_TEXT ("ERROR: Enum type description required")));
-          throw Config_Error ("",
-            ACE_TEXT ("Did not find expected enum type description,"\
-                      "tk_kind may be wrong."));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("ERROR: Enum type description required")));
+          throw Config_Error ("", ACE_TEXT ("Did not find expected enum type description," "tk_kind may be wrong."));
         }
 
       // Construct TypeCode for the enum
@@ -97,12 +87,9 @@ namespace DAnCE
       members.length (enum__if_set_ptr_2->member ().size ());
       CORBA::ULong index (0);
 
-      for (auto i = enum__if_set_ptr_2->member ().begin ();
-           i != enum__if_set_ptr_2->member ().end ();
-           ++i)
+      for (auto i = enum__if_set_ptr_2->member ().begin (); i != enum__if_set_ptr_2->member ().end (); ++i)
         {
-          members[index++] = CORBA::string_dup (
-            i->c_str ());
+          members[index++] = CORBA::string_dup ( i->c_str ());
         }
 
       CORBA::TypeCode_var tc =
@@ -111,8 +98,7 @@ namespace DAnCE
           enum__if_set_ptr_2->name ().c_str (),
           members);
 
-      DYNANY_HANDLER->register_typecode ((enum__if_set_ptr_2->typeId ()),
-                                         tc.in ());
+      DYNANY_HANDLER->register_typecode ((enum__if_set_ptr_2->typeId ()), tc.in ());
 
       return tc._retn ();
     }

@@ -14,18 +14,13 @@ namespace DAnCE
     {
       DANCE_TRACE("PSPE_Handler::sub_component_port_endpoints");
 
-      auto iei_e =
-        src.internalEndpoint ().end ();
+      auto iei_e = src.internalEndpoint ().end ();
       CORBA::ULong pos = 0;
       dest.length (src.internalEndpoint ().size ());
 
-      for (auto iei_b =
-             src.internalEndpoint ().begin ();
-           iei_b != iei_e;
-           ++iei_b)
+      for (auto iei_b = src.internalEndpoint ().begin (); iei_b != iei_e; ++iei_b)
         {
-          PSPE_Handler::sub_component_port_endpoint (*iei_b,
-                                                     dest[pos++]);
+          PSPE_Handler::sub_component_port_endpoint (*iei_b, dest[pos++]);
         }
     }
 
@@ -35,8 +30,7 @@ namespace DAnCE
       ::Deployment::PlanSubcomponentPortEndpoint &dest)
     {
       DANCE_TRACE("PSPE_Handler::sub_component_port_endpoint");
-      dest.portName =
-        src.portName ().c_str ();
+      dest.portName = src.portName ().c_str ();
 
       ::XMLSchema::string<char> const* provider_if_set_ptr = src.provider_if_set ();
       if (provider_if_set_ptr)
@@ -50,14 +44,11 @@ namespace DAnCE
 
       CORBA::ULong tmp = 0;
 
-      ::XMLSchema::IDREF<char> const* instanceRef =
-        src.instance ().idref_if_set ();
+      ::XMLSchema::IDREF<char> const* instanceRef = src.instance ().idref_if_set ();
       if (!instanceRef)
-        throw Config_Error ("",
-                            "Plan subcomponent port endpoint has no instance IDREF");
+        throw Config_Error ("", "Plan subcomponent port endpoint has no instance IDREF");
 
-      IDD_Handler::IDREF.find_ref (
-        instanceRef->id ().c_str (), tmp);
+      IDD_Handler::IDREF.find_ref ( instanceRef->id ().c_str (), tmp);
 
       dest.instanceRef = tmp;
 
@@ -88,8 +79,7 @@ namespace DAnCE
           break;
 
         default:
-          DANCE_DEBUG (DANCE_LOG_NONFATAL_ERROR,
-            (LM_DEBUG, "Invalid port kind in connection\n"));
+          DANCE_DEBUG (DANCE_LOG_NONFATAL_ERROR, (LM_DEBUG, "Invalid port kind in connection\n"));
 
         }
     }
@@ -99,8 +89,7 @@ namespace DAnCE
       const Deployment::PlanSubcomponentPortEndpoint &src)
     { // @@MAJO
       DANCE_TRACE("PSPE_Handler::sub_component_port_endpoint - reverse");
-      XMLSchema::string<char> pname (
-        src.portName);
+      XMLSchema::string<char> pname ( src.portName);
       XMLSchema::string<char> tval  ("true");
       XMLSchema::string<char> prov  ("");
       std::string id;
@@ -113,9 +102,7 @@ namespace DAnCE
       IdRef idr;
       idr.idref (idref);
 
-      PlanSubcomponentPortEndpoint pspe (pname,
-                                         CCMComponentPortKind::Facet,
-                                         idr);
+      PlanSubcomponentPortEndpoint pspe (pname, CCMComponentPortKind::Facet, idr);
       pspe.provider (prov);
 
       switch (src.kind)
@@ -145,8 +132,7 @@ namespace DAnCE
           break;
 
         default:
-          DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
-            (LM_ERROR, "Invalid port kind in PSPE\n"));
+          DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR, (LM_ERROR, "Invalid port kind in PSPE\n"));
         }
 
       return pspe;

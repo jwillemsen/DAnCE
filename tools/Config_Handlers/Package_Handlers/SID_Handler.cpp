@@ -26,32 +26,26 @@ namespace DAnCE
         DANCE_TRACE ("SID_Handler::sub_comp_inst_descr");
         toconfig.name = desc.name ().c_str ();
 
-        ::DAnCE::Config_Handlers::PackageConfiguration const* specializedConfig =
-          desc.specializedConfig_if_set ();
-        ::DAnCE::Config_Handlers::ComponentPackageImport const* importedPackage =
-          desc.importedPackage_if_set ();
-        ::DAnCE::Config_Handlers::ComponentPackageReference const* referencedPackage =
-          desc.referencedPackage_if_set ();
+        ::DAnCE::Config_Handlers::PackageConfiguration const* specializedConfig = desc.specializedConfig_if_set ();
+        ::DAnCE::Config_Handlers::ComponentPackageImport const* importedPackage = desc.importedPackage_if_set ();
+        ::DAnCE::Config_Handlers::ComponentPackageReference const* referencedPackage = desc.referencedPackage_if_set ();
 
         ::DAnCE::Config_Handlers::ComponentPackageDescription const*
           basePackage_if_set_ptr = desc.basePackage_if_set ();
         if (basePackage_if_set_ptr)
           {
             toconfig.basePackage.length (1);
-            CPD_Handler::handle_component_package_descr (*basePackage_if_set_ptr,
-                                                  toconfig.basePackage[0]);
+            CPD_Handler::handle_component_package_descr (*basePackage_if_set_ptr, toconfig.basePackage[0]);
           }
         else if (specializedConfig)
           {
             toconfig.specializedConfig.length (1);
-            PCD_Handler::package_config (*specializedConfig,
-                                         toconfig.specializedConfig[0]);
+            PCD_Handler::package_config (*specializedConfig, toconfig.specializedConfig[0]);
           }
         else if (importedPackage)
           {
             toconfig.importedPackage.length (1);
-            toconfig.importedPackage[0].location.length (
-              importedPackage->location ().size ());
+            toconfig.importedPackage[0].location.length ( importedPackage->location ().size ());
 
             CORBA::ULong location_index = 0;
             for (auto const& source_item : importedPackage->location ())
@@ -61,17 +55,13 @@ namespace DAnCE
           {
             toconfig.referencedPackage.length (1);
 
-            ::XMLSchema::string<char> const* requiredUUID =
-              referencedPackage->requiredUUID_if_set ();
+            ::XMLSchema::string<char> const* requiredUUID = referencedPackage->requiredUUID_if_set ();
             if (requiredUUID)
-              toconfig.referencedPackage[0].requiredUUID =
-                requiredUUID->c_str ();
+              toconfig.referencedPackage[0].requiredUUID = requiredUUID->c_str ();
 
-            ::XMLSchema::string<char> const* requiredName =
-              referencedPackage->requiredName_if_set ();
+            ::XMLSchema::string<char> const* requiredName = referencedPackage->requiredName_if_set ();
             if (requiredName)
-              toconfig.referencedPackage[0].requiredName =
-                requiredName->c_str ();
+              toconfig.referencedPackage[0].requiredName = requiredName->c_str ();
 
             Comp_Intf_Descr_Handler::comp_intf_descr (
               referencedPackage->requiredType (),
@@ -107,8 +97,7 @@ namespace DAnCE
         const Deployment::SubcomponentInstantiationDescription &src)
       {
         DANCE_TRACE ("SID_Handler::sub_comp_inst_descr - reverse");
-        SubcomponentInstantiationDescription retval (
-          ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
+        SubcomponentInstantiationDescription retval ( ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
 
         if (src.basePackage.length () == 1)
           retval.basePackage
@@ -120,8 +109,7 @@ namespace DAnCE
           {
             ComponentPackageImport ci;
 #if 0
-            for (CORBA::ULong i = 0;
-              i < src.importedPackage[0].location.length (); ++i)
+            for (CORBA::ULong i = 0; i < src.importedPackage[0].location.length (); ++i)
               ci.add_location (src.importedPackage[0].location[i].in ());
 #endif
             retval.importedPackage (ci);
@@ -131,10 +119,8 @@ namespace DAnCE
             ComponentPackageReference cpr (
               Comp_Intf_Descr_Handler::comp_intf_descr (
                 src.referencedPackage[0].requiredType));
-            cpr.requiredUUID (ACE_TEXT_CHAR_TO_TCHAR (
-              src.referencedPackage[0].requiredUUID.in ()));
-            cpr.requiredName (ACE_TEXT_CHAR_TO_TCHAR (
-              src.referencedPackage[0].requiredName.in ()));
+            cpr.requiredUUID (ACE_TEXT_CHAR_TO_TCHAR ( src.referencedPackage[0].requiredUUID.in ()));
+            cpr.requiredName (ACE_TEXT_CHAR_TO_TCHAR ( src.referencedPackage[0].requiredName.in ()));
 
             retval.referencedPackage (cpr);
           }
@@ -148,8 +134,7 @@ namespace DAnCE
             (Property_Handler::get_property (src.configProperty[i]));
 #endif
         // @@MAJO This is not a good way of binding reverse IDREFS.
-        std::unique_ptr<ACE_Utils::UUID> safe_uuid (
-          ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());
+        std::unique_ptr<ACE_Utils::UUID> safe_uuid ( ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());
         std::string uuid ( safe_uuid->to_string ()->c_str ());
 
         SID_Handler::IDREF.bind_next_available (uuid);

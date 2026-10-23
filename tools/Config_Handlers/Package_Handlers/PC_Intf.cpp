@@ -25,24 +25,20 @@ namespace DAnCE
         return false;
 
       // parse the .pcd (PackageConfigurationDescription) file
-      xercesc::DOMDocument *dom =
-        helper->create_dom (file);
+      xercesc::DOMDocument *dom = helper->create_dom (file);
 
       if (!dom)
         return false;
 
-      PackageConfiguration pc =
-        packageConfiguration (dom);
+      PackageConfiguration pc = packageConfiguration (dom);
 
       Deployment::PackageConfiguration idl_pc;
 
       STD_PCD_Handler pcd_handler (helper.get ());
 
-      pcd_handler.package_config (pc,
-                                  idl_pc);
+      pcd_handler.package_config (pc, idl_pc);
 
-      Deployment::PackageConfiguration *p_idl_pc =
-        new Deployment::PackageConfiguration (idl_pc);
+      Deployment::PackageConfiguration *p_idl_pc = new Deployment::PackageConfiguration (idl_pc);
 
       // let idl_pc_ take ownership
       this->idl_pc_.reset (p_idl_pc);

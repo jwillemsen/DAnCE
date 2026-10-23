@@ -50,28 +50,21 @@ namespace DAnCE
         Req_Handler::handle_requirement (source_item, toconfig.deployRequirement[deployRequirement_index++]);
 
       //Create the ComponentExternalPortEndpoint handler.
-      CEPE_Handler::external_port_endpoints (desc,
-                                             toconfig.externalEndpoint);
+      CEPE_Handler::external_port_endpoints (desc, toconfig.externalEndpoint);
 
       //Configure the PlanSubcomponentPortEndpoint's.
-      PSPE_Handler::sub_component_port_endpoints (desc,
-                                                  toconfig.internalEndpoint);
+      PSPE_Handler::sub_component_port_endpoints (desc, toconfig.internalEndpoint);
 
       //Configure the ExternalReferenceEndpoint's.
-      ERE_Handler::external_ref_endpoints (desc,
-                                           toconfig.externalReference);
+      ERE_Handler::external_ref_endpoints (desc, toconfig.externalReference);
 
       //Configure the resource value.
       CRDD_Handler crddhandler;
       CORBA::ULong pos = 0;
       toconfig.deployedResource.length (desc.deployedResource ().size ());
-      for(auto res =
-            desc.deployedResource ().begin ();
-          res != desc.deployedResource ().end ();
-          res++)
+      for(auto res = desc.deployedResource ().begin (); res != desc.deployedResource ().end (); res++)
         {
-          crddhandler.get_ConnectionResourceDeploymentDescription (toconfig.deployedResource[pos++],
-                                                                   *res);
+          crddhandler.get_ConnectionResourceDeploymentDescription (toconfig.deployedResource[pos++], *res);
         }
 
     }

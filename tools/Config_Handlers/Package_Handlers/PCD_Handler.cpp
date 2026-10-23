@@ -47,8 +47,7 @@ namespace DAnCE
 
             PCD_Handler::package_config (tpd.package ().front (), toconfig);
           }
-        else if (root == XML::XStr (
-          ACE_TEXT ("Deployment:packageConfiguration")))
+        else if (root == XML::XStr (ACE_TEXT ("Deployment:packageConfiguration")))
           {
             PackageConfiguration pcd;
             pcd = reader::packageConfiguration (dom);
@@ -56,8 +55,7 @@ namespace DAnCE
           }
         else
           {
-            std::string error (
-              "Invalid file passed to package_config, has base ");
+            std::string error ( "Invalid file passed to package_config, has base ");
 
             char *croot = xercesc::XMLString::transcode (root);
 
@@ -88,21 +86,18 @@ namespace DAnCE
 
         ::XMLSchema::string<char> const* label_if_set_ptr = pcd->label_if_set ();
         if (label_if_set_ptr)
-          toconfig.label =
-            label_if_set_ptr->c_str ();
+          toconfig.label = label_if_set_ptr->c_str ();
 
         ::XMLSchema::string<char> const* UUID_if_set_ptr = pcd->UUID_if_set ();
         if (UUID_if_set_ptr)
-          toconfig.UUID =
-            UUID_if_set_ptr->c_str ();
+          toconfig.UUID = UUID_if_set_ptr->c_str ();
 
         ::DAnCE::Config_Handlers::ComponentPackageDescription const*
           basePackage_if_set_ptr = pcd->basePackage_if_set ();
         if (basePackage_if_set_ptr)
           {
             toconfig.basePackage.length (1);
-            CPD_Handler::handle_component_package_descr (*basePackage_if_set_ptr,
-                                                         toconfig.basePackage [0]);
+            CPD_Handler::handle_component_package_descr (*basePackage_if_set_ptr, toconfig.basePackage [0]);
           }
 
         // @@ MAJO: Support other elements present here.

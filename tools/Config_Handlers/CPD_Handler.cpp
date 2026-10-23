@@ -13,13 +13,11 @@ namespace DAnCE
                                              Deployment::ComponentPortDescription& toconfig)
     {
       DANCE_TRACE("CPD_Handler::component_port_description");
-      toconfig.name =
-        desc.name ().c_str ();
+      toconfig.name = desc.name ().c_str ();
 
       ::XMLSchema::string<char> const* specificType_if_set_ptr = desc.specificType_if_set ();
       if (specificType_if_set_ptr)
-        toconfig.specificType =
-          specificType_if_set_ptr->c_str ();
+        toconfig.specificType = specificType_if_set_ptr->c_str ();
 
       toconfig.supportedType.length (desc.supportedType ().size ());
       CORBA::ULong supportedType_index = 0;

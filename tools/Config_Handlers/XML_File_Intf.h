@@ -43,8 +43,7 @@ namespace DAnCE
       ::Deployment::Domain const *get_domain (void);
       ::Deployment::Domain *release_domain (void);
 
-      void add_search_path (const ACE_TCHAR *environment,
-                            const ACE_TCHAR *relpath);
+      void add_search_path (const ACE_TCHAR *environment, const ACE_TCHAR *relpath);
 
     protected:
 

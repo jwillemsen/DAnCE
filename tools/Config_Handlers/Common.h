@@ -21,11 +21,7 @@ namespace DAnCE
     class Config_Error
     {
     public:
-      Config_Error (std::string name,
-                    std::string error) :
-        name_ (std::move (name)),
-        error_ (std::move (error))
-      {};
+      Config_Error (std::string name, std::string error) : name_ (std::move (name)), error_ (std::move (error)) {};
 
       void add_name (std::string_view name)
       {

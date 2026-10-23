@@ -57,10 +57,8 @@ namespace DAnCE
           break;
 
         default:
-          DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
-            (LM_ERROR, ACE_TEXT ("Unknown SatisfierPropertyKind\n")));
-          throw Config_Error (desc.name (),
-            "Unknown SatisfierPropertyKind");
+          DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("Unknown SatisfierPropertyKind\n")));
+          throw Config_Error (desc.name (), "Unknown SatisfierPropertyKind");
 
         }
 
@@ -68,8 +66,7 @@ namespace DAnCE
 
       try
         {
-          Any_Handler::extract_into_any (desc.value (),
-                                         toconfig.value);
+          Any_Handler::extract_into_any (desc.value (), toconfig.value);
         }
       catch (Config_Error &ex)
         {

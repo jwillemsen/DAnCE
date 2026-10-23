@@ -26,14 +26,12 @@ namespace DAnCE
 
       orb_ = CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var temp = orb_->resolve_initial_references (
-        "DynAnyFactory");
+      CORBA::Object_var temp = orb_->resolve_initial_references ( "DynAnyFactory");
       daf_ = DynamicAny::DynAnyFactory::_narrow (temp.in ());
 
       if (CORBA::is_nil (daf_.in ()))
         {
-          DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
-            (LM_ERROR, ACE_TEXT ("Unable to narrow Dynamic Any factory\n")));
+          DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("Unable to narrow Dynamic Any factory\n")));
           throw Config_Error ("", "Unable to narrow DynAny factory");
         }
     }

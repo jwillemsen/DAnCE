@@ -19,18 +19,13 @@ namespace DAnCE
                                              Deployment::InstanceDeploymentDescriptions& dest)
     {
       DANCE_TRACE("IDD_Handler::instance_deployment_descrs");
-      auto idd_e =
-        src.instance ().end ();
+      auto idd_e = src.instance ().end ();
 
       CORBA::ULong pos = 0;
       dest.length (src.instance ().size ());
-      for (auto idd_b =
-             src.instance ().begin ();
-           idd_b != idd_e;
-           ++idd_b)
+      for (auto idd_b = src.instance ().begin (); idd_b != idd_e; ++idd_b)
         {
-          IDD_Handler::instance_deployment_descr (*idd_b,
-                                                  dest[pos], pos);
+          IDD_Handler::instance_deployment_descr (*idd_b, dest[pos], pos);
           pos++;
         }
     }
@@ -62,18 +57,14 @@ namespace DAnCE
 
           // We know there should be only one element
           dest.source.length (1);
-          dest.source [0] =
-            src.source ().c_str ();
+          dest.source [0] = src.source ().c_str ();
 
           CORBA::ULong tmp = 0;
-          ::XMLSchema::IDREF<char> const* implementationRef =
-            src.implementation ().idref_if_set ();
+          ::XMLSchema::IDREF<char> const* implementationRef = src.implementation ().idref_if_set ();
           if (!implementationRef)
-            throw Config_Error ("",
-                                "Instance deployment has no implementation IDREF");
+            throw Config_Error ("", "Instance deployment has no implementation IDREF");
 
-          MDD_Handler::IDREF.find_ref (
-            implementationRef->id ().c_str (), tmp);
+          MDD_Handler::IDREF.find_ref ( implementationRef->id ().c_str (), tmp);
 
           dest.implementationRef = tmp;
 
@@ -92,8 +83,7 @@ namespace DAnCE
           if (deployedSharedResource_if_set_ptr)
             {
               dest.deployedSharedResource.length (1);
-              IRDD_Handler::handle_irdd (*deployedSharedResource_if_set_ptr,
-                                         dest.deployedSharedResource[0]);
+              IRDD_Handler::handle_irdd (*deployedSharedResource_if_set_ptr, dest.deployedSharedResource[0]);
             }
 
         }
@@ -124,8 +114,7 @@ namespace DAnCE
       XMLSchema::string<char> source ("");
       if (src.source.length () > 0)
         {
-          XMLSchema::string<char> source_detail (
-            src.source[0]);
+          XMLSchema::string<char> source_detail ( src.source[0]);
           source = source_detail;
         }
       std::string temp;
@@ -155,9 +144,7 @@ namespace DAnCE
 
       //Check if there is a deployedSharedResource, if so store it
       if(src.deployedSharedResource.length() != 0)
-        idd. deployedSharedResource(
-          IRDD_Handler::instance_resource_deployment_descr(
-            src.deployedSharedResource[0]));
+        idd. deployedSharedResource( IRDD_Handler::instance_resource_deployment_descr( src.deployedSharedResource[0]));
 
       // Generate a UUID to use for the IDREF.
       ACE_Utils::UUID uuid;

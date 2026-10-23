@@ -58,32 +58,25 @@ namespace DAnCE
       // Check if the label is there or not
       ::XMLSchema::string<char> const* label_if_set_ptr = domain_.label_if_set ();
       if (label_if_set_ptr)
-        this->idl_domain_->label =
-          CORBA::string_dup (label_if_set_ptr->c_str ());
+        this->idl_domain_->label = CORBA::string_dup (label_if_set_ptr->c_str ());
 
       ::XMLSchema::string<char> const* UUID_if_set_ptr = domain_.UUID_if_set ();
       if (UUID_if_set_ptr)
-        this->idl_domain_->UUID =
-          CORBA::string_dup (UUID_if_set_ptr->c_str ());
+        this->idl_domain_->UUID = CORBA::string_dup (UUID_if_set_ptr->c_str ());
 
       CORBA::ULong len = domain_.node ().size ();
       this->idl_domain_->node.length (len);
 
       //Resource _resource;
       int i =0;
-      for (auto iter = domain_.node ().begin ();
-           iter != domain_.node ().end ();
-           ++iter,++i
-           )
+      for (auto iter = domain_.node ().begin (); iter != domain_.node ().end (); ++iter,++i )
         {
           // Node* thisNode = (Node*)iter;
-          this->idl_domain_->node[i].name =
-            CORBA::string_dup (iter->name ().c_str ());
+          this->idl_domain_->node[i].name = CORBA::string_dup (iter->name ().c_str ());
 
           ::XMLSchema::string<char> const* label_if_set_ptr_2 = iter->label_if_set ();
           if (label_if_set_ptr_2)
-            this->idl_domain_->node[i].label =
-              CORBA::string_dup (label_if_set_ptr_2->c_str ());
+            this->idl_domain_->node[i].label = CORBA::string_dup (label_if_set_ptr_2->c_str ());
 
           // length is hard-coded for now ...
           // here iterate over the resources ...
@@ -92,13 +85,10 @@ namespace DAnCE
 
           int res_id=0;
           // FOR EACH RESOURCE ....
-          for (auto res_iter = iter->resource ().begin ();
-               res_iter != iter->resource ().end ();
-               res_iter++, res_id++)
+          for (auto res_iter = iter->resource ().begin (); res_iter != iter->resource ().end (); res_iter++, res_id++)
             {
 
-              this->idl_domain_->node[i].resource[res_id].name =
-                CORBA::string_dup (res_iter->name ().c_str ());
+              this->idl_domain_->node[i].resource[res_id].name = CORBA::string_dup (res_iter->name ().c_str ());
 
               CORBA::ULong resource_type_len = res_iter->resourceType ().size ();
               this->idl_domain_->node[i].resource[res_id].resourceType.length (resource_type_len);
@@ -135,8 +125,7 @@ namespace DAnCE
               this->idl_domain_->node[i].resource[res_id].property[property_id ].name =
               CORBA::string_dup (property_iter->name ().c_str ());
 
-              this->idl_domain_->node[i].resource[res_id].property[property_id].kind =
-              ::Deployment::Quantity;
+              this->idl_domain_->node[i].resource[res_id].property[property_id].kind = ::Deployment::Quantity;
 
               Any the_any = property_iter->value ();
               CORBA::Any a_corba_any;

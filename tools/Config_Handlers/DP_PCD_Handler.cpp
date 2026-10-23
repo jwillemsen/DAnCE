@@ -18,18 +18,13 @@ namespace DAnCE
         Deployment::PlanConnectionDescriptions& dest)
     {
       DANCE_TRACE("DP_PCD_Handler::plan_connection_descrs");
-      auto cci_e =
-        src.connection ().end ();
+      auto cci_e = src.connection ().end ();
 
       CORBA::ULong pos = 0;
       dest.length (src.connection ().size ());
-      for (auto cci_b =
-             src.connection ().begin ();
-           cci_b != cci_e;
-           ++cci_b)
+      for (auto cci_b = src.connection ().begin (); cci_b != cci_e; ++cci_b)
         {
-          DP_PCD_Handler::plan_connection_descr (*(cci_b),
-                                                 dest[pos++]);
+          DP_PCD_Handler::plan_connection_descr (*(cci_b), dest[pos++]);
         }
     }
 
@@ -46,8 +41,7 @@ namespace DAnCE
         Deployment::PlanConnectionDescription &dest)
     {
       DANCE_TRACE("DP_PCD_Handler::plan_connection_descr - reverse");
-      dest.name =
-        src.name ().c_str ();
+      dest.name = src.name ().c_str ();
 
       ::XMLSchema::string<char> const* source_if_set_ptr = src.source_if_set ();
       if (source_if_set_ptr)
@@ -57,13 +51,10 @@ namespace DAnCE
           dest.source[0] = source_if_set_ptr->c_str ();
         }
 
-      CEPE_Handler::external_port_endpoints (src,
-                                             dest.externalEndpoint);
-      ERE_Handler::external_ref_endpoints (src,
-                                           dest.externalReference);
+      CEPE_Handler::external_port_endpoints (src, dest.externalEndpoint);
+      ERE_Handler::external_ref_endpoints (src, dest.externalReference);
 
-      PSPE_Handler::sub_component_port_endpoints (src,
-                                                  dest.internalEndpoint);
+      PSPE_Handler::sub_component_port_endpoints (src, dest.internalEndpoint);
 
 #if 0
       // @@MAJO: Need to figure how to use this.
@@ -71,8 +62,7 @@ namespace DAnCE
         {
           CRDD_Handler crddhandler;
 
-          toconfig.deployedResource.length (
-            toconfig.deployedResource.length () + 1);
+          toconfig.deployedResource.length ( toconfig.deployedResource.length () + 1);
 
           crddhandler.get_ConnectionResourceDeploymentDescription (
             toconfig.deployedResource[toconfig.deployedResource.length () - 1],
@@ -88,8 +78,7 @@ namespace DAnCE
 
           //Increase the sequence length and delgate
           //the Requirement to the Req_Handler.
-          toconfig.deployRequirement.length (
-            toconfig.deployRequirement.length () + 1);
+          toconfig.deployRequirement.length ( toconfig.deployRequirement.length () + 1);
           reqhandler.get_Requirement (
             toconfig.deployRequirement[toconfig.deployRequirement.length () - 1],
             desc.deployRequirement ());

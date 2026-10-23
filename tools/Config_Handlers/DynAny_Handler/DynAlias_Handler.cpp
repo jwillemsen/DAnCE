@@ -20,11 +20,9 @@ namespace DAnCE
     {
       DANCE_TRACE("DynAlias_Handler::extract_into_dynany");
 
-      ::DAnCE::Config_Handlers::AliasType const* aliasType =
-        type.alias_if_set ();
+      ::DAnCE::Config_Handlers::AliasType const* aliasType = type.alias_if_set ();
       if (!aliasType)
-        throw Config_Error ("",
-                            "Expected alias type information");
+        throw Config_Error ("", "Expected alias type information");
 
       try
         {
@@ -35,8 +33,7 @@ namespace DAnCE
           else
             tc = DynAlias_Handler::create_typecode (type);
 
-          DynamicAny::DynAny_var alias = DYNANY_HANDLER->extract_into_dynany (
-            aliasType->elementType (), value, tc);
+          DynamicAny::DynAny_var alias = DYNANY_HANDLER->extract_into_dynany ( aliasType->elementType (), value, tc);
           return alias._retn ();
         }
       catch (const DynamicAny::DynAny::InvalidValue&)
@@ -50,18 +47,15 @@ namespace DAnCE
         }
       catch (Config_Error &ex)
         {
-          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_ERROR, ACE_TEXT ("DynAlias_Handler caught Config_Error\n")));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("DynAlias_Handler caught Config_Error\n")));
           ex.add_name (aliasType->typeId ());
 
           throw ex;
         }
       catch (...)
         {
-          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR,
-            ACE_TEXT ("DynAlias_Handler caught unknown exception\n")));
-          throw Config_Error (aliasType->typeId (),
-                              "Unknown exception");
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("DynAlias_Handler caught unknown exception\n")));
+          throw Config_Error (aliasType->typeId (), "Unknown exception");
         }
     }
 
@@ -72,11 +66,8 @@ namespace DAnCE
       ::DAnCE::Config_Handlers::AliasType const* alias_if_set_ptr_2 = type.alias_if_set ();
       if (!alias_if_set_ptr_2)
         {
-          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_ERROR, ACE_TEXT ("ERROR: Alias type description required")));
-          throw Config_Error ("",
-            ACE_TEXT ("Did not find expected alias type description, tk_kind"\
-                      "may be wrong."));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("ERROR: Alias type description required")));
+          throw Config_Error ("", ACE_TEXT ("Did not find expected alias type description, tk_kind" "may be wrong."));
         }
 
       CORBA::TypeCode_var tc =
@@ -85,8 +76,7 @@ namespace DAnCE
          alias_if_set_ptr_2->name ().c_str (),
          DYNANY_HANDLER->create_typecode (alias_if_set_ptr_2->elementType ()));
 
-      DYNANY_HANDLER->register_typecode (alias_if_set_ptr_2->typeId (),
-                                         tc.in ());
+      DYNANY_HANDLER->register_typecode (alias_if_set_ptr_2->typeId (), tc.in ());
 
       return tc._retn ();
     }

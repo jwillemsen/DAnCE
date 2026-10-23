@@ -20,15 +20,11 @@ namespace DAnCE
     {
       DANCE_TRACE("Config_Handlers::create_type_map");
 
-      ::DAnCE::Config_Handlers::StructType const* structType =
-        type._cxx_struct_if_set ();
+      ::DAnCE::Config_Handlers::StructType const* structType = type._cxx_struct_if_set ();
       if (!structType)
-        throw Config_Error ("",
-                            "Expected struct type information");
+        throw Config_Error ("", "Expected struct type information");
 
-      for (auto i =
-             structType->member ().begin ();
-           i != structType->member ().end (); ++i)
+      for (auto i = structType->member ().begin (); i != structType->member ().end (); ++i)
         {
           dt_map[i->name ()] = &(i->type ());
         }
@@ -41,11 +37,9 @@ namespace DAnCE
     {
       DANCE_TRACE("DynStruct_Handler::extract_into_dynany");
 
-      ::DAnCE::Config_Handlers::StructType const* structType =
-        type._cxx_struct_if_set ();
+      ::DAnCE::Config_Handlers::StructType const* structType = type._cxx_struct_if_set ();
       if (!structType)
-        throw Config_Error ("",
-                            "Expected struct type information");
+        throw Config_Error ("", "Expected struct type information");
 
       try
         {
@@ -60,23 +54,17 @@ namespace DAnCE
           create_type_map (type, dt_map);
 
           // Make the actual DynStruct
-          DynamicAny::DynAny_var temp =
-            DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
-          DynamicAny::DynStruct_var retval =
-            DynamicAny::DynStruct::_narrow (temp.in ());
+          DynamicAny::DynAny_var temp = DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
+          DynamicAny::DynStruct_var retval = DynamicAny::DynStruct::_narrow (temp.in ());
 
           CORBA::ULong pos (0);
           DynamicAny::NameDynAnyPairSeq values;
           values.length (value.member ().size ());
 
-          for (auto i = value.member ().begin ();
-               i != value.member ().end (); ++i)
+          for (auto i = value.member ().begin (); i != value.member ().end (); ++i)
             {
-              values[pos].id =
-                i->name ().c_str ();
-              values[pos].value =
-                DYNANY_HANDLER->extract_into_dynany (*dt_map[i->name ()],
-                                                     i->value ());
+              values[pos].id = i->name ().c_str ();
+              values[pos].value = DYNANY_HANDLER->extract_into_dynany (*dt_map[i->name ()], i->value ());
               ++pos;
             }
 
@@ -91,8 +79,7 @@ namespace DAnCE
         }
       catch (...)
         {
-          throw Config_Error (structType->typeId (),
-                              "Unknown exception");
+          throw Config_Error (structType->typeId (), "Unknown exception");
         }
     }
 
@@ -103,12 +90,8 @@ namespace DAnCE
       ::DAnCE::Config_Handlers::StructType const* struct__if_set_ptr_2 = type._cxx_struct_if_set ();
       if (!struct__if_set_ptr_2)
         {
-          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_ERROR,
-             ACE_TEXT ("ERROR: Struct type description required\n")));
-          throw Config_Error ("",
-            ACE_TEXT ("Expected struct type information, tc_kind may be"\
-                      "incorrect\n"));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("ERROR: Struct type description required\n")));
+          throw Config_Error ("", ACE_TEXT ("Expected struct type information, tc_kind may be" "incorrect\n"));
         }
 
       std::string rid (struct__if_set_ptr_2->typeId ());
@@ -118,20 +101,14 @@ namespace DAnCE
       members.length (struct__if_set_ptr_2->member ().size ());
       CORBA::ULong pos (0);
 
-      for (auto i =
-        struct__if_set_ptr_2->member ().begin ();
-           i != struct__if_set_ptr_2->member ().end (); ++i)
+      for (auto i = struct__if_set_ptr_2->member ().begin (); i != struct__if_set_ptr_2->member ().end (); ++i)
         {
           members[pos].name = i->name ().c_str ();
           members[pos].type = DYNANY_HANDLER->create_typecode (i->type ());
           ++pos;
         }
 
-      CORBA::TypeCode_var tc =
-        DYNANY_HANDLER->orb ()->create_struct_tc (
-          rid.c_str (),
-          name.c_str (),
-          members);
+      CORBA::TypeCode_var tc = DYNANY_HANDLER->orb ()->create_struct_tc ( rid.c_str (), name.c_str (), members);
 
       DYNANY_HANDLER->register_typecode (struct__if_set_ptr_2->typeId (), tc.in ());
 

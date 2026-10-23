@@ -49,8 +49,7 @@ namespace DAnCE
       /// This method maps the values from the XSC object
       /// <DAnCE::Config_Handlers::SatisfierProperty> to the CORBA IDL type
       /// <Deployment::SatisfierProperty>.
-      static void handle_sat_property (const SatisfierProperty& desc,
-                       ::Deployment::SatisfierProperty& toconfig);
+      static void handle_sat_property (const SatisfierProperty& desc, ::Deployment::SatisfierProperty& toconfig);
       static SatisfierProperty get_sat_property (const ::Deployment::SatisfierProperty& src);
     };
 

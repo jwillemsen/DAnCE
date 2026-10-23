@@ -13,20 +13,16 @@ namespace Deployment
   {
     DANCE_TRACE ("Dump_Obj::constructor");
 
-    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-      (LM_DEBUG, "%C%C:\n", indent_.c_str(), caption));
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "%C%C:\n", indent_.c_str(), caption));
     indent_.append("  ");
   }
 
-  Dump_Obj::Dump_Obj(const char* caption,
-                      CORBA::Any &val)
+  Dump_Obj::Dump_Obj (const char* caption, CORBA::Any &val)
     : desc_(caption)
   {
     DANCE_TRACE ("Dump_Obj::constructor");
 
-    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "%C%C:\n",
-                indent_.c_str(),
-                caption));
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "%C%C:\n", indent_.c_str(), caption));
 
     indent_.append("   ");
 

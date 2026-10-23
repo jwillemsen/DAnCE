@@ -36,8 +36,7 @@ namespace DAnCE
                              ::Deployment::NamedImplementationArtifact &toconfig)
         {
           toconfig.name = desc.name ().c_str ();
-          IAD_Handler::impl_artifact_descr (desc.referencedArtifact (),
-                                            toconfig.referencedArtifact);
+          IAD_Handler::impl_artifact_descr (desc.referencedArtifact (), toconfig.referencedArtifact);
         }
 
         static NamedImplementationArtifact get_nia (const ::Deployment::NamedImplementationArtifact &src)

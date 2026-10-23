@@ -29,8 +29,7 @@ namespace DAnCE
     class Config_Handlers_Export PL_Handler
     {
     public:
-      static void get_PlanLocality (const PlanLocality &desc,
-                                    Deployment::PlanLocality &toconfig);
+      static void get_PlanLocality (const PlanLocality &desc, Deployment::PlanLocality &toconfig);
 
       static PlanLocality  plan_locality (const ::Deployment::PlanLocality &src);
     };

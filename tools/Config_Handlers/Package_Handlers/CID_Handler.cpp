@@ -57,8 +57,7 @@ namespace DAnCE
         retval.add_resourceType (src.resourceType[i].in ());
 
       for (CORBA::ULong i = 0; i < src.property.length (); ++i)
-        retval.add_property (SatisfierProperty_Handler::get_sat_property (
-          src.property[i]));
+        retval.add_property (SatisfierProperty_Handler::get_sat_property ( src.property[i]));
 #endif
       return retval;
     }
@@ -159,8 +158,7 @@ namespace DAnCE
       retval.componentPort (ACE_TEXT_CHAR_TO_TCHAR (src.componentPort.in ()));
 #if 0
       for (CORBA::ULong i = 0; i < src.property.length (); ++i)
-        retval.add_property (
-          Property_Handler::get_property (src.property[i]));
+        retval.add_property ( Property_Handler::get_property (src.property[i]));
 #endif
       return retval;
     }
@@ -178,8 +176,7 @@ namespace DAnCE
       for (auto const& source_item : desc.nodeExecParameter ())
         Property_Handler::handle_property (source_item, toconfig.nodeExecParameter[nodeExecParameter_index++]);
 
-      toconfig.componentExecParameter.length (
-        desc.componentExecParameter ().size ());
+      toconfig.componentExecParameter.length ( desc.componentExecParameter ().size ());
       CORBA::ULong componentExecParameter_index = 0;
       for (auto const& source_item : desc.componentExecParameter ())
         Property_Handler::handle_property (
@@ -257,8 +254,7 @@ namespace DAnCE
           {
             // MAJO: We should be able to assume this exists,
             //fix broken interpeters..
-            Comp_Intf_Descr_Handler::comp_intf_descr (*implements_if_set_ptr,
-                                                      toconfig.implements);
+            Comp_Intf_Descr_Handler::comp_intf_descr (*implements_if_set_ptr, toconfig.implements);
           }
 
         ::DAnCE::Config_Handlers::ComponentAssemblyDescription const*
@@ -268,14 +264,12 @@ namespace DAnCE
         if (assemblyImpl_if_set_ptr)
           {
             toconfig.assemblyImpl.length (1);
-            CAD_Handler::component_assem_descr (*assemblyImpl_if_set_ptr,
-                                                toconfig.assemblyImpl[0]);
+            CAD_Handler::component_assem_descr (*assemblyImpl_if_set_ptr, toconfig.assemblyImpl[0]);
           }
         else if (monolithicImpl)
           {
             toconfig.monolithicImpl.length (1);
-            MID_Handler::handle_mid (*monolithicImpl,
-                     toconfig.monolithicImpl[0]);
+            MID_Handler::handle_mid (*monolithicImpl, toconfig.monolithicImpl[0]);
           }
         else
           throw Plan_Error (
@@ -297,12 +291,8 @@ namespace DAnCE
         // dependsOn
         toconfig.dependsOn.length (cid->dependsOn ().size ());
         CORBA::ULong pos = 0;
-        for (auto i =
-               cid->dependsOn ().begin ();
-             i != cid->dependsOn ().end ();
-             ++i)
-          toconfig.dependsOn[pos++].requiredType =
-             i->requiredType ().c_str ();
+        for (auto i = cid->dependsOn ().begin (); i != cid->dependsOn ().end (); ++i)
+          toconfig.dependsOn[pos++].requiredType = i->requiredType ().c_str ();
 
         // infoProperty
         toconfig.infoProperty.length (cid->infoProperty ().size ());
@@ -324,19 +314,16 @@ namespace DAnCE
         retval.UUID (ACE_TEXT_CHAR_TO_TCHAR (src.UUID.in ()));
 
         {
-          retval.implements (Comp_Intf_Descr_Handler::comp_intf_descr (
-            src.implements));
+          retval.implements (Comp_Intf_Descr_Handler::comp_intf_descr ( src.implements));
         }
 
         if (src.assemblyImpl.length () == 1)
           {
-            retval.assemblyImpl (CAD_Handler::component_assem_descr (
-              src.assemblyImpl[0]));
+            retval.assemblyImpl (CAD_Handler::component_assem_descr ( src.assemblyImpl[0]));
           }
         else if (src.monolithicImpl.length () == 1)
           {
-            retval.monolithicImpl (MID_Handler::get_mid (
-              src.monolithicImpl[0]));
+            retval.monolithicImpl (MID_Handler::get_mid ( src.monolithicImpl[0]));
           }
         else
           DANCE_ERROR (DANCE_LOG_WARNING,
@@ -346,22 +333,17 @@ namespace DAnCE
 #if 0
         for (CORBA::ULong i = 0; i < src.configProperty.length (); ++i)
           {
-            retval.add_configProperty (
-                                       Property_Handler::get_property (
-                                         src.configProperty[i]));
+            retval.add_configProperty ( Property_Handler::get_property ( src.configProperty[i]));
           }
 
         for (CORBA::ULong i = 0; i < src.dependsOn.length (); ++i)
           {
-            retval.add_dependsOn (ImplementationDependency (
-              src.dependsOn[i].requiredType.in ()));
+            retval.add_dependsOn (ImplementationDependency ( src.dependsOn[i].requiredType.in ()));
           }
 
         for (CORBA::ULong i = 0; i < src.infoProperty.length (); ++i)
           {
-            retval.add_infoProperty (
-                                     Property_Handler::get_property (
-                                       src.infoProperty[i]));
+            retval.add_infoProperty ( Property_Handler::get_property ( src.infoProperty[i]));
           }
 #endif
         return retval;
@@ -383,8 +365,7 @@ namespace DAnCE
             (reader::componentImplementationDescription (dom));
         }
         catch (...) {
-          throw Parse_Error (
-            "Unable to create XSC structure for CID");
+          throw Parse_Error ( "Unable to create XSC structure for CID");
         }
       }
     }

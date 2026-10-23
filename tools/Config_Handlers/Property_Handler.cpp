@@ -22,11 +22,9 @@ namespace DAnCE
 
       try
         {
-          toconfig.name =
-            CORBA::string_dup (desc.name ().c_str ());
+          toconfig.name = CORBA::string_dup (desc.name ().c_str ());
 
-          Any_Handler::extract_into_any (desc.value (),
-                                         toconfig.value);
+          Any_Handler::extract_into_any (desc.value (), toconfig.value);
         }
       catch (Config_Error &ex)
         {

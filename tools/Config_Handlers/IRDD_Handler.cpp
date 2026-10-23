@@ -46,8 +46,7 @@ namespace DAnCE
           break;
 
         default:
-          throw Config_Error (desc.requirementName (),
-                              "Unknown ResourceUsageKind.");
+          throw Config_Error (desc.requirementName (), "Unknown ResourceUsageKind.");
           break;
         }
 
@@ -69,9 +68,7 @@ namespace DAnCE
       XMLSchema::string<char> reqname (src.requirementName);
       XMLSchema::string<char> resname (src.resourceName);
 
-      InstanceResourceDeploymentDescription irdd (ResourceUsageKind::None,
-                                                  reqname,
-                                                  resname);
+      InstanceResourceDeploymentDescription irdd (ResourceUsageKind::None, reqname, resname);
 
       switch (src.resourceUsage)
         {
@@ -96,8 +93,7 @@ namespace DAnCE
           break;
 
         default:
-          throw Config_Error (src.resourceName.in (),
-                              "Unknown ResourceUsageKind.");
+          throw Config_Error (src.resourceName.in (), "Unknown ResourceUsageKind.");
           break;
         }
 

@@ -45,14 +45,12 @@ namespace DAnCE
       {
 
       public:
-        static void package_config (const ACE_TCHAR *uri,
-                                    ::Deployment::PackageConfiguration &toconfig);
+        static void package_config (const ACE_TCHAR *uri, ::Deployment::PackageConfiguration &toconfig);
 
         /// Maps the values from the XSC object
         /// <PackageConfiguration> to the CORBA IDL type
         /// <Deployment::PackageConfiguration>.
-        static void package_config (const PackageConfiguration &desc,
-                                    ::Deployment::PackageConfiguration &toconfig);
+        static void package_config (const PackageConfiguration &desc, ::Deployment::PackageConfiguration &toconfig);
 
         static PackageConfiguration package_config (const Deployment::PackageConfiguration& src);
 

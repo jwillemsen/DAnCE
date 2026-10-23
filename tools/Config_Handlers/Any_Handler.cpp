@@ -29,8 +29,7 @@ namespace DAnCE
       DANCE_TRACE("Any_Handler::extract_into_any");
       try
         {
-          DynamicAny::DynAny_var dyn = DYNANY_HANDLER->extract_into_dynany (desc.type (),
-                                                                            desc.value ());
+          DynamicAny::DynAny_var dyn = DYNANY_HANDLER->extract_into_dynany (desc.type (), desc.value ());
           CORBA::Any_var any_safe (dyn->to_any ());
           toconfig = *any_safe;
 
@@ -43,8 +42,7 @@ namespace DAnCE
                            ACE_TEXT (" Caught CORBA Exception while extracting into")
                            ACE_TEXT (" dynany: %C\n"),
                            ex._info ().c_str ()));
-          throw Config_Error ("",
-                              "CORBA Exception while extracting into dynany");
+          throw Config_Error ("", "CORBA Exception while extracting into dynany");
         }
       catch (const Config_Error &ex)
         {

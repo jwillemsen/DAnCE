@@ -16,18 +16,12 @@ namespace DAnCE
       {
         DANCE_TRACE("ADD_Handler::atrifact_deployment_descrs");
 
-        auto aci_e =
-          src.artifact ().end ();
+        auto aci_e = src.artifact ().end ();
         dest.length (src.artifact ().size ());
         CORBA::ULong pos = 0;
-        for (auto aci_b =
-               src.artifact ().begin ();
-             aci_e != aci_b;
-             ++aci_b)
+        for (auto aci_b = src.artifact ().begin (); aci_e != aci_b; ++aci_b)
           {
-            ADD_Handler::artifact_deployment_descr (*aci_b,
-                                                    dest[pos],
-                                                    pos);
+            ADD_Handler::artifact_deployment_descr (*aci_b, dest[pos], pos);
             pos++;
           }
       }
@@ -43,43 +37,30 @@ namespace DAnCE
 
         dest.node =  src.node ().c_str ();
 
-        auto end =
-          src.location ().end ();
+        auto end = src.location ().end ();
 
         dest.location.length (src.location ().size ());
         CORBA::ULong len = 0;
-        for (auto
-               start = src.location ().begin ();
-             start != end;
-             ++start)
+        for (auto start = src.location ().begin (); start != end; ++start)
           {
             dest.location[len++] =  start->c_str ();
           }
 
-        auto sce =
-          src.source ().end ();
+        auto sce = src.source ().end ();
         len = 0;
         dest.source.length (src.source ().size ());
-        for (auto
-               scb = src.source ().begin ();
-             scb != sce;
-             ++scb)
+        for (auto scb = src.source ().begin (); scb != sce; ++scb)
           {
             dest.source[len++] =  scb->c_str ();
           }
 
         // @@TODO: See this loop is repeated
-        auto adce =
-          src.execParameter ().end ();
+        auto adce = src.execParameter ().end ();
         len = 0;
         dest.execParameter.length (src.execParameter ().size ());
-        for (auto adcb =
-               src.execParameter ().begin ();
-             adcb != adce;
-             ++adcb)
+        for (auto adcb = src.execParameter ().begin (); adcb != adce; ++adcb)
           {
-            Property_Handler::handle_property (*adcb,
-                                               dest.execParameter[len++]);
+            Property_Handler::handle_property (*adcb, dest.execParameter[len++]);
           }
 
         ::XMLSchema::ID<char> const* id_if_set_ptr = src.id_if_set ();
@@ -101,8 +82,7 @@ namespace DAnCE
         if (src.deployRequirement_if_set ())
           {
             Req_Handler handler;
-            add.deployRequirement.length (
-                                          add.deployRequirement.length () + 1);
+            add.deployRequirement.length ( add.deployRequirement.length () + 1);
             handler.get_Requirement (
                                      add.deployRequirement[add.deployRequirement.length () - 1],
                                      src.deployRequirement ());
@@ -111,8 +91,7 @@ namespace DAnCE
         if (src.deployedResource_if_set ())
           {
             RDD_Handler handler;
-            add.deployedResource.length (
-                                         add.deployedResource.length () + 1);
+            add.deployedResource.length ( add.deployedResource.length () + 1);
             handler.get_ResourceDeploymentDescription (
                                                        add.deployedResource[add.deployedResource.length () - 1],
                                                        src.deployedResource ());

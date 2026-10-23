@@ -63,8 +63,7 @@ namespace DAnCE
 
       CORBA::TypeCode_ptr create_typecode (const DataType &type);
 
-      void register_typecode (std::string_view typeID,
-                              CORBA::TypeCode_ptr tc);
+      void register_typecode (std::string_view typeID, CORBA::TypeCode_ptr tc);
 
       CORBA::TypeCode_ptr get_typecode (std::string_view typeID);
 

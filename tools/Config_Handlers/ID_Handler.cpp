@@ -21,8 +21,7 @@ namespace DAnCE
 
       DANCE_TRACE("ID_Handler::get_ImplementationDependency");
 
-      toconfig.requiredType=
-        CORBA::string_dup (desc.requiredType ().c_str ());
+      toconfig.requiredType= CORBA::string_dup (desc.requiredType ().c_str ());
     }
 
     ImplementationDependency ID_Handler::impl_dependency (const ::Deployment::ImplementationDependency& src)

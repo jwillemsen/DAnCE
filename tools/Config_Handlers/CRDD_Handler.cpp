@@ -45,13 +45,9 @@ namespace DAnCE
       XMLSchema::string<char> reqname (src.requirementName);
       XMLSchema::string<char> resname (src.resourceName);
 
-      ConnectionResourceDeploymentDescription crdd (tname,
-                                                    reqname,
-                                                    resname);
+      ConnectionResourceDeploymentDescription crdd (tname, reqname, resname);
 
-      for (CORBA::ULong i = 0;
-           i != src.property.length ();
-           ++i)
+      for (CORBA::ULong i = 0; i != src.property.length (); ++i)
         {
           //crdd.add_property (Property_Handler::get_property (src.property[i]));
         }

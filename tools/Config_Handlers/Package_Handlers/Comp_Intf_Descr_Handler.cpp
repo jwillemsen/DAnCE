@@ -24,8 +24,7 @@ namespace DAnCE
             DANCE_TRACE ("Comp_Prop_Handler::get_cpd");
 
             toconfig.name = desc.name ().c_str ();
-            DataType_Handler::data_type (desc.type (),
-                                         toconfig.type);
+            DataType_Handler::data_type (desc.type (), toconfig.type);
           }
 
           static ComponentPropertyDescription
@@ -121,8 +120,7 @@ namespace DAnCE
           retval.add_idlFile (src.idlFile[i].in ());
 
         for (CORBA::ULong i = 0; i < src.configProperty.length (); ++i)
-          retval.add_configProperty (
-                                     Property_Handler::get_property (src.configProperty[i]));
+          retval.add_configProperty ( Property_Handler::get_property (src.configProperty[i]));
 
         for (CORBA::ULong i = 0; i < src.port.length (); ++i)
           retval.add_port
@@ -132,8 +130,7 @@ namespace DAnCE
           retval.add_property (Comp_Prop_Handler::get_cpd (src.property[i]));
 
         for (CORBA::ULong i = 0; i < src.infoProperty.length (); ++i)
-          retval.add_infoProperty (
-                                   Property_Handler::get_property (src.infoProperty[i]));
+          retval.add_infoProperty ( Property_Handler::get_property (src.infoProperty[i]));
 #endif
         return retval;
       }

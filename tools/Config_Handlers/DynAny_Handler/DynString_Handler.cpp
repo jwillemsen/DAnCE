@@ -29,8 +29,7 @@ namespace DAnCE
         tc = DynString_Handler::create_typecode (type);
 
       // Make the actual DynAny
-      DynamicAny::DynAny_var retval =
-        DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
+      DynamicAny::DynAny_var retval = DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
 
       const char* s = 0;
       if (!value.string ().empty ())
@@ -48,11 +47,8 @@ namespace DAnCE
 
       if (type.kind ().integral () != TCKind::tk_string_l)
         {
-          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_ERROR, ACE_TEXT (
-              "ERROR: String type description required")));
-          throw Config_Error ("",
-            "Expected <string> element, incorrect tc_kind.");
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ( "ERROR: String type description required")));
+          throw Config_Error ("", "Expected <string> element, incorrect tc_kind.");
         }
 
       CORBA::ULong bound (0);
@@ -65,8 +61,7 @@ namespace DAnCE
           }
         }
 
-      CORBA::TypeCode_var tc =
-        DYNANY_HANDLER->orb ()->create_string_tc (bound);
+      CORBA::TypeCode_var tc = DYNANY_HANDLER->orb ()->create_string_tc (bound);
 
       return tc._retn ();
     }

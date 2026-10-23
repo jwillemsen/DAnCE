@@ -24,8 +24,7 @@ namespace DAnCE
       DANCE_TRACE ("PCI_Handler::get_pci");
       toconfig.name = desc.name ().c_str ();
 
-      CID_Handler::component_impl_descr (desc.referencedImplementation (),
-                         toconfig.referencedImplementation);
+      CID_Handler::component_impl_descr (desc.referencedImplementation (), toconfig.referencedImplementation);
     }
 
     static PackagedComponentImplementation
@@ -68,8 +67,7 @@ namespace DAnCE
         // CID
         ::DAnCE::Config_Handlers::ComponentInterfaceDescription const* realizes_if_set_ptr = cpd->realizes_if_set ();
         if (realizes_if_set_ptr)
-          Comp_Intf_Descr_Handler::comp_intf_descr (*realizes_if_set_ptr,
-                                                    toconfig.realizes);
+          Comp_Intf_Descr_Handler::comp_intf_descr (*realizes_if_set_ptr, toconfig.realizes);
 
         // Config Properties
         toconfig.configProperty.length (desc.configProperty ().size ());
@@ -110,20 +108,17 @@ namespace DAnCE
 #if 0
         for (size_t i = 0; i < src.configProperty.length (); ++i)
           {
-            toconfig.add_configProperty (
-                     Property_Handler::get_property (src.configProperty[i]));
+            toconfig.add_configProperty ( Property_Handler::get_property (src.configProperty[i]));
           }
 
         { // Packaged Component Implementations
           for (size_t i = 0; i < src.implementation.length (); ++i)
-            toconfig.add_implementation (
-                     PCI_Handler::get_pci (src.implementation[i]));
+            toconfig.add_implementation ( PCI_Handler::get_pci (src.implementation[i]));
         }
 
         for (size_t i = 0; i < src.infoProperty.length (); ++i)
           {
-            toconfig.add_infoProperty (
-                       Property_Handler::get_property (src.infoProperty[i]));
+            toconfig.add_infoProperty ( Property_Handler::get_property (src.infoProperty[i]));
           }
 #endif
         return toconfig;

@@ -40,8 +40,7 @@ namespace DAnCE
           DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
             (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_plan - ")
                        ACE_TEXT ("Constructing DOM\n")));
-          XERCES_CPP_NAMESPACE::DOMDocument *dom =
-            xml_helper_.create_dom ((file));
+          XERCES_CPP_NAMESPACE::DOMDocument *dom = xml_helper_.create_dom ((file));
 
           if (dom == 0)
             {
@@ -62,8 +61,7 @@ namespace DAnCE
           DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE,
             DLINFO ACE_TEXT ("XML_File_Intf::read_process_plan - ")
             ACE_TEXT ("Parsing XML file with XSC\n")));
-          deploymentPlan dp =
-            DAnCE::Config_Handlers::reader::DeploymentPlan (dom);
+          deploymentPlan dp = DAnCE::Config_Handlers::reader::DeploymentPlan (dom);
 
           DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE,
             DLINFO ACE_TEXT ("XML_File_Intf::read_process_plan - ")
@@ -81,8 +79,7 @@ namespace DAnCE
             (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
             ACE_TEXT ("CORBA Exception whilst parsing XML into IDL\n"),
             ex._info ().c_str ()));
-          throw Config_Error (ACE_TEXT_ALWAYS_CHAR (this->file_.c_str ()),
-                              ex._info ().c_str ());
+          throw Config_Error (ACE_TEXT_ALWAYS_CHAR (this->file_.c_str ()), ex._info ().c_str ());
         }
       catch (const Config_Error &ex)
         {
@@ -112,8 +109,7 @@ namespace DAnCE
           DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE,
             DLINFO ACE_TEXT ("XML_File_Intf::read_process_domain - ")
                        ACE_TEXT ("Constructing DOM\n")));
-          XERCES_CPP_NAMESPACE::DOMDocument *dom =
-            xml_helper_.create_dom ((file));
+          XERCES_CPP_NAMESPACE::DOMDocument *dom = xml_helper_.create_dom ((file));
 
           if (dom == 0)
             {
@@ -135,8 +131,7 @@ namespace DAnCE
           ID_Map::TSS_ID_Map* TSS_ID_Map (ACE_Singleton<ID_Map::TSS_ID_Map, ACE_Null_Mutex>::instance());
           (*TSS_ID_Map)->reset ();
 
-          Domain dp =
-            DAnCE::Config_Handlers::reader::domain (dom);
+          Domain dp = DAnCE::Config_Handlers::reader::domain (dom);
 
           DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE,
             DLINFO ACE_TEXT ("XML_File_Intf::read_process_domain - ")
@@ -154,8 +149,7 @@ namespace DAnCE
             (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
                            ACE_TEXT ("CORBA Exception whilst parsing XML into IDL\n"),
                            ex._info ().c_str ()));
-          throw Config_Error (ACE_TEXT_ALWAYS_CHAR (this->file_.c_str ()),
-                              ex._info ().c_str ());
+          throw Config_Error (ACE_TEXT_ALWAYS_CHAR (this->file_.c_str ()), ex._info ().c_str ());
         }
       catch (const Config_Error &ex)
         {

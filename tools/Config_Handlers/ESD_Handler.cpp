@@ -17,13 +17,9 @@ namespace DAnCE
 
       CORBA::ULong pos = 0;
       dest.length (src.instance ().size ());
-      for (auto esd_b =
-             src.instance ().begin ();
-           esd_b != esd_e;
-           ++esd_b)
+      for (auto esd_b = src.instance ().begin (); esd_b != esd_e; ++esd_b)
         {
-          ESD_Handler::instance_deployment_descr ((*esd_b),
-                    dest[pos], pos);
+          ESD_Handler::instance_deployment_descr ((*esd_b), dest[pos], pos);
           pos++;
         }
     }
@@ -60,8 +56,7 @@ namespace DAnCE
             break;
 
           default:
-            throw Config_Error (desc.requirementName (),
-                    "Unknown EventServiceType.");
+            throw Config_Error (desc.requirementName (), "Unknown EventServiceType.");
             break;
           }
       }
@@ -84,11 +79,7 @@ namespace DAnCE
       XMLSchema::string<char> svc_cfg_file ((src.svc_cfg_file));
 
       // Instantiate the IDD
-      EventServiceDeploymentDescription esd (
-        name,
-        node,
-        EventServiceType::RTEC_l,
-        svc_cfg_file);
+      EventServiceDeploymentDescription esd ( name, node, EventServiceType::RTEC_l, svc_cfg_file);
 
       switch (src.EventServiceType)
       {
@@ -109,8 +100,7 @@ namespace DAnCE
         break;
 
       default:
-        throw Config_Error (src.resourceName.in (),
-                "Unknown EventServiceType.");
+        throw Config_Error (src.resourceName.in (), "Unknown EventServiceType.");
         break;
       }
 

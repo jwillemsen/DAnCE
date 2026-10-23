@@ -14,14 +14,12 @@ namespace DAnCE
       {
         DANCE_TRACE("IDREF_Base<T>::bind_ref");
 
-        int retval =
-          idref_map_.bind (id, value);
+        int retval = idref_map_.bind (id, value);
 
         pos_map_.bind (value,id);
 
         if (retval < 0)
-          throw Config_Error (id.c_str (),
-                              "Failed to bind an IDRef.  This likely indicates a name clash.");
+          throw Config_Error (id.c_str (), "Failed to bind an IDRef.  This likely indicates a name clash.");
       }
 
       template <typename T>
@@ -41,8 +39,7 @@ namespace DAnCE
         ++this->next_;
 
         if (retval < 0 || pos_retval < 0)
-          throw Config_Error (id.c_str (),
-                              "Failed to bind an IDRef.  This likely indicates a name clash");
+          throw Config_Error (id.c_str (), "Failed to bind an IDRef.  This likely indicates a name clash");
 
       }
 
@@ -51,12 +48,10 @@ namespace DAnCE
       {
         DANCE_TRACE("IDREF_Base<T>::find_ref(C_String, T)");
 
-        int retval =
-          idref_map_.find (id, val);
+        int retval = idref_map_.find (id, val);
 
         if (retval < 0)
-          throw Config_Error (id.c_str (),
-                              "Unable to look up an IDRef.");
+          throw Config_Error (id.c_str (), "Unable to look up an IDRef.");
       }
 
       template <typename T>
@@ -64,15 +59,13 @@ namespace DAnCE
       {
         DANCE_TRACE("IDREF_Base<T>::find_ref (T, CString)");
 
-        int retval =
-          pos_map_.find (value, id);
+        int retval = pos_map_.find (value, id);
 
         //      ACE_ERROR ((LM_ERROR, "**** Looking up value %i\n",
         //            value));
 
         if (retval < 0)
-          throw Config_Error ("No location information for reverse IDREF lookup",
-                              id.c_str ());
+          throw Config_Error ("No location information for reverse IDREF lookup", id.c_str ());
       }
 
       template <typename T>
@@ -80,8 +73,7 @@ namespace DAnCE
       {
         DANCE_TRACE("IDREF_Base<T>::unbind_refs");
 
-        int retval =
-          idref_map_.unbind_all ();
+        int retval = idref_map_.unbind_all ();
 
         pos_map_.unbind_all ();
 
