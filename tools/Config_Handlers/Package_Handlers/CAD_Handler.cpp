@@ -18,7 +18,7 @@ namespace DAnCE
     {
       struct Packaging_Handlers_Export SPE_Handler
       {
-    static void handle_spe (const SubcomponentPortEndpoint &desc,
+    static void handle_spe (SubcomponentPortEndpoint const& desc,
                 ::Deployment::SubcomponentPortEndpoint &toconfig)
     {
       DANCE_TRACE("SPE_Handler::get_spe");
@@ -29,7 +29,7 @@ namespace DAnCE
       if (!instanceRef)
         throw Config_Error ("", "Subcomponent port endpoint has no instance IDREF");
 
-      const std::string str (instanceRef->id ().c_str ());
+      std::string const str (instanceRef->id ().c_str ());
       CORBA::ULong pos {};
 
       SID_Handler::IDREF.find_ref (str, pos);
@@ -37,7 +37,7 @@ namespace DAnCE
     }
 
     static SubcomponentPortEndpoint
-    get_spe (const ::Deployment::SubcomponentPortEndpoint &src)
+    get_spe (::Deployment::SubcomponentPortEndpoint const& src)
     {
       DANCE_TRACE("SPE_Handler::get_spe - reverse");
       std::string str;
@@ -46,13 +46,13 @@ namespace DAnCE
       IdRef xid;
       xid.idref (str.c_str ());
 
-      return SubcomponentPortEndpoint ( ACE_TEXT_CHAR_TO_TCHAR (src.portName.in ()), xid);
+      return SubcomponentPortEndpoint (ACE_TEXT_CHAR_TO_TCHAR (src.portName.in ()), xid);
     }
       };
 
       struct Packaging_Handlers_Export ACD_Handler
       {
-    static void handle_acd (const AssemblyConnectionDescription &desc,
+    static void handle_acd (AssemblyConnectionDescription const& desc,
                 ::Deployment::AssemblyConnectionDescription &toconfig)
     {
       DANCE_TRACE("ACD_Handler::get_acd");
@@ -82,7 +82,7 @@ namespace DAnCE
     }
 
     static AssemblyConnectionDescription
-    get_acd (const ::Deployment::AssemblyConnectionDescription &src)
+    get_acd (::Deployment::AssemblyConnectionDescription const& src)
     {
       DANCE_TRACE("ACD_Handler::get_acd - reverse");
 
@@ -109,7 +109,7 @@ namespace DAnCE
 
       struct Packaging_Handlers_Export SPR_Handler
       {
-    static void handle_spr (const SubcomponentPropertyReference &desc,
+    static void handle_spr (SubcomponentPropertyReference const& desc,
                 ::Deployment::SubcomponentPropertyReference &toconfig)
     {
       DANCE_TRACE("SPR_Handler::get_spr");
@@ -120,7 +120,7 @@ namespace DAnCE
       if (!instanceRef)
         throw Config_Error ("", "Subcomponent property reference has no instance IDREF");
 
-      const std::string str (instanceRef->id ().c_str ());
+      std::string const str (instanceRef->id ().c_str ());
       CORBA::ULong pos {};
 
       SID_Handler::IDREF.find_ref (str, pos);
@@ -129,7 +129,7 @@ namespace DAnCE
     }
 
     static SubcomponentPropertyReference
-    get_spr (const ::Deployment::SubcomponentPropertyReference &src)
+    get_spr (::Deployment::SubcomponentPropertyReference const& src)
     {
       DANCE_TRACE("SPR_HAndler::get_spr - reverse");
       std::string str;
@@ -144,7 +144,7 @@ namespace DAnCE
 
       struct Packaging_Handlers_Export APM_Handler
       {
-    static void handle_apm (const AssemblyPropertyMapping &desc,
+    static void handle_apm (AssemblyPropertyMapping const& desc,
                 ::Deployment::AssemblyPropertyMapping &toconfig)
     {
       DANCE_TRACE("APM_Handler::get_apm");
@@ -159,7 +159,7 @@ namespace DAnCE
     }
 
     static AssemblyPropertyMapping
-    get_apm (const ::Deployment::AssemblyPropertyMapping &src)
+    get_apm (::Deployment::AssemblyPropertyMapping const& src)
     {
       DANCE_TRACE("APM_Handler::get_apm - reverse");
 
@@ -176,7 +176,7 @@ namespace DAnCE
 
       void
       CAD_Handler::component_assem_descr (
-        const ComponentAssemblyDescription &desc,
+        ComponentAssemblyDescription const& desc,
         ::Deployment::ComponentAssemblyDescription &toconfig)
       {
         DANCE_TRACE("CAD_Handler::component_assem_descr");
@@ -201,7 +201,7 @@ namespace DAnCE
 
       ComponentAssemblyDescription
       CAD_Handler::component_assem_descr (
-        const ::Deployment::ComponentAssemblyDescription &/*src*/)
+        ::Deployment::ComponentAssemblyDescription const& /*src*/)
       {
         DANCE_TRACE("CAD_Handler::component_assem_descr - reverse");
 
@@ -215,7 +215,7 @@ namespace DAnCE
           retval.add_connection (ACD_Handler::get_acd (src.connection[i]));
 
         for (CORBA::ULong i = 0; i < src.externalProperty.length (); ++i)
-          retval.add_externalProperty ( APM_Handler::get_apm (src.externalProperty[i]));
+          retval.add_externalProperty (APM_Handler::get_apm (src.externalProperty[i]));
 #endif
         return retval;
 

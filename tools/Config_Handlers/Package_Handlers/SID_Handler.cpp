@@ -20,7 +20,7 @@ namespace DAnCE
 
       void
       SID_Handler::handle_sub_comp_inst_descr (
-        const SubcomponentInstantiationDescription &desc,
+        SubcomponentInstantiationDescription const& desc,
          ::Deployment::SubcomponentInstantiationDescription &toconfig)
       {
         DANCE_TRACE ("SID_Handler::sub_comp_inst_descr");
@@ -45,7 +45,7 @@ namespace DAnCE
         else if (importedPackage)
           {
             toconfig.importedPackage.length (1);
-            toconfig.importedPackage[0].location.length ( importedPackage->location ().size ());
+            toconfig.importedPackage[0].location.length (importedPackage->location ().size ());
 
             CORBA::ULong location_index {};
             for (auto const& source_item : importedPackage->location ())
@@ -94,10 +94,10 @@ namespace DAnCE
 
       SubcomponentInstantiationDescription
       SID_Handler::sub_comp_inst_descr (
-        const Deployment::SubcomponentInstantiationDescription &src)
+        Deployment::SubcomponentInstantiationDescription const& src)
       {
         DANCE_TRACE ("SID_Handler::sub_comp_inst_descr - reverse");
-        SubcomponentInstantiationDescription retval ( ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
+        SubcomponentInstantiationDescription retval (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
 
         if (src.basePackage.length () == 1)
           retval.basePackage
@@ -119,8 +119,8 @@ namespace DAnCE
             ComponentPackageReference cpr (
               Comp_Intf_Descr_Handler::comp_intf_descr (
                 src.referencedPackage[0].requiredType));
-            cpr.requiredUUID (ACE_TEXT_CHAR_TO_TCHAR ( src.referencedPackage[0].requiredUUID.in ()));
-            cpr.requiredName (ACE_TEXT_CHAR_TO_TCHAR ( src.referencedPackage[0].requiredName.in ()));
+            cpr.requiredUUID (ACE_TEXT_CHAR_TO_TCHAR (src.referencedPackage[0].requiredUUID.in ()));
+            cpr.requiredName (ACE_TEXT_CHAR_TO_TCHAR (src.referencedPackage[0].requiredName.in ()));
 
             retval.referencedPackage (cpr);
           }
@@ -134,8 +134,8 @@ namespace DAnCE
             (Property_Handler::get_property (src.configProperty[i]));
 #endif
         // @@MAJO This is not a good way of binding reverse IDREFS.
-        std::unique_ptr<ACE_Utils::UUID> safe_uuid ( ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());
-        std::string uuid ( safe_uuid->to_string ()->c_str ());
+        std::unique_ptr<ACE_Utils::UUID> safe_uuid (ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());
+        std::string uuid (safe_uuid->to_string ()->c_str ());
 
         SID_Handler::IDREF.bind_next_available (uuid);
 

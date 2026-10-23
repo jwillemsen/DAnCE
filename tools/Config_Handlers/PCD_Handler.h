@@ -50,14 +50,14 @@ namespace DAnCE
       ///This method takes a <Deployment::PlanConnectionDescription>
       ///and maps the values from the passed in XSC
       ///PlanConnectionDescription to its members.
-      static void handle_PlanConnectionDescription (const PlanConnectionDescription& desc,
+      static void handle_PlanConnectionDescription (PlanConnectionDescription const& desc,
                                           ::Deployment::PlanConnectionDescription& toconfig);
 
       //This method takes a <Deployment::PlanConnectionDescription>
       //converts it into a <Config_Handler::PlanConnectionDescription>
       //and returns the value
       static PlanConnectionDescription
-        get_PlanConnectionDescription (const Deployment::PlanConnectionDescription &src);
+        get_PlanConnectionDescription (Deployment::PlanConnectionDescription const& src);
     };
 
   }

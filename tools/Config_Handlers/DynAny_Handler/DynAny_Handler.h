@@ -51,17 +51,17 @@ namespace DAnCE
 
       ~DynAny_Handler (void);
 
-      DynamicAny::DynAny_ptr  extract_into_dynany (const DataType &type,
-                                                   const DataValue &value,
+      DynamicAny::DynAny_ptr  extract_into_dynany (DataType const& type,
+                                                   DataValue const& value,
                                                    CORBA::TypeCode_ptr = CORBA::TypeCode::_nil ());
 
-      Any extract_from_dynany (const CORBA::Any &any);
+      Any extract_from_dynany (CORBA::Any const& any);
 
       CORBA::ORB_ptr orb ();
 
       DynamicAny::DynAnyFactory_ptr daf ();
 
-      CORBA::TypeCode_ptr create_typecode (const DataType &type);
+      CORBA::TypeCode_ptr create_typecode (DataType const& type);
 
       void register_typecode (std::string_view typeID, CORBA::TypeCode_ptr tc);
 

@@ -8,7 +8,7 @@ namespace DAnCE
   {
     void
     ERE_Handler::external_ref_endpoints (
-                                         const PlanConnectionDescription &src,
+                                         PlanConnectionDescription const& src,
                                          Deployment::ExternalReferenceEndpoints &dest)
     {
       DANCE_TRACE("ERE_Handler::external_ref_endpoints");
@@ -24,7 +24,7 @@ namespace DAnCE
 
     void
     ERE_Handler::handle_external_ref_endpoint (
-                                        const ExternalReferenceEndpoint &src,
+                                        ExternalReferenceEndpoint const& src,
                                         Deployment::ExternalReferenceEndpoint &dest)
     {
       DANCE_TRACE("ERE_Handler::external_ref_endpoint");
@@ -39,7 +39,7 @@ namespace DAnCE
         dest.supportedType[supportedType_index++] = source_item.c_str ();
     }
 
-    ExternalReferenceEndpoint ERE_Handler::external_ref_endpoint (const Deployment::ExternalReferenceEndpoint& src)
+    ExternalReferenceEndpoint ERE_Handler::external_ref_endpoint (Deployment::ExternalReferenceEndpoint const& src)
     {
       DANCE_TRACE("ERE_Handler::external_ref_endpoint - reverse");
       XMLSchema::string<char> loc (src.location);

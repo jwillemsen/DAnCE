@@ -8,7 +8,7 @@ namespace DAnCE
   {
     void
     ComponentPropertyDescription_Handler::component_property_description (
-                                                                          const ComponentPropertyDescription& desc,
+                                                                          ComponentPropertyDescription const& desc,
                                                                           ::Deployment::ComponentPropertyDescription& toconfig)
     {
       DANCE_TRACE("ComponentPropertyDescription_Handler::component_property_description");
@@ -26,7 +26,7 @@ namespace DAnCE
 
     ComponentPropertyDescription
     ComponentPropertyDescription_Handler::component_property_description (
-                                                                          const ::Deployment::ComponentPropertyDescription &src)
+                                                                          ::Deployment::ComponentPropertyDescription const& src)
     {
       DANCE_TRACE("ComponentPropertyDescription_Handler::component_property_description - reverse");
       XMLSchema::string<char> name (src.name);

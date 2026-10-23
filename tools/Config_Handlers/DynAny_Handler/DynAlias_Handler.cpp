@@ -14,8 +14,8 @@ namespace DAnCE
   namespace Config_Handlers
   {
     DynamicAny::DynAny_ptr
-    DynAlias_Handler::extract_into_dynany (const DataType &type,
-                                           const DataValue &value,
+    DynAlias_Handler::extract_into_dynany (DataType const& type,
+                                           DataValue const& value,
                                            CORBA::TypeCode_ptr req_tc)
     {
       DANCE_TRACE("DynAlias_Handler::extract_into_dynany");
@@ -33,10 +33,10 @@ namespace DAnCE
           else
             tc = DynAlias_Handler::create_typecode (type);
 
-          DynamicAny::DynAny_var alias = DYNANY_HANDLER->extract_into_dynany ( aliasType->elementType (), value, tc);
+          DynamicAny::DynAny_var alias = DYNANY_HANDLER->extract_into_dynany (aliasType->elementType (), value, tc);
           return alias._retn ();
         }
-      catch (const DynamicAny::DynAny::InvalidValue&)
+      catch (DynamicAny::DynAny::InvalidValue const&)
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR,
@@ -59,7 +59,7 @@ namespace DAnCE
         }
     }
 
-    CORBA::TypeCode_ptr DynAlias_Handler::create_typecode (const DataType &type)
+    CORBA::TypeCode_ptr DynAlias_Handler::create_typecode (DataType const& type)
     {
       DANCE_TRACE("DynAlias_Handler::create_typecode");
 

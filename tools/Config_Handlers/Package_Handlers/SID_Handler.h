@@ -34,11 +34,11 @@ namespace DAnCE
       class Packaging_Handlers_Export SID_Handler
       {
       public:
-        static void handle_sub_comp_inst_descr (const SubcomponentInstantiationDescription &desc,
+        static void handle_sub_comp_inst_descr (SubcomponentInstantiationDescription const& desc,
                                          ::Deployment::SubcomponentInstantiationDescription &toconfig);
 
         static SubcomponentInstantiationDescription
-        sub_comp_inst_descr (const ::Deployment::SubcomponentInstantiationDescription &src);
+        sub_comp_inst_descr (::Deployment::SubcomponentInstantiationDescription const& src);
 
         static IDREF_Base< CORBA::ULong > IDREF;
 

@@ -14,7 +14,7 @@ namespace DAnCE
     IDREF_Base<CORBA::ULong> MDD_Handler::IDREF;
 
     void
-    MDD_Handler::mono_deployment_descriptions (const deploymentPlan& src,
+    MDD_Handler::mono_deployment_descriptions (deploymentPlan const& src,
                                                Deployment::MonolithicDeploymentDescriptions& dest)
     {
       DANCE_TRACE("MDD_Handler::mono_deployment_descriptions");
@@ -30,7 +30,7 @@ namespace DAnCE
     }
 
     void
-    MDD_Handler::mono_deployment_description (const MonolithicDeploymentDescription& desc,
+    MDD_Handler::mono_deployment_description (MonolithicDeploymentDescription const& desc,
                                               Deployment::MonolithicDeploymentDescription& toconfig,
                                               CORBA::ULong pos)
     {
@@ -94,19 +94,19 @@ namespace DAnCE
 
     MonolithicDeploymentDescription
     MDD_Handler::mono_deployment_description(
-        const Deployment::MonolithicDeploymentDescription &src)
+        Deployment::MonolithicDeploymentDescription const& src)
     {
       DANCE_TRACE("mono_deployment_description - reverse");
 
       //Get the name and instantiate the mdd
-      XMLSchema::string<char> name ( src.name);
+      XMLSchema::string<char> name (src.name);
       MonolithicDeploymentDescription mdd (name);
 
       //Get the source(s) from the IDL and store them
       size_t total = src.source.length();
       for(size_t i = 0; i < total; i++)
         {
-          XMLSchema::string<char> curr ( src.source[i]);
+          XMLSchema::string<char> curr (src.source[i]);
           //mdd.add_source(curr);
         }
 

@@ -18,7 +18,7 @@ namespace DAnCE
     {
       struct Packaging_Handlers_Export PCI_Handler
       {
-    static void handle_pci (const PackagedComponentImplementation &desc,
+    static void handle_pci (PackagedComponentImplementation const& desc,
                 ::Deployment::PackagedComponentImplementation &toconfig)
     {
       DANCE_TRACE ("PCI_Handler::get_pci");
@@ -28,7 +28,7 @@ namespace DAnCE
     }
 
     static PackagedComponentImplementation
-    get_pci (const ::Deployment::PackagedComponentImplementation &src)
+    get_pci (::Deployment::PackagedComponentImplementation const& src)
     {
       DANCE_TRACE ("PCI_Handler::get_pci - reverse");
       return PackagedComponentImplementation (
@@ -39,13 +39,13 @@ namespace DAnCE
 
       void
       CPD_Handler::handle_component_package_descr (
-        const ComponentPackageDescription &desc,
+        ComponentPackageDescription const& desc,
         ::Deployment::ComponentPackageDescription &toconfig)
       {
         DANCE_TRACE ("CPD_Handler::component_package_descr");
 
         std::unique_ptr<ComponentPackageDescription> xsc_cpd;
-        const ComponentPackageDescription *cpd = 0;
+        ComponentPackageDescription const* cpd {};
 
         ::XMLSchema::string<char> const* href_if_set_ptr = desc.href_if_set ();
         if (href_if_set_ptr)
@@ -76,7 +76,7 @@ namespace DAnCE
           Property_Handler::handle_property (source_item, toconfig.configProperty[configProperty_index++]);
 
         // Packaged Component Implementations
-        toconfig.implementation.length ( cpd->implementation ().size ());
+        toconfig.implementation.length (cpd->implementation ().size ());
         CORBA::ULong implementation_index {};
         for (auto const& source_item : cpd->implementation ())
           PCI_Handler::handle_pci (source_item, toconfig.implementation[implementation_index++]);
@@ -90,7 +90,7 @@ namespace DAnCE
 
       ComponentPackageDescription
       CPD_Handler::component_package_descr (
-        const Deployment::ComponentPackageDescription& src)
+        Deployment::ComponentPackageDescription const& src)
       {
         DANCE_TRACE ("CPD_Handler::component_package_descr - reverse");
         ComponentPackageDescription toconfig;
@@ -108,17 +108,17 @@ namespace DAnCE
 #if 0
         for (size_t i = 0; i < src.configProperty.length (); ++i)
           {
-            toconfig.add_configProperty ( Property_Handler::get_property (src.configProperty[i]));
+            toconfig.add_configProperty (Property_Handler::get_property (src.configProperty[i]));
           }
 
         { // Packaged Component Implementations
           for (size_t i = 0; i < src.implementation.length (); ++i)
-            toconfig.add_implementation ( PCI_Handler::get_pci (src.implementation[i]));
+            toconfig.add_implementation (PCI_Handler::get_pci (src.implementation[i]));
         }
 
         for (size_t i = 0; i < src.infoProperty.length (); ++i)
           {
-            toconfig.add_infoProperty ( Property_Handler::get_property (src.infoProperty[i]));
+            toconfig.add_infoProperty (Property_Handler::get_property (src.infoProperty[i]));
           }
 #endif
         return toconfig;
@@ -132,11 +132,11 @@ namespace DAnCE
         if (!xml_helper.is_initialized ())
           return 0;
 
-        const std::string uri_string (uri);
+        std::string const uri_string (uri);
         xercesc::DOMDocument* dom = xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri_string.c_str()));
 
         if (!dom)
-          throw Parse_Error ( "Unable to create DOM for component package description");
+          throw Parse_Error ("Unable to create DOM for component package description");
 
         try {
           return new ComponentPackageDescription (reader::componentPackageDescription (dom));

@@ -11,7 +11,7 @@ namespace DAnCE
   {
     void
     RDD_Handler::resource_deployment_descr (
-                                            const ResourceDeploymentDescription &src,
+                                            ResourceDeploymentDescription const& src,
                                             ::Deployment::ResourceDeploymentDescription &dest)
     {
       DANCE_TRACE("RDD_Handler::resource_deployment_descr");
@@ -28,7 +28,7 @@ namespace DAnCE
 
     ResourceDeploymentDescription
     RDD_Handler::resource_deployment_descr (
-                                            const ::Deployment::ResourceDeploymentDescription &src)
+                                            ::Deployment::ResourceDeploymentDescription const& src)
     {
       DANCE_TRACE("RDD_Handler::resource_deployment_descr - reverse");
 

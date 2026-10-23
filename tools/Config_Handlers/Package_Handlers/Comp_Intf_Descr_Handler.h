@@ -34,10 +34,10 @@ namespace DAnCE
       class Packaging_Handlers_Export Comp_Intf_Descr_Handler
       {
       public:
-        static void comp_intf_descr (const ComponentInterfaceDescription &descr,
+        static void comp_intf_descr (ComponentInterfaceDescription const& descr,
                                      ::Deployment::ComponentInterfaceDescription &toconfig);
 
-        static ComponentInterfaceDescription comp_intf_descr (const ::Deployment::ComponentInterfaceDescription &src);
+        static ComponentInterfaceDescription comp_intf_descr (::Deployment::ComponentInterfaceDescription const& src);
 
       private:
         static ComponentInterfaceDescription *resolve_cid (std::string_view uri);

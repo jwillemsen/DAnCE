@@ -23,7 +23,7 @@ namespace DAnCE
     ///and maps the values from the passed in XSC
     ///ConnectionResourceDeploymentDescription to its members.
     void CRDD_Handler::get_ConnectionResourceDeploymentDescription (Deployment::ConnectionResourceDeploymentDescription& toconfig,
-                                                                    const ConnectionResourceDeploymentDescription& desc)
+                                                                    ConnectionResourceDeploymentDescription const& desc)
     {
       DANCE_TRACE("CRDD_Handler::get_ConnectionResourceDD");
 
@@ -39,7 +39,7 @@ namespace DAnCE
 
     ConnectionResourceDeploymentDescription
     CRDD_Handler::connection_resource_depl_desc (
-                                                 const ::Deployment::ConnectionResourceDeploymentDescription& src)
+                                                 ::Deployment::ConnectionResourceDeploymentDescription const& src)
     {
       DANCE_TRACE("CRDD_Handler::get_ConnectionResourceDeploymentDescription- reverse");
       XMLSchema::string<char> tname (src.targetName);

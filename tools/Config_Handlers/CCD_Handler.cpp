@@ -14,7 +14,7 @@ namespace DAnCE
   {
     void
     CCD_Handler::component_interface_descr (
-                                            const ComponentInterfaceDescription &desc,
+                                            ComponentInterfaceDescription const& desc,
                                             Deployment::ComponentInterfaceDescription& toconfig)
     {
       DANCE_TRACE("CCD_Handler::component_interface_descr");
@@ -70,7 +70,7 @@ namespace DAnCE
 
       pos = 0;
       CORBA::ULong len = desc.property ().size ();
-      toconfig.property.length ( len );
+      toconfig.property.length (len );
       for(auto prop (desc.property ().begin ()); prop != desc.property ().end (); prop++)
         {
           ComponentPropertyDescription_Handler::component_property_description (*prop, toconfig.property[pos++]);
@@ -78,7 +78,7 @@ namespace DAnCE
 
       pos = 0;
       toconfig.infoProperty.length (desc.infoProperty ().size ());
-      for ( auto infoProp (desc.infoProperty ().begin ()); infoProp != desc.infoProperty ().end (); infoProp++)
+      for (auto infoProp (desc.infoProperty ().begin ()); infoProp != desc.infoProperty ().end (); infoProp++)
         {
           Property_Handler::handle_property (*infoProp, toconfig.infoProperty[pos]);
         }
@@ -86,7 +86,7 @@ namespace DAnCE
 
     ComponentInterfaceDescription
     CCD_Handler::component_interface_descr (
-                                            const ::Deployment::ComponentInterfaceDescription&  src)
+                                            ::Deployment::ComponentInterfaceDescription const&  src)
     {
       DANCE_TRACE("CCD_Handler::component_interface_descr - reverse");
       ComponentInterfaceDescription cid;

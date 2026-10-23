@@ -15,7 +15,7 @@ namespace DAnCE
     IDREF_Base<CORBA::ULong> IDD_Handler::IDREF;
 
     void
-    IDD_Handler::instance_deployment_descrs (const deploymentPlan &src,
+    IDD_Handler::instance_deployment_descrs (deploymentPlan const& src,
                                              Deployment::InstanceDeploymentDescriptions& dest)
     {
       DANCE_TRACE("IDD_Handler::instance_deployment_descrs");
@@ -32,7 +32,7 @@ namespace DAnCE
 
     void
     IDD_Handler::instance_deployment_descr (
-                                            const InstanceDeploymentDescription& src,
+                                            InstanceDeploymentDescription const& src,
                                             Deployment::InstanceDeploymentDescription& dest,
                                             CORBA::ULong pos)
     {
@@ -64,7 +64,7 @@ namespace DAnCE
           if (!implementationRef)
             throw Config_Error ("", "Instance deployment has no implementation IDREF");
 
-          MDD_Handler::IDREF.find_ref ( implementationRef->id ().c_str (), tmp);
+          MDD_Handler::IDREF.find_ref (implementationRef->id ().c_str (), tmp);
 
           dest.implementationRef = tmp;
 
@@ -105,7 +105,7 @@ namespace DAnCE
 
     InstanceDeploymentDescription
     IDD_Handler::instance_deployment_descr (
-                     const Deployment::InstanceDeploymentDescription& src)
+                     Deployment::InstanceDeploymentDescription const& src)
     {
       DANCE_TRACE("IDD_Handler::instance_deployment_descr - reverse");
       //Get all the string/IDREFs
@@ -114,7 +114,7 @@ namespace DAnCE
       XMLSchema::string<char> source ("");
       if (src.source.length () > 0)
         {
-          XMLSchema::string<char> source_detail ( src.source[0]);
+          XMLSchema::string<char> source_detail (src.source[0]);
           source = source_detail;
         }
       std::string temp;
@@ -144,7 +144,7 @@ namespace DAnCE
 
       //Check if there is a deployedSharedResource, if so store it
       if(src.deployedSharedResource.length() != 0)
-        idd. deployedSharedResource( IRDD_Handler::instance_resource_deployment_descr( src.deployedSharedResource[0]));
+        idd. deployedSharedResource(IRDD_Handler::instance_resource_deployment_descr(src.deployedSharedResource[0]));
 
       // Generate a UUID to use for the IDREF.
       ACE_Utils::UUID uuid;

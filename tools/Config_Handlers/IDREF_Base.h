@@ -52,10 +52,10 @@ IDREF_Base (T start_point)
 void bind_next_available (std::string &id);
 
 /// Get the index associated with an IDREF
- void find_ref (const std::string& id, T& value);
+ void find_ref (std::string const& id, T& value);
 
 /// get the IDREF associated with an index
- void find_ref (const T &value, std::string& id);
+ void find_ref (T const& value, std::string& id);
 
 /// Unbind all IDREFS
 bool

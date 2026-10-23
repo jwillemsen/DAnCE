@@ -49,8 +49,8 @@ namespace DAnCE
       /// This method maps the values from the XSC object
       /// <DAnCE::Config_Handlers::Property> to the CORBA IDL type
       /// <Deployment::Property>.
-      static void handle_property (const Property& desc, ::Deployment::Property& toconfig);
-      static Property get_property (const ::Deployment::Property& src);
+      static void handle_property (Property const& desc, ::Deployment::Property& toconfig);
+      static Property get_property (::Deployment::Property const& src);
     };
 
     }

@@ -8,7 +8,7 @@ namespace DAnCE
   {
     void
     CEPE_Handler::external_port_endpoints (
-                                           const PlanConnectionDescription &src,
+                                           PlanConnectionDescription const& src,
                                            ::Deployment::ComponentExternalPortEndpoints &dest)
     {
       DANCE_TRACE("CEOE_Handler::external_port_endpoints");
@@ -24,7 +24,7 @@ namespace DAnCE
 
     void
     CEPE_Handler::handle_external_port_endpoint (
-                                          const ComponentExternalPortEndpoint &src,
+                                          ComponentExternalPortEndpoint const& src,
                                           ::Deployment::ComponentExternalPortEndpoint &dest)
     {
       DANCE_TRACE("CEOE_Handler::external_port_endpoint");
@@ -33,7 +33,7 @@ namespace DAnCE
 
     ComponentExternalPortEndpoint
     CEPE_Handler::external_port_endpoint (
-                                          const ::Deployment::ComponentExternalPortEndpoint &src)
+                                          ::Deployment::ComponentExternalPortEndpoint const& src)
     {
       DANCE_TRACE("CEOE_Handler::external_port_endpoint - reverse");
       //MAJO Unfinished

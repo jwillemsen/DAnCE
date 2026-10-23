@@ -51,10 +51,10 @@ ID_Handler (void);
 virtual ~ID_Handler (void);
 
 static void get_ImplementationDependency (
-const ImplementationDependency& desc,
+ImplementationDependency const& desc,
 Deployment::ImplementationDependency& toconfig);
 
-static ImplementationDependency impl_dependency ( const ::Deployment::ImplementationDependency& src);
+static ImplementationDependency impl_dependency (::Deployment::ImplementationDependency const& src);
 };
 
 }

@@ -22,11 +22,11 @@ namespace DAnCE
       DANCE_TRACE("DynAny_Handler::constructor");
 
       int argc = 0;
-      char **argv = 0;
+      char **argv {};
 
       orb_ = CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var temp = orb_->resolve_initial_references ( "DynAnyFactory");
+      CORBA::Object_var temp = orb_->resolve_initial_references ("DynAnyFactory");
       daf_ = DynamicAny::DynAnyFactory::_narrow (temp.in ());
 
       if (CORBA::is_nil (daf_.in ()))
@@ -56,8 +56,8 @@ namespace DAnCE
     }
 
     DynamicAny::DynAny_ptr
-    DynAny_Handler::extract_into_dynany (const DataType &type,
-                                         const DataValue &value,
+    DynAny_Handler::extract_into_dynany (DataType const& type,
+                                         DataValue const& value,
                                          CORBA::TypeCode_ptr req_tc)
     {
       DANCE_TRACE("DynAny_Handler::extract_into_dynany");
@@ -341,7 +341,7 @@ namespace DAnCE
       return retval._retn ();
     }
 
-    Any DynAny_Handler::extract_from_dynany (const CORBA::Any &any)
+    Any DynAny_Handler::extract_from_dynany (CORBA::Any const& any)
     {
       DANCE_TRACE("DynAny_Handler::extract_from_dynany");
 
@@ -352,7 +352,7 @@ namespace DAnCE
       return retval;
     }
 
-    CORBA::TypeCode_ptr DynAny_Handler::create_typecode (const DataType &type)
+    CORBA::TypeCode_ptr DynAny_Handler::create_typecode (DataType const& type)
     {
       DANCE_TRACE("DynAny_Handler::create_typecode");
 
@@ -464,7 +464,7 @@ namespace DAnCE
     {
       DANCE_TRACE("DynAny_Handler::get_typecode");
 
-      const TypecodeMap::const_iterator pos = this->typecode_map_.find (typeID);
+      TypecodeMap::const_iterator const pos = this->typecode_map_.find (typeID);
       return pos == this->typecode_map_.end () ? 0 : pos->second;
     }
   }

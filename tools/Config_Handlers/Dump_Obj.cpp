@@ -8,7 +8,7 @@ namespace Deployment
   std::string Dump_Obj::indent_ = "-";
   std::map<std::string, CORBA::Any> Dump_Obj::desc_map_;
 
-  Dump_Obj::Dump_Obj(const char* caption)
+  Dump_Obj::Dump_Obj(char const* caption)
     : desc_()
   {
     DANCE_TRACE ("Dump_Obj::constructor");
@@ -17,7 +17,7 @@ namespace Deployment
     indent_.append("  ");
   }
 
-  Dump_Obj::Dump_Obj (const char* caption, CORBA::Any &val)
+  Dump_Obj::Dump_Obj (char const* caption, CORBA::Any &val)
     : desc_(caption)
   {
     DANCE_TRACE ("Dump_Obj::constructor");

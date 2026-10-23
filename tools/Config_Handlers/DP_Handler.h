@@ -44,7 +44,7 @@ namespace DAnCE
 
           /// Use this constructor if you want to use
           /// the IDL->XSC mapping
-          DP_Handler (const ::Deployment::DeploymentPlan &plan);
+          DP_Handler (::Deployment::DeploymentPlan const& plan);
 
           ~DP_Handler (void)
             throw ();
@@ -66,7 +66,7 @@ namespace DAnCE
 
           bool resolve_plan (deploymentPlan &dp);
 
-          bool build_xsc (const ::Deployment::DeploymentPlan &plan);
+          bool build_xsc (::Deployment::DeploymentPlan const& plan);
 
         private:
           std::unique_ptr<deploymentPlan> xsc_dp_;

@@ -16,8 +16,8 @@ namespace DAnCE
   namespace Config_Handlers
   {
     DynamicAny::DynAny_ptr
-    DynArray_Handler::extract_into_dynany (const DataType &type,
-                                           const DataValue &value,
+    DynArray_Handler::extract_into_dynany (DataType const& type,
+                                           DataValue const& value,
                                            CORBA::TypeCode_ptr req_tc)
     {
       DANCE_TRACE("DynArray_Handler::extract_into_dynany");
@@ -82,7 +82,7 @@ namespace DAnCE
               retval->set_elements_as_dyn_any (dynseq);
               return retval._retn ();
             }
-          catch (const DynamicAny::DynAny::InvalidValue&)
+          catch (DynamicAny::DynAny::InvalidValue const&)
             {
               DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
                 (LM_ERROR,
@@ -119,14 +119,14 @@ namespace DAnCE
       return retval._retn ();
     }
 
-    CORBA::TypeCode_ptr DynArray_Handler::create_typecode (const DataType &type)
+    CORBA::TypeCode_ptr DynArray_Handler::create_typecode (DataType const& type)
     {
       DANCE_TRACE("DynArray_Handler::create_typecode");
 
       ::DAnCE::Config_Handlers::ArrayType const* array_if_set_ptr = type.array_if_set ();
       if (!array_if_set_ptr)
         {
-          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ( "ERROR: Array type description required")));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("ERROR: Array type description required")));
           throw Config_Error ("", "Expected <array> element, incorrect tc_kind.");
         }
 

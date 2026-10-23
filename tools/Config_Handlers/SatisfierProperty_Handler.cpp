@@ -23,7 +23,7 @@ namespace DAnCE
 
     void
     SatisfierProperty_Handler::handle_sat_property (
-                                                 const SatisfierProperty& desc,
+                                                 SatisfierProperty const& desc,
                                                  Deployment::SatisfierProperty& toconfig)
     {
       DANCE_TRACE("SatisfierProperty_Handler::get_sat_property");
@@ -75,13 +75,13 @@ namespace DAnCE
         }
     }
 
-    SatisfierProperty SatisfierProperty_Handler::get_sat_property (const Deployment::SatisfierProperty& src)
+    SatisfierProperty SatisfierProperty_Handler::get_sat_property (Deployment::SatisfierProperty const& src)
     {
       DANCE_TRACE("SatisfierProperty_Handler::get_sat_property - reverse");
 
       XMLSchema::string<char> name (src.name);
 
-      const SatisfierPropertyKind *spk = 0;
+      SatisfierPropertyKind const* spk {};
 
       switch (src.kind)
         {

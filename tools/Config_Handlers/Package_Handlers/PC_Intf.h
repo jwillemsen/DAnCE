@@ -37,13 +37,13 @@ namespace DAnCE
     class Config_Handlers_Export STD_PC_Intf
     {
     public:
-      STD_PC_Intf (const char *file);
+      STD_PC_Intf (char const* file);
 
       ::Deployment::PackageConfiguration const *get_PC (void) const;
       ::Deployment::PackageConfiguration *get_PC (void);
 
     protected:
-      bool prepare_PC (const char *file);
+      bool prepare_PC (char const* file);
 
     private:
       std::unique_ptr<::Deployment::PackageConfiguration> idl_pc_;

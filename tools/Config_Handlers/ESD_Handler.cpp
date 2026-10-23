@@ -9,7 +9,7 @@ namespace DAnCE
   {
     void
     ESD_Handler::es_deployment_descrs (
-        const DeploymentPlan &src,
+        DeploymentPlan const& src,
         Deployment::EventServiceDeploymentDescriptions& dest)
     {
       DANCE_TRACE("ESD_Handler::instance_deployment_descrs");
@@ -26,7 +26,7 @@ namespace DAnCE
 
     void
     ESD_Handler::es_deployment_descr (
-        const EventServiceDeploymentDescription& src,
+        EventServiceDeploymentDescription const& src,
         Deployment::EventServiceDeploymentDescription& dest,
         CORBA::ULong pos)
     {
@@ -70,7 +70,7 @@ namespace DAnCE
 
     EventServiceDeploymentDescription
     ESD_Handler::es_deployment_descr (
-        const Deployment::EventServiceDeploymentDescription& src)
+        Deployment::EventServiceDeploymentDescription const& src)
     {
       DANCE_TRACE("ESD_Handler::es_deployment_descr - reverse");
       //Get all the string
@@ -79,7 +79,7 @@ namespace DAnCE
       XMLSchema::string<char> svc_cfg_file ((src.svc_cfg_file));
 
       // Instantiate the IDD
-      EventServiceDeploymentDescription esd ( name, node, EventServiceType::RTEC_l, svc_cfg_file);
+      EventServiceDeploymentDescription esd (name, node, EventServiceType::RTEC_l, svc_cfg_file);
 
       switch (src.EventServiceType)
       {

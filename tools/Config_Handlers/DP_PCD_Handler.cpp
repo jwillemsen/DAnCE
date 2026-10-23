@@ -14,7 +14,7 @@ namespace DAnCE
   {
     void
     DP_PCD_Handler::plan_connection_descrs (
-        const DeploymentPlan &src,
+        DeploymentPlan const& src,
         Deployment::PlanConnectionDescriptions& dest)
     {
       DANCE_TRACE("DP_PCD_Handler::plan_connection_descrs");
@@ -28,7 +28,7 @@ namespace DAnCE
         }
     }
 
-    PlanConnectionDescription DP_PCD_Handler::plan_connection_descr (const Deployment::PlanConnectionDescription &src)
+    PlanConnectionDescription DP_PCD_Handler::plan_connection_descr (Deployment::PlanConnectionDescription const& src)
     {
       DANCE_TRACE("DP_PCD_Handler::plan_connection_descr");
       PlanConnectionDescription pcd = PCD_Handler::get_PlanConnectionDescription(src);
@@ -37,7 +37,7 @@ namespace DAnCE
 
     void
     DP_PCD_Handler::plan_connection_descr (
-        const PlanConnectionDescription &src,
+        PlanConnectionDescription const& src,
         Deployment::PlanConnectionDescription &dest)
     {
       DANCE_TRACE("DP_PCD_Handler::plan_connection_descr - reverse");
@@ -62,7 +62,7 @@ namespace DAnCE
         {
           CRDD_Handler crddhandler;
 
-          toconfig.deployedResource.length ( toconfig.deployedResource.length () + 1);
+          toconfig.deployedResource.length (toconfig.deployedResource.length () + 1);
 
           crddhandler.get_ConnectionResourceDeploymentDescription (
             toconfig.deployedResource[toconfig.deployedResource.length () - 1],
@@ -78,7 +78,7 @@ namespace DAnCE
 
           //Increase the sequence length and delgate
           //the Requirement to the Req_Handler.
-          toconfig.deployRequirement.length ( toconfig.deployRequirement.length () + 1);
+          toconfig.deployRequirement.length (toconfig.deployRequirement.length () + 1);
           reqhandler.get_Requirement (
             toconfig.deployRequirement[toconfig.deployRequirement.length () - 1],
             desc.deployRequirement ());

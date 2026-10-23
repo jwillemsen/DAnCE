@@ -18,7 +18,7 @@ namespace DAnCE
     }
 
     void
-    IRDD_Handler::handle_irdd (const InstanceResourceDeploymentDescription& desc,
+    IRDD_Handler::handle_irdd (InstanceResourceDeploymentDescription const& desc,
                                Deployment::InstanceResourceDeploymentDescription& toconfig)
     {
       DANCE_TRACE("IRDD_Handler::instance_resource_deployment_descr");
@@ -61,7 +61,7 @@ namespace DAnCE
     }
 
     InstanceResourceDeploymentDescription
-    IRDD_Handler::instance_resource_deployment_descr (const Deployment::InstanceResourceDeploymentDescription& src)
+    IRDD_Handler::instance_resource_deployment_descr (Deployment::InstanceResourceDeploymentDescription const& src)
     {
       DANCE_TRACE("IRDD_Handler::instance_resource_deployment_descr - reverse");
 

@@ -8,7 +8,7 @@ namespace DAnCE
 {
   namespace Config_Handlers
   {
-    void PL_Handler::get_PlanLocality (const PlanLocality &desc, Deployment::PlanLocality &toconfig)
+    void PL_Handler::get_PlanLocality (PlanLocality const& desc, Deployment::PlanLocality &toconfig)
     {
       DANCE_TRACE ("PL_Handler::get_PlanLocality");
 

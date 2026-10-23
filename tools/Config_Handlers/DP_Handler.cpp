@@ -27,7 +27,7 @@ namespace DAnCE
         throw;
     }
 
-    DP_Handler::DP_Handler (const ::Deployment::DeploymentPlan &plan)
+    DP_Handler::DP_Handler (::Deployment::DeploymentPlan const& plan)
       : xsc_dp_ (std::make_unique<deploymentPlan> ()),
         idl_dp_ {},
         retval_ (0)
@@ -91,14 +91,14 @@ namespace DAnCE
       ::XMLSchema::string<char> const* label_if_set_ptr = xsc_dp.label_if_set ();
       if (label_if_set_ptr)
         {
-          this->idl_dp_->label = CORBA::string_dup ( label_if_set_ptr->c_str ());
+          this->idl_dp_->label = CORBA::string_dup (label_if_set_ptr->c_str ());
         }
 
       // Read in the UUID, if present
       ::XMLSchema::string<char> const* UUID_if_set_ptr = xsc_dp.UUID_if_set ();
       if (UUID_if_set_ptr)
         {
-          this->idl_dp_->UUID = CORBA::string_dup ( UUID_if_set_ptr->c_str ());
+          this->idl_dp_->UUID = CORBA::string_dup (UUID_if_set_ptr->c_str ());
         }
 
       // Similar thing for dependsOn
@@ -124,7 +124,7 @@ namespace DAnCE
       ::DAnCE::Config_Handlers::ComponentInterfaceDescription const* realizes_if_set_ptr = xsc_dp.realizes_if_set ();
       if (realizes_if_set_ptr)
         {
-          CCD_Handler::component_interface_descr ( *realizes_if_set_ptr, this->idl_dp_->realizes);
+          CCD_Handler::component_interface_descr (*realizes_if_set_ptr, this->idl_dp_->realizes);
         }
 
       ADD_Handler::artifact_deployment_descrs (xsc_dp, this->idl_dp_->artifact);
@@ -138,7 +138,7 @@ namespace DAnCE
       for (auto const& source_item : xsc_dp.connection ())
         PCD_Handler::handle_PlanConnectionDescription (source_item, this->idl_dp_->connection[connection_index++]);
 
-      this->idl_dp_->localityConstraint.length ( xsc_dp.localityConstraint ().size ());
+      this->idl_dp_->localityConstraint.length (xsc_dp.localityConstraint ().size ());
 
       CORBA::ULong localityConstraint_index {};
       for (auto const& source_item : xsc_dp.localityConstraint ())
@@ -150,7 +150,7 @@ namespace DAnCE
       return true;
     }
 
-    bool DP_Handler::build_xsc (const ::Deployment::DeploymentPlan &plan)
+    bool DP_Handler::build_xsc (::Deployment::DeploymentPlan const& plan)
     {
       DANCE_TRACE ("DP_Handler::build_xsc");
 
@@ -167,14 +167,14 @@ namespace DAnCE
       // Read in the label, if present, since minoccurs = 0
       if (plan.label != 0)
         {
-          XMLSchema::string<char> i ( plan.label);
+          XMLSchema::string<char> i (plan.label);
           this->xsc_dp_->label(i);
         }
 
       // Read in the UUID, if present
       if (plan.UUID != 0)
         {
-          XMLSchema::string<char> j ( plan.UUID);
+          XMLSchema::string<char> j (plan.UUID);
           this->xsc_dp_->UUID(j);
         }
 

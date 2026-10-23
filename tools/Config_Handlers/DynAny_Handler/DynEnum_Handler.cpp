@@ -17,8 +17,8 @@ namespace DAnCE
   namespace Config_Handlers
   {
     DynamicAny::DynAny_ptr
-    DynEnum_Handler::extract_into_dynany (const DataType &type,
-                                          const DataValue &value,
+    DynEnum_Handler::extract_into_dynany (DataType const& type,
+                                          DataValue const& value,
                                           CORBA::TypeCode_ptr req_tc)
     {
       DANCE_TRACE("DynEnum_Handler::extract_into_dynany");
@@ -42,13 +42,13 @@ namespace DAnCE
 
           // Make the actual DynEnum
           DynamicAny::DynAny_var temp = DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
-          DynamicAny::DynEnum_var retval = DynamicAny::DynEnum::_narrow ( temp.in ());
+          DynamicAny::DynEnum_var retval = DynamicAny::DynEnum::_narrow (temp.in ());
 
           retval->set_as_string (enum_values.front ().c_str ());
 
           return retval._retn ();
         }
-      catch (const DynamicAny::DynAny::InvalidValue&)
+      catch (DynamicAny::DynAny::InvalidValue const&)
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR,
@@ -71,7 +71,7 @@ namespace DAnCE
         }
     }
 
-    CORBA::TypeCode_ptr DynEnum_Handler::create_typecode (const DataType &type)
+    CORBA::TypeCode_ptr DynEnum_Handler::create_typecode (DataType const& type)
     {
       DANCE_TRACE("DynEnum_Handler::create_typecode");
 
@@ -89,7 +89,7 @@ namespace DAnCE
 
       for (auto i = enum_type->member ().begin (); i != enum_type->member ().end (); ++i)
         {
-          members[index++] = CORBA::string_dup ( i->c_str ());
+          members[index++] = CORBA::string_dup (i->c_str ());
         }
 
       CORBA::TypeCode_var tc =

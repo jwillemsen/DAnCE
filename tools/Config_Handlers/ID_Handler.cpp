@@ -15,7 +15,7 @@ namespace DAnCE
     }
 
     void
-    ID_Handler::get_ImplementationDependency (const ImplementationDependency& desc,
+    ID_Handler::get_ImplementationDependency (ImplementationDependency const& desc,
                                               Deployment::ImplementationDependency& toconfig)
     {
 
@@ -24,7 +24,7 @@ namespace DAnCE
       toconfig.requiredType= CORBA::string_dup (desc.requiredType ().c_str ());
     }
 
-    ImplementationDependency ID_Handler::impl_dependency (const ::Deployment::ImplementationDependency& src)
+    ImplementationDependency ID_Handler::impl_dependency (::Deployment::ImplementationDependency const& src)
     {
       DANCE_TRACE("ID_Handler::get_ImplementationDependency - reverse");
       XMLSchema::string<char> reqtype (src.requiredType);

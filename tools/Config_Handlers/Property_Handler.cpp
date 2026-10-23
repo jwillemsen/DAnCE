@@ -16,7 +16,7 @@ namespace DAnCE
     {
     }
 
-    void Property_Handler::handle_property (const Property& desc, Deployment::Property& toconfig)
+    void Property_Handler::handle_property (Property const& desc, Deployment::Property& toconfig)
     {
       DANCE_TRACE("Property_Handler::get_property");
 
@@ -33,7 +33,7 @@ namespace DAnCE
         }
     }
 
-    Property Property_Handler::get_property (const Deployment::Property& src)
+    Property Property_Handler::get_property (Deployment::Property const& src)
     {
       DANCE_TRACE("Property_Handler::get_property - reverse");
 

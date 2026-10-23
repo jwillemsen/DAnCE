@@ -45,12 +45,12 @@ namespace DAnCE
     IRDD_Handler (void);
     virtual ~IRDD_Handler (void);
 
-    static void handle_irdd (const InstanceResourceDeploymentDescription& desc,
+    static void handle_irdd (InstanceResourceDeploymentDescription const& desc,
                             Deployment::InstanceResourceDeploymentDescription& toconfig)
       /*throw (Config_Error)*/;
 
     static InstanceResourceDeploymentDescription
-      instance_resource_deployment_descr (const Deployment::InstanceResourceDeploymentDescription& src)
+      instance_resource_deployment_descr (Deployment::InstanceResourceDeploymentDescription const& src)
       /*throw (Config_Error)*/;
       };
 

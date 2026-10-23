@@ -21,7 +21,7 @@ namespace DAnCE
   {
     namespace Packaging
     {
-      void PCD_Handler::package_config (const ACE_TCHAR *uri, ::Deployment::PackageConfiguration &toconfig)
+      void PCD_Handler::package_config (ACE_TCHAR const* uri, ::Deployment::PackageConfiguration &toconfig)
       {
         XML::XML_Helper<> xml_helper;
         XERCES_CPP_NAMESPACE::DOMDocument *dom = xml_helper.create_dom (uri);
@@ -55,7 +55,7 @@ namespace DAnCE
           }
         else
           {
-            std::string error ( "Invalid file passed to package_config, has base ");
+            std::string error ("Invalid file passed to package_config, has base ");
 
             char *croot = xercesc::XMLString::transcode (root);
 
@@ -67,12 +67,12 @@ namespace DAnCE
           }
       }
 
-      void PCD_Handler::package_config (const PackageConfiguration &desc, ::Deployment::PackageConfiguration &toconfig)
+      void PCD_Handler::package_config (PackageConfiguration const& desc, ::Deployment::PackageConfiguration &toconfig)
       {
         DANCE_TRACE ("PCD_Handler::package_config");
         std::unique_ptr<PackageConfiguration> xsc_pcd;
 
-        const PackageConfiguration *pcd;
+        PackageConfiguration const* pcd;
 
         ::XMLSchema::string<char> const* contentLocation_if_set_ptr = desc.contentLocation_if_set ();
         if (contentLocation_if_set_ptr)
@@ -114,7 +114,7 @@ namespace DAnCE
 
       }
 
-      PackageConfiguration PCD_Handler::package_config (const Deployment::PackageConfiguration& src)
+      PackageConfiguration PCD_Handler::package_config (Deployment::PackageConfiguration const& src)
       {
         DANCE_TRACE ("PCD_Handler::package_config - reverse");
         PackageConfiguration pcd = PackageConfiguration ();
@@ -144,7 +144,7 @@ namespace DAnCE
       PackageConfiguration * PCD_Handler::resolve_package_config (std::string_view uri)
       {
         XML::XML_Helper<> xml_helper;
-        const std::string uri_string (uri);
+        std::string const uri_string (uri);
         xercesc::DOMDocument* dom = xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri_string.c_str()));
 
         if (!dom)

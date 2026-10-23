@@ -9,13 +9,13 @@ namespace DAnCE
 {
   namespace Config_Handlers
   {
-    STD_PC_Intf::STD_PC_Intf (const char *file)
+    STD_PC_Intf::STD_PC_Intf (char const* file)
     {
       if (!this->prepare_PC (file))
         throw;
     }
 
-    bool STD_PC_Intf::prepare_PC (const char *file)
+    bool STD_PC_Intf::prepare_PC (char const* file)
     {
       DANCE_TRACE("STD_PC_Intf::prepare_PC");
 

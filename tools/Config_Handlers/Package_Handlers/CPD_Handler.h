@@ -48,10 +48,10 @@ namespace DAnCE
         /// Maps the values from the XSC object
         /// <ComponentPackageDescription> to the CORBA IDL type
         /// <Deployment::ComponentPackageDescription>.
-        static void handle_component_package_descr (const ComponentPackageDescription &desc,
+        static void handle_component_package_descr (ComponentPackageDescription const& desc,
                                              ::Deployment::ComponentPackageDescription &toconfig);
 
-        static ComponentPackageDescription component_package_descr (const Deployment::ComponentPackageDescription& src);
+        static ComponentPackageDescription component_package_descr (Deployment::ComponentPackageDescription const& src);
       private:
         static ComponentPackageDescription * resolve_cpd (std::string_view uri);
 

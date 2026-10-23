@@ -39,11 +39,11 @@ namespace DAnCE
       class Packaging_Handlers_Export CAD_Handler
       {
       public:
-        static void component_assem_descr (const ComponentAssemblyDescription &desc,
+        static void component_assem_descr (ComponentAssemblyDescription const& desc,
                                            ::Deployment::ComponentAssemblyDescription &toconfig);
 
         static ComponentAssemblyDescription
-        component_assem_descr (const ::Deployment::ComponentAssemblyDescription &src);
+        component_assem_descr (::Deployment::ComponentAssemblyDescription const& src);
 
       private:
         static ComponentAssemblyDescription * resolve_cad (std::string_view uri);

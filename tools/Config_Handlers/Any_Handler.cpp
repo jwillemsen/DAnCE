@@ -24,7 +24,7 @@ namespace DAnCE
       DANCE_TRACE("Any_Handler::destructor");
     }
 
-    void Any_Handler::extract_into_any (const Any& desc, CORBA::Any& toconfig)
+    void Any_Handler::extract_into_any (Any const& desc, CORBA::Any& toconfig)
     {
       DANCE_TRACE("Any_Handler::extract_into_any");
       try
@@ -35,7 +35,7 @@ namespace DAnCE
 
           dyn->destroy ();
         }
-      catch (const CORBA::Exception &ex)
+      catch (CORBA::Exception const& ex)
         {
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, DLINFO
                            ACE_TEXT ("Any_Handler::extract_into_any -")
@@ -44,7 +44,7 @@ namespace DAnCE
                            ex._info ().c_str ()));
           throw Config_Error ("", "CORBA Exception while extracting into dynany");
         }
-      catch (const Config_Error &ex)
+      catch (Config_Error const& ex)
         {
           throw ex;
         }
@@ -54,7 +54,7 @@ namespace DAnCE
         }
     }
 
-    Any Any_Handler::get_any (const ::CORBA::Any& src)
+    Any Any_Handler::get_any (::CORBA::Any const& src)
     {
       DANCE_TRACE("Any_Handler::extract_into_any - reverse");
 

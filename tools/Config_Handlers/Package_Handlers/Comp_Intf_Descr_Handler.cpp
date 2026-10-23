@@ -18,7 +18,7 @@ namespace DAnCE
     {
         struct Comp_Prop_Handler
         {
-          static void handle_cpd (const ComponentPropertyDescription &desc,
+          static void handle_cpd (ComponentPropertyDescription const& desc,
                                ::Deployment::ComponentPropertyDescription &toconfig)
           {
             DANCE_TRACE ("Comp_Prop_Handler::get_cpd");
@@ -28,7 +28,7 @@ namespace DAnCE
           }
 
           static ComponentPropertyDescription
-          get_cpd (const ::Deployment::ComponentPropertyDescription &src)
+          get_cpd (::Deployment::ComponentPropertyDescription const& src)
           {
             DANCE_TRACE ("Comp_Prop_Handler::get_cpd - reverse");
 
@@ -40,12 +40,12 @@ namespace DAnCE
 
       void
       Comp_Intf_Descr_Handler::comp_intf_descr (
-                                                const ComponentInterfaceDescription &desc,
+                                                ComponentInterfaceDescription const& desc,
                                                 ::Deployment::ComponentInterfaceDescription &toconfig)
       {
         DANCE_TRACE ("Comp_Intf_Descr_Handler::comp_intf_descr");
 
-        const ComponentInterfaceDescription *cid = 0;
+        ComponentInterfaceDescription const* cid {};
         std::unique_ptr<ComponentInterfaceDescription> safe_cid;
 
         ::XMLSchema::string<char> const* href_if_set_ptr = desc.href_if_set ();
@@ -104,7 +104,7 @@ namespace DAnCE
 
       ComponentInterfaceDescription
       Comp_Intf_Descr_Handler::comp_intf_descr (
-                                                const ::Deployment::ComponentInterfaceDescription &src)
+                                                ::Deployment::ComponentInterfaceDescription const& src)
       {
         DANCE_TRACE ("Comp_Intf_Descr_Handler::comp_intf_descr - reverse");
         ComponentInterfaceDescription retval;
@@ -120,7 +120,7 @@ namespace DAnCE
           retval.add_idlFile (src.idlFile[i].in ());
 
         for (CORBA::ULong i = 0; i < src.configProperty.length (); ++i)
-          retval.add_configProperty ( Property_Handler::get_property (src.configProperty[i]));
+          retval.add_configProperty (Property_Handler::get_property (src.configProperty[i]));
 
         for (CORBA::ULong i = 0; i < src.port.length (); ++i)
           retval.add_port
@@ -130,7 +130,7 @@ namespace DAnCE
           retval.add_property (Comp_Prop_Handler::get_cpd (src.property[i]));
 
         for (CORBA::ULong i = 0; i < src.infoProperty.length (); ++i)
-          retval.add_infoProperty ( Property_Handler::get_property (src.infoProperty[i]));
+          retval.add_infoProperty (Property_Handler::get_property (src.infoProperty[i]));
 #endif
         return retval;
       }
@@ -140,7 +140,7 @@ namespace DAnCE
         DANCE_TRACE ("Comp_Intf_Descr_Handler::resolve_cid");
 
         XML::XML_Helper<> xml_helper;
-        const std::string uri_string (uri);
+        std::string const uri_string (uri);
         xercesc::DOMDocument *dom = xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri_string.c_str()));
 
         if (!dom)

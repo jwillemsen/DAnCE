@@ -14,7 +14,7 @@ namespace DAnCE
 {
   namespace Config_Handlers
   {
-    void create_type_map (const DataType &type,
+    void create_type_map (DataType const& type,
                           std::map <std::string,
                           DataType const *> &dt_map)
     {
@@ -31,8 +31,8 @@ namespace DAnCE
     }
 
     DynamicAny::DynAny_ptr
-    DynStruct_Handler::extract_into_dynany (const DataType &type,
-                                            const DataValue &value,
+    DynStruct_Handler::extract_into_dynany (DataType const& type,
+                                            DataValue const& value,
                                             CORBA::TypeCode_ptr req_tc)
     {
       DANCE_TRACE("DynStruct_Handler::extract_into_dynany");
@@ -83,7 +83,7 @@ namespace DAnCE
         }
     }
 
-    CORBA::TypeCode_ptr DynStruct_Handler::create_typecode (const DataType &type)
+    CORBA::TypeCode_ptr DynStruct_Handler::create_typecode (DataType const& type)
     {
       DANCE_TRACE("DynStruct_Handler::create_typecode");
 
@@ -94,8 +94,8 @@ namespace DAnCE
           throw Config_Error ("", ACE_TEXT ("Expected struct type information, tc_kind may be" "incorrect\n"));
         }
 
-      const std::string rid (struct_type->typeId ());
-      const std::string name (struct_type->name ());
+      std::string const rid (struct_type->typeId ());
+      std::string const name (struct_type->name ());
 
       CORBA::StructMemberSeq members;
       members.length (struct_type->member ().size ());
@@ -108,7 +108,7 @@ namespace DAnCE
           ++pos;
         }
 
-      CORBA::TypeCode_var tc = DYNANY_HANDLER->orb ()->create_struct_tc ( rid.c_str (), name.c_str (), members);
+      CORBA::TypeCode_var tc = DYNANY_HANDLER->orb ()->create_struct_tc (rid.c_str (), name.c_str (), members);
 
       DYNANY_HANDLER->register_typecode (struct_type->typeId (), tc.in ());
 

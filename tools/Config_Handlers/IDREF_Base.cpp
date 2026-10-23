@@ -44,7 +44,7 @@ namespace DAnCE
       }
 
       template <typename T>
-      void IDREF_Base<T>::find_ref (const std::string& id, T& val)
+      void IDREF_Base<T>::find_ref (std::string const& id, T& val)
       {
         DANCE_TRACE("IDREF_Base<T>::find_ref(C_String, T)");
 
@@ -55,7 +55,7 @@ namespace DAnCE
       }
 
       template <typename T>
-      void IDREF_Base<T>::find_ref (const T& value, std::string& id)
+      void IDREF_Base<T>::find_ref (T const& value, std::string& id)
       {
         DANCE_TRACE("IDREF_Base<T>::find_ref (T, CString)");
 

@@ -45,13 +45,13 @@ namespace DAnCE
         /// Maps the values from the XSC object
         /// <ComponentImplementationDescription> to the CORBA IDL type
         /// <Deployment::ComponentImplementationDescription>.
-        static void component_impl_descr (const ComponentImplementationDescription &desc,
+        static void component_impl_descr (ComponentImplementationDescription const& desc,
                                           ::Deployment::ComponentImplementationDescription &toconfig);
 
         static IDREF_Base<CORBA::ULong> IDREF;
 
         static ComponentImplementationDescription
-        component_impl_descr (const Deployment::ComponentImplementationDescription& src);
+        component_impl_descr (Deployment::ComponentImplementationDescription const& src);
 
       private:
 

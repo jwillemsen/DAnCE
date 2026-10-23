@@ -33,7 +33,7 @@ namespace DAnCE
     class Config_Handlers_Export XML_File_Intf
     {
     public:
-      XML_File_Intf (const ACE_TCHAR *file);
+      XML_File_Intf (ACE_TCHAR const* file);
 
       ~XML_File_Intf (void);
 
@@ -43,13 +43,13 @@ namespace DAnCE
       ::Deployment::Domain const *get_domain (void);
       ::Deployment::Domain *release_domain (void);
 
-      void add_search_path (const ACE_TCHAR *environment, const ACE_TCHAR *relpath);
+      void add_search_path (ACE_TCHAR const* environment, ACE_TCHAR const* relpath);
 
     protected:
 
-      bool read_process_plan (const ACE_TCHAR *file);
+      bool read_process_plan (ACE_TCHAR const* file);
 
-      bool read_process_domain (const ACE_TCHAR *file);
+      bool read_process_domain (ACE_TCHAR const* file);
 
     private:
       std::basic_string <ACE_TCHAR> file_;

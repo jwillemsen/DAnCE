@@ -9,7 +9,7 @@ namespace DAnCE
   {
     void
     PSPE_Handler::sub_component_port_endpoints (
-                                                const PlanConnectionDescription &src,
+                                                PlanConnectionDescription const& src,
                                                 ::Deployment::PlanSubcomponentPortEndpoints &dest)
     {
       DANCE_TRACE("PSPE_Handler::sub_component_port_endpoints");
@@ -26,7 +26,7 @@ namespace DAnCE
 
     void
     PSPE_Handler::sub_component_port_endpoint (
-      const PlanSubcomponentPortEndpoint &src,
+      PlanSubcomponentPortEndpoint const& src,
       ::Deployment::PlanSubcomponentPortEndpoint &dest)
     {
       DANCE_TRACE("PSPE_Handler::sub_component_port_endpoint");
@@ -48,7 +48,7 @@ namespace DAnCE
       if (!instanceRef)
         throw Config_Error ("", "Plan subcomponent port endpoint has no instance IDREF");
 
-      IDD_Handler::IDREF.find_ref ( instanceRef->id ().c_str (), tmp);
+      IDD_Handler::IDREF.find_ref (instanceRef->id ().c_str (), tmp);
 
       dest.instanceRef = tmp;
 
@@ -86,10 +86,10 @@ namespace DAnCE
 
     PlanSubcomponentPortEndpoint
     PSPE_Handler::sub_component_port_endpoint (
-      const Deployment::PlanSubcomponentPortEndpoint &src)
+      Deployment::PlanSubcomponentPortEndpoint const& src)
     { // @@MAJO
       DANCE_TRACE("PSPE_Handler::sub_component_port_endpoint - reverse");
-      XMLSchema::string<char> pname ( src.portName);
+      XMLSchema::string<char> pname (src.portName);
       XMLSchema::string<char> tval  ("true");
       XMLSchema::string<char> prov  ("");
       std::string id;

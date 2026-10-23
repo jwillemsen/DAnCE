@@ -11,7 +11,7 @@ namespace DAnCE
     IDREF_Base<CORBA::ULong> ADD_Handler::IDREF;
 
       void
-      ADD_Handler::artifact_deployment_descrs (const deploymentPlan &src,
+      ADD_Handler::artifact_deployment_descrs (deploymentPlan const& src,
                                                ::Deployment::ArtifactDeploymentDescriptions &dest)
       {
         DANCE_TRACE("ADD_Handler::atrifact_deployment_descrs");
@@ -28,7 +28,7 @@ namespace DAnCE
 
       void
       ADD_Handler::artifact_deployment_descr (
-                                              const ArtifactDeploymentDescription &src,
+                                              ArtifactDeploymentDescription const& src,
                                               Deployment::ArtifactDeploymentDescription &dest,
                                               CORBA::ULong pos)
       {
@@ -82,7 +82,7 @@ namespace DAnCE
         if (src.deployRequirement_if_set ())
           {
             Req_Handler handler;
-            add.deployRequirement.length ( add.deployRequirement.length () + 1);
+            add.deployRequirement.length (add.deployRequirement.length () + 1);
             handler.get_Requirement (
                                      add.deployRequirement[add.deployRequirement.length () - 1],
                                      src.deployRequirement ());
@@ -91,7 +91,7 @@ namespace DAnCE
         if (src.deployedResource_if_set ())
           {
             RDD_Handler handler;
-            add.deployedResource.length ( add.deployedResource.length () + 1);
+            add.deployedResource.length (add.deployedResource.length () + 1);
             handler.get_ResourceDeploymentDescription (
                                                        add.deployedResource[add.deployedResource.length () - 1],
                                                        src.deployedResource ());
@@ -101,7 +101,7 @@ namespace DAnCE
 
       ArtifactDeploymentDescription
       ADD_Handler::artifact_deployment_descr (
-                                              const Deployment::ArtifactDeploymentDescription &src)
+                                              Deployment::ArtifactDeploymentDescription const& src)
       {
         DANCE_TRACE("ADD_Handler::atrifact_deployment_descr - reverse");
         //Get the name and node and store them in the add

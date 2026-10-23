@@ -14,7 +14,7 @@ namespace DAnCE
 {
   namespace Config_Handlers
   {
-    XML_File_Intf::XML_File_Intf (const ACE_TCHAR *file)
+    XML_File_Intf::XML_File_Intf (ACE_TCHAR const* file)
       : file_ (file),
         idl_dp_ (nullptr)
     {
@@ -28,7 +28,7 @@ namespace DAnCE
       //      XML_Helper::XML_HELPER.terminate_parser ();
     }
 
-    bool XML_File_Intf::read_process_plan (const ACE_TCHAR *file)
+    bool XML_File_Intf::read_process_plan (ACE_TCHAR const* file)
     {
       DANCE_TRACE("XML_File_Intf::read_process_plan");
 
@@ -73,7 +73,7 @@ namespace DAnCE
           if (this->idl_dp_.get ())
             return true;
         }
-      catch (const CORBA::Exception &ex)
+      catch (CORBA::Exception const& ex)
         {
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
@@ -81,7 +81,7 @@ namespace DAnCE
             ex._info ().c_str ()));
           throw Config_Error (ACE_TEXT_ALWAYS_CHAR (this->file_.c_str ()), ex._info ().c_str ());
         }
-      catch (const Config_Error &ex)
+      catch (Config_Error const& ex)
         {
           throw ex;
         }
@@ -97,7 +97,7 @@ namespace DAnCE
       return false;
     }
 
-    bool XML_File_Intf::read_process_domain (const ACE_TCHAR *file)
+    bool XML_File_Intf::read_process_domain (ACE_TCHAR const* file)
     {
       DANCE_TRACE("XML_File_Intf::read_process_domain");
 
@@ -143,7 +143,7 @@ namespace DAnCE
           if (this->idl_domain_.get ())
             return true;
         }
-      catch (const CORBA::Exception &ex)
+      catch (CORBA::Exception const& ex)
         {
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
@@ -151,7 +151,7 @@ namespace DAnCE
                            ex._info ().c_str ()));
           throw Config_Error (ACE_TEXT_ALWAYS_CHAR (this->file_.c_str ()), ex._info ().c_str ());
         }
-      catch (const Config_Error &ex)
+      catch (Config_Error const& ex)
         {
           throw ex;
         }
@@ -207,7 +207,7 @@ namespace DAnCE
       return this->idl_domain_.release ();
     }
 
-    void XML_File_Intf::add_search_path (const ACE_TCHAR *environment, const ACE_TCHAR *relpath)
+    void XML_File_Intf::add_search_path (ACE_TCHAR const* environment, ACE_TCHAR const* relpath)
     {
       DANCE_TRACE("XML_File_Intf::add_search_path");
       xml_helper_.get_resolver ().get_resolver ().add_path (environment, relpath);

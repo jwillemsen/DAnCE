@@ -24,12 +24,12 @@ namespace DAnCE
     ///This method takes a <Deployment::PlanConnectionDescription>
     ///and maps the values from the passed in XSC
     ///PlanConnectionDescription to its members.
-    void PCD_Handler::handle_PlanConnectionDescription (const PlanConnectionDescription& desc,
+    void PCD_Handler::handle_PlanConnectionDescription (PlanConnectionDescription const& desc,
                                                      Deployment::PlanConnectionDescription& toconfig)
     {
       DANCE_TRACE("PCD_Handler::get_PlanConnectionDescription");
 
-      toconfig.name =( CORBA::string_dup (desc.name ().c_str ()));
+      toconfig.name =(CORBA::string_dup (desc.name ().c_str ()));
 
       //Source is mapped to a string in the schema and a sequence
       //in the IDL. We just assign the source string from the xml
@@ -70,7 +70,7 @@ namespace DAnCE
     }
 
     PlanConnectionDescription
-    PCD_Handler::get_PlanConnectionDescription (const Deployment::PlanConnectionDescription &src)
+    PCD_Handler::get_PlanConnectionDescription (Deployment::PlanConnectionDescription const& src)
     {
       DANCE_TRACE("PCD_Handler::get_PlanConnectionDescription");
 
