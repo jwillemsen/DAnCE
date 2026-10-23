@@ -44,4 +44,3 @@ namespace DAnCE
 }
 #endif /* CONFIG_HANDLERS_COMMON_H */
 
-

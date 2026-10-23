@@ -90,7 +90,6 @@ namespace DAnCE
                        desc.configProperty ().end (),
                        Property_Functor (toconfig.configProperty));
 
-
         ::XMLSchema::ID<char> const* id_if_set_ptr = desc.id_if_set ();
         if (id_if_set_ptr)
           {

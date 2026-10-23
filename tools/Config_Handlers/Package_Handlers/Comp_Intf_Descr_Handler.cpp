@@ -45,7 +45,6 @@ namespace DAnCE
                                    ::Deployment::ComponentPropertyDescription,
                                    Comp_Prop_Handler::handle_cpd > Comp_Prop_Functor;
 
-
       void
       Comp_Intf_Descr_Handler::comp_intf_descr (
                                                 const ComponentInterfaceDescription &desc,
@@ -56,7 +55,6 @@ namespace DAnCE
         const ComponentInterfaceDescription *cid = 0;
         std::unique_ptr<ComponentInterfaceDescription> safe_cid;
 
-
         ::XMLSchema::string<char> const* href_if_set_ptr = desc.href_if_set ();
         if (href_if_set_ptr)
           {
@@ -66,11 +64,9 @@ namespace DAnCE
         else
           cid = &desc;
 
-
         ::XMLSchema::string<char> const* label_if_set_ptr = cid->label_if_set ();
         if (label_if_set_ptr)
           toconfig.label = label_if_set_ptr->c_str ();
-
 
         ::XMLSchema::string<char> const* UUID_if_set_ptr = cid->UUID_if_set ();
         if (UUID_if_set_ptr)
@@ -114,7 +110,6 @@ namespace DAnCE
                        cid->infoProperty ().end (),
                        Property_Functor (toconfig.infoProperty));
       }
-
 
       ComponentInterfaceDescription
       Comp_Intf_Descr_Handler::comp_intf_descr (

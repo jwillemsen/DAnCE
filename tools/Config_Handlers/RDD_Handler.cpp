@@ -47,7 +47,6 @@ namespace DAnCE
       return rdd;
     }
 
-
   }
 
 }

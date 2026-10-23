@@ -51,7 +51,6 @@ namespace DAnCE
         impl_artifact_descr (const ImplementationArtifactDescription &desc,
                              ::Deployment::ImplementationArtifactDescription &toconfig);
 
-
         static ImplementationArtifactDescription
         impl_artifact_descr (const Deployment::ImplementationArtifactDescription& src);
 

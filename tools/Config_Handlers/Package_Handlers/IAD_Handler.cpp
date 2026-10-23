@@ -28,7 +28,6 @@ namespace DAnCE
         const ImplementationArtifactDescription *iad = 0;
         std::unique_ptr<ImplementationArtifactDescription> safe_iad;
 
-
         ::XMLSchema::string<char> const* href_if_set_ptr = desc.href_if_set ();
         if (href_if_set_ptr)
           {
@@ -38,13 +37,9 @@ namespace DAnCE
         else
           iad = &desc;
 
-
-
-
         ::XMLSchema::string<char> const* label_if_set_ptr = iad->label_if_set ();
         if (label_if_set_ptr)
           toconfig.label = label_if_set_ptr->c_str ();
-
 
         ::XMLSchema::string<char> const* UUID_if_set_ptr = iad->UUID_if_set ();
         if (UUID_if_set_ptr)

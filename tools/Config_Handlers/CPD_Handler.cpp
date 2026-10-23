@@ -16,7 +16,6 @@ namespace DAnCE
       toconfig.name =
         desc.name ().c_str ();
 
-
       ::XMLSchema::string<char> const* specificType_if_set_ptr = desc.specificType_if_set ();
       if (specificType_if_set_ptr)
         toconfig.specificType =
@@ -26,7 +25,6 @@ namespace DAnCE
       std::for_each (desc.supportedType ().begin (),
                      desc.supportedType ().end (),
                      String_Seq_Functor (toconfig.supportedType));
-
 
       switch (desc.kind ().integral ())
         {

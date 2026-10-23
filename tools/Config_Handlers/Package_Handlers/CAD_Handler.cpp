@@ -122,7 +122,6 @@ namespace DAnCE
                  ::Deployment::AssemblyConnectionDescription,
                  ACD_Handler::handle_acd > ACD_Functor;
 
-
       struct Packaging_Handlers_Export SPR_Handler
       {
     static void handle_spr (const SubcomponentPropertyReference &desc,

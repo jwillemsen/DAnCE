@@ -82,7 +82,6 @@ namespace DAnCE
     {
       DANCE_TRACE("DynEnum_Handler::create_typecode");
 
-
       ::DAnCE::Config_Handlers::EnumType const* enum__if_set_ptr_2 = type._cxx_enum_if_set ();
       if (!enum__if_set_ptr_2)
         {
@@ -120,5 +119,4 @@ namespace DAnCE
 
   }
 }
-
 

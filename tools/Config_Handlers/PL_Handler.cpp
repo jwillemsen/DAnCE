@@ -27,7 +27,6 @@ namespace DAnCE
           break;
         }
 
-
       size_t pos = 0;
       toconfig.constrainedInstanceRef.length (desc.constrainedInstance ().size ());
 
@@ -47,7 +46,6 @@ namespace DAnCE
           ++pos;
         }
     }
-
 
   }
 }

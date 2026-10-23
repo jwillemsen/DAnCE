@@ -181,7 +181,6 @@ namespace DAnCE
       MDD_Handler::IDREF.unbind_refs ();
       ADD_Handler::IDREF.unbind_refs ();
 
-
       size_t len; //Used for checking the length of struct data members
 
       // Read in the label, if present, since minoccurs = 0
@@ -228,7 +227,6 @@ namespace DAnCE
           //this->xsc_dp_->add_infoProperty (Property_Handler::
           // get_property (plan.infoProperty[q]));
         }
-
 
       // We are assuming there is a realizes for the moment
       // @@ We may want to change this at a later date

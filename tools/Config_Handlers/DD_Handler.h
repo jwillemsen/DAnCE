@@ -43,7 +43,6 @@ class Config_Handlers_Export DD_Handler
 public:
 class NoDomain {};
 
-
 /**
 * @param dmn The Domain structure
 */

@@ -56,7 +56,6 @@ namespace DAnCE
           //crdd.add_property (Property_Handler::get_property (src.property[i]));
         }
 
-
       return crdd;
     }
 

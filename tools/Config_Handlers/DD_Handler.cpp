@@ -13,7 +13,6 @@ namespace DAnCE
   namespace Config_Handlers
   {
 
-
     DD_Handler::DD_Handler (Domain *dmn):
       idl_domain_ (nullptr),
       domain_ptr_ (dmn),
@@ -62,7 +61,6 @@ namespace DAnCE
         this->idl_domain_->label =
           CORBA::string_dup (label_if_set_ptr->c_str ());
 
-
       ::XMLSchema::string<char> const* UUID_if_set_ptr = domain_.UUID_if_set ();
       if (UUID_if_set_ptr)
         this->idl_domain_->UUID =
@@ -81,7 +79,6 @@ namespace DAnCE
           // Node* thisNode = (Node*)iter;
           this->idl_domain_->node[i].name =
             CORBA::string_dup (iter->name ().c_str ());
-
 
           ::XMLSchema::string<char> const* label_if_set_ptr_2 = iter->label_if_set ();
           if (label_if_set_ptr_2)
@@ -136,7 +133,6 @@ namespace DAnCE
               {
               this->idl_domain_->node[i].resource[res_id].property[property_id ].name =
               CORBA::string_dup (property_iter->name ().c_str ());
-
 
               this->idl_domain_->node[i].resource[res_id].property[property_id].kind =
               ::Deployment::Quantity;

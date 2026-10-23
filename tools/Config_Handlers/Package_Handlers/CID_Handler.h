@@ -19,7 +19,6 @@ namespace Deployment
   struct ComponentImplementationDescription;
 }
 
-
 namespace DAnCE
 {
   namespace Config_Handlers

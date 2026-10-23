@@ -69,7 +69,6 @@ namespace DAnCE
     {
       DANCE_TRACE("DynAlias_Handler::create_typecode");
 
-
       ::DAnCE::Config_Handlers::AliasType const* alias_if_set_ptr_2 = type.alias_if_set ();
       if (!alias_if_set_ptr_2)
         {

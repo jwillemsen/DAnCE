@@ -114,7 +114,6 @@ namespace DAnCE
         }
     }
 
-
     MonolithicDeploymentDescription
     MDD_Handler::mono_deployment_description(
         const Deployment::MonolithicDeploymentDescription &src)

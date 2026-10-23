@@ -445,7 +445,6 @@ namespace DAnCE
       this->typecode_map_.insert_or_assign (std::string (typeID), tc);
     }
 
-
     CORBA::TypeCode_ptr DynAny_Handler::get_typecode (std::string_view typeID)
     {
       DANCE_TRACE("DynAny_Handler::get_typecode");

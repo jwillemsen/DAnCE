@@ -132,7 +132,6 @@ namespace DAnCE
     {
       DANCE_TRACE("DynArray_Handler::create_typecode");
 
-
       ::DAnCE::Config_Handlers::ArrayType const* array_if_set_ptr = type.array_if_set ();
       if (!array_if_set_ptr)
         {
@@ -155,6 +154,4 @@ namespace DAnCE
     }
   }
 }
-
-
 

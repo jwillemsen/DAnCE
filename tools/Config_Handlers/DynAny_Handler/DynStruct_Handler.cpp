@@ -96,11 +96,9 @@ namespace DAnCE
         }
     }
 
-
     CORBA::TypeCode_ptr DynStruct_Handler::create_typecode (const DataType &type)
     {
       DANCE_TRACE("DynStruct_Handler::create_typecode");
-
 
       ::DAnCE::Config_Handlers::StructType const* struct__if_set_ptr_2 = type._cxx_struct_if_set ();
       if (!struct__if_set_ptr_2)
@@ -141,6 +139,4 @@ namespace DAnCE
     }
   }
 }
-
-
 

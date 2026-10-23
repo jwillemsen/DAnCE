@@ -14,7 +14,6 @@ namespace DAnCE
     {
     }
 
-
     void
     ID_Handler::get_ImplementationDependency (const ImplementationDependency& desc,
                                               Deployment::ImplementationDependency& toconfig)

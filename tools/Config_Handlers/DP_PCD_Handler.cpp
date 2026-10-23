@@ -49,7 +49,6 @@ namespace DAnCE
       dest.name =
         src.name ().c_str ();
 
-
       ::XMLSchema::string<char> const* source_if_set_ptr = src.source_if_set ();
       if (source_if_set_ptr)
         {
@@ -57,7 +56,6 @@ namespace DAnCE
           dest.source.length (1);
           dest.source[0] = source_if_set_ptr->c_str ();
         }
-
 
       CEPE_Handler::external_port_endpoints (src,
                                              dest.externalEndpoint);
@@ -95,7 +93,6 @@ namespace DAnCE
           reqhandler.get_Requirement (
             toconfig.deployRequirement[toconfig.deployRequirement.length () - 1],
             desc.deployRequirement ());
-
 
         }
 #endif /*if 0*/

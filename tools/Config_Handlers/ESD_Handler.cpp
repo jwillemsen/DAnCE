@@ -28,7 +28,6 @@ namespace DAnCE
         }
     }
 
-
     void
     ESD_Handler::es_deployment_descr (
         const EventServiceDeploymentDescription& src,

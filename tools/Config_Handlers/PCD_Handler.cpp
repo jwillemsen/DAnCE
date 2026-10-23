@@ -49,7 +49,6 @@ namespace DAnCE
                      desc.deployRequirement ().end (),
                      Requirement_Functor (toconfig.deployRequirement));
 
-
       //Create the ComponentExternalPortEndpoint handler.
       CEPE_Handler::external_port_endpoints (desc,
                                              toconfig.externalEndpoint);

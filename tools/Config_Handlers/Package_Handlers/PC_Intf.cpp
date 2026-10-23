@@ -31,19 +31,15 @@ namespace DAnCE
       if (!dom)
         return false;
 
-
       PackageConfiguration pc =
         packageConfiguration (dom);
 
-
       Deployment::PackageConfiguration idl_pc;
-
 
       STD_PCD_Handler pcd_handler (helper.get ());
 
       pcd_handler.package_config (pc,
                                   idl_pc);
-
 
       Deployment::PackageConfiguration *p_idl_pc =
         new Deployment::PackageConfiguration (idl_pc);

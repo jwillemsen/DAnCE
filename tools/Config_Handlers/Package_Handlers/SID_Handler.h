@@ -3,7 +3,6 @@
  * @author William Otte <wotte@dre.vanderbilt.edu>
  */
 
-
 #ifndef CIAO_PACKAGING_SID_HANDLER_H
 #define CIAO_PACKAGING_SID_HANDLER_H
 

@@ -65,7 +65,6 @@ typedef ACE_Hash_Map_Manager<std::string,
 T,
 ACE_Null_Mutex> IDREF_MAP;
 
-
 typedef ACE_Hash_Map_Manager<T,
 std::string,
 ACE_Null_Mutex> POS_MAP;

@@ -4,7 +4,6 @@
 #include "Property_Handler.h"
 #include "dance/Logger/Log_Macros.h"
 
-
 namespace DAnCE
 {
   namespace Config_Handlers
@@ -17,7 +16,6 @@ namespace DAnCE
     IRDD_Handler::~IRDD_Handler (void)
     {
     }
-
 
     void
     IRDD_Handler::handle_irdd (const InstanceResourceDeploymentDescription& desc,
@@ -107,7 +105,6 @@ namespace DAnCE
         {
           //irdd.add_property (Property_Handler::get_property (src.property[i]));
         }
-
 
       return irdd;
     }

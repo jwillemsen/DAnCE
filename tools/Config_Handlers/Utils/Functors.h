@@ -54,7 +54,6 @@ namespace DAnCE
       W (X, Y[0]);  \
     }
 
-
     template <typename Dest, typename Dest_Type>
     struct String_Seq_Handler
     {

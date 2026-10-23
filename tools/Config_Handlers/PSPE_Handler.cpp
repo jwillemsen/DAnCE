@@ -38,7 +38,6 @@ namespace DAnCE
       dest.portName =
         src.portName ().c_str ();
 
-
       ::XMLSchema::string<char> const* provider_if_set_ptr = src.provider_if_set ();
       if (provider_if_set_ptr)
         {
@@ -149,7 +148,6 @@ namespace DAnCE
           DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
             (LM_ERROR, "Invalid port kind in PSPE\n"));
         }
-
 
       return pspe;
     }

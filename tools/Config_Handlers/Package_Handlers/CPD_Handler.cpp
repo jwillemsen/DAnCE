@@ -43,7 +43,6 @@ namespace DAnCE
                  ::Deployment::PackagedComponentImplementation,
                  PCI_Handler::handle_pci > PCI_Functor;
 
-
       void
       CPD_Handler::handle_component_package_descr (
         const ComponentPackageDescription &desc,
@@ -54,7 +53,6 @@ namespace DAnCE
         std::unique_ptr<ComponentPackageDescription> xsc_cpd;
         const ComponentPackageDescription *cpd = 0;
 
-
         ::XMLSchema::string<char> const* href_if_set_ptr = desc.href_if_set ();
         if (href_if_set_ptr)
           {
@@ -64,11 +62,9 @@ namespace DAnCE
         else
           cpd = &desc;
 
-
         ::XMLSchema::string<char> const* label_if_set_ptr = cpd->label_if_set ();
         if (label_if_set_ptr)
           toconfig.label = label_if_set_ptr->c_str ();
-
 
         ::XMLSchema::string<char> const* UUID_if_set_ptr = cpd->UUID_if_set ();
         if (UUID_if_set_ptr)

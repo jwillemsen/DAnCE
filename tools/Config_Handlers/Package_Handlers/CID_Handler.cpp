@@ -18,7 +18,6 @@
 #include "Property_Handler.h"
 #include <string>
 
-
 namespace DAnCE
 {
   namespace Config_Handlers
@@ -77,7 +76,6 @@ namespace DAnCE
     {
       DANCE_TRACE ("IR_Handler::get_ir");
 
-
       ::DAnCE::Config_Handlers::ResourceUsageKind const* resourceUsage_if_set_ptr = desc.resourceUsage_if_set ();
       if (resourceUsage_if_set_ptr)
         {
@@ -109,11 +107,9 @@ namespace DAnCE
         }
         }
 
-
       ::XMLSchema::string<char> const* resourcePort_if_set_ptr = desc.resourcePort_if_set ();
       if (resourcePort_if_set_ptr)
         toconfig.resourcePort = resourcePort_if_set_ptr->c_str ();
-
 
       ::XMLSchema::string<char> const* componentPort_if_set_ptr = desc.componentPort_if_set ();
       if (componentPort_if_set_ptr)
@@ -250,8 +246,6 @@ namespace DAnCE
                  ::Deployment::MonolithicImplementationDescription,
                  MID_Handler::handle_mid > MID_Functor;
 
-
-
       void
       CID_Handler::component_impl_descr (
         const ComponentImplementationDescription &desc,
@@ -262,7 +256,6 @@ namespace DAnCE
         const ComponentImplementationDescription *cid = 0;
         std::unique_ptr<ComponentImplementationDescription> xsc_cid;
 
-
         ::XMLSchema::string<char> const* href_if_set_ptr = desc.href_if_set ();
         if (href_if_set_ptr)
           {
@@ -272,16 +265,13 @@ namespace DAnCE
         else
           cid = &desc;
 
-
         ::XMLSchema::string<char> const* label_if_set_ptr = cid->label_if_set ();
         if (label_if_set_ptr)
           toconfig.label = label_if_set_ptr->c_str ();
 
-
         ::XMLSchema::string<char> const* UUID_if_set_ptr = cid->UUID_if_set ();
         if (UUID_if_set_ptr)
           toconfig.UUID = UUID_if_set_ptr->c_str ();
-
 
         ::DAnCE::Config_Handlers::ComponentInterfaceDescription const*
           implements_if_set_ptr = cid->implements_if_set ();
@@ -292,7 +282,6 @@ namespace DAnCE
             Comp_Intf_Descr_Handler::comp_intf_descr (*implements_if_set_ptr,
                                                       toconfig.implements);
           }
-
 
         ::DAnCE::Config_Handlers::ComponentAssemblyDescription const*
           assemblyImpl_if_set_ptr = cid->assemblyImpl_if_set ();

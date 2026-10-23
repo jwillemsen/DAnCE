@@ -134,7 +134,6 @@ namespace DAnCE
     {
       DANCE_TRACE("DynSequence_Handler::create_typecode");
 
-
       ::DAnCE::Config_Handlers::SequenceType const* sequence_if_set_ptr = type.sequence_if_set ();
       if (!sequence_if_set_ptr)
         {
@@ -161,6 +160,4 @@ namespace DAnCE
     }
   }
 }
-
-
 

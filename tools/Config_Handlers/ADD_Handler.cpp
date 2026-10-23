@@ -41,7 +41,6 @@ namespace DAnCE
         DANCE_TRACE("ADD_Handler::atrifact_deployment_descr");
         dest.name =  src.name ().c_str ();
 
-
         dest.node =  src.node ().c_str ();
 
         auto end =
@@ -82,7 +81,6 @@ namespace DAnCE
             Property_Handler::handle_property (*adcb,
                                                dest.execParameter[len++]);
           }
-
 
         ::XMLSchema::ID<char> const* id_if_set_ptr = src.id_if_set ();
         if (id_if_set_ptr)

@@ -23,14 +23,12 @@ namespace DAnCE
         toconfig.UUID =
           CORBA::string_dup (UUID_if_set_ptr->c_str ());
 
-
       ::XMLSchema::string<char> const* label_if_set_ptr = desc.label_if_set ();
       if (label_if_set_ptr)
         {
           toconfig.label =
             CORBA::string_dup (label_if_set_ptr->c_str ());
         }
-
 
       ::XMLSchema::string<char> const* specificType_if_set_ptr = desc.specificType_if_set ();
       if (specificType_if_set_ptr)
@@ -158,7 +156,6 @@ namespace DAnCE
         {
           //cid.add_port (CPD_Handler::component_port_description (src.port[l]));
         }
-
 
       //Load up the property field
       total = src.property.length();

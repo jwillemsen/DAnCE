@@ -13,11 +13,9 @@
 #include "Config_Handlers_Export.h"
 #include <memory>
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 namespace Deployment
 {

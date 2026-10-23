@@ -14,7 +14,6 @@
 
 #include <memory>
 
-
 namespace Deployment
 {
   struct PackageConfiguration ;

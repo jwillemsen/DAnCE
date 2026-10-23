@@ -18,7 +18,6 @@ namespace Deployment
     indent_.append("  ");
   }
 
-
   Dump_Obj::Dump_Obj(const char* caption,
                       CORBA::Any &val)
     : desc_(caption)

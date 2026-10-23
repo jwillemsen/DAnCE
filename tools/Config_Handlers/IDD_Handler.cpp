@@ -47,7 +47,6 @@ namespace DAnCE
           dest.name =  src.name ().c_str ();
           dest.node =  src.node ().c_str ();
 
-
           ::XMLSchema::ID<char> const* id_if_set_ptr = src.id_if_set ();
           if (id_if_set_ptr)
             {
@@ -87,7 +86,6 @@ namespace DAnCE
           std::for_each (src.deployedResource ().begin (),
                          src.deployedResource ().end (),
                          IRDD_Functor (dest.deployedResource));
-
 
           ::DAnCE::Config_Handlers::InstanceResourceDeploymentDescription const*
             deployedSharedResource_if_set_ptr = src.deployedSharedResource_if_set ();

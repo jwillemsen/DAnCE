@@ -76,7 +76,6 @@ namespace DAnCE
 
         const PackageConfiguration *pcd;
 
-
         ::XMLSchema::string<char> const* contentLocation_if_set_ptr = desc.contentLocation_if_set ();
         if (contentLocation_if_set_ptr)
           {
@@ -87,18 +86,15 @@ namespace DAnCE
         else
           pcd = &desc;
 
-
         ::XMLSchema::string<char> const* label_if_set_ptr = pcd->label_if_set ();
         if (label_if_set_ptr)
           toconfig.label =
             label_if_set_ptr->c_str ();
 
-
         ::XMLSchema::string<char> const* UUID_if_set_ptr = pcd->UUID_if_set ();
         if (UUID_if_set_ptr)
           toconfig.UUID =
             UUID_if_set_ptr->c_str ();
-
 
         ::DAnCE::Config_Handlers::ComponentPackageDescription const*
           basePackage_if_set_ptr = pcd->basePackage_if_set ();
@@ -167,7 +163,6 @@ namespace DAnCE
         }
 
       }
-
 
     }
   }

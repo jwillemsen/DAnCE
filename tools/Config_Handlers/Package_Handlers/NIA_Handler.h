@@ -41,7 +41,6 @@ namespace DAnCE
                                             toconfig.referencedArtifact);
         }
 
-
         static NamedImplementationArtifact get_nia (const ::Deployment::NamedImplementationArtifact &src)
         {
           return NamedImplementationArtifact (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()),
