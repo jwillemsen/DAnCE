@@ -7,6 +7,7 @@
 #ifndef CONFIG_HANDLERS_COMMON_H
 #define CONFIG_HANDLERS_COMMON_H
 #include <string>
+#include <string_view>
 
 namespace DAnCE
 {
@@ -25,9 +26,9 @@ namespace DAnCE
         error_ (error)
       {};
 
-      void add_name (const std::string &name)
+      void add_name (std::string_view name)
       {
-        name_ = name + ":" + name_;
+        name_ = std::string (name) + ":" + name_;
       }
 
       /// Some identifying information about the element that
