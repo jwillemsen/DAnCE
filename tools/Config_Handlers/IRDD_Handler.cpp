@@ -97,11 +97,6 @@ namespace DAnCE
           break;
         }
 
-      for (CORBA::ULong i {}; i < src.property.length (); ++i)
-        {
-          //irdd.add_property (Property_Handler::get_property (src.property[i]));
-        }
-
       return irdd;
     }
   }

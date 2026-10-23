@@ -105,22 +105,6 @@ namespace DAnCE
           toconfig.realizes
             (Comp_Intf_Descr_Handler::comp_intf_descr (src.realizes));
         }
-#if 0
-        for (size_t i {}; i < src.configProperty.length (); ++i)
-          {
-            toconfig.add_configProperty (Property_Handler::get_property (src.configProperty[i]));
-          }
-
-        { // Packaged Component Implementations
-          for (size_t i {}; i < src.implementation.length (); ++i)
-            toconfig.add_implementation (PCI_Handler::get_pci (src.implementation[i]));
-        }
-
-        for (size_t i {}; i < src.infoProperty.length (); ++i)
-          {
-            toconfig.add_infoProperty (Property_Handler::get_property (src.infoProperty[i]));
-          }
-#endif
         return toconfig;
       }
 

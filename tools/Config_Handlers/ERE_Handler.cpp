@@ -43,9 +43,7 @@ namespace DAnCE
     {
       DANCE_TRACE("ERE_Handler::external_ref_endpoint - reverse");
       XMLSchema::string<char> loc (src.location);
-      //      XMLSchema::string< char > provider ((src.provider));
       XMLSchema::string<char> pn (src.portName);
-      //      XMLSchema::string< char > st ((src.supportedType));
       ExternalReferenceEndpoint erp (loc, src.provider);
       return erp;
     }

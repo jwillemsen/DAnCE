@@ -30,17 +30,6 @@ namespace DAnCE
         throw NoDomain ();
     }
 
-    /*
-    DD_Handler::DD_Handler (::Deployment::Domain *dmn):
-      idl_domain_(dmn),
-      domain_ptr_ (dmn),
-      retval_(false)
-    {
-      if(!this->build_xsc())
-        throw NoDomain ();
-    }
-    */
-
     DD_Handler::~DD_Handler ()
     {
     }
@@ -63,11 +52,9 @@ namespace DAnCE
       CORBA::ULong const len = domain_.node ().size ();
       this->idl_domain_->node.length (len);
 
-      //Resource _resource;
       int i {};
       for (auto iter = domain_.node ().begin (); iter != domain_.node ().end (); ++iter,++i )
         {
-          // Node* thisNode = (Node*)iter;
           this->idl_domain_->node[i].name = CORBA::string_dup (iter->name ().c_str ());
 
           ::XMLSchema::string<char> const* node_label_if_set_ptr = iter->label_if_set ();
@@ -104,37 +91,14 @@ namespace DAnCE
               CORBA::ULong const property_len = res_iter->property ().size ();
               this->idl_domain_->node[i].resource[res_id].property.length (property_len);
 
-              //              int property_id {};
-
               CORBA::ULong property_index {};
               for (auto const& source_item : res_iter->property ())
                 SatisfierProperty_Handler::handle_sat_property (source_item,
                   this->idl_domain_->node[i].resource[res_id].property[property_index++]);
-
-              /*
-              //FOR EACH PROPERTY
-              for (auto property_iter =
-              res_iter->property ().begin ();
-              property_iter != res_iter->property ().end ();
-              property_iter++, property_id++)
-              {
-              this->idl_domain_->node[i].resource[res_id].property[property_id ].name =
-              CORBA::string_dup (property_iter->name ().c_str ());
-
-              this->idl_domain_->node[i].resource[res_id].property[property_id].kind = ::Deployment::Quantity;
-
-              Any the_any = property_iter->value ();
-              CORBA::Any a_corba_any {};
-              Any_Handler::extract_into_any (the_any , a_corba_any);
-              this->idl_domain_->node[i].resource[res_id].property[property_id].value
-              = a_corba_any;
-              }
-              */
             }
         }
 
       return true;
-
     }
 
     bool DD_Handler::build_xsc ()
@@ -148,7 +112,6 @@ namespace DAnCE
       if(!this->idl_domain_.get())
         throw NoDomain ();
 
-      //else
       return this->idl_domain_.get();
     }
 
@@ -157,7 +120,6 @@ namespace DAnCE
       if(!this->idl_domain_.get())
         throw NoDomain();
 
-      //else
       return this->idl_domain_.release();
     }
 
@@ -167,7 +129,6 @@ namespace DAnCE
       if(!this->domain_ptr_.get())
         throw NoDomain ();
 
-      //else
       return this->domain_ptr_.get();
     }
 
@@ -176,7 +137,6 @@ namespace DAnCE
       if(!this->domain_ptr_.get())
         throw NoDomain ();
 
-      //else
       return this->domain_ptr_.release();
     }
   }

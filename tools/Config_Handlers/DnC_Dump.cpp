@@ -101,12 +101,6 @@ namespace Deployment
     Dump_Obj dump_obj("SharedResource");
     dump ("name", sr.name);
     dump ("resourceType", sr.resourceType);
-#if 0
-    ::Deployment::DnC_Dump_T::dump_ref_seq<Deployment::Domain> ("nodeRef",
-                                      sr.nodeRef,
-                                      "Domain",
-                                      &Domain::node);
-#endif /*if 0*/
     ::Deployment::DnC_Dump_T::dump_sequence ("property",
                                              sr.property);
   }
@@ -678,7 +672,6 @@ namespace Deployment
     dump (plan.realizes);
     ::Deployment::DnC_Dump_T::dump_sequence ("implementation", plan.implementation);
     ::Deployment::DnC_Dump_T::dump_sequence ("instance", plan.instance);
-    //::Deployment::DnC_Dump_T::dump_sequence ("connection", plan.connection);
     ::Deployment::DnC_Dump_T::dump_sequence ("externalProperty", plan.externalProperty);
     ::Deployment::DnC_Dump_T::dump_sequence ("dependsOn", plan.dependsOn);
     ::Deployment::DnC_Dump_T::dump_sequence ("artifact", plan.artifact);
@@ -704,10 +697,8 @@ namespace Deployment
     Dump_Obj dump_obj("SubcomponentInstantiationDescription");
 
     dump ("name", sid.name);
-    //    ::Deployment::DnC_Dump_T::dump_sequence ("basePackage", sid.package);
     ::Deployment::DnC_Dump_T::dump_sequence ("configProperty", sid.configProperty);
     ::Deployment::DnC_Dump_T::dump_sequence ("selectRequirement", sid.selectRequirement);
-    //    ::Deployment::DnC_Dump_T::dump_sequence ("reference", sid.reference);
   }
 
   // SubcomponentPortEndpoint
@@ -835,7 +826,6 @@ namespace Deployment
   {
     Dump_Obj dump_obj("MonolithicImplementationDescription");
 
-    //    ::Deployment::DnC_Dump_T::dump_sequence ("execParameter", mid.execParameter);
     ::Deployment::DnC_Dump_T::dump_sequence ("primaryArtifact", mid.primaryArtifact);
     ::Deployment::DnC_Dump_T::dump_sequence ("deployRequirement", mid.deployRequirement);
   }
@@ -1170,15 +1160,7 @@ encoded with different type"));
 
         case CORBA::tk_enum:
         {
-/*          CORBA::Enum temp;
-          if (! (any >>= temp))
-            {
-              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG,
-              "DnC::dump (CORBA::Any) expected enum \
-encoded with different type"));
-              throw CORBA::INTERNAL ();
-            }
-*/          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
               (LM_DEBUG, "%CAny value: some enum\n", Dump_Obj::indent ()));
         }
         break;

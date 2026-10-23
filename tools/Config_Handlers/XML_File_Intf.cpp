@@ -24,7 +24,6 @@ namespace DAnCE
     {
       DANCE_TRACE("XML_File_Intf::destructor");
 
-      //      XML_Helper::XML_HELPER.terminate_parser ();
     }
 
     bool XML_File_Intf::read_process_plan (ACE_TCHAR const* file)

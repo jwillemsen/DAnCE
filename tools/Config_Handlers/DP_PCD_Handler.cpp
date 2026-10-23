@@ -56,35 +56,6 @@ namespace DAnCE
 
       PSPE_Handler::sub_component_port_endpoints (src, dest.internalEndpoint);
 
-#if 0
-      // @@MAJO: Need to figure how to use this.
-      if (desc.deployedResource_if_set ())
-        {
-          CRDD_Handler crddhandler {};
-
-          toconfig.deployedResource.length (toconfig.deployedResource.length () + 1);
-
-          crddhandler.get_ConnectionResourceDeploymentDescription (
-            toconfig.deployedResource[toconfig.deployedResource.length () - 1],
-            desc.deployedResource ());
-        }
-
-      if (desc.deployRequirement_if_set ())
-        {
-
-          // @@ MAJO: Not sure how to use this
-          //Create the handler for the requirements.
-          Requirement_Handler reqhandler {};
-
-          //Increase the sequence length and delgate
-          //the Requirement to the Req_Handler.
-          toconfig.deployRequirement.length (toconfig.deployRequirement.length () + 1);
-          reqhandler.get_Requirement (
-            toconfig.deployRequirement[toconfig.deployRequirement.length () - 1],
-            desc.deployRequirement ());
-
-        }
-#endif /*if 0*/
     }
   }
 }

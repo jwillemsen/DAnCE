@@ -87,22 +87,6 @@ namespace DAnCE
       DANCE_TRACE("ACD_Handler::get_acd - reverse");
 
       AssemblyConnectionDescription retval (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
-#if 0
-      for (CORBA::ULong i {}; i < src.deployRequirement.length (); ++i)
-        retval.add_deployRequirement (Req_Handler::get_requirement (src.deployRequirement[i]));
-
-      for (CORBA::ULong i {}; i < src.internalEndpoint.length (); ++i)
-        retval.add_internalEndpoint
-          (SPE_Handler::get_spe (src.internalEndpoint[i]));
-
-      for (CORBA::ULong i {}; i < src.externalEndpoint.length (); ++i)
-        retval.add_externalEndpoint
-          (CEPE_Handler::external_port_endpoint (src.externalEndpoint[i]));
-
-      for (CORBA::ULong i {}; i < src.externalReference.length (); ++i)
-        retval.add_externalReference
-          (ERE_Handler::external_ref_endpoint (src.externalReference[i]));
-#endif
       return retval;
     }
       };
@@ -166,10 +150,6 @@ namespace DAnCE
       AssemblyPropertyMapping retval (
         ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()),
         ACE_TEXT_CHAR_TO_TCHAR (src.externalName.in ()));
-#if 0
-      for (CORBA::ULong i {}; i < src.delegatesTo.length (); ++i)
-        retval.add_delegatesTo (SPR_Handler::get_spr (src.delegatesTo[i]));
-#endif
       return retval;
     }
       };
@@ -206,17 +186,6 @@ namespace DAnCE
         DANCE_TRACE("CAD_Handler::component_assem_descr - reverse");
 
         ComponentAssemblyDescription retval {};
-#if 0
-        for (CORBA::ULong i {}; i < src.instance.length (); ++i)
-          retval.add_instance
-            (SID_Handler::sub_comp_inst_descr (src.instance[i]));
-
-        for (CORBA::ULong i {}; i < src.connection.length (); ++i)
-          retval.add_connection (ACD_Handler::get_acd (src.connection[i]));
-
-        for (CORBA::ULong i {}; i < src.externalProperty.length (); ++i)
-          retval.add_externalProperty (APM_Handler::get_apm (src.externalProperty[i]));
-#endif
         return retval;
 
       }
@@ -225,19 +194,6 @@ namespace DAnCE
       {
         DANCE_TRACE("CAD_Handler::resolve_cad");
 
-        /*      xercesc::DOMDocument *dom =
-                this->xml_helper_->create_dom (uri);
-
-                if (!dom)
-                throw Parse_Error ("Unable to create DOM for CAD");
-
-                try {
-                return new ComponentAssemblyDescription
-                (componentAssemblyDescription (dom));
-                }
-                catch (...) {
-                throw Parse_Error ("Unable to create XSC structure for CAD");
-        */
         return 0;
       }
     }

@@ -129,14 +129,6 @@ namespace DAnCE
           {
             pcd.basePackage (CPD_Handler::component_package_descr (src.basePackage[0]));
           }
-#if 0
-        // @@ MAJO: Support other elements present here.
-        for (CORBA::ULong i {}; i < src.configProperty.length (); ++i)
-          pcd.add_configProperty (Property_Handler::get_property (src.configProperty[i]));
-
-        for (CORBA::ULong i {}; i < src.selectRequirement.length (); ++i)
-          pcd.add_selectRequirement (Req_Handler::get_requirement (src.selectRequirement[i]));
-#endif
         return pcd;
 
       }

@@ -102,41 +102,6 @@ namespace DAnCE
       XMLSchema::string<char> name (src.name);
       MonolithicDeploymentDescription mdd (name);
 
-      //Get the source(s) from the IDL and store them
-      size_t total = src.source.length();
-      for(size_t i {}; i < total; i++)
-        {
-          XMLSchema::string<char> curr (src.source[i]);
-          //mdd.add_source(curr);
-        }
-
-      //Get the artifactRef(s) from the IDL and store them
-      total = src.artifactRef.length();
-      for(size_t j {}; j < total; j++)
-        {
-          std::string tmp {};
-          ADD_Handler::IDREF.find_ref(src.artifactRef[j], tmp);
-          IdRef idref {};
-          idref.idref (tmp.c_str ());
-          //mdd.add_artifact (idref);
-        }
-
-      //Get the execParameter(s) from the IDL and store them
-      total = src.execParameter.length();
-      for(size_t k {}; k < total; k++)
-        {
-          //mdd.add_execParameter (Property_Handler::
-          //get_property (src.execParameter[k]));
-        }
-
-      //Get the deployRequirement(s) from the IDL and store them
-      total = src.deployRequirement.length();
-      for(size_t l {}; l < total; l++)
-        {
-          //mdd.add_deployRequirement(Req_Handler::
-          //get_requirement (src.deployRequirement[l]));
-        }
-
       // Generate a UUID to use for the IDREF.
       ACE_Utils::UUID uuid {};
       ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);

@@ -78,25 +78,6 @@ namespace DAnCE
 
         retval.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
         retval.UUID (ACE_TEXT_CHAR_TO_TCHAR  (src.UUID.in ()));
-#if 0
-        for (CORBA::ULong i {}; i < src.location.length (); ++i)
-          retval.add_location (src.location[i].in ());
-
-        for (CORBA::ULong i {}; i < src.dependsOn.length (); ++i)
-          retval.add_dependsOn (NIA_Handler::get_nia (src.dependsOn[i]));
-
-        for (CORBA::ULong i {}; i < src.execParameter.length (); ++i)
-          retval.add_execParameter
-            (Property_Handler::get_property (src.execParameter[i]));
-
-        for (CORBA::ULong i {}; i < src.infoProperty.length (); ++i)
-          retval.add_infoProperty
-            (Property_Handler::get_property (src.infoProperty[i]));
-
-        for (CORBA::ULong i {}; i < src.deployRequirement.length (); ++i)
-          retval.add_deployRequirement
-            (Req_Handler::get_requirement (src.deployRequirement[i]));
-#endif
         return retval;
       }
 

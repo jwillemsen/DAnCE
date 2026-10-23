@@ -85,41 +85,6 @@ namespace DAnCE
           pcd.source(source);
         }
 
-      //Get any externalEndpoint(s) and store them
-      size_t total = src.externalEndpoint.length();
-      for(size_t i {}; i < total; i++)
-        {
-          //pcd.add_externalEndpoint(CEPE_Handler::external_port_endpoint(src.externalEndpoint[i]));
-        }
-
-      //Get any externalReference(s) and store them
-      total = src.externalReference.length();
-      for(size_t j {}; j < total; j++)
-        {
-          //pcd.add_externalReference(ERE_Handler::external_ref_endpoint(src.externalReference[j]));
-        }
-
-      //Get any internalEndpoint(s) and store them
-      total = src.internalEndpoint.length();
-      for(size_t k {}; k < total; k++)
-        {
-          //pcd.add_internalEndpoint(PSPE_Handler::sub_component_port_endpoint(src.internalEndpoint[k]));
-        }
-
-      //Get any deployedResource(s) and store them
-      total = src.deployedResource.length();
-      for(size_t l {}; l < total; l++)
-        {
-          //pcd.add_deployedResource(CRDD_Handler::connection_resource_depl_desc(src.deployedResource[l]));
-        }
-
-      //Get any deployRequirement(s) and store them
-      total = src.deployRequirement.length();
-      for(size_t m {}; m < total; m++)
-        {
-          //pcd.add_deployRequirement(Req_Handler::get_requirement(src.deployRequirement[m]));
-        }
-
       return pcd;
     }
   }

@@ -18,10 +18,8 @@ namespace DAnCE
       // DataType_Handler.
 
       // @@ There is a lurking bug here.
-      //#if 0
       CORBA::TypeCode_ptr tcptr = toconfig.type.in ();
       DataType_Handler::data_type (desc.type (), tcptr);
-      //#endif /*if 0*/
     }
 
     ComponentPropertyDescription

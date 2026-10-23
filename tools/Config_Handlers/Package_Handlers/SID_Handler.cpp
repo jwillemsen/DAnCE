@@ -108,10 +108,6 @@ namespace DAnCE
         else if (src.importedPackage.length () == 1)
           {
             ComponentPackageImport const ci {};
-#if 0
-            for (CORBA::ULong i {}; i < src.importedPackage[0].location.length (); ++i)
-              ci.add_location (src.importedPackage[0].location[i].in ());
-#endif
             retval.importedPackage (ci);
           }
         else if (src.referencedPackage.length () == 1)
@@ -124,15 +120,6 @@ namespace DAnCE
 
             retval.referencedPackage (cpr);
           }
-#if 0
-        for (CORBA::ULong i {}; i < src.selectRequirement.length (); ++i)
-          retval.add_selectRequirement
-            (Req_Handler::get_requirement (src.selectRequirement[i]));
-
-        for (CORBA::ULong i {}; i < src.configProperty.length (); ++i)
-          retval.add_configProperty
-            (Property_Handler::get_property (src.configProperty[i]));
-#endif
         // @@MAJO This is not a good way of binding reverse IDREFS.
         std::unique_ptr<ACE_Utils::UUID> safe_uuid (ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());
         std::string uuid (safe_uuid->to_string ()->c_str ());

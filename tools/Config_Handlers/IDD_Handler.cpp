@@ -126,22 +126,6 @@ namespace DAnCE
       xid.idref (implementation);
       InstanceDeploymentDescription idd (name, node, source, xid);
 
-      //Get and store the configProperty(s)
-      size_t total = src.configProperty.length();
-      for(size_t j {}; j < total; j++)
-        {
-          //idd.add_configProperty(
-          //Property_Handler::get_property (src.configProperty[j]));
-        }
-
-      // Get and store the deployedResource(s)
-      size_t const dp_total = src.deployedResource.length ();
-      for (size_t k {}; k < dp_total; k++)
-        {
-          //idd.add_deployedResource (IRDD_Handler::
-          //instance_resource_deployment_descr (src.deployedResource[k]));
-        }
-
       //Check if there is a deployedSharedResource, if so store it
       if(src.deployedSharedResource.length() != 0)
         idd. deployedSharedResource(IRDD_Handler::instance_resource_deployment_descr(src.deployedSharedResource[0]));

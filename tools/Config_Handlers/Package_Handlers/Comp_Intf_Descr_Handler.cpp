@@ -112,26 +112,6 @@ namespace DAnCE
         retval.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
         retval.UUID (ACE_TEXT_CHAR_TO_TCHAR  (src.UUID.in ()));
         retval.specificType (ACE_TEXT_CHAR_TO_TCHAR  (src.specificType.in ()));
-#if 0
-        for (CORBA::ULong i {}; i < src.supportedType.length (); ++i)
-          retval.add_supportedType (src.supportedType[i].in ());
-
-        for (CORBA::ULong i {}; i < src.idlFile.length (); ++i)
-          retval.add_idlFile (src.idlFile[i].in ());
-
-        for (CORBA::ULong i {}; i < src.configProperty.length (); ++i)
-          retval.add_configProperty (Property_Handler::get_property (src.configProperty[i]));
-
-        for (CORBA::ULong i {}; i < src.port.length (); ++i)
-          retval.add_port
-            (DAnCE::Config_Handlers::CPD_Handler::component_port_description (src.port[i]));
-
-        for (CORBA::ULong i {}; i < src.property.length (); ++i)
-          retval.add_property (Comp_Prop_Handler::get_cpd (src.property[i]));
-
-        for (CORBA::ULong i {}; i < src.infoProperty.length (); ++i)
-          retval.add_infoProperty (Property_Handler::get_property (src.infoProperty[i]));
-#endif
         return retval;
       }
 

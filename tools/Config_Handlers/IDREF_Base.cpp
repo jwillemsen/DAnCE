@@ -28,9 +28,6 @@ namespace DAnCE
         // Note:  For this function to compile and work properly,
         // T must have the postincrement operator defined.
         DANCE_TRACE ("IDREF_Base<T>::bind_next_available");
-        //      ACE_DEBUG ((LM_DEBUG, "**** Binding %s to %i\n",
-        //            id.c_str (),
-        //            this->next_));
 
         int retval = idref_map_.bind (id, this->next_);
 
@@ -60,9 +57,6 @@ namespace DAnCE
         DANCE_TRACE("IDREF_Base<T>::find_ref (T, CString)");
 
         int retval = pos_map_.find (value, id);
-
-        //      ACE_ERROR ((LM_ERROR, "**** Looking up value %i\n",
-        //            value));
 
         if (retval < 0)
           throw Config_Error ("No location information for reverse IDREF lookup", id.c_str ());

@@ -41,11 +41,6 @@ namespace DAnCE
       //Instantiate the Requirement
       Requirement req (name,res);
 
-      for (CORBA::ULong i {}; i < src.property.length (); ++i)
-        {
-          //req.add_property (Property_Handler::get_property (src.property[i]));
-        }
-
       return req;
     }
   }

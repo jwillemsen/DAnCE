@@ -107,8 +107,6 @@ namespace DAnCE
         }
 
       //   This case used to be supported...is it not in the schema?
-      //    case  TCKind::tk_Object)
-      //      type = CORBA::TypeCode::_duplicate (CORBA::_tc_Object);*/
 
     }
 

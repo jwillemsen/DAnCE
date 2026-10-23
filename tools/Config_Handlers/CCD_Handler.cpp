@@ -101,50 +101,6 @@ namespace DAnCE
       cid.label (label);
       cid.specificType (specifict);
 
-      //Get the supported type(s) and load them into cid
-      ::CORBA::ULong total = src.supportedType.length ();
-      for (size_t i {}; i < total; ++i)
-        {
-          XMLSchema::string<char> curr (src.supportedType[i]);
-          //cid.add_supportedType (new XMLSchema::string<char> (curr));
-        }
-
-      //Get the idlFile(s) and store them into the cid
-      total = src.idlFile.length ();
-      for (size_t j {}; j < total; ++j)
-        {
-          XMLSchema::string<char> curr (src.idlFile[j]);
-          //cid.add_idlFile (curr);
-        }
-
-      //Get the configProperty(ies) and store them into the cid
-      total = src.configProperty.length ();
-      for (size_t k {}; k < total; ++k)
-        {
-          //cid.add_configProperty (Property_Handler::get_property (src.configProperty[k]));
-        }
-
-      //Same drill for the component port description(s)
-      total = src.port.length ();
-      for (size_t l {}; l < total; ++l)
-        {
-          //cid.add_port (CPD_Handler::component_port_description (src.port[l]));
-        }
-
-      //Load up the property field
-      total = src.property.length();
-      for(size_t m {}; m < total; m++)
-        {
-          //cid.add_property(ComponentPropertyDescription_Handler::component_property_description (src.property[m]));
-        }
-
-      //Load up the infoProperty(s)
-      total = src.infoProperty.length();
-      for(size_t n {}; n < total; n++)
-        {
-          //cid.add_infoProperty(Property_Handler::get_property (src.infoProperty[n]));
-        }
-
       return cid;
     }
   }
