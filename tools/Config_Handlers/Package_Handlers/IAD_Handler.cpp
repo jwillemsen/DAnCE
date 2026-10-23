@@ -25,7 +25,7 @@ namespace DAnCE
         DANCE_TRACE ("IAD_Handler::impl_artifact_descr");
 
         ImplementationArtifactDescription const* iad {};
-        std::unique_ptr<ImplementationArtifactDescription> safe_iad;
+        std::unique_ptr<ImplementationArtifactDescription> safe_iad {};
 
         ::XMLSchema::string<char> const* href_if_set_ptr = desc.href_if_set ();
         if (href_if_set_ptr)
@@ -74,26 +74,26 @@ namespace DAnCE
       IAD_Handler::impl_artifact_descr (::Deployment::ImplementationArtifactDescription const& src)
       {
         DANCE_TRACE ("IAD_Handler::impl_artifact_descr - reverse");
-        ImplementationArtifactDescription retval;
+        ImplementationArtifactDescription retval {};
 
         retval.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
         retval.UUID (ACE_TEXT_CHAR_TO_TCHAR  (src.UUID.in ()));
 #if 0
-        for (CORBA::ULong i = 0; i < src.location.length (); ++i)
+        for (CORBA::ULong i {}; i < src.location.length (); ++i)
           retval.add_location (src.location[i].in ());
 
-        for (CORBA::ULong i = 0; i < src.dependsOn.length (); ++i)
+        for (CORBA::ULong i {}; i < src.dependsOn.length (); ++i)
           retval.add_dependsOn (NIA_Handler::get_nia (src.dependsOn[i]));
 
-        for (CORBA::ULong i = 0; i < src.execParameter.length (); ++i)
+        for (CORBA::ULong i {}; i < src.execParameter.length (); ++i)
           retval.add_execParameter
             (Property_Handler::get_property (src.execParameter[i]));
 
-        for (CORBA::ULong i = 0; i < src.infoProperty.length (); ++i)
+        for (CORBA::ULong i {}; i < src.infoProperty.length (); ++i)
           retval.add_infoProperty
             (Property_Handler::get_property (src.infoProperty[i]));
 
-        for (CORBA::ULong i = 0; i < src.deployRequirement.length (); ++i)
+        for (CORBA::ULong i {}; i < src.deployRequirement.length (); ++i)
           retval.add_deployRequirement
             (Req_Handler::get_requirement (src.deployRequirement[i]));
 #endif
@@ -104,7 +104,7 @@ namespace DAnCE
       {
         DANCE_TRACE ("IAD_Handler::resolve_iad");
 
-        XML::XML_Helper<> xml_helper;
+        XML::XML_Helper<> xml_helper {};
         std::string const uri_string (uri);
         xercesc::DOMDocument *dom = xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri_string.c_str()));
 

@@ -33,7 +33,7 @@ namespace DAnCE
 
       try
         {
-          CORBA::TypeCode_var tc;
+          CORBA::TypeCode_var tc {};
 
           if (req_tc)
             tc = req_tc;
@@ -83,7 +83,7 @@ namespace DAnCE
         }
 
       // Construct TypeCode for the enum
-      CORBA::EnumMemberSeq members;
+      CORBA::EnumMemberSeq members {};
       members.length (enum_type->member ().size ());
       CORBA::ULong index (0);
 

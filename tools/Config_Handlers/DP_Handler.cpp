@@ -159,7 +159,7 @@ namespace DAnCE
       MDD_Handler::IDREF.unbind_refs ();
       ADD_Handler::IDREF.unbind_refs ();
 
-      size_t len; //Used for checking the length of struct data members
+      size_t len {}; //Used for checking the length of struct data members
 
       // Read in the label, if present, since minoccurs = 0
       if (plan.label != 0)
@@ -177,7 +177,7 @@ namespace DAnCE
 
       // Similar thing for dependsOn
       len = plan.dependsOn.length();
-      for (size_t j = 0; j < len; ++j)
+      for (size_t j {}; j < len; ++j)
         {
           //this->xsc_dp_->add_dependsOn(ID_Handler::
           //impl_dependency(plan.dependsOn[j]));
@@ -185,7 +185,7 @@ namespace DAnCE
 
       // ... And the property stuff
       len = plan.infoProperty.length();
-      for (size_t q = 0; q < len; q++)
+      for (size_t q {}; q < len; q++)
         {
           if (ACE_OS::strcmp (plan.infoProperty[q].name.in (),
                               "CIAOServerResources") == 0)
@@ -219,7 +219,7 @@ namespace DAnCE
 
       //Take care of the artifact(s) if they exist
       len = plan.artifact.length();
-      for(size_t k = 0; k < len; k++)
+      for(size_t k {}; k < len; k++)
         {
           //this->xsc_dp_->add_artifact
           //(ADD_Handler::artifact_deployment_descr (plan.artifact[k]));
@@ -227,7 +227,7 @@ namespace DAnCE
 
       //Take care of the implementation(s) if they exist
       len = plan.implementation.length();
-      for(size_t l = 0; l < len; l++)
+      for(size_t l {}; l < len; l++)
         {
           //this->xsc_dp_->add_implementation
           //(MDD_Handler::mono_deployment_description (plan.implementation[l]));
@@ -235,7 +235,7 @@ namespace DAnCE
 
       //Ditto for the instance(s)
       len = plan.instance.length();
-      for(size_t m = 0; m < len; m++)
+      for(size_t m {}; m < len; m++)
         {
           //this->xsc_dp_->add_instance
           //(IDD_Handler::instance_deployment_descr (plan.instance[m]));
@@ -243,7 +243,7 @@ namespace DAnCE
 
       //Finally, take care of the Connection Planning
       len = plan.connection.length();
-      for(size_t n = 0; n < len; n++)
+      for(size_t n {}; n < len; n++)
         {
           //this->xsc_dp_->add_connection
           //(PCD_Handler::get_PlanConnectionDescription (plan.connection[n]));

@@ -64,7 +64,7 @@ namespace DAnCE
       this->idl_domain_->node.length (len);
 
       //Resource _resource;
-      int i =0;
+      int i {};
       for (auto iter = domain_.node ().begin (); iter != domain_.node ().end (); ++iter,++i )
         {
           // Node* thisNode = (Node*)iter;
@@ -79,7 +79,7 @@ namespace DAnCE
           CORBA::ULong const res_len = iter->resource ().size ();
           this->idl_domain_->node[i].resource.length (res_len);
 
-          int res_id=0;
+          int res_id {};
           // FOR EACH RESOURCE ....
           for (auto res_iter = iter->resource ().begin (); res_iter != iter->resource ().end (); res_iter++, res_id++)
             {
@@ -89,7 +89,7 @@ namespace DAnCE
               CORBA::ULong const resource_type_len = res_iter->resourceType ().size ();
               this->idl_domain_->node[i].resource[res_id].resourceType.length (resource_type_len);
 
-              int res_type_id =0;
+              int res_type_id {};
 
               // FOR EACH RESOURCE TYPE
               for (auto res_type_iter =
@@ -104,7 +104,7 @@ namespace DAnCE
               CORBA::ULong const property_len = res_iter->property ().size ();
               this->idl_domain_->node[i].resource[res_id].property.length (property_len);
 
-              //              int property_id =0;
+              //              int property_id {};
 
               CORBA::ULong property_index {};
               for (auto const& source_item : res_iter->property ())
@@ -124,7 +124,7 @@ namespace DAnCE
               this->idl_domain_->node[i].resource[res_id].property[property_id].kind = ::Deployment::Quantity;
 
               Any the_any = property_iter->value ();
-              CORBA::Any a_corba_any;
+              CORBA::Any a_corba_any {};
               Any_Handler::extract_into_any (the_any , a_corba_any);
               this->idl_domain_->node[i].resource[res_id].property[property_id].value
               = a_corba_any;

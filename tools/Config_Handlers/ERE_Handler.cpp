@@ -14,7 +14,7 @@ namespace DAnCE
       DANCE_TRACE("ERE_Handler::external_ref_endpoints");
       auto erep_e = src.externalReference ().end ();
 
-      CORBA::ULong pos = 0;
+      CORBA::ULong pos {};
       dest.length (src.externalReference ().size ());
       for (auto erep_b = src.externalReference ().begin (); erep_b != erep_e; ++erep_b)
         {

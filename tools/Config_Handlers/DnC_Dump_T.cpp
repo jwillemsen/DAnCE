@@ -32,7 +32,7 @@ namespace Deployment
 
       const CORBA::Any &val = Dump_Obj::desc (root);
 
-      const ROOT *t = 0;
+      ROOT const* t {};
 
       val >>= t;
 
@@ -56,14 +56,14 @@ namespace Deployment
         (LM_DEBUG, "%s%s:\n",
            Dump_Obj::indent(), caption));
 
-      CORBA::Any val;
+      CORBA::Any val {};
       val <<= root;
 
-      for (size_t i = 0; i < seq.length(); ++i)
+      for (size_t i {}; i < seq.length(); ++i)
         {
           const CORBA::Any &val = Dump_Obj::desc (root);
 
-          const ROOT *t = 0;
+          ROOT const* t {};
 
           val >>= t;
 
@@ -88,7 +88,7 @@ namespace Deployment
         {
           Dump_Obj dump_obj(caption);
 
-          for (CORBA::ULong i = 0; i < size; ++i)
+          for (CORBA::ULong i {}; i < size; ++i)
             {
               DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
                 (LM_DEBUG, "%s%s %d:\n", Dump_Obj::indent(),

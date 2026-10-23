@@ -26,7 +26,7 @@ namespace DAnCE
 
       try
         {
-          CORBA::TypeCode_var tc;
+          CORBA::TypeCode_var tc {};
 
           if (req_tc)
             tc = req_tc;

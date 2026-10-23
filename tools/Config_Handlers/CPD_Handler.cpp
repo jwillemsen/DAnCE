@@ -72,10 +72,10 @@ namespace DAnCE
 
       XMLSchema::string<char> tval ("true");
       XMLSchema::string<char> fval ("false");
-      XMLSchema::boolean provider;
-      XMLSchema::boolean exclusiveProvider;
-      XMLSchema::boolean exclusiveUser;
-      XMLSchema::boolean optional;
+      XMLSchema::boolean provider {};
+      XMLSchema::boolean exclusiveProvider {};
+      XMLSchema::boolean exclusiveUser {};
+      XMLSchema::boolean optional {};
 
       if (src.provider)
         provider = true;
@@ -136,7 +136,7 @@ namespace DAnCE
             name.c_str ()));
         }
 
-      for (CORBA::ULong i = 0; i < src.supportedType.length (); ++i)
+      for (CORBA::ULong i {}; i < src.supportedType.length (); ++i)
         {
           //cpd.add_supportedType (XMLSchema::string<char> ((src.supportedType[i])));
         }

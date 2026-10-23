@@ -40,10 +40,10 @@ namespace DAnCE
     get_spe (::Deployment::SubcomponentPortEndpoint const& src)
     {
       DANCE_TRACE("SPE_Handler::get_spe - reverse");
-      std::string str;
+      std::string str {};
       SID_Handler::IDREF.find_ref (src.instanceRef, str);
 
-      IdRef xid;
+      IdRef xid {};
       xid.idref (str.c_str ());
 
       return SubcomponentPortEndpoint (ACE_TEXT_CHAR_TO_TCHAR (src.portName.in ()), xid);
@@ -88,18 +88,18 @@ namespace DAnCE
 
       AssemblyConnectionDescription retval (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
 #if 0
-      for (CORBA::ULong i = 0; i < src.deployRequirement.length (); ++i)
+      for (CORBA::ULong i {}; i < src.deployRequirement.length (); ++i)
         retval.add_deployRequirement (Req_Handler::get_requirement (src.deployRequirement[i]));
 
-      for (CORBA::ULong i = 0; i < src.internalEndpoint.length (); ++i)
+      for (CORBA::ULong i {}; i < src.internalEndpoint.length (); ++i)
         retval.add_internalEndpoint
           (SPE_Handler::get_spe (src.internalEndpoint[i]));
 
-      for (CORBA::ULong i = 0; i < src.externalEndpoint.length (); ++i)
+      for (CORBA::ULong i {}; i < src.externalEndpoint.length (); ++i)
         retval.add_externalEndpoint
           (CEPE_Handler::external_port_endpoint (src.externalEndpoint[i]));
 
-      for (CORBA::ULong i = 0; i < src.externalReference.length (); ++i)
+      for (CORBA::ULong i {}; i < src.externalReference.length (); ++i)
         retval.add_externalReference
           (ERE_Handler::external_ref_endpoint (src.externalReference[i]));
 #endif
@@ -132,10 +132,10 @@ namespace DAnCE
     get_spr (::Deployment::SubcomponentPropertyReference const& src)
     {
       DANCE_TRACE("SPR_HAndler::get_spr - reverse");
-      std::string str;
+      std::string str {};
       SID_Handler::IDREF.find_ref (src.instanceRef, str);
 
-      IdRef xid;
+      IdRef xid {};
       xid.idref (str.c_str ());
       return SubcomponentPropertyReference (ACE_TEXT_CHAR_TO_TCHAR (src.propertyName.in ()), xid);
     }
@@ -167,7 +167,7 @@ namespace DAnCE
         ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()),
         ACE_TEXT_CHAR_TO_TCHAR (src.externalName.in ()));
 #if 0
-      for (CORBA::ULong i = 0; i < src.delegatesTo.length (); ++i)
+      for (CORBA::ULong i {}; i < src.delegatesTo.length (); ++i)
         retval.add_delegatesTo (SPR_Handler::get_spr (src.delegatesTo[i]));
 #endif
       return retval;
@@ -205,16 +205,16 @@ namespace DAnCE
       {
         DANCE_TRACE("CAD_Handler::component_assem_descr - reverse");
 
-        ComponentAssemblyDescription retval;
+        ComponentAssemblyDescription retval {};
 #if 0
-        for (CORBA::ULong i = 0; i < src.instance.length (); ++i)
+        for (CORBA::ULong i {}; i < src.instance.length (); ++i)
           retval.add_instance
             (SID_Handler::sub_comp_inst_descr (src.instance[i]));
 
-        for (CORBA::ULong i = 0; i < src.connection.length (); ++i)
+        for (CORBA::ULong i {}; i < src.connection.length (); ++i)
           retval.add_connection (ACD_Handler::get_acd (src.connection[i]));
 
-        for (CORBA::ULong i = 0; i < src.externalProperty.length (); ++i)
+        for (CORBA::ULong i {}; i < src.externalProperty.length (); ++i)
           retval.add_externalProperty (APM_Handler::get_apm (src.externalProperty[i]));
 #endif
         return retval;

@@ -22,7 +22,7 @@ namespace DAnCE
     {
       DANCE_TRACE("DynString_Handler::extract_into_dynany");
 
-      CORBA::TypeCode_var tc;
+      CORBA::TypeCode_var tc {};
       if (req_tc)
         tc = req_tc;
       else

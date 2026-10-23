@@ -20,7 +20,7 @@ namespace DAnCE
       DANCE_TRACE("DP_PCD_Handler::plan_connection_descrs");
       auto cci_e = src.connection ().end ();
 
-      CORBA::ULong pos = 0;
+      CORBA::ULong pos {};
       dest.length (src.connection ().size ());
       for (auto cci_b = src.connection ().begin (); cci_b != cci_e; ++cci_b)
         {
@@ -60,7 +60,7 @@ namespace DAnCE
       // @@MAJO: Need to figure how to use this.
       if (desc.deployedResource_if_set ())
         {
-          CRDD_Handler crddhandler;
+          CRDD_Handler crddhandler {};
 
           toconfig.deployedResource.length (toconfig.deployedResource.length () + 1);
 
@@ -74,7 +74,7 @@ namespace DAnCE
 
           // @@ MAJO: Not sure how to use this
           //Create the handler for the requirements.
-          Requirement_Handler reqhandler;
+          Requirement_Handler reqhandler {};
 
           //Increase the sequence length and delgate
           //the Requirement to the Req_Handler.

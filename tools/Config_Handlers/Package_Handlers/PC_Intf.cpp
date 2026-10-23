@@ -32,7 +32,7 @@ namespace DAnCE
 
       PackageConfiguration pc = packageConfiguration (dom);
 
-      Deployment::PackageConfiguration idl_pc;
+      Deployment::PackageConfiguration idl_pc {};
 
       STD_PCD_Handler pcd_handler (helper.get ());
 

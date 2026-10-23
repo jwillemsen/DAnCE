@@ -107,9 +107,9 @@ namespace DAnCE
             (PCD_Handler::package_config (src.specializedConfig[0]));
         else if (src.importedPackage.length () == 1)
           {
-            ComponentPackageImport const ci;
+            ComponentPackageImport const ci {};
 #if 0
-            for (CORBA::ULong i = 0; i < src.importedPackage[0].location.length (); ++i)
+            for (CORBA::ULong i {}; i < src.importedPackage[0].location.length (); ++i)
               ci.add_location (src.importedPackage[0].location[i].in ());
 #endif
             retval.importedPackage (ci);
@@ -125,11 +125,11 @@ namespace DAnCE
             retval.referencedPackage (cpr);
           }
 #if 0
-        for (CORBA::ULong i = 0; i < src.selectRequirement.length (); ++i)
+        for (CORBA::ULong i {}; i < src.selectRequirement.length (); ++i)
           retval.add_selectRequirement
             (Req_Handler::get_requirement (src.selectRequirement[i]));
 
-        for (CORBA::ULong i = 0; i < src.configProperty.length (); ++i)
+        for (CORBA::ULong i {}; i < src.configProperty.length (); ++i)
           retval.add_configProperty
             (Property_Handler::get_property (src.configProperty[i]));
 #endif

@@ -53,10 +53,10 @@ namespace DAnCE
 
       Capability retval (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
 #if 0
-      for (CORBA::ULong i = 0; i < src.resourceType.length (); ++i)
+      for (CORBA::ULong i {}; i < src.resourceType.length (); ++i)
         retval.add_resourceType (src.resourceType[i].in ());
 
-      for (CORBA::ULong i = 0; i < src.property.length (); ++i)
+      for (CORBA::ULong i {}; i < src.property.length (); ++i)
         retval.add_property (SatisfierProperty_Handler::get_sat_property (src.property[i]));
 #endif
       return retval;
@@ -158,7 +158,7 @@ namespace DAnCE
 
       retval.componentPort (ACE_TEXT_CHAR_TO_TCHAR (src.componentPort.in ()));
 #if 0
-      for (CORBA::ULong i = 0; i < src.property.length (); ++i)
+      for (CORBA::ULong i {}; i < src.property.length (); ++i)
         retval.add_property (Property_Handler::get_property (src.property[i]));
 #endif
       return retval;
@@ -199,21 +199,21 @@ namespace DAnCE
     {
       DANCE_TRACE ("MID_Handler::get_mid - reverse");
 
-      MonolithicImplementationDescription retval;
+      MonolithicImplementationDescription retval {};
 #if 0
-      for (CORBA::ULong i = 0; i < src.nodeExecParameter.length (); ++i)
+      for (CORBA::ULong i {}; i < src.nodeExecParameter.length (); ++i)
         retval.add_nodeExecParameter
           (Property_Handler::get_property (src.nodeExecParameter[i]));
 
-      for (CORBA::ULong i = 0; i < src.componentExecParameter.length (); ++i)
+      for (CORBA::ULong i {}; i < src.componentExecParameter.length (); ++i)
         retval.add_componentExecParameter
           (Property_Handler::get_property (src.componentExecParameter[i]));
 
-      for (CORBA::ULong i = 0; i < src.deployRequirement.length (); ++i)
+      for (CORBA::ULong i {}; i < src.deployRequirement.length (); ++i)
         retval.add_deployRequirement
           (IR_Handler::get_ir (src.deployRequirement[i]));
 
-      for (CORBA::ULong i = 0; i < src.primaryArtifact.length (); ++i)
+      for (CORBA::ULong i {}; i < src.primaryArtifact.length (); ++i)
         retval.add_primaryArtifact
           (NIA_Handler::get_nia (src.primaryArtifact[i]));
 #endif
@@ -230,7 +230,7 @@ namespace DAnCE
         DANCE_TRACE ("CID_Handler::component_impl_descr");
 
         ComponentImplementationDescription const* cid {};
-        std::unique_ptr<ComponentImplementationDescription> xsc_cid;
+        std::unique_ptr<ComponentImplementationDescription> xsc_cid {};
 
         ::XMLSchema::string<char> const* href_if_set_ptr = desc.href_if_set ();
         if (href_if_set_ptr)
@@ -291,7 +291,7 @@ namespace DAnCE
 
         // dependsOn
         toconfig.dependsOn.length (cid->dependsOn ().size ());
-        CORBA::ULong pos = 0;
+        CORBA::ULong pos {};
         for (auto i = cid->dependsOn ().begin (); i != cid->dependsOn ().end (); ++i)
           toconfig.dependsOn[pos++].requiredType = i->requiredType ().c_str ();
 
@@ -309,7 +309,7 @@ namespace DAnCE
       {
         DANCE_TRACE ("CID_Handler::component_impl_descr - reverse");
 
-        ComponentImplementationDescription retval;
+        ComponentImplementationDescription retval {};
 
         retval.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
         retval.UUID (ACE_TEXT_CHAR_TO_TCHAR (src.UUID.in ()));
@@ -332,17 +332,17 @@ namespace DAnCE
                          "either a required assemblyImpl or monolithicImpl, "\
                          "or has too many"));
 #if 0
-        for (CORBA::ULong i = 0; i < src.configProperty.length (); ++i)
+        for (CORBA::ULong i {}; i < src.configProperty.length (); ++i)
           {
             retval.add_configProperty (Property_Handler::get_property (src.configProperty[i]));
           }
 
-        for (CORBA::ULong i = 0; i < src.dependsOn.length (); ++i)
+        for (CORBA::ULong i {}; i < src.dependsOn.length (); ++i)
           {
             retval.add_dependsOn (ImplementationDependency (src.dependsOn[i].requiredType.in ()));
           }
 
-        for (CORBA::ULong i = 0; i < src.infoProperty.length (); ++i)
+        for (CORBA::ULong i {}; i < src.infoProperty.length (); ++i)
           {
             retval.add_infoProperty (Property_Handler::get_property (src.infoProperty[i]));
           }
@@ -354,7 +354,7 @@ namespace DAnCE
       {
         DANCE_TRACE ("CID_Handler::resolve_cid");
 
-        XML::XML_Helper<> xml_helper;
+        XML::XML_Helper<> xml_helper {};
         std::string const uri_string (uri);
         xercesc::DOMDocument *dom = xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri_string.c_str()));
 

@@ -44,7 +44,7 @@ namespace DAnCE
       {
         DANCE_TRACE ("CPD_Handler::component_package_descr");
 
-        std::unique_ptr<ComponentPackageDescription> xsc_cpd;
+        std::unique_ptr<ComponentPackageDescription> xsc_cpd {};
         ComponentPackageDescription const* cpd {};
 
         ::XMLSchema::string<char> const* href_if_set_ptr = desc.href_if_set ();
@@ -93,7 +93,7 @@ namespace DAnCE
         Deployment::ComponentPackageDescription const& src)
       {
         DANCE_TRACE ("CPD_Handler::component_package_descr - reverse");
-        ComponentPackageDescription toconfig;
+        ComponentPackageDescription toconfig {};
 
         if (src.label.in () != 0)
           toconfig.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
@@ -106,17 +106,17 @@ namespace DAnCE
             (Comp_Intf_Descr_Handler::comp_intf_descr (src.realizes));
         }
 #if 0
-        for (size_t i = 0; i < src.configProperty.length (); ++i)
+        for (size_t i {}; i < src.configProperty.length (); ++i)
           {
             toconfig.add_configProperty (Property_Handler::get_property (src.configProperty[i]));
           }
 
         { // Packaged Component Implementations
-          for (size_t i = 0; i < src.implementation.length (); ++i)
+          for (size_t i {}; i < src.implementation.length (); ++i)
             toconfig.add_implementation (PCI_Handler::get_pci (src.implementation[i]));
         }
 
-        for (size_t i = 0; i < src.infoProperty.length (); ++i)
+        for (size_t i {}; i < src.infoProperty.length (); ++i)
           {
             toconfig.add_infoProperty (Property_Handler::get_property (src.infoProperty[i]));
           }
@@ -128,7 +128,7 @@ namespace DAnCE
         std::string_view uri)
       {
         DANCE_TRACE ("CPD_Handler::resolve_cpd");
-        XML::XML_Helper<> xml_helper;
+        XML::XML_Helper<> xml_helper {};
         if (!xml_helper.is_initialized ())
           return 0;
 

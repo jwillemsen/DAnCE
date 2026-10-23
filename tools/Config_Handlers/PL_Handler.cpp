@@ -27,12 +27,12 @@ namespace DAnCE
           break;
         }
 
-      size_t pos = 0;
+      size_t pos {};
       toconfig.constrainedInstanceRef.length (desc.constrainedInstance ().size ());
 
       for (auto i = desc.constrainedInstance ().begin (); i != desc.constrainedInstance ().end (); ++i)
         {
-          CORBA::ULong tmp = 0;
+          CORBA::ULong tmp {};
           ::XMLSchema::IDREF<char> const* instanceRef = i->idref_if_set ();
           if (!instanceRef)
             throw Config_Error ("", "Constrained instance has no IDREF");

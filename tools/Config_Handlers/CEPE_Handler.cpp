@@ -14,7 +14,7 @@ namespace DAnCE
       DANCE_TRACE("CEOE_Handler::external_port_endpoints");
       auto eeci_e = src.externalEndpoint ().end ();
 
-      CORBA::ULong pos = 0;
+      CORBA::ULong pos {};
       dest.length (src.externalEndpoint ().size ());
       for (auto eeci_b = src.externalEndpoint ().begin (); eeci_b != eeci_e; ++eeci_b)
         {

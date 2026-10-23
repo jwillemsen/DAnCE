@@ -15,7 +15,7 @@ namespace DAnCE
       DANCE_TRACE("PSPE_Handler::sub_component_port_endpoints");
 
       auto iei_e = src.internalEndpoint ().end ();
-      CORBA::ULong pos = 0;
+      CORBA::ULong pos {};
       dest.length (src.internalEndpoint ().size ());
 
       for (auto iei_b = src.internalEndpoint ().begin (); iei_b != iei_e; ++iei_b)
@@ -42,7 +42,7 @@ namespace DAnCE
           dest.provider = false;
         }
 
-      CORBA::ULong tmp = 0;
+      CORBA::ULong tmp {};
 
       ::XMLSchema::IDREF<char> const* instanceRef = src.instance ().idref_if_set ();
       if (!instanceRef)
@@ -92,14 +92,14 @@ namespace DAnCE
       XMLSchema::string<char> pname (src.portName);
       XMLSchema::string<char> tval  ("true");
       XMLSchema::string<char> prov  ("");
-      std::string id;
+      std::string id {};
       IDD_Handler::IDREF.find_ref(src.instanceRef, id);
       XMLSchema::IDREF<char> idref(id.c_str());
 
       if (src.provider)
         prov = tval;
 
-      IdRef idr;
+      IdRef idr {};
       idr.idref (idref);
 
       PlanSubcomponentPortEndpoint pspe (pname, CCMComponentPortKind::Facet, idr);

@@ -21,7 +21,7 @@ namespace DAnCE
       DANCE_TRACE("IDD_Handler::instance_deployment_descrs");
       auto idd_e = src.instance ().end ();
 
-      CORBA::ULong pos = 0;
+      CORBA::ULong pos {};
       dest.length (src.instance ().size ());
       for (auto idd_b = src.instance ().begin (); idd_b != idd_e; ++idd_b)
         {
@@ -59,7 +59,7 @@ namespace DAnCE
           dest.source.length (1);
           dest.source [0] = src.source ().c_str ();
 
-          CORBA::ULong tmp = 0;
+          CORBA::ULong tmp {};
           ::XMLSchema::IDREF<char> const* implementationRef = src.implementation ().idref_if_set ();
           if (!implementationRef)
             throw Config_Error ("", "Instance deployment has no implementation IDREF");
@@ -117,18 +117,18 @@ namespace DAnCE
           XMLSchema::string<char> source_detail (src.source[0]);
           source = source_detail;
         }
-      std::string temp;
+      std::string temp {};
       MDD_Handler::IDREF.find_ref(src.implementationRef, temp);
       XMLSchema::IDREF<char> implementation ((temp.c_str()));
 
       // Instantiate the IDD
-      IdRef xid;
+      IdRef xid {};
       xid.idref (implementation);
       InstanceDeploymentDescription idd (name, node, source, xid);
 
       //Get and store the configProperty(s)
       size_t total = src.configProperty.length();
-      for(size_t j = 0; j < total; j++)
+      for(size_t j {}; j < total; j++)
         {
           //idd.add_configProperty(
           //Property_Handler::get_property (src.configProperty[j]));
@@ -136,7 +136,7 @@ namespace DAnCE
 
       // Get and store the deployedResource(s)
       size_t const dp_total = src.deployedResource.length ();
-      for (size_t k = 0; k < dp_total; k++)
+      for (size_t k {}; k < dp_total; k++)
         {
           //idd.add_deployedResource (IRDD_Handler::
           //instance_resource_deployment_descr (src.deployedResource[k]));
@@ -147,7 +147,7 @@ namespace DAnCE
         idd. deployedSharedResource(IRDD_Handler::instance_resource_deployment_descr(src.deployedSharedResource[0]));
 
       // Generate a UUID to use for the IDREF.
-      ACE_Utils::UUID uuid;
+      ACE_Utils::UUID uuid {};
       ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
       std::string idd_id ("_");
       idd_id += uuid.to_string ()->c_str ();

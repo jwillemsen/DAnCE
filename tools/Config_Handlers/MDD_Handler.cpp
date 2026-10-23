@@ -20,7 +20,7 @@ namespace DAnCE
       DANCE_TRACE("MDD_Handler::mono_deployment_descriptions");
 
       auto imp_e = src.implementation ().end ();
-      CORBA::ULong pos = 0;
+      CORBA::ULong pos {};
       dest.length (src.implementation ().size ());
       for (auto imp_b = src.implementation ().begin (); imp_b != imp_e; ++imp_b)
         {
@@ -40,7 +40,7 @@ namespace DAnCE
 
       auto me = desc.source ().end ();
 
-      CORBA::ULong len = 0;
+      CORBA::ULong len {};
       toconfig.source.length (desc.source ().size ());
       for (auto se = desc.source ().begin (); se != me; ++se)
         {
@@ -52,7 +52,7 @@ namespace DAnCE
       toconfig.artifactRef.length (desc.artifact ().size ());
       for (auto ab = desc.artifact ().begin (); ae != ab; ++ab)
         {
-          CORBA::ULong tmp = 0;
+          CORBA::ULong tmp {};
 
           ::XMLSchema::IDREF<char> const* artifactRef = ab->idref_if_set ();
           if (!artifactRef)
@@ -104,7 +104,7 @@ namespace DAnCE
 
       //Get the source(s) from the IDL and store them
       size_t total = src.source.length();
-      for(size_t i = 0; i < total; i++)
+      for(size_t i {}; i < total; i++)
         {
           XMLSchema::string<char> curr (src.source[i]);
           //mdd.add_source(curr);
@@ -112,18 +112,18 @@ namespace DAnCE
 
       //Get the artifactRef(s) from the IDL and store them
       total = src.artifactRef.length();
-      for(size_t j = 0; j < total; j++)
+      for(size_t j {}; j < total; j++)
         {
-          std::string tmp;
+          std::string tmp {};
           ADD_Handler::IDREF.find_ref(src.artifactRef[j], tmp);
-          IdRef idref;
+          IdRef idref {};
           idref.idref (tmp.c_str ());
           //mdd.add_artifact (idref);
         }
 
       //Get the execParameter(s) from the IDL and store them
       total = src.execParameter.length();
-      for(size_t k = 0; k < total; k++)
+      for(size_t k {}; k < total; k++)
         {
           //mdd.add_execParameter (Property_Handler::
           //get_property (src.execParameter[k]));
@@ -131,14 +131,14 @@ namespace DAnCE
 
       //Get the deployRequirement(s) from the IDL and store them
       total = src.deployRequirement.length();
-      for(size_t l = 0; l < total; l++)
+      for(size_t l {}; l < total; l++)
         {
           //mdd.add_deployRequirement(Req_Handler::
           //get_requirement (src.deployRequirement[l]));
         }
 
       // Generate a UUID to use for the IDREF.
-      ACE_Utils::UUID uuid;
+      ACE_Utils::UUID uuid {};
       ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
       std::string mdd_id ("_");
       mdd_id += uuid.to_string ()->c_str ();

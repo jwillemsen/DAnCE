@@ -26,7 +26,7 @@ namespace DAnCE
       if (!sequenceType)
         throw Config_Error ("", "Expected sequence type information");
 
-      CORBA::TypeCode_var tc;
+      CORBA::TypeCode_var tc {};
       if (req_tc)
         tc = req_tc;
       else
@@ -36,8 +36,8 @@ namespace DAnCE
       DynamicAny::DynAny_var const temp = DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
       DynamicAny::DynSequence_var retval = DynamicAny::DynSequence::_narrow (temp.in ());
 
-      DynamicAny::DynAnySeq dynseq;
-      CORBA::ULong pos = 0;
+      DynamicAny::DynAnySeq dynseq {};
+      CORBA::ULong pos {};
 
       switch (sequenceType->elementType ().kind ().integral ())
         {

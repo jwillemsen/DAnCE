@@ -23,7 +23,7 @@ namespace DAnCE
     {
       void PCD_Handler::package_config (ACE_TCHAR const* uri, ::Deployment::PackageConfiguration &toconfig)
       {
-        XML::XML_Helper<> xml_helper;
+        XML::XML_Helper<> xml_helper {};
         XERCES_CPP_NAMESPACE::DOMDocument *dom = xml_helper.create_dom (uri);
 
         if (dom == 0)
@@ -38,7 +38,7 @@ namespace DAnCE
         if (root == XML::XStr (
                     ACE_TEXT ("Deployment:topLevelPackageDescription")))
           {
-            TopLevelPackageDescription tpd;
+            TopLevelPackageDescription tpd {};
 
             tpd = reader::topLevelPackageDescription (dom);
 
@@ -49,7 +49,7 @@ namespace DAnCE
           }
         else if (root == XML::XStr (ACE_TEXT ("Deployment:packageConfiguration")))
           {
-            PackageConfiguration pcd;
+            PackageConfiguration pcd {};
             pcd = reader::packageConfiguration (dom);
             PCD_Handler::package_config (pcd, toconfig);
           }
@@ -70,9 +70,9 @@ namespace DAnCE
       void PCD_Handler::package_config (PackageConfiguration const& desc, ::Deployment::PackageConfiguration &toconfig)
       {
         DANCE_TRACE ("PCD_Handler::package_config");
-        std::unique_ptr<PackageConfiguration> xsc_pcd;
+        std::unique_ptr<PackageConfiguration> xsc_pcd {};
 
-        PackageConfiguration const* pcd;
+        PackageConfiguration const* pcd {};
 
         ::XMLSchema::string<char> const* contentLocation_if_set_ptr = desc.contentLocation_if_set ();
         if (contentLocation_if_set_ptr)
@@ -131,10 +131,10 @@ namespace DAnCE
           }
 #if 0
         // @@ MAJO: Support other elements present here.
-        for (CORBA::ULong i = 0; i < src.configProperty.length (); ++i)
+        for (CORBA::ULong i {}; i < src.configProperty.length (); ++i)
           pcd.add_configProperty (Property_Handler::get_property (src.configProperty[i]));
 
-        for (CORBA::ULong i = 0; i < src.selectRequirement.length (); ++i)
+        for (CORBA::ULong i {}; i < src.selectRequirement.length (); ++i)
           pcd.add_selectRequirement (Req_Handler::get_requirement (src.selectRequirement[i]));
 #endif
         return pcd;
@@ -143,7 +143,7 @@ namespace DAnCE
 
       PackageConfiguration * PCD_Handler::resolve_package_config (std::string_view uri)
       {
-        XML::XML_Helper<> xml_helper;
+        XML::XML_Helper<> xml_helper {};
         std::string const uri_string (uri);
         xercesc::DOMDocument* dom = xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri_string.c_str()));
 

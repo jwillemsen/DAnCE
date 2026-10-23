@@ -15,7 +15,7 @@ namespace DAnCE
       DANCE_TRACE("ESD_Handler::instance_deployment_descrs");
       auto esd_e = src.instance ().end ();
 
-      CORBA::ULong pos = 0;
+      CORBA::ULong pos {};
       dest.length (src.instance ().size ());
       for (auto esd_b = src.instance ().begin (); esd_b != esd_e; ++esd_b)
         {

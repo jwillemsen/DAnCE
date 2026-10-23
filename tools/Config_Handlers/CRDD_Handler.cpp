@@ -49,7 +49,7 @@ namespace DAnCE
 
       ConnectionResourceDeploymentDescription crdd (tname, reqname, resname);
 
-      for (CORBA::ULong i = 0; i != src.property.length (); ++i)
+      for (CORBA::ULong i {}; i != src.property.length (); ++i)
         {
           //crdd.add_property (Property_Handler::get_property (src.property[i]));
         }

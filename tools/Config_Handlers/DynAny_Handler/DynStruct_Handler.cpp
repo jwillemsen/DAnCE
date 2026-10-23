@@ -43,14 +43,14 @@ namespace DAnCE
 
       try
         {
-          CORBA::TypeCode_var tc;
+          CORBA::TypeCode_var tc {};
 
           if (req_tc)
             tc = req_tc;
           else
             tc = DynStruct_Handler::create_typecode (type);
 
-          std::map <std::string, DataType const*> dt_map;
+          std::map <std::string, DataType const*> dt_map {};
           create_type_map (type, dt_map);
 
           // Make the actual DynStruct
@@ -58,7 +58,7 @@ namespace DAnCE
           DynamicAny::DynStruct_var retval = DynamicAny::DynStruct::_narrow (temp.in ());
 
           CORBA::ULong pos {};
-          DynamicAny::NameDynAnyPairSeq values;
+          DynamicAny::NameDynAnyPairSeq values {};
           values.length (value.member ().size ());
 
           for (auto i = value.member ().begin (); i != value.member ().end (); ++i)
@@ -97,7 +97,7 @@ namespace DAnCE
       std::string const rid (struct_type->typeId ());
       std::string const name (struct_type->name ());
 
-      CORBA::StructMemberSeq members;
+      CORBA::StructMemberSeq members {};
       members.length (struct_type->member ().size ());
       CORBA::ULong pos {};
 

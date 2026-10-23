@@ -26,7 +26,7 @@ namespace Deployment
       {
         Dump_Obj dump_obj (caption);
 
-        for (CORBA::ULong i = 0; i < size; ++i)
+        for (CORBA::ULong i {}; i < size; ++i)
           {
             DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "%s%s %d:\n",
                         Dump_Obj::indent(), caption, i));
@@ -192,7 +192,7 @@ namespace Deployment
   void DnC_Dump::dump (const ::Deployment::Domain &domain)
   {
     DANCE_TRACE("DnC_Dump::dump");
-    CORBA::Any val;
+    CORBA::Any val {};
     val <<= domain;
 
     Dump_Obj dump_obj ("Domain",
@@ -667,7 +667,7 @@ namespace Deployment
 
   void DnC_Dump::dump(const Deployment::DeploymentPlan &plan)
   {
-    CORBA::Any val;
+    CORBA::Any val {};
 
     val <<= plan;
 
@@ -718,7 +718,7 @@ namespace Deployment
 
     dump ("portName", spe.portName);
     int value = spe.instanceRef;
-    const ::Deployment::ComponentAssemblyDescription *v = 0;
+    ::Deployment::ComponentAssemblyDescription const* v {};
     const CORBA::Any &a =
       Dump_Obj::desc ("ComponentAssemblyDescription");
 
@@ -751,7 +751,7 @@ namespace Deployment
     dump ("propertyName", spr.propertyName);
     int value = spr.instanceRef;
 
-    const ::Deployment::ComponentAssemblyDescription *v = 0;
+    ::Deployment::ComponentAssemblyDescription const* v {};
 
     const CORBA::Any &a =
       Dump_Obj::desc ("ComponentAssemblyDescription");
@@ -777,7 +777,7 @@ namespace Deployment
 
   void DnC_Dump::dump (const ::Deployment::ComponentAssemblyDescription& cad)
   {
-    CORBA::Any a;
+    CORBA::Any a {};
     a <<= cad;
 
     Dump_Obj dump_obj ("ComponentAssemblyDescription",
@@ -935,7 +935,7 @@ namespace Deployment
       {
       case CORBA::tk_short:
         {
-          CORBA::Short temp;
+          CORBA::Short temp {};
           if (! (any >>= temp))
             {
               DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
@@ -961,7 +961,7 @@ encoded different type"));
         break;
       case CORBA::tk_long:
         {
-          CORBA::Long temp;
+          CORBA::Long temp {};
           if (! (any >>= temp))
             {
               DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
@@ -977,7 +977,7 @@ encoded with different type"));
 
       case CORBA::tk_ushort:
         {
-          CORBA::UShort temp;
+          CORBA::UShort temp {};
           if (! (any >>= temp))
             {
               DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
@@ -993,7 +993,7 @@ encoded with different type"));
 
       case CORBA::tk_ulong:
         {
-          CORBA::ULong temp;
+          CORBA::ULong temp {};
           if (! (any >>= temp))
             {
               DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
@@ -1009,7 +1009,7 @@ encoded with different type"));
 
       case CORBA::tk_float:
         {
-          CORBA::Float temp;
+          CORBA::Float temp {};
           if (! (any >>= temp))
             {
               DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
@@ -1024,7 +1024,7 @@ encoded with different type"));
         break;
       case CORBA::tk_double:
         {
-          CORBA::Double temp;
+          CORBA::Double temp {};
           if (! (any >>= temp))
             {
               DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
@@ -1039,7 +1039,7 @@ encoded with different type"));
         break;
       case CORBA::tk_boolean:
         {
-          CORBA::Boolean temp;
+          CORBA::Boolean temp {};
           if (! (any >>= CORBA::Any::to_boolean (temp)))
             {
               DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
@@ -1059,7 +1059,7 @@ encoded with different type"));
 
       case CORBA::tk_char:
         {
-          CORBA::Char temp;
+          CORBA::Char temp {};
           if (! (any >>= CORBA::Any::to_char (temp)))
             {
               DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
@@ -1075,7 +1075,7 @@ encoded with different type"));
 
       case CORBA::tk_octet:
         {
-          CORBA::Octet temp;
+          CORBA::Octet temp {};
           if (! (any >>= CORBA::Any::to_octet (temp)))
             {
               DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
@@ -1091,7 +1091,7 @@ encoded with different type"));
 
       case CORBA::tk_string:
         {
-          const char * temp = 0;
+          char const* temp {};
           if (! (any >>= temp))
             {
               DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
@@ -1106,7 +1106,7 @@ encoded with different type"));
         break;
       case CORBA::tk_longlong:
         {
-          CORBA::LongLong temp;
+          CORBA::LongLong temp {};
           if (! (any >>= temp))
             {
               DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
@@ -1122,7 +1122,7 @@ encoded with different type"));
 
       case CORBA::tk_longdouble:
         {
-          CORBA::LongDouble temp;
+          CORBA::LongDouble temp {};
           if (! (any >>= temp))
             {
               DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
@@ -1138,7 +1138,7 @@ encoded with different type"));
         break;
       case CORBA::tk_wchar:
         {
-          CORBA::WChar temp;
+          CORBA::WChar temp {};
           if (! (any >>= CORBA::Any::to_wchar (temp)))
             {
               DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
@@ -1154,7 +1154,7 @@ encoded with different type"));
 
       case CORBA::tk_wstring:
         {
-          const CORBA::WChar * temp;
+          CORBA::WChar const* temp {};
           if (! (any >>= temp))
             {
               DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,

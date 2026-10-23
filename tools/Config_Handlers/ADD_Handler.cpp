@@ -18,7 +18,7 @@ namespace DAnCE
 
         auto aci_e = src.artifact ().end ();
         dest.length (src.artifact ().size ());
-        CORBA::ULong pos = 0;
+        CORBA::ULong pos {};
         for (auto aci_b = src.artifact ().begin (); aci_e != aci_b; ++aci_b)
           {
             ADD_Handler::artifact_deployment_descr (*aci_b, dest[pos], pos);
@@ -40,7 +40,7 @@ namespace DAnCE
         auto end = src.location ().end ();
 
         dest.location.length (src.location ().size ());
-        CORBA::ULong len = 0;
+        CORBA::ULong len {};
         for (auto start = src.location ().begin (); start != end; ++start)
           {
             dest.location[len++] = start->c_str ();
@@ -81,7 +81,7 @@ namespace DAnCE
         // @@ MAJO: Don't know how to handle this.
         if (src.deployRequirement_if_set ())
           {
-            Req_Handler handler;
+            Req_Handler handler {};
             add.deployRequirement.length (add.deployRequirement.length () + 1);
             handler.get_Requirement (
                                      add.deployRequirement[add.deployRequirement.length () - 1],
@@ -90,7 +90,7 @@ namespace DAnCE
 
         if (src.deployedResource_if_set ())
           {
-            RDD_Handler handler;
+            RDD_Handler handler {};
             add.deployedResource.length (add.deployedResource.length () + 1);
             handler.get_ResourceDeploymentDescription (
                                                        add.deployedResource[add.deployedResource.length () - 1],
@@ -112,7 +112,7 @@ namespace DAnCE
 
         //Get the location(s) and store it/them in the add
         size_t total = src.location.length ();
-        for (size_t i = 0; i < total; ++i)
+        for (size_t i {}; i < total; ++i)
           {
             XMLSchema::string<char> curr (src.location[i]);
             //add.add_location (curr);
@@ -120,7 +120,7 @@ namespace DAnCE
 
         //As above, for the source(s)
         total = src.source.length ();
-        for (size_t j = 0; j < total; ++j)
+        for (size_t j {}; j < total; ++j)
           {
             XMLSchema::string<char> curr (src.source[j]);
             //add.add_source (curr);
@@ -128,13 +128,13 @@ namespace DAnCE
 
         //As above for the execParameter(s)
         total = src.execParameter.length ();
-        for (size_t k = 0; k < total; ++k)
+        for (size_t k {}; k < total; ++k)
           {
             //add.add_execParameter (Property_Handler::get_property (src.execParameter[k]));
           }
 
         // Generate a UUID to use for the IDREF.
-        ACE_Utils::UUID uuid;
+        ACE_Utils::UUID uuid {};
         ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
         std::string add_id ("_");
         add_id += uuid.to_string ()->c_str ();

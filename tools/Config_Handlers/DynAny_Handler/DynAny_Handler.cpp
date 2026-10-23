@@ -19,7 +19,7 @@ namespace DAnCE
     {
       DANCE_TRACE("DynAny_Handler::constructor");
 
-      int argc = 0;
+      int argc {};
       char **argv {};
 
       orb_ = CORBA::ORB_init (argc, argv);
@@ -60,7 +60,7 @@ namespace DAnCE
     {
       DANCE_TRACE("DynAny_Handler::extract_into_dynany");
 
-      DynamicAny::DynAny_var retval;
+      DynamicAny::DynAny_var retval {};
 
       if (req_tc)
         retval = this->daf_->create_dyn_any_from_type_code (req_tc);
@@ -112,7 +112,7 @@ namespace DAnCE
               {
                 retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_short);
               }
-            CORBA::Short s = 0;
+            CORBA::Short s {};
             if (!value._cxx_short ().empty ())
               {
                 s = value._cxx_short ().front ();
@@ -127,7 +127,7 @@ namespace DAnCE
               {
                 retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_long);
               }
-            CORBA::Long l = 0;
+            CORBA::Long l {};
             if (!value._cxx_long ().empty ())
               {
                 l = value._cxx_long ().front ();
@@ -142,7 +142,7 @@ namespace DAnCE
               {
                 retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_ushort);
               }
-            CORBA::UShort us = 0;
+            CORBA::UShort us {};
             if (!value.ushort ().empty ())
               {
                 us = value.ushort ().front ();
@@ -157,7 +157,7 @@ namespace DAnCE
               {
                 retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_ulong);
               }
-            CORBA::ULong ul = 0;
+            CORBA::ULong ul {};
             if (!value.ulong ().empty ())
               {
                 ul = value.ulong ().front ();
@@ -217,7 +217,7 @@ namespace DAnCE
               {
                 retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_octet);
               }
-            CORBA::Octet o = 0;
+            CORBA::Octet o {};
             if (!value.octet ().empty ())
               {
                 o = value.octet ().front ();
@@ -232,7 +232,7 @@ namespace DAnCE
               {
                 retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_longlong);
               }
-            CORBA::LongLong ll = 0;
+            CORBA::LongLong ll {};
             if (!value.longlong ().empty ())
               {
                 ll = value.longlong ().front ();
@@ -247,7 +247,7 @@ namespace DAnCE
               {
                 retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_ulonglong);
               }
-            CORBA::ULongLong ull = 0;
+            CORBA::ULongLong ull {};
             if (!value.ulonglong ().empty ())
               {
                 ull = value.ulonglong ().front ();
@@ -265,7 +265,7 @@ namespace DAnCE
               {
                 retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_char);
               }
-            CORBA::Char c = 0;
+            CORBA::Char c {};
             if (!value.string ().empty ())
               {
                 c = *value.string ().front ().c_str ();
@@ -280,7 +280,7 @@ namespace DAnCE
               {
                 retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_wchar);
               }
-            CORBA::WChar wc = 0;
+            CORBA::WChar wc {};
             if (!value.string ().empty ())
               {
                 ::XMLSchema::string<char> const& character_value = value.string ().front ();
@@ -345,7 +345,7 @@ namespace DAnCE
 
       DynamicAny::DynAny_var const dyn = this->daf_->create_dyn_any (any);
 
-      DataValue const val;
+      DataValue const val {};
       Any retval (TCKind::tk_char, val);
       return retval;
     }
