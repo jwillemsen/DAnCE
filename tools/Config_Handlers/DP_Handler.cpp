@@ -94,19 +94,21 @@ namespace DAnCE
       this->idl_dp_.reset (tmp);
 
       // Read in the label, if present, since minoccurs = 0
-      if (xsc_dp.label_if_set ())
+      ::XMLSchema::string<char> const* label_if_set_ptr = xsc_dp.label_if_set ();
+      if (label_if_set_ptr)
         {
           this->idl_dp_->label =
             CORBA::string_dup (
-              xsc_dp.label_if_set ()->c_str ());
+              label_if_set_ptr->c_str ());
         }
 
       // Read in the UUID, if present
-      if (xsc_dp.UUID_if_set ())
+      ::XMLSchema::string<char> const* UUID_if_set_ptr = xsc_dp.UUID_if_set ();
+      if (UUID_if_set_ptr)
         {
           this->idl_dp_->UUID =
             CORBA::string_dup (
-              xsc_dp.UUID_if_set ()->c_str ());
+              UUID_if_set_ptr->c_str ());
         }
 
       // Similar thing for dependsOn
@@ -138,10 +140,11 @@ namespace DAnCE
         }
 
       // Read in the realizes, if present
-      if (xsc_dp.realizes_if_set ())
+      ::DAnCE::Config_Handlers::ComponentInterfaceDescription const* realizes_if_set_ptr = xsc_dp.realizes_if_set ();
+      if (realizes_if_set_ptr)
         {
           CCD_Handler::component_interface_descr (
-                            *xsc_dp.realizes_if_set (),
+                            *realizes_if_set_ptr,
                             this->idl_dp_->realizes);
         }
 
@@ -241,7 +244,9 @@ namespace DAnCE
       // @@ in ../dance/Deployment/Deployment_Data.idl
       // @@ so we can check for length
       this->xsc_dp_->realizes(CCD_Handler::component_interface_descr(plan.realizes));
-      if (!this->xsc_dp_->realizes_if_set())
+      ::DAnCE::Config_Handlers::ComponentInterfaceDescription const*
+        realizes_if_set_ptr_2 = this->xsc_dp_->realizes_if_set ();
+      if (!realizes_if_set_ptr_2)
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR,
                       "(%P|%t) DP_Handler: "

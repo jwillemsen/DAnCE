@@ -35,8 +35,9 @@ namespace DAnCE
       DANCE_TRACE("ERE_Handler::external_ref_endpoint");
       dest.location =  src.location ().c_str ();
       dest.provider = src.provider ();
-      if (src.portName_if_set ())
-        dest.portName = src.portName_if_set ()->c_str ();
+      ::XMLSchema::string<char> const* portName_if_set_ptr = src.portName_if_set ();
+      if (portName_if_set_ptr)
+        dest.portName = portName_if_set_ptr->c_str ();
       dest.supportedType.length (src.count_supportedType ());
       std::for_each (src.begin_supportedType (),
                      src.end_supportedType (),

@@ -38,9 +38,11 @@ namespace DAnCE
       dest.portName =
         src.portName ().c_str ();
 
-      if (src.provider_if_set ())
+
+      ::XMLSchema::string<char> const* provider_if_set_ptr = src.provider_if_set ();
+      if (provider_if_set_ptr)
         {
-          dest.provider = *src.provider_if_set () == "true";
+          dest.provider = *provider_if_set_ptr == "true";
         }
       else
         {
@@ -49,8 +51,14 @@ namespace DAnCE
 
       CORBA::ULong tmp = 0;
 
+      ::XMLSchema::IDREF<char> const* instanceRef =
+        src.instance ().idref_if_set ();
+      if (!instanceRef)
+        throw Config_Error (ACE_TEXT (""),
+                            ACE_TEXT ("Plan subcomponent port endpoint has no instance IDREF"));
+
       IDD_Handler::IDREF.find_ref (
-        std::string (src.instance ().idref_if_set ()->id ().c_str ()), tmp);
+        instanceRef->id ().c_str (), tmp);
 
       dest.instanceRef = tmp;
 

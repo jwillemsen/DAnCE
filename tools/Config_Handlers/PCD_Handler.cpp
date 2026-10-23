@@ -36,11 +36,12 @@ namespace DAnCE
       //to the first position in the IDL type's sequence. We
       //make sure that the source is present before lengthening
       //the sequence.
-      if (desc.source_if_set ())
+      ::XMLSchema::string<char> const* source_if_set_ptr = desc.source_if_set ();
+      if (source_if_set_ptr)
         {
           // Only one.....
           toconfig.source.length (1);
-          toconfig.source[0] = desc.source_if_set ()->c_str ();
+          toconfig.source[0] = source_if_set_ptr->c_str ();
         }
 
       toconfig.deployRequirement.length (desc.count_deployRequirement ());

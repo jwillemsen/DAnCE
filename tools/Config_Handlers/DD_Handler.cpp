@@ -82,13 +82,16 @@ namespace DAnCE
 
       // Read in the name
       // Check if the label is there or not
-      if (domain_.label_if_set ())
+      ::XMLSchema::string<char> const* label_if_set_ptr = domain_.label_if_set ();
+      if (label_if_set_ptr)
         this->idl_domain_->label =
-          CORBA::string_dup (domain_.label_if_set ()->c_str ());
+          CORBA::string_dup (label_if_set_ptr->c_str ());
 
-      if (domain_.UUID_if_set ())
+
+      ::XMLSchema::string<char> const* UUID_if_set_ptr = domain_.UUID_if_set ();
+      if (UUID_if_set_ptr)
         this->idl_domain_->UUID =
-          CORBA::string_dup (domain_.UUID_if_set ()->c_str ());
+          CORBA::string_dup (UUID_if_set_ptr->c_str ());
 
       CORBA::ULong len = domain_.count_node ();
       this->idl_domain_->node.length (len);
@@ -104,9 +107,11 @@ namespace DAnCE
           this->idl_domain_->node[i].name =
             CORBA::string_dup (iter->name ().c_str ());
 
-          if (iter->label_if_set ())
+
+          ::XMLSchema::string<char> const* label_if_set_ptr_2 = iter->label_if_set ();
+          if (label_if_set_ptr_2)
             this->idl_domain_->node[i].label =
-              CORBA::string_dup (iter->label_if_set ()->c_str ());
+              CORBA::string_dup (label_if_set_ptr_2->c_str ());
 
           // length is hard-coded for now ...
           // here iterate over the resources ...

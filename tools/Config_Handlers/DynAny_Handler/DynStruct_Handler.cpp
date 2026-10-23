@@ -20,9 +20,15 @@ namespace DAnCE
     {
       DANCE_TRACE("Config_Handlers::create_type_map");
 
+      ::DAnCE::Config_Handlers::StructType const* structType =
+        type.struct__if_set ();
+      if (!structType)
+        throw Config_Error (ACE_TEXT (""),
+                            ACE_TEXT ("Expected struct type information"));
+
       for (StructType::member_const_iterator i =
-             (*type.struct__if_set ()).begin_member ();
-           i != (*type.struct__if_set ()).end_member (); ++i)
+             structType->begin_member ();
+           i != structType->end_member (); ++i)
         {
           dt_map[i->name ()] = &(i->type ());
         }
@@ -34,6 +40,12 @@ namespace DAnCE
                                             CORBA::TypeCode_ptr req_tc)
     {
       DANCE_TRACE("DynStruct_Handler::extract_into_dynany");
+
+      ::DAnCE::Config_Handlers::StructType const* structType =
+        type.struct__if_set ();
+      if (!structType)
+        throw Config_Error (ACE_TEXT (""),
+                            ACE_TEXT ("Expected struct type information"));
 
       try
         {
@@ -74,13 +86,12 @@ namespace DAnCE
         }
       catch (Config_Error &ex)
         {
-          if (type.struct__if_set ())
-            ex.add_name ((*type.struct__if_set ()).typeId ());
+          ex.add_name (structType->typeId ());
           throw ex;
         }
       catch (...)
         {
-          throw Config_Error ((*type.struct__if_set ()).typeId (),
+          throw Config_Error (structType->typeId (),
                               ACE_TEXT ("Unknown exception"));
         }
     }
@@ -91,7 +102,9 @@ namespace DAnCE
     {
       DANCE_TRACE("DynStruct_Handler::create_typecode");
 
-      if (!type.struct__if_set ())
+
+      ::DAnCE::Config_Handlers::StructType const* struct__if_set_ptr_2 = type.struct__if_set ();
+      if (!struct__if_set_ptr_2)
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR,
@@ -101,16 +114,16 @@ namespace DAnCE
                       "incorrect\n"));
         }
 
-      std::string rid ((*type.struct__if_set ()).typeId ());
-      std::string name ((*type.struct__if_set ()).name ());
+      std::string rid ((*struct__if_set_ptr_2).typeId ());
+      std::string name ((*struct__if_set_ptr_2).name ());
 
       CORBA::StructMemberSeq members;
-      members.length ((*type.struct__if_set ()).count_member ());
+      members.length ((*struct__if_set_ptr_2).count_member ());
       CORBA::ULong pos (0);
 
       for (StructType::member_const_iterator i =
-        (*type.struct__if_set ()).begin_member ();
-           i != (*type.struct__if_set ()).end_member (); ++i)
+        (*struct__if_set_ptr_2).begin_member ();
+           i != (*struct__if_set_ptr_2).end_member (); ++i)
         {
           members[pos].name = i->name ().c_str ();
           members[pos].type = DYNANY_HANDLER->create_typecode (i->type ());
@@ -123,7 +136,7 @@ namespace DAnCE
           name.c_str (),
           members);
 
-      DYNANY_HANDLER->register_typecode ((*type.struct__if_set ()).typeId (), tc.in ());
+      DYNANY_HANDLER->register_typecode ((*struct__if_set_ptr_2).typeId (), tc.in ());
 
       return tc._retn ();
     }

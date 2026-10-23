@@ -23,6 +23,12 @@ namespace DAnCE
     {
       DANCE_TRACE("DynEnum_Handler::extract_into_dynany");
 
+      ::DAnCE::Config_Handlers::EnumType const* enumType =
+        type.enum__if_set ();
+      if (!enumType)
+        throw Config_Error (ACE_TEXT (""),
+                            ACE_TEXT ("Expected enum type information"));
+
       try
         {
           CORBA::TypeCode_var tc;
@@ -49,16 +55,15 @@ namespace DAnCE
             (LM_ERROR,
               ACE_TEXT ("Invalid value provided in XML when trying to ")
               ACE_TEXT ("initialize an instance of enumerated type %s\n"),
-              (*type.enum__if_set ()).typeId ().c_str ()));
-          throw Config_Error ((*type.enum__if_set ()).typeId (),
+              enumType->typeId ().c_str ()));
+          throw Config_Error (enumType->typeId (),
                               ACE_TEXT ("Invalid value provided in XML"));
         }
       catch (Config_Error &ex)
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, ACE_TEXT ("DynEnum_Handler caught Config_Error\n")));
-          if (type.enum__if_set ())
-            ex.add_name ((*type.enum__if_set ()).typeId ());
+          ex.add_name (enumType->typeId ());
 
           throw ex;
         }
@@ -66,7 +71,7 @@ namespace DAnCE
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, ACE_TEXT ("DynEnum_Handler caught unknown exception\n")));
-          throw Config_Error ((*type.enum__if_set ()).typeId (),
+          throw Config_Error (enumType->typeId (),
                               ACE_TEXT ("Unknown exception"));
         }
     }
@@ -76,7 +81,9 @@ namespace DAnCE
     {
       DANCE_TRACE("DynEnum_Handler::create_typecode");
 
-      if (!type.enum__if_set ())
+
+      ::DAnCE::Config_Handlers::EnumType const* enum__if_set_ptr_2 = type.enum__if_set ();
+      if (!enum__if_set_ptr_2)
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, ACE_TEXT ("ERROR: Enum type description required")));
@@ -87,11 +94,11 @@ namespace DAnCE
 
       // Construct TypeCode for the enum
       CORBA::EnumMemberSeq members;
-      members.length ((*type.enum__if_set ()).count_member ());
+      members.length ((*enum__if_set_ptr_2).count_member ());
       CORBA::ULong index (0);
 
-      for (EnumType::member_const_iterator i = (*type.enum__if_set ()).begin_member ();
-           i != (*type.enum__if_set ()).end_member ();
+      for (EnumType::member_const_iterator i = (*enum__if_set_ptr_2).begin_member ();
+           i != (*enum__if_set_ptr_2).end_member ();
            ++i)
         {
           members[index++] = CORBA::string_dup (
@@ -100,11 +107,11 @@ namespace DAnCE
 
       CORBA::TypeCode_var tc =
         DYNANY_HANDLER->orb ()->create_enum_tc (
-          (*type.enum__if_set ()).typeId ().c_str (),
-          (*type.enum__if_set ()).name ().c_str (),
+          (*enum__if_set_ptr_2).typeId ().c_str (),
+          (*enum__if_set_ptr_2).name ().c_str (),
           members);
 
-      DYNANY_HANDLER->register_typecode (((*type.enum__if_set ()).typeId ()),
+      DYNANY_HANDLER->register_typecode (((*enum__if_set_ptr_2).typeId ()),
                                          tc.in ());
 
       return tc._retn ();

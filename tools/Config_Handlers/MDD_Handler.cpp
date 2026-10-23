@@ -70,8 +70,12 @@ namespace DAnCE
         {
           CORBA::ULong tmp = 0;
 
-          ADD_Handler::IDREF.find_ref (std::string (ab->idref_if_set ()->id ().c_str ()),
-                                       tmp);
+          ::XMLSchema::IDREF<char> const* artifactRef = ab->idref_if_set ();
+          if (!artifactRef)
+            throw Config_Error (ACE_TEXT (""),
+                                ACE_TEXT ("Artifact reference has no IDREF"));
+
+          ADD_Handler::IDREF.find_ref (artifactRef->id ().c_str (), tmp);
 
           toconfig.artifactRef[len++] = tmp;
         }
@@ -95,9 +99,10 @@ namespace DAnCE
                      Requirement_Functor (toconfig.deployRequirement));
 
       // Handle the idref
-      if (desc.id_if_set ())
+      ::XMLSchema::ID<char> const* id_if_set_ptr = desc.id_if_set ();
+      if (id_if_set_ptr)
         {
-          std::string cstr (desc.id_if_set ()->c_str ());
+          std::string cstr (id_if_set_ptr->c_str ());
 
           MDD_Handler::IDREF.bind_ref (cstr, pos);
         }

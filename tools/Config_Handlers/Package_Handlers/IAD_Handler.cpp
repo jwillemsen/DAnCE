@@ -27,20 +27,27 @@ namespace DAnCE
         const ImplementationArtifactDescription *iad = 0;
         std::auto_ptr <ImplementationArtifactDescription> safe_iad;
 
-        if (desc.href_if_set ())
+
+        ::XMLSchema::string<char> const* href_if_set_ptr = desc.href_if_set ();
+        if (href_if_set_ptr)
           {
-            safe_iad.reset (IAD_Handler::resolve_iad (desc.href_if_set ()->c_str ()));
+            safe_iad.reset (IAD_Handler::resolve_iad (href_if_set_ptr->c_str ()));
             iad = safe_iad.get ();
           }
         else
           iad = &desc;
 
 
-        if (iad->label_if_set ())
-          toconfig.label = iad->label_if_set ()->c_str ();
 
-        if (iad->UUID_if_set ())
-          toconfig.UUID = iad->UUID_if_set ()->c_str ();
+
+        ::XMLSchema::string<char> const* label_if_set_ptr = iad->label_if_set ();
+        if (label_if_set_ptr)
+          toconfig.label = label_if_set_ptr->c_str ();
+
+
+        ::XMLSchema::string<char> const* UUID_if_set_ptr = iad->UUID_if_set ();
+        if (UUID_if_set_ptr)
+          toconfig.UUID = UUID_if_set_ptr->c_str ();
 
         toconfig.location.length (iad->count_location ());
         std::for_each (iad->begin_location (),

@@ -26,45 +26,56 @@ namespace DAnCE
         DANCE_TRACE ("SID_Handler::sub_comp_inst_descr");
         toconfig.name = desc.name ().c_str ();
 
-        if (desc.basePackage_if_set ())
+        ::DAnCE::Config_Handlers::PackageConfiguration const* specializedConfig =
+          desc.specializedConfig_if_set ();
+        ::DAnCE::Config_Handlers::ComponentPackageImport const* importedPackage =
+          desc.importedPackage_if_set ();
+        ::DAnCE::Config_Handlers::ComponentPackageReference const* referencedPackage =
+          desc.referencedPackage_if_set ();
+
+        ::DAnCE::Config_Handlers::ComponentPackageDescription const*
+          basePackage_if_set_ptr = desc.basePackage_if_set ();
+        if (basePackage_if_set_ptr)
           {
             toconfig.basePackage.length (1);
-            CPD_Handler::handle_component_package_descr (*desc.basePackage_if_set (),
+            CPD_Handler::handle_component_package_descr (*basePackage_if_set_ptr,
                                                   toconfig.basePackage[0]);
           }
-        else if (desc.specializedConfig_if_set ())
+        else if (specializedConfig)
           {
             toconfig.specializedConfig.length (1);
-            PCD_Handler::package_config (*desc.specializedConfig_if_set (),
+            PCD_Handler::package_config (*specializedConfig,
                                          toconfig.specializedConfig[0]);
           }
-        else if (desc.importedPackage_if_set ())
+        else if (importedPackage)
           {
             toconfig.importedPackage.length (1);
             toconfig.importedPackage[0].location.length (
-              desc.importedPackage_if_set ()->count_location ());
+              importedPackage->count_location ());
 
-            std::for_each (desc.importedPackage_if_set ()->begin_location (),
-                           desc.importedPackage_if_set ()->end_location (),
+            std::for_each (importedPackage->begin_location (),
+                           importedPackage->end_location (),
                            String_Seq_Functor (
                              toconfig.importedPackage[0].location));
           }
-        else if (desc.referencedPackage_if_set ())
+        else if (referencedPackage)
           {
             toconfig.referencedPackage.length (1);
 
-            if (desc.referencedPackage_if_set ()->requiredUUID_if_set ())
+            ::XMLSchema::string<char> const* requiredUUID =
+              referencedPackage->requiredUUID_if_set ();
+            if (requiredUUID)
               toconfig.referencedPackage[0].requiredUUID =
+                requiredUUID->c_str ();
 
-                  desc.referencedPackage_if_set ()->requiredUUID_if_set ()->c_str ();
-
-            if (desc.referencedPackage_if_set ()->requiredName_if_set ())
+            ::XMLSchema::string<char> const* requiredName =
+              referencedPackage->requiredName_if_set ();
+            if (requiredName)
               toconfig.referencedPackage[0].requiredName =
-
-                  desc.referencedPackage_if_set ()->requiredName_if_set ()->c_str ();
+                requiredName->c_str ();
 
             Comp_Intf_Descr_Handler::comp_intf_descr (
-              desc.referencedPackage_if_set ()->requiredType (),
+              referencedPackage->requiredType (),
               toconfig.referencedPackage[0].requiredType);
 
           }
@@ -79,9 +90,11 @@ namespace DAnCE
                        desc.end_configProperty (),
                        Property_Functor (toconfig.configProperty));
 
-        if (desc.id_if_set ())
+
+        ::XMLSchema::ID<char> const* id_if_set_ptr = desc.id_if_set ();
+        if (id_if_set_ptr)
           {
-            std::string str (desc.id_if_set ()->c_str ());
+            std::string str (id_if_set_ptr->c_str ());
             SID_Handler::IDREF.bind_next_available (str);
           }
         else

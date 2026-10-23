@@ -47,9 +47,11 @@ namespace DAnCE
           dest.name =  src.name ().c_str ();
           dest.node =  src.node ().c_str ();
 
-          if (src.id_if_set ())
+
+          ::XMLSchema::ID<char> const* id_if_set_ptr = src.id_if_set ();
+          if (id_if_set_ptr)
             {
-              std::string cstr (src.id_if_set ()->c_str ());
+              std::string cstr (id_if_set_ptr->c_str ());
               IDD_Handler::IDREF.bind_ref (cstr, pos);
             }
           else
@@ -65,8 +67,14 @@ namespace DAnCE
             src.source ().c_str ();
 
           CORBA::ULong tmp = 0;
+          ::XMLSchema::IDREF<char> const* implementationRef =
+            src.implementation ().idref_if_set ();
+          if (!implementationRef)
+            throw Config_Error (ACE_TEXT (""),
+                                ACE_TEXT ("Instance deployment has no implementation IDREF"));
+
           MDD_Handler::IDREF.find_ref (
-            std::string (src.implementation ().idref_if_set ()->id ().c_str ()), tmp);
+            implementationRef->id ().c_str (), tmp);
 
           dest.implementationRef = tmp;
 
@@ -80,10 +88,13 @@ namespace DAnCE
                          src.end_deployedResource (),
                          IRDD_Functor (dest.deployedResource));
 
-          if (src.deployedSharedResource_if_set ())
+
+          ::DAnCE::Config_Handlers::InstanceResourceDeploymentDescription const*
+            deployedSharedResource_if_set_ptr = src.deployedSharedResource_if_set ();
+          if (deployedSharedResource_if_set_ptr)
             {
               dest.deployedSharedResource.length (1);
-              IRDD_Handler::handle_irdd (*src.deployedSharedResource_if_set (),
+              IRDD_Handler::handle_irdd (*deployedSharedResource_if_set_ptr,
                                          dest.deployedSharedResource[0]);
             }
 

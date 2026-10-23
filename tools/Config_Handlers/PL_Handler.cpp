@@ -38,7 +38,12 @@ namespace DAnCE
            ++i)
         {
           CORBA::ULong tmp = 0;
-          IDD_Handler::IDREF.find_ref (i->idref_if_set ()->id ().c_str (), tmp);
+          ::XMLSchema::IDREF<char> const* instanceRef = i->idref_if_set ();
+          if (!instanceRef)
+            throw Config_Error (ACE_TEXT (""),
+                                ACE_TEXT ("Constrained instance has no IDREF"));
+
+          IDD_Handler::IDREF.find_ref (instanceRef->id ().c_str (), tmp);
 
           toconfig.constrainedInstanceRef[pos] = tmp;
           ++pos;

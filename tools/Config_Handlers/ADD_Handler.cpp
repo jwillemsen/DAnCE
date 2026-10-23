@@ -83,9 +83,11 @@ namespace DAnCE
                                                dest.execParameter[len++]);
           }
 
-        if (src.id_if_set ())
+
+        ::XMLSchema::ID<char> const* id_if_set_ptr = src.id_if_set ();
+        if (id_if_set_ptr)
           {
-            std::string cstr (src.id_if_set ()->c_str ());
+            std::string cstr (id_if_set_ptr->c_str ());
 
             ADD_Handler::IDREF.bind_ref (cstr,pos);
           }

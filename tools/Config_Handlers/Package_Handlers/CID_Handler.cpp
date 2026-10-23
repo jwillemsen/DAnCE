@@ -76,9 +76,11 @@ namespace DAnCE
     {
       DANCE_TRACE ("IR_Handler::get_ir");
 
-      if (desc.resourceUsage_if_set ())
+
+      ::DAnCE::Config_Handlers::ResourceUsageKind const* resourceUsage_if_set_ptr = desc.resourceUsage_if_set ();
+      if (resourceUsage_if_set_ptr)
         {
-          switch (desc.resourceUsage_if_set ()->integral ())
+          switch (resourceUsage_if_set_ptr->integral ())
         {
         case ResourceUsageKind::None_l:
           toconfig.resourceUsage = Deployment::None;
@@ -107,11 +109,15 @@ namespace DAnCE
         }
         }
 
-      if (desc.resourcePort_if_set ())
-        toconfig.resourcePort = desc.resourcePort_if_set ()->c_str ();
 
-      if (desc.componentPort_if_set  ())
-        toconfig.componentPort = desc.componentPort_if_set ()->c_str ();
+      ::XMLSchema::string<char> const* resourcePort_if_set_ptr = desc.resourcePort_if_set ();
+      if (resourcePort_if_set_ptr)
+        toconfig.resourcePort = resourcePort_if_set_ptr->c_str ();
+
+
+      ::XMLSchema::string<char> const* componentPort_if_set_ptr = desc.componentPort_if_set ();
+      if (componentPort_if_set_ptr)
+        toconfig.componentPort = componentPort_if_set_ptr->c_str ();
 
       toconfig.resourceType =  desc.resourceType ().c_str ();
       toconfig.name =  desc.name ().c_str ();
@@ -257,38 +263,52 @@ namespace DAnCE
         const ComponentImplementationDescription *cid = 0;
         std::auto_ptr <ComponentImplementationDescription> xsc_cid;
 
-        if (desc.href_if_set ())
+
+        ::XMLSchema::string<char> const* href_if_set_ptr = desc.href_if_set ();
+        if (href_if_set_ptr)
           {
-            xsc_cid.reset (CID_Handler::resolve_cid (desc.href_if_set ()->c_str ()));
+            xsc_cid.reset (CID_Handler::resolve_cid (href_if_set_ptr->c_str ()));
             cid = xsc_cid.get ();
           }
         else
           cid = &desc;
 
-        if (cid->label_if_set ())
-          toconfig.label = cid->label_if_set ()->c_str ();
 
-        if (cid->UUID_if_set ())
-          toconfig.UUID = cid->UUID_if_set ()->c_str ();
+        ::XMLSchema::string<char> const* label_if_set_ptr = cid->label_if_set ();
+        if (label_if_set_ptr)
+          toconfig.label = label_if_set_ptr->c_str ();
 
-        if (cid->implements_if_set ())
+
+        ::XMLSchema::string<char> const* UUID_if_set_ptr = cid->UUID_if_set ();
+        if (UUID_if_set_ptr)
+          toconfig.UUID = UUID_if_set_ptr->c_str ();
+
+
+        ::DAnCE::Config_Handlers::ComponentInterfaceDescription const*
+          implements_if_set_ptr = cid->implements_if_set ();
+        if (implements_if_set_ptr)
           {
             // MAJO: We should be able to assume this exists,
             //fix broken interpeters..
-            Comp_Intf_Descr_Handler::comp_intf_descr (*cid->implements_if_set (),
+            Comp_Intf_Descr_Handler::comp_intf_descr (*implements_if_set_ptr,
                                                       toconfig.implements);
           }
 
-        if (cid->assemblyImpl_if_set ())
+
+        ::DAnCE::Config_Handlers::ComponentAssemblyDescription const*
+          assemblyImpl_if_set_ptr = cid->assemblyImpl_if_set ();
+        ::DAnCE::Config_Handlers::MonolithicImplementationDescription const* monolithicImpl =
+          cid->monolithicImpl_if_set ();
+        if (assemblyImpl_if_set_ptr)
           {
             toconfig.assemblyImpl.length (1);
-            CAD_Handler::component_assem_descr (*cid->assemblyImpl_if_set (),
+            CAD_Handler::component_assem_descr (*assemblyImpl_if_set_ptr,
                                                 toconfig.assemblyImpl[0]);
           }
-        else if (cid->monolithicImpl_if_set ())
+        else if (monolithicImpl)
           {
             toconfig.monolithicImpl.length (1);
-            MID_Handler::handle_mid (*cid->monolithicImpl_if_set (),
+            MID_Handler::handle_mid (*monolithicImpl,
                      toconfig.monolithicImpl[0]);
           }
         else

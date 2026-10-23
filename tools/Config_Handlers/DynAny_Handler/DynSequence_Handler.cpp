@@ -22,6 +22,12 @@ namespace DAnCE
     {
       DANCE_TRACE("DynSequence_Handler::extract_into_dynany");
 
+      ::DAnCE::Config_Handlers::SequenceType const* sequenceType =
+        type.sequence_if_set ();
+      if (!sequenceType)
+        throw Config_Error (ACE_TEXT (""),
+                            ACE_TEXT ("Expected sequence type information"));
+
       CORBA::TypeCode_var tc;
       if (req_tc)
         tc = req_tc;
@@ -37,7 +43,7 @@ namespace DAnCE
       DynamicAny::DynAnySeq dynseq;
       CORBA::ULong pos = 0;
 
-      switch ((*type.sequence_if_set ()).elementType ().kind ().integral ())
+      switch (sequenceType->elementType ().kind ().integral ())
         {
           // ========== BASIC TYPES
         case TCKind::tk_null_l:
@@ -78,7 +84,7 @@ namespace DAnCE
                    ++i)
                 {
                   DynamicAny::DynAny_var dynany
-                    (DYNANY_HANDLER->extract_into_dynany ((*type.sequence_if_set ()).elementType (),
+                    (DYNANY_HANDLER->extract_into_dynany (sequenceType->elementType (),
                                                           *i));
                   dynseq[pos++] = dynany->copy ();
                 }
@@ -125,7 +131,9 @@ namespace DAnCE
     {
       DANCE_TRACE("DynSequence_Handler::create_typecode");
 
-      if (!type.sequence_if_set ())
+
+      ::DAnCE::Config_Handlers::SequenceType const* sequence_if_set_ptr = type.sequence_if_set ();
+      if (!sequence_if_set_ptr)
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, ACE_TEXT (
@@ -135,11 +143,13 @@ namespace DAnCE
         }
 
       CORBA::TypeCode_var etc =
-        DYNANY_HANDLER->create_typecode ((*type.sequence_if_set ()).elementType ());
+        DYNANY_HANDLER->create_typecode ((*sequence_if_set_ptr).elementType ());
 
       CORBA::ULong bound (0);
-      if ((*type.sequence_if_set ()).bound_if_set ())
-        bound = *(*type.sequence_if_set ()).bound_if_set ();
+      ::XMLSchema::unsignedInt const* bound_if_set_ptr =
+        sequence_if_set_ptr->bound_if_set ();
+      if (bound_if_set_ptr)
+        bound = *bound_if_set_ptr;
 
       CORBA::TypeCode_var tc =
         DYNANY_HANDLER->orb ()->create_sequence_tc (bound, etc);

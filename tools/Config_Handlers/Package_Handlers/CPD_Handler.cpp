@@ -53,23 +53,30 @@ namespace DAnCE
         std::unique_ptr<ComponentPackageDescription> xsc_cpd;
         const ComponentPackageDescription *cpd = 0;
 
-        if (desc.href_if_set ())
+
+        ::XMLSchema::string<char> const* href_if_set_ptr = desc.href_if_set ();
+        if (href_if_set_ptr)
           {
-            xsc_cpd.reset (CPD_Handler::resolve_cpd (desc.href_if_set ()->c_str ()));
+            xsc_cpd.reset (CPD_Handler::resolve_cpd (href_if_set_ptr->c_str ()));
             cpd = xsc_cpd.get ();
           }
         else
           cpd = &desc;
 
-        if (cpd->label_if_set ())
-          toconfig.label = cpd->label_if_set ()->c_str ();
 
-        if (cpd->UUID_if_set ())
-          toconfig.UUID = cpd->UUID_if_set ()->c_str ();
+        ::XMLSchema::string<char> const* label_if_set_ptr = cpd->label_if_set ();
+        if (label_if_set_ptr)
+          toconfig.label = label_if_set_ptr->c_str ();
+
+
+        ::XMLSchema::string<char> const* UUID_if_set_ptr = cpd->UUID_if_set ();
+        if (UUID_if_set_ptr)
+          toconfig.UUID = UUID_if_set_ptr->c_str ();
 
         // CID
-        if (cpd->realizes_if_set ())
-          Comp_Intf_Descr_Handler::comp_intf_descr (*cpd->realizes_if_set (),
+        ::DAnCE::Config_Handlers::ComponentInterfaceDescription const* realizes_if_set_ptr = cpd->realizes_if_set ();
+        if (realizes_if_set_ptr)
+          Comp_Intf_Descr_Handler::comp_intf_descr (*realizes_if_set_ptr,
                                                     toconfig.realizes);
 
         // Config Properties

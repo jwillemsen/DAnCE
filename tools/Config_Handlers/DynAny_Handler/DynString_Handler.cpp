@@ -57,11 +57,12 @@ namespace DAnCE
         }
 
       CORBA::ULong bound (0);
-      if (type.boundedString_if_set ())
+      ::DAnCE::Config_Handlers::BoundedStringType const* boundedString_if_set_ptr = type.boundedString_if_set ();
+      if (boundedString_if_set_ptr)
         {
-          if ((*type.boundedString_if_set ()).count_bound ())
+          if ((*boundedString_if_set_ptr).count_bound ())
           {
-            bound = *(*type.boundedString_if_set ()).begin_bound ();
+            bound = *(*boundedString_if_set_ptr).begin_bound ();
           }
         }
 

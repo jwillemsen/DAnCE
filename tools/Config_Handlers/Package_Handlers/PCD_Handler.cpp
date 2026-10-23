@@ -78,27 +78,36 @@ namespace DAnCE
 
         const PackageConfiguration *pcd;
 
-        if (desc.contentLocation_if_set ())
+
+        ::XMLSchema::string<char> const* contentLocation_if_set_ptr = desc.contentLocation_if_set ();
+        if (contentLocation_if_set_ptr)
           {
             // Take ownership of the resolved pcd
-            xsc_pcd.reset (PCD_Handler::resolve_package_config (desc.contentLocation_if_set ()->c_str ()));
+            xsc_pcd.reset (PCD_Handler::resolve_package_config (contentLocation_if_set_ptr->c_str ()));
             pcd = xsc_pcd.get ();
           }
         else
           pcd = &desc;
 
-        if (pcd->label_if_set ())
+
+        ::XMLSchema::string<char> const* label_if_set_ptr = pcd->label_if_set ();
+        if (label_if_set_ptr)
           toconfig.label =
-            pcd->label_if_set ()->c_str ();
+            label_if_set_ptr->c_str ();
 
-        if (pcd->UUID_if_set ())
+
+        ::XMLSchema::string<char> const* UUID_if_set_ptr = pcd->UUID_if_set ();
+        if (UUID_if_set_ptr)
           toconfig.UUID =
-            pcd->UUID_if_set ()->c_str ();
+            UUID_if_set_ptr->c_str ();
 
-        if (pcd->basePackage_if_set ())
+
+        ::DAnCE::Config_Handlers::ComponentPackageDescription const*
+          basePackage_if_set_ptr = pcd->basePackage_if_set ();
+        if (basePackage_if_set_ptr)
           {
             toconfig.basePackage.length (1);
-            CPD_Handler::handle_component_package_descr (*pcd->basePackage_if_set (),
+            CPD_Handler::handle_component_package_descr (*basePackage_if_set_ptr,
                                                          toconfig.basePackage [0]);
           }
 

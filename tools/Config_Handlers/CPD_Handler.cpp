@@ -16,9 +16,11 @@ namespace DAnCE
       toconfig.name =
         desc.name ().c_str ();
 
-      if (desc.specificType_if_set ())
+
+      ::XMLSchema::string<char> const* specificType_if_set_ptr = desc.specificType_if_set ();
+      if (specificType_if_set_ptr)
         toconfig.specificType =
-          desc.specificType_if_set ()->c_str ();
+          specificType_if_set_ptr->c_str ();
 
       toconfig.supportedType.length (desc.count_supportedType ());
       std::for_each (desc.begin_supportedType (),

@@ -18,20 +18,25 @@ namespace DAnCE
                                             Deployment::ComponentInterfaceDescription& toconfig)
     {
       DANCE_TRACE("CCD_Handler::component_interface_descr");
-      if (desc.UUID_if_set ())
+      ::XMLSchema::string<char> const* UUID_if_set_ptr = desc.UUID_if_set ();
+      if (UUID_if_set_ptr)
         toconfig.UUID =
-          CORBA::string_dup (desc.UUID_if_set ()->c_str ());
+          CORBA::string_dup (UUID_if_set_ptr->c_str ());
 
-      if (desc.label_if_set ())
+
+      ::XMLSchema::string<char> const* label_if_set_ptr = desc.label_if_set ();
+      if (label_if_set_ptr)
         {
           toconfig.label =
-            CORBA::string_dup (desc.label_if_set ()->c_str ());
+            CORBA::string_dup (label_if_set_ptr->c_str ());
         }
 
-      if (desc.specificType_if_set ())
+
+      ::XMLSchema::string<char> const* specificType_if_set_ptr = desc.specificType_if_set ();
+      if (specificType_if_set_ptr)
         {
           toconfig.specificType =
-            CORBA::string_dup (desc.specificType_if_set ()->c_str ());
+            CORBA::string_dup (specificType_if_set_ptr->c_str ());
         }
 
       ComponentInterfaceDescription::supportedType_const_iterator
