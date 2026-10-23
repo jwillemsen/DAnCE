@@ -49,7 +49,7 @@ namespace Deployment
     DANCE_TRACE ("Dump_Obj::destructor");
 
     indent_.erase(indent_.size() - 2, 2);
-    if (desc_.size() != 0)
+    if (!desc_.empty ())
       {
         if (desc_map_.find(desc_) != desc_map_.end())
           {
