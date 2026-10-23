@@ -70,9 +70,9 @@ namespace DAnCE
           Comp_Intf_Descr_Handler::comp_intf_descr (*realizes_if_set_ptr, toconfig.realizes);
 
         // Config Properties
-        toconfig.configProperty.length (desc.configProperty ().size ());
+        toconfig.configProperty.length (cpd->configProperty ().size ());
         CORBA::ULong configProperty_index = 0;
-        for (auto const& source_item : cpd->infoProperty ())
+        for (auto const& source_item : cpd->configProperty ())
           Property_Handler::handle_property (source_item, toconfig.configProperty[configProperty_index++]);
 
         // Packaged Component Implementations

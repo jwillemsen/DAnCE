@@ -112,6 +112,7 @@ namespace DAnCE
       toconfig.resourceType = desc.resourceType ().c_str ();
       toconfig.name = desc.name ().c_str ();
 
+      toconfig.property.length (desc.property ().size ());
       CORBA::ULong property_index = 0;
       for (auto const& source_item : desc.property ())
         Property_Handler::handle_property (source_item, toconfig.property[property_index++]);
