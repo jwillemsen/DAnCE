@@ -46,7 +46,8 @@ namespace DAnCE
       IdRef xid {};
       xid.idref (str.c_str ());
 
-      return SubcomponentPortEndpoint (ACE_TEXT_CHAR_TO_TCHAR (src.portName.in ()), xid);
+      XMLSchema::string<char> port_name (src.portName.in ());
+      return SubcomponentPortEndpoint (port_name, xid);
     }
       };
 
