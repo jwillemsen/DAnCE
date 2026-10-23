@@ -28,8 +28,8 @@ namespace DAnCE
       ::XMLSchema::IDREF<char> const* instanceRef =
         desc.instance ().idref_if_set ();
       if (!instanceRef)
-        throw Config_Error (ACE_TEXT (""),
-                            ACE_TEXT ("Subcomponent port endpoint has no instance IDREF"));
+        throw Config_Error ("",
+                            "Subcomponent port endpoint has no instance IDREF");
 
       std::string str (instanceRef->id ().c_str ());
       CORBA::ULong pos (0);
@@ -137,8 +137,8 @@ namespace DAnCE
       ::XMLSchema::IDREF<char> const* instanceRef =
         desc.instance ().idref_if_set ();
       if (!instanceRef)
-        throw Config_Error (ACE_TEXT (""),
-                            ACE_TEXT ("Subcomponent property reference has no instance IDREF"));
+        throw Config_Error ("",
+                            "Subcomponent property reference has no instance IDREF");
 
       std::string str (instanceRef->id ().c_str ());
       CORBA::ULong pos (0);

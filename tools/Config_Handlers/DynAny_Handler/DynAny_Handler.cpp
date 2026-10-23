@@ -35,7 +35,7 @@ namespace DAnCE
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, ACE_TEXT ("Unable to narrow Dynamic Any factory\n")));
           throw Config_Error (
-            ACE_TEXT (""), ACE_TEXT ("Unable to narrow DynAny factory"));
+            "", "Unable to narrow DynAny factory");
         }
     }
 
@@ -88,7 +88,7 @@ namespace DAnCE
                                       tkind == TCKind::tk_char_l ||
                                       tkind == TCKind::tk_wchar_l)))
         {
-          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Wrong value type for data type"));
+          throw Config_Error ("", "Wrong value type for data type");
         }
 
       switch (tkind)
@@ -99,8 +99,8 @@ namespace DAnCE
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR,
             ACE_TEXT ("DynAny_Handler::extract_into_dynany - Don't know how to handle null or void types\n")));
-          throw Config_Error (ACE_TEXT (""),
-            ACE_TEXT ("Null or void types not supported"));
+          throw Config_Error ("",
+            "Null or void types not supported");
           break;
 
         case TCKind::tk_short_l:
@@ -324,7 +324,7 @@ namespace DAnCE
         case TCKind::tk_event_l:
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR,
             DLINFO ACE_TEXT ("DynAny_Handler::extract_into_dynany - Type not supported\n")));
-          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Type not supported"));
+          throw Config_Error ("", "Type not supported");
         }
 
       return retval._retn ();
@@ -354,8 +354,8 @@ namespace DAnCE
         case TCKind::tk_void_l:
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_WARNING,
             ACE_TEXT ("I don't know how to handle null or void types\n")));
-          throw Config_Error (ACE_TEXT (""),
-            ACE_TEXT ("Null or void types not supported"));
+          throw Config_Error ("",
+            "Null or void types not supported");
           break;
 
         case TCKind::tk_short_l:
@@ -439,7 +439,7 @@ namespace DAnCE
         case TCKind::tk_event_l:
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, DLINFO ACE_TEXT ("DynAny_Handler::create_typecode - Type not supported\n")));
-          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Type not supported"));
+          throw Config_Error ("", "Type not supported");
         }
 
       return 0;

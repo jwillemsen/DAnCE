@@ -55,7 +55,7 @@ namespace DAnCE
 
       private:
 
-        static ComponentImplementationDescription * resolve_cid (const ACE_TCHAR *uri);
+        static ComponentImplementationDescription * resolve_cid (const char *uri);
       };
     }
   }

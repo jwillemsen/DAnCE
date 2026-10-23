@@ -54,8 +54,8 @@ namespace DAnCE
       ::XMLSchema::IDREF<char> const* instanceRef =
         src.instance ().idref_if_set ();
       if (!instanceRef)
-        throw Config_Error (ACE_TEXT (""),
-                            ACE_TEXT ("Plan subcomponent port endpoint has no instance IDREF"));
+        throw Config_Error ("",
+                            "Plan subcomponent port endpoint has no instance IDREF");
 
       IDD_Handler::IDREF.find_ref (
         instanceRef->id ().c_str (), tmp);

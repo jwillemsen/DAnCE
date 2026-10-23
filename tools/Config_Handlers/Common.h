@@ -19,23 +19,23 @@ namespace DAnCE
     class Config_Error
     {
     public:
-      Config_Error (const std::basic_string<ACE_TCHAR> &name,
-                    const std::basic_string<ACE_TCHAR> &error) :
+      Config_Error (const std::string &name,
+                    const std::string &error) :
         name_ (name),
         error_ (error)
       {};
 
-      void add_name (const std::basic_string<ACE_TCHAR> &name)
+      void add_name (const std::string &name)
       {
-        name_ = name + ACE_TEXT (":") + name_;
+        name_ = name + ":" + name_;
       }
 
       /// Some identifying information about the element that
       /// caused the error
-      std::basic_string<ACE_TCHAR> name_;
+      std::string name_;
 
       /// A human readable error message
-      std::basic_string<ACE_TCHAR> error_;
+      std::string error_;
 
     };
   }

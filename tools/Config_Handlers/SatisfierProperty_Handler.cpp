@@ -60,7 +60,7 @@ namespace DAnCE
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, ACE_TEXT ("Unknown SatisfierPropertyKind\n")));
           throw Config_Error (desc.name (),
-            ACE_TEXT ("Unknown SatisfierPropertyKind"));
+            "Unknown SatisfierPropertyKind");
 
         }
 
@@ -107,7 +107,7 @@ namespace DAnCE
           break;
 
         default:
-          throw Plan_Error (ACE_TEXT ("Invalid SatisfierPropertyKind"));
+          throw Plan_Error ("Invalid SatisfierPropertyKind");
         }
 
       bool dynamic = src.dynamic;

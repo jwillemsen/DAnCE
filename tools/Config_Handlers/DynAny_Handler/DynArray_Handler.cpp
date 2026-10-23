@@ -25,8 +25,8 @@ namespace DAnCE
       ::DAnCE::Config_Handlers::ArrayType const* arrayType =
         type.array_if_set ();
       if (!arrayType)
-        throw Config_Error (ACE_TEXT (""),
-                            ACE_TEXT ("Expected array type information"));
+        throw Config_Error ("",
+                            "Expected array type information");
 
       CORBA::TypeCode_var tc;
       if (req_tc)
@@ -98,7 +98,7 @@ namespace DAnCE
                  ACE_TEXT ("Invalid value provided in XML when trying to ")
                  ACE_TEXT ("populate %ith element of an array\n"),
                  pos));
-              throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Invalid value whilst populating the array."));
+              throw Config_Error ("", "Invalid value whilst populating the array.");
             }
 
         case TCKind::tk_char_l:
@@ -122,7 +122,7 @@ namespace DAnCE
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR,
              DLINFO ACE_TEXT ("DynArray_Handler::extract_into_dynany - Type not supported\n")));
-          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Type not supported"));
+          throw Config_Error ("", "Type not supported");
         }
 
       return retval._retn ();
@@ -140,8 +140,8 @@ namespace DAnCE
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, ACE_TEXT (
               "ERROR: Array type description required")));
-          throw Config_Error (ACE_TEXT (""),
-            ACE_TEXT ("Expected <array> element, incorrect tc_kind."));
+          throw Config_Error ("",
+            "Expected <array> element, incorrect tc_kind.");
         }
 
       CORBA::TypeCode_var etc =

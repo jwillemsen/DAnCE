@@ -25,8 +25,8 @@ namespace DAnCE
       ::DAnCE::Config_Handlers::SequenceType const* sequenceType =
         type.sequence_if_set ();
       if (!sequenceType)
-        throw Config_Error (ACE_TEXT (""),
-                            ACE_TEXT ("Expected sequence type information"));
+        throw Config_Error ("",
+                            "Expected sequence type information");
 
       CORBA::TypeCode_var tc;
       if (req_tc)
@@ -99,7 +99,7 @@ namespace DAnCE
                  ACE_TEXT ("Invalid value provided in XML when trying to ")
                  ACE_TEXT ("populate %ith element of a sequence\n"),
                  pos));
-              throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Invalid value whilst populating the sequence."));
+              throw Config_Error ("", "Invalid value whilst populating the sequence.");
             }
 
         case TCKind::tk_char_l:
@@ -124,7 +124,7 @@ namespace DAnCE
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR,
              DLINFO ACE_TEXT ("DynSequence_Handler::extract_into_dynany - Type not supported\n")));
-          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Type not supported"));
+          throw Config_Error ("", "Type not supported");
         }
 
       return retval._retn ();
@@ -142,8 +142,8 @@ namespace DAnCE
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, ACE_TEXT (
               "ERROR: Sequence type description required")));
-          throw Config_Error (ACE_TEXT (""),
-            ACE_TEXT ("Expected <sequence> element, incorrect tc_kind."));
+          throw Config_Error ("",
+            "Expected <sequence> element, incorrect tc_kind.");
         }
 
       CORBA::TypeCode_var etc =

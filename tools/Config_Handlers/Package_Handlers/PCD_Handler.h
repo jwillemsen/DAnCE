@@ -56,7 +56,7 @@ namespace DAnCE
         static PackageConfiguration package_config (const Deployment::PackageConfiguration& src);
 
       private:
-         static PackageConfiguration *resolve_package_config (const ACE_TCHAR *uri);
+         static PackageConfiguration *resolve_package_config (const char *uri);
       };
     }
 

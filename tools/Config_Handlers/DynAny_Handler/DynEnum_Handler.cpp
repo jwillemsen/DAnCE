@@ -26,12 +26,12 @@ namespace DAnCE
       ::DAnCE::Config_Handlers::EnumType const* enumType =
         type._cxx_enum_if_set ();
       if (!enumType)
-        throw Config_Error (ACE_TEXT (""),
-                            ACE_TEXT ("Expected enum type information"));
+        throw Config_Error ("",
+                            "Expected enum type information");
 
       ::DAnCE::Config_Handlers::DataValue::enum_container_type const& enum_values = value._cxx_enum ();
       if (enum_values.empty ())
-        throw Config_Error (enumType->typeId (), ACE_TEXT ("Enum value required"));
+        throw Config_Error (enumType->typeId (), "Enum value required");
 
       try
         {
@@ -59,7 +59,7 @@ namespace DAnCE
               ACE_TEXT ("Invalid value provided in XML when trying to ")
               ACE_TEXT ("initialize an instance of enumerated type %s\n"),
               enumType->typeId ().c_str ()));
-          throw Config_Error (enumType->typeId (), ACE_TEXT ("Invalid value provided in XML"));
+          throw Config_Error (enumType->typeId (), "Invalid value provided in XML");
         }
       catch (Config_Error &ex)
         {
@@ -74,7 +74,7 @@ namespace DAnCE
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, ACE_TEXT ("DynEnum_Handler caught unknown exception\n")));
           throw Config_Error (enumType->typeId (),
-                              ACE_TEXT ("Unknown exception"));
+                              "Unknown exception");
         }
     }
 
@@ -89,7 +89,7 @@ namespace DAnCE
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, ACE_TEXT ("ERROR: Enum type description required")));
-          throw Config_Error (ACE_TEXT (""),
+          throw Config_Error ("",
             ACE_TEXT ("Did not find expected enum type description,"\
                       "tk_kind may be wrong."));
         }

@@ -151,22 +151,22 @@ namespace DAnCE
       }
 
       ComponentInterfaceDescription *
-      Comp_Intf_Descr_Handler::resolve_cid (const ACE_TCHAR *uri)
+      Comp_Intf_Descr_Handler::resolve_cid (const char *uri)
       {
         DANCE_TRACE ("Comp_Intf_Descr_Handler::resolve_cid");
 
         XML::XML_Helper<> xml_helper;
-        xercesc::DOMDocument *dom = xml_helper.create_dom (uri);
+        xercesc::DOMDocument *dom = xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri));
 
         if (!dom)
-          throw Parse_Error (ACE_TEXT ("Unable to create DOM for Component Interface Description."));
+          throw Parse_Error ("Unable to create DOM for Component Interface Description.");
 
         try {
           return new ComponentInterfaceDescription
             (reader::componentInterfaceDescription (dom));
         }
         catch (...) {
-          throw Parse_Error (ACE_TEXT ("Unable to create XSC structure for Component Interface Description"));
+          throw Parse_Error ("Unable to create XSC structure for Component Interface Description");
         }
       }
     }

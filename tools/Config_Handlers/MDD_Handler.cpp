@@ -72,8 +72,8 @@ namespace DAnCE
 
           ::XMLSchema::IDREF<char> const* artifactRef = ab->idref_if_set ();
           if (!artifactRef)
-            throw Config_Error (ACE_TEXT (""),
-                                ACE_TEXT ("Artifact reference has no IDREF"));
+            throw Config_Error ("",
+                                "Artifact reference has no IDREF");
 
           ADD_Handler::IDREF.find_ref (artifactRef->id ().c_str (), tmp);
 

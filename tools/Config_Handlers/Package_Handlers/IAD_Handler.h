@@ -54,7 +54,7 @@ namespace DAnCE
         static ImplementationArtifactDescription
         impl_artifact_descr (const Deployment::ImplementationArtifactDescription& src);
 
-        static ImplementationArtifactDescription * resolve_iad (const ACE_TCHAR *uri);
+        static ImplementationArtifactDescription * resolve_iad (const char *uri);
       };
     }
   }

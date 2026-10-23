@@ -21,8 +21,8 @@ namespace DAnCE
         pos_map_.bind (value,id);
 
         if (retval < 0)
-          throw Config_Error (ACE_TEXT_CHAR_TO_TCHAR (id.c_str ()),
-                              ACE_TEXT ("Failed to bind an IDRef.  This likely indicates a name clash."));
+          throw Config_Error (id.c_str (),
+                              "Failed to bind an IDRef.  This likely indicates a name clash.");
       }
 
       template <typename T>
@@ -43,8 +43,8 @@ namespace DAnCE
         ++this->next_;
 
         if (retval < 0 || pos_retval < 0)
-          throw Config_Error (ACE_TEXT_CHAR_TO_TCHAR (id.c_str ()),
-                              ACE_TEXT ("Failed to bind an IDRef.  This likely indicates a name clash"));
+          throw Config_Error (id.c_str (),
+                              "Failed to bind an IDRef.  This likely indicates a name clash");
 
       }
 
@@ -58,8 +58,8 @@ namespace DAnCE
           idref_map_.find (id, val);
 
         if (retval < 0)
-          throw Config_Error (ACE_TEXT_CHAR_TO_TCHAR (id.c_str ()),
-                              ACE_TEXT ("Unable to look up an IDRef."));
+          throw Config_Error (id.c_str (),
+                              "Unable to look up an IDRef.");
       }
 
       template <typename T>
@@ -75,8 +75,8 @@ namespace DAnCE
         //            value));
 
         if (retval < 0)
-          throw Config_Error (ACE_TEXT ("No location information for reverse IDREF lookup"),
-                              ACE_TEXT_CHAR_TO_TCHAR (id.c_str ()));
+          throw Config_Error ("No location information for reverse IDREF lookup",
+                              id.c_str ());
       }
 
       template <typename T>

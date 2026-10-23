@@ -12,31 +12,7 @@ namespace DAnCE
 {
   namespace Config_Handlers
   {
-    /*
-    DD_Handler::DD_Handler (const ACE_TCHAR *file) :
-      idl_domain_ (nullptr),
-      domain_ptr_ (0),
-      retval_ (false)
-    {
-      DANCE_TRACE("DP_PCD_Handler::constructor");
 
-      XERCES_CPP_NAMESPACE::DOMDocument *dom =
-        XML_Helper::XML_HELPER.create_dom (file);
-
-      if (!dom)
-        throw DD_Handler::NoDomain ();
-
-      Domain *dm =
-        new Domain (reader::domain (dom));
-
-      //      Domain d = domain (dom);
-
-      this->domain_ptr_.reset (dm);
-
-      if (!this->build_domain ())
-        throw NoDomain ();
-    }
-    */
 
     DD_Handler::DD_Handler (Domain *dmn):
       idl_domain_ (nullptr),

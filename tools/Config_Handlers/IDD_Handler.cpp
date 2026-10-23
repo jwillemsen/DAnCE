@@ -70,8 +70,8 @@ namespace DAnCE
           ::XMLSchema::IDREF<char> const* implementationRef =
             src.implementation ().idref_if_set ();
           if (!implementationRef)
-            throw Config_Error (ACE_TEXT (""),
-                                ACE_TEXT ("Instance deployment has no implementation IDREF"));
+            throw Config_Error ("",
+                                "Instance deployment has no implementation IDREF");
 
           MDD_Handler::IDREF.find_ref (
             implementationRef->id ().c_str (), tmp);
@@ -101,7 +101,7 @@ namespace DAnCE
         }
       catch (Config_Error &ex)
         {
-          ex.name_ = src.name ()  + ACE_TEXT (":") + ex.name_;
+          ex.name_ = src.name ()  + ":" + ex.name_;
           throw ex;
         }
       catch (...)
@@ -109,7 +109,7 @@ namespace DAnCE
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, ACE_TEXT ("Unknown exception at IDD:%s"),
             src.name ().c_str ()));
-          throw Config_Error (src.name (), ACE_TEXT ("Unknown exception"));
+          throw Config_Error (src.name (), "Unknown exception");
         }
 
       // Done!

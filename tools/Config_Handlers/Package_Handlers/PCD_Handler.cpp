@@ -29,8 +29,8 @@ namespace DAnCE
 
         if (dom == 0)
           {
-            std::basic_string<ACE_TCHAR> error (ACE_TEXT ("Unable to open file: "));
-            error += uri;
+            std::string error ("Unable to open file: ");
+            error += ACE_TEXT_ALWAYS_CHAR (uri);
             throw Parse_Error (error);
           }
 
@@ -44,9 +44,9 @@ namespace DAnCE
             tpd = reader::topLevelPackageDescription (dom);
 
             if (tpd.package ().empty ())
-              throw Plan_Error (ACE_TEXT ("Top-level package description contains no package"));
+              throw Plan_Error ("Top-level package description contains no package");
 
-            PCD_Handler::package_config (tpd.package ().front (),
+            PCD_Handler::package_config (ACE_TEXT_CHAR_TO_TCHAR (tpd.package ().front ().c_str ()),
                                          toconfig);
           }
         else if (root == XML::XStr (
@@ -67,8 +67,7 @@ namespace DAnCE
 
             delete [] croot;
 
-            throw Plan_Error (ACE_TEXT (
-              "Invalid file passed to package_config, had base"));
+            throw Plan_Error ("Invalid file passed to package_config, had base");
           }
       }
 
@@ -156,20 +155,20 @@ namespace DAnCE
 
       }
 
-      PackageConfiguration * PCD_Handler::resolve_package_config (const ACE_TCHAR *uri)
+      PackageConfiguration * PCD_Handler::resolve_package_config (const char *uri)
       {
         XML::XML_Helper<> xml_helper;
         xercesc::DOMDocument* dom =
-          xml_helper.create_dom (uri);
+          xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri));
 
         if (!dom)
-          throw Parse_Error (ACE_TEXT ("Unable to create DOM for PackageConfiguration"));
+          throw Parse_Error ("Unable to create DOM for PackageConfiguration");
 
         try {
           return new PackageConfiguration (reader::packageConfiguration (dom));
         }
         catch (...) {
-          throw Parse_Error (ACE_TEXT ("Unable to create XSC structure for PackageConfiguration"));
+          throw Parse_Error ("Unable to create XSC structure for PackageConfiguration");
         }
 
       }

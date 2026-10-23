@@ -52,8 +52,8 @@ namespace DAnCE
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, ACE_TEXT (
               "ERROR: String type description required")));
-          throw Config_Error (ACE_TEXT (""),
-            ACE_TEXT ("Expected <string> element, incorrect tc_kind."));
+          throw Config_Error ("",
+            "Expected <string> element, incorrect tc_kind.");
         }
 
       CORBA::ULong bound (0);

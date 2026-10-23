@@ -82,7 +82,7 @@ namespace DAnCE
             (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
             ACE_TEXT ("CORBA Exception whilst parsing XML into IDL\n"),
             ex._info ().c_str ()));
-          throw Config_Error (this->file_,
+          throw Config_Error (ACE_TEXT_ALWAYS_CHAR (this->file_.c_str ()),
                               ex._info ().c_str ());
         }
       catch (const Config_Error &ex)
@@ -94,8 +94,8 @@ namespace DAnCE
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
             ACE_TEXT ("Unexpected exception whilst parsing XML into IDL.\n")));
-          throw Config_Error (this->file_,
-            ACE_TEXT ("Unexpected C++ exception whilst parsing XML"));
+          throw Config_Error (ACE_TEXT_ALWAYS_CHAR (this->file_.c_str ()),
+            "Unexpected C++ exception whilst parsing XML");
         }
 
       return false;
@@ -156,7 +156,7 @@ namespace DAnCE
             (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
                            ACE_TEXT ("CORBA Exception whilst parsing XML into IDL\n"),
                            ex._info ().c_str ()));
-          throw Config_Error (this->file_,
+          throw Config_Error (ACE_TEXT_ALWAYS_CHAR (this->file_.c_str ()),
                               ex._info ().c_str ());
         }
       catch (const Config_Error &ex)
@@ -168,8 +168,8 @@ namespace DAnCE
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
                       ACE_TEXT ("Unexpected exception whilst parsing XML into IDL.\n")));
-          throw Config_Error (this->file_,
-                              ACE_TEXT ("Unexpected C++ exception whilst parsing XML"));
+          throw Config_Error (ACE_TEXT_ALWAYS_CHAR (this->file_.c_str ()),
+                              "Unexpected C++ exception whilst parsing XML");
         }
 
       return false;

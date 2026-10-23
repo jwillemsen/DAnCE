@@ -104,7 +104,7 @@ namespace DAnCE
 
         default:
           throw Config_Error (desc.name (),
-                              ACE_TEXT ("Unknown ResourceUsageKind."));
+                              "Unknown ResourceUsageKind.");
           break;
         }
         }
@@ -159,8 +159,8 @@ namespace DAnCE
         break;
 
           default:
-            throw Config_Error (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()),
-                            ACE_TEXT ("Unknown ResourceUsageKind."));
+            throw Config_Error (src.name.in (),
+                            "Unknown ResourceUsageKind.");
         break;
           }
 
@@ -405,15 +405,15 @@ namespace DAnCE
       }
 
       ComponentImplementationDescription *
-      CID_Handler::resolve_cid (const ACE_TCHAR *uri)
+      CID_Handler::resolve_cid (const char *uri)
       {
         DANCE_TRACE ("CID_Handler::resolve_cid");
 
         XML::XML_Helper<> xml_helper;
-        xercesc::DOMDocument *dom = xml_helper.create_dom (uri);
+        xercesc::DOMDocument *dom = xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri));
 
         if (!dom)
-          throw Parse_Error (ACE_TEXT ("Unable to create DOM for CID"));
+          throw Parse_Error ("Unable to create DOM for CID");
 
         try {
           return new ComponentImplementationDescription
@@ -421,7 +421,7 @@ namespace DAnCE
         }
         catch (...) {
           throw Parse_Error (
-            ACE_TEXT ("Unable to create XSC structure for CID"));
+            "Unable to create XSC structure for CID");
         }
       }
     }

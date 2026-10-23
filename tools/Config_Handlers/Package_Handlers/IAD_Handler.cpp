@@ -108,22 +108,22 @@ namespace DAnCE
         return retval;
       }
 
-      ImplementationArtifactDescription *  IAD_Handler::resolve_iad (const ACE_TCHAR *uri)
+      ImplementationArtifactDescription *  IAD_Handler::resolve_iad (const char *uri)
       {
         DANCE_TRACE ("IAD_Handler::resolve_iad");
 
         XML::XML_Helper<> xml_helper;
-        xercesc::DOMDocument *dom = xml_helper.create_dom (uri);
+        xercesc::DOMDocument *dom = xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri));
 
         if (!dom)
-          throw Parse_Error (ACE_TEXT ("Unable to create DOM for IAD"));
+          throw Parse_Error ("Unable to create DOM for IAD");
 
         try {
           return new ImplementationArtifactDescription
             (reader::implementationArtifactDescription (dom));
         }
         catch (...) {
-          throw Parse_Error (ACE_TEXT ("Unable to create XSC structure for IAD"));
+          throw Parse_Error ("Unable to create XSC structure for IAD");
         }
       }
 

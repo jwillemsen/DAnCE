@@ -23,8 +23,8 @@ namespace DAnCE
       ::DAnCE::Config_Handlers::StructType const* structType =
         type._cxx_struct_if_set ();
       if (!structType)
-        throw Config_Error (ACE_TEXT (""),
-                            ACE_TEXT ("Expected struct type information"));
+        throw Config_Error ("",
+                            "Expected struct type information");
 
       for (auto i =
              structType->member ().begin ();
@@ -44,8 +44,8 @@ namespace DAnCE
       ::DAnCE::Config_Handlers::StructType const* structType =
         type._cxx_struct_if_set ();
       if (!structType)
-        throw Config_Error (ACE_TEXT (""),
-                            ACE_TEXT ("Expected struct type information"));
+        throw Config_Error ("",
+                            "Expected struct type information");
 
       try
         {
@@ -92,7 +92,7 @@ namespace DAnCE
       catch (...)
         {
           throw Config_Error (structType->typeId (),
-                              ACE_TEXT ("Unknown exception"));
+                              "Unknown exception");
         }
     }
 
@@ -109,7 +109,7 @@ namespace DAnCE
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR,
              ACE_TEXT ("ERROR: Struct type description required\n")));
-          throw Config_Error (ACE_TEXT (""),
+          throw Config_Error ("",
             ACE_TEXT ("Expected struct type information, tc_kind may be"\
                       "incorrect\n"));
         }

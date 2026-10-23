@@ -12,22 +12,22 @@ namespace DAnCE
   {
     struct Parse_Error
     {
-      Parse_Error (const std::basic_string<ACE_TCHAR> &reason)
+      Parse_Error (const std::string &reason)
         : reason_ (reason)
       {
       }
 
-      std::basic_string<ACE_TCHAR> reason_;
+      std::string reason_;
     };
 
     struct Plan_Error
     {
-      Plan_Error (const std::basic_string<ACE_TCHAR> &reason)
+      Plan_Error (const std::string &reason)
         : reason_ (reason)
       {
       }
 
-      std::basic_string<ACE_TCHAR> reason_;
+      std::string reason_;
     };
 
   }

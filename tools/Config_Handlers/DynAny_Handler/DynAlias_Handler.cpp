@@ -23,8 +23,8 @@ namespace DAnCE
       ::DAnCE::Config_Handlers::AliasType const* aliasType =
         type.alias_if_set ();
       if (!aliasType)
-        throw Config_Error (ACE_TEXT (""),
-                            ACE_TEXT ("Expected alias type information"));
+        throw Config_Error ("",
+                            "Expected alias type information");
 
       try
         {
@@ -46,7 +46,7 @@ namespace DAnCE
               ACE_TEXT ("Invalid value provided in XML when trying to ")
               ACE_TEXT ("initialize an instance of enumerated type %s\n"),
               aliasType->typeId ().c_str ()));
-          throw Config_Error (aliasType->typeId (), ACE_TEXT ("Invalid value provided in XML"));
+          throw Config_Error (aliasType->typeId (), "Invalid value provided in XML");
         }
       catch (Config_Error &ex)
         {
@@ -61,7 +61,7 @@ namespace DAnCE
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR,
             ACE_TEXT ("DynAlias_Handler caught unknown exception\n")));
           throw Config_Error (aliasType->typeId (),
-                              ACE_TEXT ("Unknown exception"));
+                              "Unknown exception");
         }
     }
 
@@ -76,7 +76,7 @@ namespace DAnCE
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, ACE_TEXT ("ERROR: Alias type description required")));
-          throw Config_Error (ACE_TEXT (""),
+          throw Config_Error ("",
             ACE_TEXT ("Did not find expected alias type description, tk_kind"\
                       "may be wrong."));
         }

@@ -141,7 +141,7 @@ namespace DAnCE
       }
 
       ComponentPackageDescription * CPD_Handler::resolve_cpd (
-        const ACE_TCHAR *uri)
+        const char *uri)
       {
         DANCE_TRACE ("CPD_Handler::resolve_cpd");
         XML::XML_Helper<> xml_helper;
@@ -149,18 +149,16 @@ namespace DAnCE
           return 0;
 
         xercesc::DOMDocument* dom =
-          xml_helper.create_dom (uri);
+          xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri));
 
         if (!dom)
-          throw Parse_Error ( ACE_TEXT (
-            "Unable to create DOM for component package description"));
+          throw Parse_Error ( "Unable to create DOM for component package description");
 
         try {
           return new ComponentPackageDescription (reader::componentPackageDescription (dom));
         }
         catch (...) {
-          throw Parse_Error (ACE_TEXT (
-            "Unable to create XSC structure for CID"));
+          throw Parse_Error ("Unable to create XSC structure for CID");
         }
       }
     }
