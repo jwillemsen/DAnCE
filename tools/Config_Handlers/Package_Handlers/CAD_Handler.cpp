@@ -185,17 +185,14 @@ namespace DAnCE
         ::Deployment::ComponentAssemblyDescription const& /*src*/)
       {
         DANCE_TRACE("CAD_Handler::component_assem_descr - reverse");
-
-        ComponentAssemblyDescription retval {};
-        return retval;
-
+        return {};
       }
 
       ComponentAssemblyDescription * CAD_Handler::resolve_cad (std::string_view)
       {
         DANCE_TRACE("CAD_Handler::resolve_cad");
 
-        return 0;
+        return nullptr;
       }
     }
   }
