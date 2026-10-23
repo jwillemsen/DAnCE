@@ -60,9 +60,9 @@ namespace DAnCE
       ::DAnCE::Config_Handlers::BoundedStringType const* boundedString_if_set_ptr = type.boundedString_if_set ();
       if (boundedString_if_set_ptr)
         {
-          if ((*boundedString_if_set_ptr).count_bound ())
+          if (boundedString_if_set_ptr->count_bound ())
           {
-            bound = *(*boundedString_if_set_ptr).begin_bound ();
+            bound = *boundedString_if_set_ptr->begin_bound ();
           }
         }
 

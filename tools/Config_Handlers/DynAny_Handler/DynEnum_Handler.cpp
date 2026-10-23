@@ -94,11 +94,11 @@ namespace DAnCE
 
       // Construct TypeCode for the enum
       CORBA::EnumMemberSeq members;
-      members.length ((*enum__if_set_ptr_2).count_member ());
+      members.length (enum__if_set_ptr_2->count_member ());
       CORBA::ULong index (0);
 
-      for (EnumType::member_const_iterator i = (*enum__if_set_ptr_2).begin_member ();
-           i != (*enum__if_set_ptr_2).end_member ();
+      for (EnumType::member_const_iterator i = enum__if_set_ptr_2->begin_member ();
+           i != enum__if_set_ptr_2->end_member ();
            ++i)
         {
           members[index++] = CORBA::string_dup (
@@ -107,11 +107,11 @@ namespace DAnCE
 
       CORBA::TypeCode_var tc =
         DYNANY_HANDLER->orb ()->create_enum_tc (
-          (*enum__if_set_ptr_2).typeId ().c_str (),
-          (*enum__if_set_ptr_2).name ().c_str (),
+          enum__if_set_ptr_2->typeId ().c_str (),
+          enum__if_set_ptr_2->name ().c_str (),
           members);
 
-      DYNANY_HANDLER->register_typecode (((*enum__if_set_ptr_2).typeId ()),
+      DYNANY_HANDLER->register_typecode ((enum__if_set_ptr_2->typeId ()),
                                          tc.in ());
 
       return tc._retn ();

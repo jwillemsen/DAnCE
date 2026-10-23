@@ -93,9 +93,11 @@ namespace DAnCE
             }
           catch (const DynamicAny::DynAny::InvalidValue&)
             {
-              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("Invalid value provided in XML when trying to ")
-                          ACE_TEXT ("populate %ith element of an array\n"),
-                          pos));
+              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+                (LM_ERROR,
+                 ACE_TEXT ("Invalid value provided in XML when trying to ")
+                 ACE_TEXT ("populate %ith element of an array\n"),
+                 pos));
               throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Invalid value whilst populating the array."));
             }
 
@@ -117,7 +119,9 @@ namespace DAnCE
         case TCKind::tk_local_interface_l:
         case TCKind::tk_event_l:
           // Special case where element association in datavalue contains another datavalue.
-          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("DynArray_Handler::extract_into_dynany - Type not supported\n")));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR,
+             DLINFO ACE_TEXT ("DynArray_Handler::extract_into_dynany - Type not supported\n")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Type not supported"));
         }
 
@@ -141,9 +145,9 @@ namespace DAnCE
         }
 
       CORBA::TypeCode_var etc =
-        DYNANY_HANDLER->create_typecode ((*array_if_set_ptr).elementType ());
+        DYNANY_HANDLER->create_typecode (array_if_set_ptr->elementType ());
 
-      CORBA::ULong const length =  (*array_if_set_ptr).length ();
+      CORBA::ULong const length =  array_if_set_ptr->length ();
 
       CORBA::TypeCode_var tc =
         DYNANY_HANDLER->orb ()->create_array_tc (length, etc);

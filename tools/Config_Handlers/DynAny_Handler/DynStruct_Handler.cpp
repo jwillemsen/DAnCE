@@ -114,16 +114,16 @@ namespace DAnCE
                       "incorrect\n"));
         }
 
-      std::string rid ((*struct__if_set_ptr_2).typeId ());
-      std::string name ((*struct__if_set_ptr_2).name ());
+      std::string rid (struct__if_set_ptr_2->typeId ());
+      std::string name (struct__if_set_ptr_2->name ());
 
       CORBA::StructMemberSeq members;
-      members.length ((*struct__if_set_ptr_2).count_member ());
+      members.length (struct__if_set_ptr_2->count_member ());
       CORBA::ULong pos (0);
 
       for (StructType::member_const_iterator i =
-        (*struct__if_set_ptr_2).begin_member ();
-           i != (*struct__if_set_ptr_2).end_member (); ++i)
+        struct__if_set_ptr_2->begin_member ();
+           i != struct__if_set_ptr_2->end_member (); ++i)
         {
           members[pos].name = i->name ().c_str ();
           members[pos].type = DYNANY_HANDLER->create_typecode (i->type ());
@@ -136,7 +136,7 @@ namespace DAnCE
           name.c_str (),
           members);
 
-      DYNANY_HANDLER->register_typecode ((*struct__if_set_ptr_2).typeId (), tc.in ());
+      DYNANY_HANDLER->register_typecode (struct__if_set_ptr_2->typeId (), tc.in ());
 
       return tc._retn ();
     }

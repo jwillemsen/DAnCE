@@ -84,11 +84,11 @@ namespace DAnCE
 
       CORBA::TypeCode_var tc =
         DYNANY_HANDLER->orb ()->create_alias_tc
-        ((*alias_if_set_ptr_2).typeId ().c_str (),
-         (*alias_if_set_ptr_2).name ().c_str (),
-         DYNANY_HANDLER->create_typecode ((*alias_if_set_ptr_2).elementType ()));
+        (alias_if_set_ptr_2->typeId ().c_str (),
+         alias_if_set_ptr_2->name ().c_str (),
+         DYNANY_HANDLER->create_typecode (alias_if_set_ptr_2->elementType ()));
 
-      DYNANY_HANDLER->register_typecode ((*alias_if_set_ptr_2).typeId (),
+      DYNANY_HANDLER->register_typecode (alias_if_set_ptr_2->typeId (),
                                          tc.in ());
 
       return tc._retn ();
