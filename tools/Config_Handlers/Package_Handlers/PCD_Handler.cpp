@@ -159,8 +159,7 @@ namespace DAnCE
       {
         XML::XML_Helper<> xml_helper;
         const std::string uri_string (uri);
-        xercesc::DOMDocument* dom =
-          xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri_string.c_str()));
+        xercesc::DOMDocument* dom = xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri_string.c_str()));
 
         if (!dom)
           throw Parse_Error ("Unable to create DOM for PackageConfiguration");

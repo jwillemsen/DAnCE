@@ -104,8 +104,7 @@ namespace DAnCE
           break;
 
         default:
-          throw Config_Error (desc.name (),
-                              "Unknown ResourceUsageKind.");
+          throw Config_Error (desc.name (), "Unknown ResourceUsageKind.");
           break;
         }
         }
@@ -160,8 +159,7 @@ namespace DAnCE
         break;
 
           default:
-            throw Config_Error (src.name.in (),
-                            "Unknown ResourceUsageKind.");
+            throw Config_Error (src.name.in (), "Unknown ResourceUsageKind.");
         break;
           }
 

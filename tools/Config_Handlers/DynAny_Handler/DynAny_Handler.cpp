@@ -34,8 +34,7 @@ namespace DAnCE
         {
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, ACE_TEXT ("Unable to narrow Dynamic Any factory\n")));
-          throw Config_Error (
-            "", "Unable to narrow DynAny factory");
+          throw Config_Error ("", "Unable to narrow DynAny factory");
         }
     }
 
@@ -99,8 +98,7 @@ namespace DAnCE
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR,
             ACE_TEXT ("DynAny_Handler::extract_into_dynany - Don't know how to handle null or void types\n")));
-          throw Config_Error ("",
-            "Null or void types not supported");
+          throw Config_Error ("", "Null or void types not supported");
           break;
 
         case TCKind::tk_short_l:
@@ -354,8 +352,7 @@ namespace DAnCE
         case TCKind::tk_void_l:
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_WARNING,
             ACE_TEXT ("I don't know how to handle null or void types\n")));
-          throw Config_Error ("",
-            "Null or void types not supported");
+          throw Config_Error ("", "Null or void types not supported");
           break;
 
         case TCKind::tk_short_l:

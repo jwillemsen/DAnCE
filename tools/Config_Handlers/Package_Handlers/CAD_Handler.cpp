@@ -25,11 +25,9 @@ namespace DAnCE
 
       toconfig.portName =  desc.portName ().c_str ();
 
-      ::XMLSchema::IDREF<char> const* instanceRef =
-        desc.instance ().idref_if_set ();
+      ::XMLSchema::IDREF<char> const* instanceRef = desc.instance ().idref_if_set ();
       if (!instanceRef)
-        throw Config_Error ("",
-                            "Subcomponent port endpoint has no instance IDREF");
+        throw Config_Error ("", "Subcomponent port endpoint has no instance IDREF");
 
       std::string str (instanceRef->id ().c_str ());
       CORBA::ULong pos (0);
@@ -134,11 +132,9 @@ namespace DAnCE
 
       toconfig.propertyName =  desc.propertyName ().c_str ();
 
-      ::XMLSchema::IDREF<char> const* instanceRef =
-        desc.instance ().idref_if_set ();
+      ::XMLSchema::IDREF<char> const* instanceRef = desc.instance ().idref_if_set ();
       if (!instanceRef)
-        throw Config_Error ("",
-                            "Subcomponent property reference has no instance IDREF");
+        throw Config_Error ("", "Subcomponent property reference has no instance IDREF");
 
       std::string str (instanceRef->id ().c_str ());
       CORBA::ULong pos (0);
