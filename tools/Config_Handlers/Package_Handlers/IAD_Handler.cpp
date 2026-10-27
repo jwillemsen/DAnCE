@@ -82,7 +82,41 @@ namespace DAnCE
           label_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (label);
         if (src.UUID.in () != nullptr)
           UUID_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (UUID);
-        return ImplementationArtifactDescription (label_arg, UUID_arg);
+
+        ImplementationArtifactDescription::location_container_type locations;
+        for (CORBA::ULong i {}; i < src.location.length (); ++i)
+          locations.emplace_back (src.location[i]);
+
+        ImplementationArtifactDescription::dependsOn_container_type dependencies;
+        for (CORBA::ULong i {}; i < src.dependsOn.length (); ++i)
+          {
+            NamedImplementationArtifact const dependency (NIA_Handler::get_nia (src.dependsOn[i]));
+            dependencies.push_back (dependency);
+          }
+
+        ImplementationArtifactDescription::execParameter_container_type exec_parameters;
+        for (CORBA::ULong i {}; i < src.execParameter.length (); ++i)
+          {
+            Property const property (Property_Handler::get_property (src.execParameter[i]));
+            exec_parameters.push_back (property);
+          }
+
+        ImplementationArtifactDescription::infoProperty_container_type info_properties;
+        for (CORBA::ULong i {}; i < src.infoProperty.length (); ++i)
+          {
+            Property const property (Property_Handler::get_property (src.infoProperty[i]));
+            info_properties.push_back (property);
+          }
+
+        ImplementationArtifactDescription::deployRequirement_container_type requirements;
+        for (CORBA::ULong i {}; i < src.deployRequirement.length (); ++i)
+          {
+            Requirement const requirement (Req_Handler::get_requirement (src.deployRequirement[i]));
+            requirements.push_back (requirement);
+          }
+
+        return ImplementationArtifactDescription (label_arg, UUID_arg, locations, dependencies,
+                                                  exec_parameters, info_properties, requirements);
       }
 
       ImplementationArtifactDescription * IAD_Handler::resolve_iad (std::string_view uri)

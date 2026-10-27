@@ -85,7 +85,38 @@ namespace DAnCE
     {
       DANCE_TRACE("ACD_Handler::get_acd - reverse");
 
-      return AssemblyConnectionDescription (src.name.in ());
+      AssemblyConnectionDescription::deployRequirement_container_type requirements;
+      for (CORBA::ULong i {}; i < src.deployRequirement.length (); ++i)
+        {
+          Requirement const requirement (Req_Handler::get_requirement (src.deployRequirement[i]));
+          requirements.push_back (requirement);
+        }
+
+      AssemblyConnectionDescription::internalEndpoint_container_type internal_endpoints;
+      for (CORBA::ULong i {}; i < src.internalEndpoint.length (); ++i)
+        {
+          SubcomponentPortEndpoint const endpoint (SPE_Handler::get_spe (src.internalEndpoint[i]));
+          internal_endpoints.push_back (endpoint);
+        }
+
+      AssemblyConnectionDescription::externalEndpoint_container_type external_endpoints;
+      for (CORBA::ULong i {}; i < src.externalEndpoint.length (); ++i)
+        {
+          ComponentExternalPortEndpoint const endpoint (
+            CEPE_Handler::external_port_endpoint (src.externalEndpoint[i]));
+          external_endpoints.push_back (endpoint);
+        }
+
+      AssemblyConnectionDescription::externalReference_container_type external_references;
+      for (CORBA::ULong i {}; i < src.externalReference.length (); ++i)
+        {
+          ExternalReferenceEndpoint const endpoint (
+            ERE_Handler::external_ref_endpoint (src.externalReference[i]));
+          external_references.push_back (endpoint);
+        }
+
+      return AssemblyConnectionDescription (src.name.in (), requirements, internal_endpoints,
+                                            external_endpoints, external_references);
     }
       };
 
@@ -144,7 +175,14 @@ namespace DAnCE
     {
       DANCE_TRACE("APM_Handler::get_apm - reverse");
 
-      return AssemblyPropertyMapping (src.name.in (), src.externalName.in ());
+      AssemblyPropertyMapping::delegatesTo_container_type delegates;
+      for (CORBA::ULong i {}; i < src.delegatesTo.length (); ++i)
+        {
+          SubcomponentPropertyReference const delegate (SPR_Handler::get_spr (src.delegatesTo[i]));
+          delegates.push_back (delegate);
+        }
+
+      return AssemblyPropertyMapping (src.name.in (), src.externalName.in (), delegates);
     }
       };
 
@@ -175,10 +213,73 @@ namespace DAnCE
 
       ComponentAssemblyDescription
       CAD_Handler::component_assem_descr (
-        ::Deployment::ComponentAssemblyDescription const& /*src*/)
+        ::Deployment::ComponentAssemblyDescription const& src)
       {
         DANCE_TRACE("CAD_Handler::component_assem_descr - reverse");
-        return ComponentAssemblyDescription ();
+
+        ComponentAssemblyDescription::instance_container_type instances;
+        for (CORBA::ULong i {}; i < src.instance.length (); ++i)
+          {
+            SubcomponentInstantiationDescription const instance (
+              SID_Handler::sub_comp_inst_descr (src.instance[i]));
+            instances.push_back (instance);
+          }
+
+        ComponentAssemblyDescription::connection_container_type connections;
+        for (CORBA::ULong i {}; i < src.connection.length (); ++i)
+          {
+            AssemblyConnectionDescription const connection (ACD_Handler::get_acd (src.connection[i]));
+            connections.push_back (connection);
+          }
+
+        ComponentAssemblyDescription::externalProperty_container_type external_properties;
+        for (CORBA::ULong i {}; i < src.externalProperty.length (); ++i)
+          {
+            AssemblyPropertyMapping const external_property (APM_Handler::get_apm (src.externalProperty[i]));
+            external_properties.push_back (external_property);
+          }
+
+        ComponentAssemblyDescription::locality_container_type localities;
+        for (CORBA::ULong i {}; i < src.localityConstraint.length (); ++i)
+          {
+            ::DAnCE::Config_Handlers::LocalityKind::Value kind;
+            switch (src.localityConstraint[i].constraint)
+              {
+              case ::Deployment::SameNodeAnyProcess:
+                kind = ::DAnCE::Config_Handlers::LocalityKind::SameNodeAnyProcess;
+                break;
+              case ::Deployment::SameNodeSameProcess:
+                kind = ::DAnCE::Config_Handlers::LocalityKind::SameNodeSameProcess;
+                break;
+              case ::Deployment::SameNodeDifferentProcess:
+                kind = ::DAnCE::Config_Handlers::LocalityKind::SameNodeDifferentProcess;
+                break;
+              case ::Deployment::DifferentNode:
+                kind = ::DAnCE::Config_Handlers::LocalityKind::DifferentNode;
+                break;
+              case ::Deployment::DifferentProcess:
+                kind = ::DAnCE::Config_Handlers::LocalityKind::DifferentProcess;
+                break;
+              case ::Deployment::NoConstraint:
+                kind = ::DAnCE::Config_Handlers::LocalityKind::NoConstraint;
+                break;
+              default:
+                throw Config_Error ("", "Unknown LocalityKind.");
+              }
+
+            ::DAnCE::Config_Handlers::LocalityKind const constraint (kind);
+            for (CORBA::ULong j {}; j < src.localityConstraint[i].constrainedInstanceRef.length (); ++j)
+              {
+                std::string id;
+                SID_Handler::IDREF.find_ref (src.localityConstraint[i].constrainedInstanceRef[j], id);
+                ::DAnCE::Config_Handlers::IdRef const instance (
+                  std::nullopt, XMLSchema::IDREF<char> (id.c_str ()));
+                ::DAnCE::Config_Handlers::Locality const locality (constraint, instance);
+                localities.push_back (locality);
+              }
+          }
+
+        return ComponentAssemblyDescription (instances, connections, external_properties, localities);
       }
 
       ComponentAssemblyDescription * CAD_Handler::resolve_cad (std::string_view)

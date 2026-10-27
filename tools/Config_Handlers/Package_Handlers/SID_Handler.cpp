@@ -7,6 +7,7 @@
 #include "Package_Handlers/Comp_Intf_Descr_Handler.h"
 #include "Req_Handler.h"
 #include "Property_Handler.h"
+#include "Utils/Exceptions.h"
 
 #include "ace/UUID.h"
 
@@ -105,19 +106,50 @@ namespace DAnCE
 
         SID_Handler::IDREF.bind_next_available (uuid);
 
+        XMLSchema::ID<char> id (uuid.c_str ());
+        XSCRT::OptionalArg<XMLSchema::ID<char>> id_arg (id);
+
+        SubcomponentInstantiationDescription::selectRequirement_container_type select_requirements;
+        for (CORBA::ULong i {}; i < src.selectRequirement.length (); ++i)
+          {
+            Requirement const requirement (Req_Handler::get_requirement (src.selectRequirement[i]));
+            select_requirements.push_back (requirement);
+          }
+
+        SubcomponentInstantiationDescription::configProperty_container_type config_properties;
+        for (CORBA::ULong i {}; i < src.configProperty.length (); ++i)
+          {
+            Property const property (Property_Handler::get_property (src.configProperty[i]));
+            config_properties.push_back (property);
+          }
+
+        CORBA::ULong package_kind_count {};
+        package_kind_count += src.basePackage.length ();
+        package_kind_count += src.specializedConfig.length ();
+        package_kind_count += src.importedPackage.length ();
+        package_kind_count += src.referencedPackage.length ();
+        if (package_kind_count != 1)
+          throw Plan_Error ("SubcomponentInstantiationDescription must contain exactly one package kind");
+
         if (src.basePackage.length () == 1)
           return SubcomponentInstantiationDescription (
-            name, CPD_Handler::component_package_descr (src.basePackage[0]));
+            name, CPD_Handler::component_package_descr (src.basePackage[0]), std::nullopt,
+            select_requirements, config_properties, std::nullopt, std::nullopt, id_arg);
 
         if (src.specializedConfig.length () == 1)
           return SubcomponentInstantiationDescription (
-            name, std::nullopt, PCD_Handler::package_config (src.specializedConfig[0]));
+            name, std::nullopt, PCD_Handler::package_config (src.specializedConfig[0]),
+            select_requirements, config_properties, std::nullopt, std::nullopt, id_arg);
 
         if (src.importedPackage.length () == 1)
           {
-            ComponentPackageImport const imported_package {};
+            ComponentPackageImport::location_container_type locations;
+            for (CORBA::ULong i {}; i < src.importedPackage[0].location.length (); ++i)
+              locations.emplace_back (src.importedPackage[0].location[i]);
+            ComponentPackageImport const imported_package (locations);
             return SubcomponentInstantiationDescription (
-              name, std::nullopt, std::nullopt, {}, {}, std::nullopt, imported_package);
+              name, std::nullopt, std::nullopt, select_requirements, config_properties,
+              std::nullopt, imported_package, id_arg);
           }
 
         if (src.referencedPackage.length () == 1)
@@ -125,15 +157,25 @@ namespace DAnCE
             Deployment::ComponentPackageReference const& package_reference = src.referencedPackage[0];
             ComponentInterfaceDescription required_type (
               Comp_Intf_Descr_Handler::comp_intf_descr (package_reference.requiredType));
-            XMLSchema::string<char> required_uuid (package_reference.requiredUUID.in ());
-            XMLSchema::string<char> required_name (package_reference.requiredName.in ());
-            ComponentPackageReference const referenced_package (
-              required_type, required_uuid, required_name);
+            XMLSchema::string<char> required_uuid_value (
+              package_reference.requiredUUID.in () == nullptr ? "" : package_reference.requiredUUID.in ());
+            XMLSchema::string<char> required_name_value (
+              package_reference.requiredName.in () == nullptr ? "" : package_reference.requiredName.in ());
+            XSCRT::OptionalArg<XMLSchema::string<char>> required_uuid (std::nullopt);
+            XSCRT::OptionalArg<XMLSchema::string<char>> required_name (std::nullopt);
+            if (package_reference.requiredUUID.in () != nullptr)
+              required_uuid = XSCRT::OptionalArg<XMLSchema::string<char>> (required_uuid_value);
+            if (package_reference.requiredName.in () != nullptr)
+              required_name = XSCRT::OptionalArg<XMLSchema::string<char>> (required_name_value);
+            ComponentPackageReference const referenced_package (required_type, required_uuid, required_name);
             return SubcomponentInstantiationDescription (
-              name, std::nullopt, std::nullopt, {}, {}, referenced_package);
+              name, std::nullopt, std::nullopt, select_requirements, config_properties,
+              referenced_package, std::nullopt, id_arg);
           }
 
-        return SubcomponentInstantiationDescription (name);
+        return SubcomponentInstantiationDescription (
+          name, std::nullopt, std::nullopt, select_requirements, config_properties,
+          std::nullopt, std::nullopt, id_arg);
       }
     }
   }

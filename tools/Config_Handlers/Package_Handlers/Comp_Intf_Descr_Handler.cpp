@@ -120,7 +120,47 @@ namespace DAnCE
           UUID_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (UUID);
         if (src.specificType.in () != nullptr)
           specificType_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (specificType);
-        return ComponentInterfaceDescription (label_arg, UUID_arg, specificType_arg);
+
+        ComponentInterfaceDescription::supportedType_container_type supported_types;
+        for (CORBA::ULong i {}; i < src.supportedType.length (); ++i)
+          supported_types.emplace_back (src.supportedType[i]);
+
+        ComponentInterfaceDescription::idlFile_container_type idl_files;
+        for (CORBA::ULong i {}; i < src.idlFile.length (); ++i)
+          idl_files.emplace_back (src.idlFile[i]);
+
+        ComponentInterfaceDescription::configProperty_container_type config_properties;
+        for (CORBA::ULong i {}; i < src.configProperty.length (); ++i)
+          {
+            Property const property (Property_Handler::get_property (src.configProperty[i]));
+            config_properties.push_back (property);
+          }
+
+        ComponentInterfaceDescription::port_container_type ports;
+        for (CORBA::ULong i {}; i < src.port.length (); ++i)
+          {
+            ComponentPortDescription const port (
+              ::DAnCE::Config_Handlers::CPD_Handler::component_port_description (src.port[i]));
+            ports.push_back (port);
+          }
+
+        ComponentInterfaceDescription::property_container_type properties;
+        for (CORBA::ULong i {}; i < src.property.length (); ++i)
+          {
+            ComponentPropertyDescription const property (Comp_Prop_Handler::get_cpd (src.property[i]));
+            properties.push_back (property);
+          }
+
+        ComponentInterfaceDescription::infoProperty_container_type info_properties;
+        for (CORBA::ULong i {}; i < src.infoProperty.length (); ++i)
+          {
+            Property const property (Property_Handler::get_property (src.infoProperty[i]));
+            info_properties.push_back (property);
+          }
+
+        return ComponentInterfaceDescription (label_arg, UUID_arg, specificType_arg,
+                                              supported_types, idl_files, config_properties,
+                                              ports, properties, info_properties);
       }
 
       ComponentInterfaceDescription * Comp_Intf_Descr_Handler::resolve_cid (std::string_view uri)

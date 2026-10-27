@@ -103,7 +103,30 @@ namespace DAnCE
           UUID_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (UUID);
         ComponentInterfaceDescription realizes (
           Comp_Intf_Descr_Handler::comp_intf_descr (src.realizes));
-        return ComponentPackageDescription (label_arg, UUID_arg, realizes);
+
+        ComponentPackageDescription::configProperty_container_type config_properties;
+        for (CORBA::ULong i {}; i < src.configProperty.length (); ++i)
+          {
+            Property const property (Property_Handler::get_property (src.configProperty[i]));
+            config_properties.push_back (property);
+          }
+
+        ComponentPackageDescription::implementation_container_type implementations;
+        for (CORBA::ULong i {}; i < src.implementation.length (); ++i)
+          {
+            PackagedComponentImplementation const implementation (PCI_Handler::get_pci (src.implementation[i]));
+            implementations.push_back (implementation);
+          }
+
+        ComponentPackageDescription::infoProperty_container_type info_properties;
+        for (CORBA::ULong i {}; i < src.infoProperty.length (); ++i)
+          {
+            Property const property (Property_Handler::get_property (src.infoProperty[i]));
+            info_properties.push_back (property);
+          }
+
+        return ComponentPackageDescription (label_arg, UUID_arg, realizes,
+                                            config_properties, implementations, info_properties);
       }
 
       ComponentPackageDescription * CPD_Handler::resolve_cpd (

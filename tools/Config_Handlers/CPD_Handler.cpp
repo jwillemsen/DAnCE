@@ -73,6 +73,20 @@ namespace DAnCE
       XMLSchema::boolean exclusiveProvider (src.exclusiveProvider);
       XMLSchema::boolean exclusiveUser (src.exclusiveUser);
       XMLSchema::boolean optional (src.optional);
+      XMLSchema::string<char> specific_type_value (
+        src.specificType.in () == nullptr ? "" : src.specificType.in ());
+      XSCRT::OptionalArg<XMLSchema::string<char>> specific_type (std::nullopt);
+      if (src.specificType.in () != nullptr)
+        specific_type = XSCRT::OptionalArg<XMLSchema::string<char>> (specific_type_value);
+
+      ComponentPortDescription::supportedType_container_type supported_types;
+      for (CORBA::ULong i {}; i < src.supportedType.length (); ++i)
+        supported_types.emplace_back (src.supportedType[i]);
+
+      ComponentPortDescription::templateParam_container_type template_parameters;
+      for (CORBA::ULong i {}; i < src.templateParam.length (); ++i)
+        template_parameters.emplace_back (src.templateParam[i]);
+
       CCMComponentPortKind::Value kind (CCMComponentPortKind::Facet);
 
       switch (src.kind)
@@ -109,7 +123,8 @@ namespace DAnCE
         }
 
       return ComponentPortDescription (name, provider, exclusiveProvider, exclusiveUser, optional,
-                                       CCMComponentPortKind (kind));
+                                       CCMComponentPortKind (kind), specific_type,
+                                       supported_types, template_parameters);
     }
 #endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 

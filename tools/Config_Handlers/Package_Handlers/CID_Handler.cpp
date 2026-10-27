@@ -51,7 +51,18 @@ namespace DAnCE
     {
       DANCE_TRACE ("Capability_Handler::get_capability - reverse");
 
-      return Capability (src.name.in ());
+      Capability::resourceType_container_type resource_types;
+      for (CORBA::ULong i {}; i < src.resourceType.length (); ++i)
+        resource_types.emplace_back (src.resourceType[i]);
+
+      Capability::property_container_type properties;
+      for (CORBA::ULong i {}; i < src.property.length (); ++i)
+        {
+          SatisfierProperty const property (SatisfierProperty_Handler::get_sat_property (src.property[i]));
+          properties.push_back (property);
+        }
+
+      return Capability (src.name.in (), resource_types, properties);
     }
       };
 
@@ -149,10 +160,26 @@ namespace DAnCE
       if (src.resourceUsage.length () == 1)
         usage_arg = XSCRT::OptionalArg<ResourceUsageKind> (usage);
 
+      XMLSchema::string<char> resource_port_value (
+        src.resourcePort.in () == nullptr ? "" : src.resourcePort.in ());
+      XMLSchema::string<char> component_port_value (
+        src.componentPort.in () == nullptr ? "" : src.componentPort.in ());
+      XSCRT::OptionalArg<XMLSchema::string<char>> resource_port (std::nullopt);
+      XSCRT::OptionalArg<XMLSchema::string<char>> component_port (std::nullopt);
+      if (src.resourcePort.in () != nullptr)
+        resource_port = XSCRT::OptionalArg<XMLSchema::string<char>> (resource_port_value);
+      if (src.componentPort.in () != nullptr)
+        component_port = XSCRT::OptionalArg<XMLSchema::string<char>> (component_port_value);
+
+      ImplementationRequirement::property_container_type properties;
+      for (CORBA::ULong i {}; i < src.property.length (); ++i)
+        {
+          Property const property (Property_Handler::get_property (src.property[i]));
+          properties.push_back (property);
+        }
+
       return ImplementationRequirement (
-        src.resourceType.in (), src.name.in (), usage_arg,
-        XMLSchema::string<char> (src.resourcePort.in ()),
-        XMLSchema::string<char> (src.componentPort.in ()));
+        src.resourceType.in (), src.name.in (), usage_arg, resource_port, component_port, properties);
     }
       };
 
@@ -186,11 +213,40 @@ namespace DAnCE
     }
 
     static MonolithicImplementationDescription
-    get_mid (::Deployment::MonolithicImplementationDescription const& /*src*/)
+    get_mid (::Deployment::MonolithicImplementationDescription const& src)
     {
       DANCE_TRACE ("MID_Handler::get_mid - reverse");
 
-      return MonolithicImplementationDescription ();
+      MonolithicImplementationDescription::nodeExecParameter_container_type node_parameters;
+      for (CORBA::ULong i {}; i < src.nodeExecParameter.length (); ++i)
+        {
+          Property const property (Property_Handler::get_property (src.nodeExecParameter[i]));
+          node_parameters.push_back (property);
+        }
+
+      MonolithicImplementationDescription::componentExecParameter_container_type component_parameters;
+      for (CORBA::ULong i {}; i < src.componentExecParameter.length (); ++i)
+        {
+          Property const property (Property_Handler::get_property (src.componentExecParameter[i]));
+          component_parameters.push_back (property);
+        }
+
+      MonolithicImplementationDescription::deployRequirement_container_type requirements;
+      for (CORBA::ULong i {}; i < src.deployRequirement.length (); ++i)
+        {
+          ImplementationRequirement const requirement (IR_Handler::get_ir (src.deployRequirement[i]));
+          requirements.push_back (requirement);
+        }
+
+      MonolithicImplementationDescription::primaryArtifact_container_type artifacts;
+      for (CORBA::ULong i {}; i < src.primaryArtifact.length (); ++i)
+        {
+          NamedImplementationArtifact const artifact (NIA_Handler::get_nia (src.primaryArtifact[i]));
+          artifacts.push_back (artifact);
+        }
+
+      return MonolithicImplementationDescription (node_parameters, component_parameters,
+                                                  requirements, artifacts);
     }
 
       };
@@ -294,24 +350,52 @@ namespace DAnCE
         ComponentInterfaceDescription implements (
           Comp_Intf_Descr_Handler::comp_intf_descr (src.implements));
 
+        ComponentImplementationDescription::configProperty_container_type config_properties;
+        for (CORBA::ULong i {}; i < src.configProperty.length (); ++i)
+          {
+            Property const property (Property_Handler::get_property (src.configProperty[i]));
+            config_properties.push_back (property);
+          }
+
+        ComponentImplementationDescription::capability_container_type capabilities;
+        for (CORBA::ULong i {}; i < src.capability.length (); ++i)
+          {
+            Capability const capability (Capability_Handler::get_capability (src.capability[i]));
+            capabilities.push_back (capability);
+          }
+
+        ComponentImplementationDescription::dependsOn_container_type dependencies;
+        for (CORBA::ULong i {}; i < src.dependsOn.length (); ++i)
+          {
+            ImplementationDependency const dependency (src.dependsOn[i].requiredType.in ());
+            dependencies.push_back (dependency);
+          }
+
+        ComponentImplementationDescription::infoProperty_container_type info_properties;
+        for (CORBA::ULong i {}; i < src.infoProperty.length (); ++i)
+          {
+            Property const property (Property_Handler::get_property (src.infoProperty[i]));
+            info_properties.push_back (property);
+          }
+
+        if (src.assemblyImpl.length () + src.monolithicImpl.length () != 1)
+          throw Plan_Error (
+            "ComponentImplementationDescription must contain exactly one implementation kind");
+
         if (src.assemblyImpl.length () == 1)
           return ComponentImplementationDescription (
             label_arg, UUID_arg, implements,
-            CAD_Handler::component_assem_descr (src.assemblyImpl[0]));
+            CAD_Handler::component_assem_descr (src.assemblyImpl[0]), std::nullopt,
+            config_properties, capabilities, dependencies, info_properties);
         else if (src.monolithicImpl.length () == 1)
           {
             return ComponentImplementationDescription (
               label_arg, UUID_arg, implements, std::nullopt,
-              MID_Handler::get_mid (src.monolithicImpl[0]));
+              MID_Handler::get_mid (src.monolithicImpl[0]),
+              config_properties, capabilities, dependencies, info_properties);
           }
-        else
-          {
-            DANCE_ERROR (DANCE_LOG_WARNING,
-            (LM_WARNING, "Warning: ComponentImplementationDescription lacks "
-                         "either a required assemblyImpl or monolithicImpl, "\
-                         "or has too many"));
-            return ComponentImplementationDescription (label_arg, UUID_arg, implements);
-          }
+
+        throw Plan_Error ("ComponentImplementationDescription has an invalid implementation kind");
       }
 
       ComponentImplementationDescription * CID_Handler::resolve_cid (std::string_view uri)

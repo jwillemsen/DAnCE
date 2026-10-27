@@ -7,6 +7,7 @@
 #include "Utils/Exceptions.h"
 #include "Package_Handlers/PCD_Handler.h"
 #include "Package_Handlers/CPD_Handler.h"
+#include "Package_Handlers/Comp_Intf_Descr_Handler.h"
 #include "toplevel.hpp"
 #include "Deployment.hpp"
 #include "Property_Handler.h"
@@ -122,11 +123,72 @@ namespace DAnCE
           label_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (label);
         if (src.UUID.in () != nullptr)
           UUID_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (UUID);
-        if (src.basePackage.length () > 0)
-          return PackageConfiguration (label_arg, UUID_arg,
-                                       CPD_Handler::component_package_descr (src.basePackage[0]));
 
-        return PackageConfiguration (label_arg, UUID_arg);
+        XSCRT::OptionalArg<ComponentPackageDescription> base_package (std::nullopt);
+        if (src.basePackage.length () > 1 || src.specializedConfig.length () > 1 ||
+            src.importedPackage.length () > 1 || src.referencedPackage.length () > 1)
+          throw Plan_Error ("PackageConfiguration has multiple values for a single-valued field");
+        if (src.basePackage.length () == 1)
+          {
+            ComponentPackageDescription const value (
+              CPD_Handler::component_package_descr (src.basePackage[0]));
+            base_package = XSCRT::OptionalArg<ComponentPackageDescription> (value);
+          }
+
+        XSCRT::OptionalArg<PackageConfiguration> specialized_config (std::nullopt);
+        if (src.specializedConfig.length () == 1)
+          {
+            PackageConfiguration const value (PCD_Handler::package_config (src.specializedConfig[0]));
+            specialized_config = XSCRT::OptionalArg<PackageConfiguration> (value);
+          }
+
+        XSCRT::OptionalArg<ComponentPackageImport> imported_package (std::nullopt);
+        if (src.importedPackage.length () == 1)
+          {
+            ComponentPackageImport::location_container_type locations;
+            for (CORBA::ULong i {}; i < src.importedPackage[0].location.length (); ++i)
+              locations.emplace_back (src.importedPackage[0].location[i]);
+            ComponentPackageImport const value (locations);
+            imported_package = XSCRT::OptionalArg<ComponentPackageImport> (value);
+          }
+
+        XSCRT::OptionalArg<ComponentPackageReference> referenced_package (std::nullopt);
+        if (src.referencedPackage.length () == 1)
+          {
+            ::Deployment::ComponentPackageReference const& package_reference = src.referencedPackage[0];
+            ComponentInterfaceDescription const required_type (
+              Comp_Intf_Descr_Handler::comp_intf_descr (package_reference.requiredType));
+            XMLSchema::string<char> const required_uuid (
+              package_reference.requiredUUID.in () == nullptr ? "" : package_reference.requiredUUID.in ());
+            XMLSchema::string<char> const required_name (
+              package_reference.requiredName.in () == nullptr ? "" : package_reference.requiredName.in ());
+            XSCRT::OptionalArg<XMLSchema::string<char>> required_uuid_arg (std::nullopt);
+            XSCRT::OptionalArg<XMLSchema::string<char>> required_name_arg (std::nullopt);
+            if (package_reference.requiredUUID.in () != nullptr)
+              required_uuid_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (required_uuid);
+            if (package_reference.requiredName.in () != nullptr)
+              required_name_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (required_name);
+            ComponentPackageReference const value (required_type, required_uuid_arg, required_name_arg);
+            referenced_package = XSCRT::OptionalArg<ComponentPackageReference> (value);
+          }
+
+        PackageConfiguration::selectRequirement_container_type select_requirements;
+        for (CORBA::ULong i {}; i < src.selectRequirement.length (); ++i)
+          {
+            Requirement const requirement (Req_Handler::get_requirement (src.selectRequirement[i]));
+            select_requirements.push_back (requirement);
+          }
+
+        PackageConfiguration::configProperty_container_type config_properties;
+        for (CORBA::ULong i {}; i < src.configProperty.length (); ++i)
+          {
+            Property const property (Property_Handler::get_property (src.configProperty[i]));
+            config_properties.push_back (property);
+          }
+
+        return PackageConfiguration (label_arg, UUID_arg, base_package, specialized_config,
+                                     imported_package, referenced_package,
+                                     select_requirements, config_properties);
       }
 
       PackageConfiguration * PCD_Handler::resolve_package_config (std::string_view uri)
