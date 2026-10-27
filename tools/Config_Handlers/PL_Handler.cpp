@@ -47,5 +47,39 @@ namespace DAnCE
         }
     }
 
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
+    PlanLocality PL_Handler::plan_locality (::Deployment::PlanLocality const& src)
+    {
+      PlanLocalityKind::Value value {};
+      switch (src.constraint)
+        {
+        case Deployment::PlanSameProcess:
+          value = PlanLocalityKind::SameProcess;
+          break;
+        case Deployment::PlanDifferentProcess:
+          value = PlanLocalityKind::DifferentProcess;
+          break;
+        case Deployment::PlanNoConstraint:
+          value = PlanLocalityKind::NoConstraint;
+          break;
+        default:
+          throw Config_Error ("", "Unknown PlanLocality constraint");
+        }
+
+      PlanLocalityKind const constraint (value);
+      PlanLocality::constrainedInstance_container_type instances;
+      for (CORBA::ULong i {}; i < src.constrainedInstanceRef.length (); ++i)
+        {
+          std::string id;
+          IDD_Handler::IDREF.find_ref (src.constrainedInstanceRef[i], id);
+          XMLSchema::IDREF<char> instance_ref (id.c_str ());
+          IdRef const instance (std::nullopt, instance_ref);
+          instances.push_back (instance);
+        }
+
+      return PlanLocality (constraint, instances);
+    }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
+
   }
 }

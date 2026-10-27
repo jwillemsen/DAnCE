@@ -99,7 +99,14 @@ namespace DAnCE
         }
 
       ResourceUsageKind const usage (usage_value);
-      return InstanceResourceDeploymentDescription (usage, reqname, resname);
+      InstanceResourceDeploymentDescription::property_container_type properties;
+      for (CORBA::ULong i {}; i < src.property.length (); ++i)
+        {
+          Property const property (Property_Handler::get_property (src.property[i]));
+          properties.push_back (property);
+        }
+
+      return InstanceResourceDeploymentDescription (usage, reqname, resname, properties);
     }
 #endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }

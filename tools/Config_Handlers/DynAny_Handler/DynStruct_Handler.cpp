@@ -59,10 +59,17 @@ namespace DAnCE
           DynamicAny::NameDynAnyPairSeq values {};
           values.length (value.member ().size ());
 
+          if (value.member ().size () != structType->member ().size ())
+            throw Config_Error (structType->typeId (), "Struct value member count does not match its type");
+
           for (auto const& member : value.member ())
             {
+              auto const type_pos = dt_map.find (member.name ());
+              if (type_pos == dt_map.end ())
+                throw Config_Error (structType->typeId (), "Unknown member in struct value");
+
               values[pos].id = member.name ().c_str ();
-              values[pos].value = DYNANY_HANDLER->extract_into_dynany (*dt_map[member.name ()], member.value ());
+              values[pos].value = DYNANY_HANDLER->extract_into_dynany (*type_pos->second, member.value ());
               ++pos;
             }
 

@@ -70,6 +70,7 @@ namespace DAnCE
         case TCKind::tk_struct:
         case TCKind::tk_sequence:
         case TCKind::tk_array:
+        case TCKind::tk_alias:
           try
             {
               dynseq.length (value.element ().size ());
@@ -97,14 +98,36 @@ namespace DAnCE
 
         case TCKind::tk_char:
         case TCKind::tk_wchar:
-          // special case where value iterator multiplicity should be one, and should
-          // represent a string, each character of which becomes a element of the sequence.
+          {
+            if (!value.element ().empty () || value.string ().size () != 1)
+              throw Config_Error ("", "Character sequences require one string value");
+
+            std::string const& characters = value.string ().front ();
+            ::XMLSchema::unsignedInt const* bound_if_set_ptr = sequenceType->bound_if_set ();
+            if (bound_if_set_ptr && characters.size () > *bound_if_set_ptr)
+              throw Config_Error ("", "Character sequence exceeds its bound");
+            dynseq.length (characters.size ());
+            retval->set_length (characters.size ());
+            for (char character : characters)
+              {
+                if (sequenceType->elementType ().kind ().integral () == TCKind::tk_wchar &&
+                    static_cast<unsigned char> (character) > 0x7f)
+                  throw Config_Error ("", "Non-ASCII wchar values are not supported");
+
+                DataValue::string_container_type character_value {std::string (1, character)};
+                DataValue const element_value ({}, {}, {}, {}, {}, {}, {}, {}, {}, character_value);
+                DynamicAny::DynAny_var const dynany (
+                  DYNANY_HANDLER->extract_into_dynany (sequenceType->elementType (), element_value));
+                dynseq[pos++] = dynany->copy ();
+              }
+            retval->set_elements_as_dyn_any (dynseq);
+            return retval._retn ();
+          }
 
         case TCKind::tk_any:
         case TCKind::tk_TypeCode:
         case TCKind::tk_Principal:
         case TCKind::tk_union:
-        case TCKind::tk_alias:
         case TCKind::tk_except:
         case TCKind::tk_value:
         case TCKind::tk_value_box:

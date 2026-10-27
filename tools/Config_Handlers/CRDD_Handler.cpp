@@ -49,7 +49,14 @@ namespace DAnCE
       XMLSchema::string<char> reqname (src.requirementName);
       XMLSchema::string<char> resname (src.resourceName);
 
-      return ConnectionResourceDeploymentDescription (tname, reqname, resname);
+      ConnectionResourceDeploymentDescription::property_container_type properties;
+      for (CORBA::ULong i {}; i < src.property.length (); ++i)
+        {
+          Property const property (Property_Handler::get_property (src.property[i]));
+          properties.push_back (property);
+        }
+
+      return ConnectionResourceDeploymentDescription (tname, reqname, resname, properties);
     }
 #endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 

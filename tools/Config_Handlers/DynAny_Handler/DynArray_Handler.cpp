@@ -39,6 +39,11 @@ namespace DAnCE
       DynamicAny::DynAnySeq dynseq {};
       CORBA::ULong pos {};
 
+      TCKind::Value const element_kind = arrayType->elementType ().kind ().integral ();
+      if (element_kind != TCKind::tk_char && element_kind != TCKind::tk_wchar &&
+          value.element ().size () != arrayType->length ())
+        throw Config_Error ("", "Array element count does not match its type");
+
       switch (arrayType->elementType ().kind ().integral ())
         {
           // ========== BASIC TYPES
@@ -70,6 +75,7 @@ namespace DAnCE
         case TCKind::tk_struct:
         case TCKind::tk_sequence:
         case TCKind::tk_array:
+        case TCKind::tk_alias:
           try
             {
               dynseq.length (value.element ().size ());
@@ -96,14 +102,35 @@ namespace DAnCE
 
         case TCKind::tk_char:
         case TCKind::tk_wchar:
-          // special case where value iterator multiplicity should be one, and should
-          // represent a string, each character of which becomes a element of the sequence.
+          {
+            if (!value.element ().empty () || value.string ().size () != 1)
+              throw Config_Error ("", "Character arrays require one string value");
+
+            std::string const& characters = value.string ().front ();
+            if (characters.size () != arrayType->length ())
+              throw Config_Error ("", "Character array length does not match its type");
+
+            dynseq.length (characters.size ());
+            for (char character : characters)
+              {
+                if (arrayType->elementType ().kind ().integral () == TCKind::tk_wchar &&
+                    static_cast<unsigned char> (character) > 0x7f)
+                  throw Config_Error ("", "Non-ASCII wchar values are not supported");
+
+                DataValue::string_container_type character_value {std::string (1, character)};
+                DataValue const element_value ({}, {}, {}, {}, {}, {}, {}, {}, {}, character_value);
+                DynamicAny::DynAny_var const dynany (
+                  DYNANY_HANDLER->extract_into_dynany (arrayType->elementType (), element_value));
+                dynseq[pos++] = dynany->copy ();
+              }
+            retval->set_elements_as_dyn_any (dynseq);
+            return retval._retn ();
+          }
 
         case TCKind::tk_any:
         case TCKind::tk_TypeCode:
         case TCKind::tk_Principal:
         case TCKind::tk_union:
-        case TCKind::tk_alias:
         case TCKind::tk_except:
         case TCKind::tk_value:
         case TCKind::tk_value_box:

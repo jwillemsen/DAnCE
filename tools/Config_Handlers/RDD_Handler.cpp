@@ -21,6 +21,7 @@ namespace DAnCE
 
       dest.resourceName= src.resourceName ().c_str ();
 
+      dest.property.length (src.property ().size ());
       CORBA::ULong property_index {};
       for (auto const& source_item : src.property ())
         Property_Handler::handle_property (source_item, dest.property[property_index++]);
@@ -36,8 +37,14 @@ namespace DAnCE
 
       XMLSchema::string<char> reqname (src.requirementName);
       XMLSchema::string<char> resname (src.resourceName.in ());
+      ResourceDeploymentDescription::property_container_type properties;
+      for (CORBA::ULong i {}; i < src.property.length (); ++i)
+        {
+          Property const property (Property_Handler::get_property (src.property[i]));
+          properties.push_back (property);
+        }
 
-      return ResourceDeploymentDescription (reqname, resname);
+      return ResourceDeploymentDescription (reqname, resname, properties);
     }
 #endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 

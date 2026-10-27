@@ -41,13 +41,19 @@ namespace DAnCE
     {
       DANCE_TRACE("ERE_Handler::external_ref_endpoint - reverse");
       XMLSchema::string<char> loc (src.location);
+      XMLSchema::boolean provider (src.provider);
+      ExternalReferenceEndpoint::supportedType_container_type supported_types;
+      for (CORBA::ULong i {}; i < src.supportedType.length (); ++i)
+        supported_types.emplace_back (src.supportedType[i]);
+
       if (src.portName)
         {
           XMLSchema::string<char> pn (src.portName);
-          return ExternalReferenceEndpoint (loc, src.provider, pn);
+          ::XSCRT::OptionalArg<XMLSchema::string<char>> const port_name (pn);
+          return ExternalReferenceEndpoint (loc, provider, port_name, supported_types);
         }
 
-      return ExternalReferenceEndpoint (loc, src.provider);
+      return ExternalReferenceEndpoint (loc, provider, std::nullopt, supported_types);
     }
 #endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }

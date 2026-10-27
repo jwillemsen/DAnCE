@@ -40,7 +40,14 @@ namespace DAnCE
       XMLSchema::string<char> const name (src.name);
       XMLSchema::string<char> const res (src.resourceType);
 
-      return Requirement (name, res);
+      Requirement::property_container_type properties;
+      for (CORBA::ULong i {}; i < src.property.length (); ++i)
+        {
+          Property const property (Property_Handler::get_property (src.property[i]));
+          properties.push_back (property);
+        }
+
+      return Requirement (name, res, properties);
     }
 #endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }

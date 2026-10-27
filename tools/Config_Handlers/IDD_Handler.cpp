@@ -112,6 +112,8 @@ namespace DAnCE
       XMLSchema::string<char> name (src.name);
       XMLSchema::string<char> node (src.node);
       XMLSchema::string<char> source ("");
+      if (src.source.length () > 1)
+        throw Config_Error (src.name.in (), "Multiple source entries cannot be represented by the schema");
       if (src.source.length () > 0)
         {
           XMLSchema::string<char> source_detail (src.source[0]);
@@ -132,15 +134,34 @@ namespace DAnCE
 
       XMLSchema::ID<char> xml_id (idd_id.c_str ());
 
+      InstanceDeploymentDescription::configProperty_container_type config_properties;
+      for (CORBA::ULong i {}; i < src.configProperty.length (); ++i)
+        {
+          Property const property (Property_Handler::get_property (src.configProperty[i]));
+          config_properties.push_back (property);
+        }
+
+      InstanceDeploymentDescription::deployedResource_container_type resources;
+      for (CORBA::ULong i {}; i < src.deployedResource.length (); ++i)
+        {
+          InstanceResourceDeploymentDescription const resource (
+            IRDD_Handler::instance_resource_deployment_descr (src.deployedResource[i]));
+          resources.push_back (resource);
+        }
+
+      if (src.deployedSharedResource.length () > 1)
+        throw Config_Error (src.name.in (), "Multiple shared resources cannot be represented by the schema");
+
       // Bind the ref and set it in the IDD
       IDD_Handler::IDREF.bind_next_available (idd_id);
 
       if (src.deployedSharedResource.length () != 0)
         return InstanceDeploymentDescription (
-          name, node, source, xid, {}, {},
+          name, node, source, xid, config_properties, resources,
           IRDD_Handler::instance_resource_deployment_descr (src.deployedSharedResource[0]), xml_id);
 
-      return InstanceDeploymentDescription (name, node, source, xid, {}, {}, std::nullopt, xml_id);
+      return InstanceDeploymentDescription (name, node, source, xid, config_properties, resources,
+                                            std::nullopt, xml_id);
     }
 #endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
