@@ -76,8 +76,8 @@ namespace DAnCE
         DANCE_TRACE ("IAD_Handler::impl_artifact_descr - reverse");
         ImplementationArtifactDescription retval {};
 
-        retval.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
-        retval.UUID (ACE_TEXT_CHAR_TO_TCHAR  (src.UUID.in ()));
+        retval.label (src.label.in ());
+        retval.UUID (src.UUID.in ());
         return retval;
       }
 

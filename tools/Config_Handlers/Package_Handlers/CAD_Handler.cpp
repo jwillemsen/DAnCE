@@ -87,7 +87,7 @@ namespace DAnCE
     {
       DANCE_TRACE("ACD_Handler::get_acd - reverse");
 
-      AssemblyConnectionDescription retval (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
+      AssemblyConnectionDescription retval (src.name.in ());
       return retval;
     }
       };
@@ -122,7 +122,7 @@ namespace DAnCE
 
       IdRef xid {};
       xid.idref (str.c_str ());
-      return SubcomponentPropertyReference (ACE_TEXT_CHAR_TO_TCHAR (src.propertyName.in ()), xid);
+      return SubcomponentPropertyReference (src.propertyName.in (), xid);
     }
 
       };
@@ -149,8 +149,8 @@ namespace DAnCE
       DANCE_TRACE("APM_Handler::get_apm - reverse");
 
       AssemblyPropertyMapping retval (
-        ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()),
-        ACE_TEXT_CHAR_TO_TCHAR (src.externalName.in ()));
+        src.name.in (),
+        src.externalName.in ());
       return retval;
     }
       };

@@ -120,10 +120,10 @@ namespace DAnCE
         PackageConfiguration pcd = PackageConfiguration ();
 
         if (src.label.in () != 0)
-          pcd.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
+          pcd.label (src.label.in ());
 
         if (src.UUID.in () != 0)
-          pcd.UUID (ACE_TEXT_CHAR_TO_TCHAR (src.UUID.in ()));
+          pcd.UUID (src.UUID.in ());
 
         if (src.basePackage.length () > 0)
           {

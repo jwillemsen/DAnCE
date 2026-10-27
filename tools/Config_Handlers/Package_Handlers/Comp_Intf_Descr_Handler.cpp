@@ -32,7 +32,7 @@ namespace DAnCE
           {
             DANCE_TRACE ("Comp_Prop_Handler::get_cpd - reverse");
 
-            return ComponentPropertyDescription (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()),
+            return ComponentPropertyDescription (src.name.in (),
                                                  DataType_Handler::data_type (src.type));
           }
 
@@ -109,9 +109,9 @@ namespace DAnCE
         DANCE_TRACE ("Comp_Intf_Descr_Handler::comp_intf_descr - reverse");
         ComponentInterfaceDescription retval {};
 
-        retval.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
-        retval.UUID (ACE_TEXT_CHAR_TO_TCHAR  (src.UUID.in ()));
-        retval.specificType (ACE_TEXT_CHAR_TO_TCHAR  (src.specificType.in ()));
+        retval.label (src.label.in ());
+        retval.UUID (src.UUID.in ());
+        retval.specificType (src.specificType.in ());
         return retval;
       }
 

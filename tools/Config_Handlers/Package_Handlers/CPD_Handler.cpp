@@ -32,7 +32,7 @@ namespace DAnCE
     {
       DANCE_TRACE ("PCI_Handler::get_pci - reverse");
       return PackagedComponentImplementation (
-        ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()),
+        src.name.in (),
         CID_Handler::component_impl_descr (src.referencedImplementation));
     }
       };
@@ -96,10 +96,10 @@ namespace DAnCE
         ComponentPackageDescription toconfig {};
 
         if (src.label.in () != 0)
-          toconfig.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
+          toconfig.label (src.label.in ());
 
         if (src.UUID.in () != 0)
-          toconfig.UUID (ACE_TEXT_CHAR_TO_TCHAR (src.UUID.in ()));
+          toconfig.UUID (src.UUID.in ());
 
         {
           toconfig.realizes

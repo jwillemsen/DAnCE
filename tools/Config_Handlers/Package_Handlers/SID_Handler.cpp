@@ -97,7 +97,7 @@ namespace DAnCE
         Deployment::SubcomponentInstantiationDescription const& src)
       {
         DANCE_TRACE ("SID_Handler::sub_comp_inst_descr - reverse");
-        SubcomponentInstantiationDescription retval (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
+        SubcomponentInstantiationDescription retval (src.name.in ());
 
         if (src.basePackage.length () == 1)
           retval.basePackage

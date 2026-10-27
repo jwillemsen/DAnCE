@@ -88,7 +88,7 @@ namespace DAnCE
       CORBA::ULong index {};
 
       for (auto const& member : enum_type->member ())
-        members[index++] = CORBA::string_dup (member.c_str ());
+        members[index++] = member.c_str ();
 
       CORBA::TypeCode_var tc =
         DYNANY_HANDLER->orb ()->create_enum_tc (

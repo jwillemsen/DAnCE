@@ -51,7 +51,7 @@ namespace DAnCE
     {
       DANCE_TRACE ("Capability_Handler::get_capability - reverse");
 
-      Capability retval (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
+      Capability retval (src.name.in ());
       return retval;
     }
       };
@@ -116,8 +116,7 @@ namespace DAnCE
     {
       DANCE_TRACE ("IR_Handler::get_ir - reverse");
 
-      ImplementationRequirement retval (ACE_TEXT_CHAR_TO_TCHAR (src.resourceType.in ()),
-                                        ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
+      ImplementationRequirement retval (src.resourceType.in (), src.name.in ());
 
       if (src.resourceUsage.length () == 1)
         switch (src.resourceUsage[0])
@@ -147,9 +146,9 @@ namespace DAnCE
         break;
           }
 
-      retval.resourcePort (ACE_TEXT_CHAR_TO_TCHAR (src.resourcePort.in ()));
+      retval.resourcePort (src.resourcePort.in ());
 
-      retval.componentPort (ACE_TEXT_CHAR_TO_TCHAR (src.componentPort.in ()));
+      retval.componentPort (src.componentPort.in ());
       return retval;
     }
       };
@@ -283,8 +282,8 @@ namespace DAnCE
 
         ComponentImplementationDescription retval {};
 
-        retval.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
-        retval.UUID (ACE_TEXT_CHAR_TO_TCHAR (src.UUID.in ()));
+        retval.label (src.label.in ());
+        retval.UUID (src.UUID.in ());
 
         {
           retval.implements (Comp_Intf_Descr_Handler::comp_intf_descr (src.implements));

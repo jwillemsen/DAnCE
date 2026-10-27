@@ -41,7 +41,7 @@ namespace DAnCE
 
         static NamedImplementationArtifact get_nia (::Deployment::NamedImplementationArtifact const& src)
         {
-          return NamedImplementationArtifact (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()),
+          return NamedImplementationArtifact (src.name.in (),
                                               IAD_Handler::impl_artifact_descr (src.referencedArtifact));
         }
 
