@@ -70,36 +70,36 @@ namespace DAnCE
       XMLSchema::string<char> reqname (src.requirementName);
       XMLSchema::string<char> resname (src.resourceName);
 
-      InstanceResourceDeploymentDescription irdd (ResourceUsageKind::None, reqname, resname);
+      ResourceUsageKind::Value usage_value {};
 
       switch (src.resourceUsage)
         {
         case Deployment::None:
-          irdd.resourceUsage (ResourceUsageKind::None);
+          usage_value = ResourceUsageKind::None;
           break;
 
         case Deployment::InstanceUsesResource:
-          irdd.resourceUsage (ResourceUsageKind::InstanceUsesResource);
+          usage_value = ResourceUsageKind::InstanceUsesResource;
           break;
 
         case Deployment::ResourceUsesInstance:
-          irdd.resourceUsage (ResourceUsageKind::ResourceUsesInstance);
+          usage_value = ResourceUsageKind::ResourceUsesInstance;
           break;
 
         case Deployment::PortUsesResource:
-          irdd.resourceUsage (ResourceUsageKind::PortUsesResource);
+          usage_value = ResourceUsageKind::PortUsesResource;
           break;
 
         case Deployment::ResourceUsesPort:
-          irdd.resourceUsage (ResourceUsageKind::ResourceUsesPort);
+          usage_value = ResourceUsageKind::ResourceUsesPort;
           break;
 
         default:
           throw Config_Error (src.resourceName.in (), "Unknown ResourceUsageKind.");
-          break;
         }
 
-      return irdd;
+      ResourceUsageKind const usage (usage_value);
+      return InstanceResourceDeploymentDescription (usage, reqname, resname);
     }
 #endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }

@@ -43,6 +43,7 @@ namespace DAnCE
       XMLSchema::string<char> loc (src.location);
       XMLSchema::string<char> pn (src.portName);
       ExternalReferenceEndpoint erp (loc, src.provider);
+      erp.portName (pn);
       return erp;
     }
 #endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC

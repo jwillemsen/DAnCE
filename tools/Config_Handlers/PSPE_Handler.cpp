@@ -89,50 +89,50 @@ namespace DAnCE
     { // @@MAJO
       DANCE_TRACE("PSPE_Handler::sub_component_port_endpoint - reverse");
       XMLSchema::string<char> pname (src.portName);
-      XMLSchema::string<char> tval  ("true");
-      XMLSchema::string<char> prov  ("");
+      XMLSchema::string<char> provider (src.provider ? "true" : "");
       std::string id {};
       IDD_Handler::IDREF.find_ref(src.instanceRef, id);
       XMLSchema::IDREF<char> idref(id.c_str());
 
-      if (src.provider)
-        prov = tval;
-
       IdRef idr {};
       idr.idref (idref);
 
-      PlanSubcomponentPortEndpoint pspe (pname, CCMComponentPortKind::Facet, idr);
-      pspe.provider (prov);
+      CCMComponentPortKind::Value kind_value {};
 
       switch (src.kind)
         {
         case ::Deployment::Facet:
-          pspe.kind (CCMComponentPortKind::Facet);
+          kind_value = CCMComponentPortKind::Facet;
           break;
 
         case ::Deployment::SimplexReceptacle:
-          pspe.kind (CCMComponentPortKind::SimplexReceptacle);
+          kind_value = CCMComponentPortKind::SimplexReceptacle;
           break;
 
         case ::Deployment::MultiplexReceptacle:
-          pspe.kind (CCMComponentPortKind::MultiplexReceptacle);
+          kind_value = CCMComponentPortKind::MultiplexReceptacle;
           break;
 
         case ::Deployment::EventEmitter:
-          pspe.kind (CCMComponentPortKind::EventEmitter);
+          kind_value = CCMComponentPortKind::EventEmitter;
           break;
 
         case ::Deployment::EventPublisher:
-          pspe.kind (CCMComponentPortKind::EventPublisher);
+          kind_value = CCMComponentPortKind::EventPublisher;
           break;
 
         case ::Deployment::EventConsumer:
-          pspe.kind (CCMComponentPortKind::EventConsumer);
+          kind_value = CCMComponentPortKind::EventConsumer;
           break;
 
         default:
           DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR, (LM_ERROR, "Invalid port kind in PSPE\n"));
+          throw Config_Error (pname.c_str (), "Invalid port kind in plan subcomponent endpoint");
         }
+
+      CCMComponentPortKind const kind (kind_value);
+      PlanSubcomponentPortEndpoint pspe (pname, kind, idr);
+      pspe.provider (provider);
 
       return pspe;
     }
