@@ -32,27 +32,27 @@ namespace DAnCE
 
       switch (desc.kind ().integral ())
         {
-        case SatisfierPropertyKind::Quantity_l:
+        case SatisfierPropertyKind::Quantity:
           toconfig.kind = Deployment::Quantity;
           break;
 
-        case SatisfierPropertyKind::Capacity_l:
+        case SatisfierPropertyKind::Capacity:
           toconfig.kind = Deployment::Capacity;
           break;
 
-        case SatisfierPropertyKind::Minimum_l:
+        case SatisfierPropertyKind::Minimum:
           toconfig.kind = Deployment::Minimum;
           break;
 
-        case SatisfierPropertyKind::Maximum_l:
+        case SatisfierPropertyKind::Maximum:
           toconfig.kind = Deployment::Maximum;
           break;
 
-        case SatisfierPropertyKind::Attribute_l:
+        case SatisfierPropertyKind::Attribute:
           toconfig.kind = Deployment::Attribute;
           break;
 
-        case SatisfierPropertyKind::Selection_l:
+        case SatisfierPropertyKind::Selection:
           toconfig.kind = Deployment::Selection;
           break;
 

@@ -45,7 +45,7 @@ namespace DAnCE
     {
       DANCE_TRACE("DynString_Handler::create_typecode");
 
-      if (type.kind ().integral () != TCKind::tk_string_l)
+      if (type.kind ().integral () != TCKind::tk_string)
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("ERROR: String type description required")));
           throw Config_Error ("", "Expected <string> element, incorrect tc_kind.");

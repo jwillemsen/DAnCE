@@ -27,27 +27,27 @@ namespace DAnCE
 
       switch (desc.kind ().integral ())
         {
-        case CCMComponentPortKind::Facet_l:
+        case CCMComponentPortKind::Facet:
           toconfig.kind = Deployment::Facet;
           break;
 
-        case CCMComponentPortKind::SimplexReceptacle_l:
+        case CCMComponentPortKind::SimplexReceptacle:
           toconfig.kind = Deployment::SimplexReceptacle;
           break;
 
-        case CCMComponentPortKind::MultiplexReceptacle_l:
+        case CCMComponentPortKind::MultiplexReceptacle:
           toconfig.kind = Deployment::MultiplexReceptacle;
           break;
 
-        case CCMComponentPortKind::EventEmitter_l:
+        case CCMComponentPortKind::EventEmitter:
           toconfig.kind = Deployment::EventEmitter;
           break;
 
-        case CCMComponentPortKind::EventPublisher_l:
+        case CCMComponentPortKind::EventPublisher:
           toconfig.kind = Deployment::EventPublisher;
           break;
 
-        case CCMComponentPortKind::EventConsumer_l:
+        case CCMComponentPortKind::EventConsumer:
           toconfig.kind = Deployment::EventConsumer;
           break;
 

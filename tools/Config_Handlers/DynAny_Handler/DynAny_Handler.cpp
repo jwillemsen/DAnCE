@@ -78,19 +78,19 @@ namespace DAnCE
           throw Config_Error ("", "Multiple scalar values provided for data type");
         }
 
-      if ((!value._cxx_short ().empty () && tkind != TCKind::tk_short_l) ||
-          (!value._cxx_long ().empty () && tkind != TCKind::tk_long_l) ||
-          (!value.ushort ().empty () && tkind != TCKind::tk_ushort_l ) ||
-          (!value.ulong ().empty () && tkind != TCKind::tk_ulong_l) ||
-          (!value._cxx_float ().empty () && tkind != TCKind::tk_float_l) ||
-          (!value._cxx_double ().empty () && tkind != TCKind::tk_double_l) ||
-          (!value.boolean ().empty () && tkind != TCKind::tk_boolean_l) ||
-          (!value.octet ().empty () && tkind != TCKind::tk_octet_l) ||
-          (!value.longlong ().empty () && tkind != TCKind::tk_longlong_l) ||
-          (!value.ulonglong ().empty () && tkind != TCKind::tk_ulonglong_l) ||
-          (!value.string ().empty () && !(tkind == TCKind::tk_string_l ||
-                                      tkind == TCKind::tk_char_l ||
-                                      tkind == TCKind::tk_wchar_l)))
+      if ((!value._cxx_short ().empty () && tkind != TCKind::tk_short) ||
+          (!value._cxx_long ().empty () && tkind != TCKind::tk_long) ||
+          (!value.ushort ().empty () && tkind != TCKind::tk_ushort ) ||
+          (!value.ulong ().empty () && tkind != TCKind::tk_ulong) ||
+          (!value._cxx_float ().empty () && tkind != TCKind::tk_float) ||
+          (!value._cxx_double ().empty () && tkind != TCKind::tk_double) ||
+          (!value.boolean ().empty () && tkind != TCKind::tk_boolean) ||
+          (!value.octet ().empty () && tkind != TCKind::tk_octet) ||
+          (!value.longlong ().empty () && tkind != TCKind::tk_longlong) ||
+          (!value.ulonglong ().empty () && tkind != TCKind::tk_ulonglong) ||
+          (!value.string ().empty () && !(tkind == TCKind::tk_string ||
+                                      tkind == TCKind::tk_char ||
+                                      tkind == TCKind::tk_wchar)))
         {
           throw Config_Error ("", "Wrong value type for data type");
         }
@@ -98,15 +98,15 @@ namespace DAnCE
       switch (tkind)
         {
           // ========== BASIC TYPES
-        case TCKind::tk_null_l:
-        case TCKind::tk_void_l:
+        case TCKind::tk_null:
+        case TCKind::tk_void:
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR,
             ACE_TEXT ("DynAny_Handler::extract_into_dynany - Don't know how to handle null or void types\n")));
           throw Config_Error ("", "Null or void types not supported");
           break;
 
-        case TCKind::tk_short_l:
+        case TCKind::tk_short:
           {
             if (!req_tc)
               {
@@ -121,7 +121,7 @@ namespace DAnCE
           }
           break;
 
-        case TCKind::tk_long_l:
+        case TCKind::tk_long:
           {
             if (!req_tc)
               {
@@ -136,7 +136,7 @@ namespace DAnCE
           }
           break;
 
-        case TCKind::tk_ushort_l:
+        case TCKind::tk_ushort:
           {
             if (!req_tc)
               {
@@ -151,7 +151,7 @@ namespace DAnCE
           }
           break;
 
-        case TCKind::tk_ulong_l:
+        case TCKind::tk_ulong:
           {
             if (!req_tc)
               {
@@ -166,7 +166,7 @@ namespace DAnCE
           }
           break;
 
-        case TCKind::tk_float_l:
+        case TCKind::tk_float:
           {
             if (!req_tc)
               {
@@ -181,7 +181,7 @@ namespace DAnCE
           }
           break;
 
-        case TCKind::tk_double_l:
+        case TCKind::tk_double:
           {
             if (!req_tc)
               {
@@ -196,7 +196,7 @@ namespace DAnCE
           }
           break;
 
-        case TCKind::tk_boolean_l:
+        case TCKind::tk_boolean:
           {
             if (!req_tc)
               {
@@ -211,7 +211,7 @@ namespace DAnCE
           }
           break;
 
-        case TCKind::tk_octet_l:
+        case TCKind::tk_octet:
           {
             if (!req_tc)
               {
@@ -226,7 +226,7 @@ namespace DAnCE
           }
           break;
 
-        case TCKind::tk_longlong_l:
+        case TCKind::tk_longlong:
           {
             if (!req_tc)
               {
@@ -241,7 +241,7 @@ namespace DAnCE
           }
           break;
 
-        case TCKind::tk_ulonglong_l:
+        case TCKind::tk_ulonglong:
           {
             if (!req_tc)
               {
@@ -256,10 +256,10 @@ namespace DAnCE
           }
           break;
 
-        case TCKind::tk_string_l:
+        case TCKind::tk_string:
           return DynString_Handler::extract_into_dynany (type, value, req_tc);
 
-        case TCKind::tk_char_l:
+        case TCKind::tk_char:
           {
             if (!req_tc)
               {
@@ -274,7 +274,7 @@ namespace DAnCE
           }
           break;
 
-        case TCKind::tk_wchar_l:
+        case TCKind::tk_wchar:
           {
             if (!req_tc)
               {
@@ -295,42 +295,42 @@ namespace DAnCE
           }
           break;
 
-        case TCKind::tk_enum_l:
+        case TCKind::tk_enum:
           return DynEnum_Handler::extract_into_dynany (type, value, req_tc);
 
-        case TCKind::tk_sequence_l:
+        case TCKind::tk_sequence:
           return DynSequence_Handler::extract_into_dynany (type, value, req_tc);
 
-        case TCKind::tk_struct_l:
+        case TCKind::tk_struct:
           return DynStruct_Handler::extract_into_dynany (type, value, req_tc);
 
-        case TCKind::tk_alias_l:
+        case TCKind::tk_alias:
           return DynAlias_Handler::extract_into_dynany (type, value, req_tc);
 
-        case TCKind::tk_array_l:
+        case TCKind::tk_array:
           return DynArray_Handler::extract_into_dynany (type, value, req_tc);
 
-        case TCKind::tk_longdouble_l:
+        case TCKind::tk_longdouble:
           // Not supported since a longdouble is defined in the xsd as double.
           // We are then creating a long double initialized with a regular
           // double. This is a very tricky conversion and doesn't work in
           // combination with certain (versions of) compilers.
-        case TCKind::tk_wstring_l:
-        case TCKind::tk_fixed_l:
-        case TCKind::tk_any_l:
-        case TCKind::tk_TypeCode_l:
-        case TCKind::tk_Principal_l:
-        case TCKind::tk_objref_l:
-        case TCKind::tk_union_l:
-        case TCKind::tk_except_l:
-        case TCKind::tk_value_l:
-        case TCKind::tk_value_box_l:
-        case TCKind::tk_native_l:
-        case TCKind::tk_abstract_interface_l:
-        case TCKind::tk_local_interface_l:
-        case TCKind::tk_component_l:
-        case TCKind::tk_home_l:
-        case TCKind::tk_event_l:
+        case TCKind::tk_wstring:
+        case TCKind::tk_fixed:
+        case TCKind::tk_any:
+        case TCKind::tk_TypeCode:
+        case TCKind::tk_Principal:
+        case TCKind::tk_objref:
+        case TCKind::tk_union:
+        case TCKind::tk_except:
+        case TCKind::tk_value:
+        case TCKind::tk_value_box:
+        case TCKind::tk_native:
+        case TCKind::tk_abstract_interface:
+        case TCKind::tk_local_interface:
+        case TCKind::tk_component:
+        case TCKind::tk_home:
+        case TCKind::tk_event:
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR,
             DLINFO ACE_TEXT ("DynAny_Handler::extract_into_dynany - Type not supported\n")));
           throw Config_Error ("", "Type not supported");
@@ -357,92 +357,92 @@ namespace DAnCE
       switch (type.kind ().integral ())
         {
           // ========== BASIC TYPES
-        case TCKind::tk_null_l:
-        case TCKind::tk_void_l:
+        case TCKind::tk_null:
+        case TCKind::tk_void:
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_WARNING,
             ACE_TEXT ("I don't know how to handle null or void types\n")));
           throw Config_Error ("", "Null or void types not supported");
           break;
 
-        case TCKind::tk_short_l:
+        case TCKind::tk_short:
           return CORBA::_tc_short;
 
-        case TCKind::tk_long_l:
+        case TCKind::tk_long:
           return CORBA::_tc_long;
 
-        case TCKind::tk_ushort_l:
+        case TCKind::tk_ushort:
           return CORBA::_tc_ushort;
 
-        case TCKind::tk_ulong_l:
+        case TCKind::tk_ulong:
           return CORBA::_tc_ulong;
 
-        case TCKind::tk_float_l:
+        case TCKind::tk_float:
           return CORBA::_tc_float;
 
-        case TCKind::tk_double_l:
+        case TCKind::tk_double:
           return CORBA::_tc_double;
 
-        case TCKind::tk_boolean_l:
+        case TCKind::tk_boolean:
           return CORBA::_tc_boolean;
 
-        case TCKind::tk_char_l:
+        case TCKind::tk_char:
           return CORBA::_tc_char;
 
-        case TCKind::tk_octet_l:
+        case TCKind::tk_octet:
           return CORBA::_tc_octet;
 
-        case TCKind::tk_string_l:
+        case TCKind::tk_string:
           return DynString_Handler::create_typecode (type);
 
-        case TCKind::tk_longlong_l:
+        case TCKind::tk_longlong:
           return CORBA::_tc_longlong;
 
-        case TCKind::tk_ulonglong_l:
+        case TCKind::tk_ulonglong:
           return CORBA::_tc_ulonglong;
 
-        case TCKind::tk_longdouble_l:
+        case TCKind::tk_longdouble:
           // Disabled since a longdouble is defined in the xsd as double.
           // We are then creating a long double initialized from a regular
           // double. This is a very tricky conversion and doesn't work in
           // combination with certain (versions of) compilers.
           break;
 
-        case TCKind::tk_wchar_l:
+        case TCKind::tk_wchar:
           return CORBA::_tc_wchar;
 
-        case TCKind::tk_wstring_l:
+        case TCKind::tk_wstring:
           break;
 
-        case TCKind::tk_enum_l:
+        case TCKind::tk_enum:
           return DynEnum_Handler::create_typecode (type);
 
-        case TCKind::tk_struct_l:
+        case TCKind::tk_struct:
           return DynStruct_Handler::create_typecode (type);
 
-        case TCKind::tk_sequence_l:
+        case TCKind::tk_sequence:
           return DynSequence_Handler::create_typecode (type);
 
-        case TCKind::tk_alias_l:
+        case TCKind::tk_alias:
           return DynAlias_Handler::create_typecode (type);
 
-        case TCKind::tk_array_l:
+        case TCKind::tk_array:
           return DynArray_Handler::create_typecode (type);
 
-        case TCKind::tk_fixed_l:
-        case TCKind::tk_any_l:
-        case TCKind::tk_TypeCode_l:
-        case TCKind::tk_Principal_l:
-        case TCKind::tk_objref_l:
-        case TCKind::tk_union_l:
-        case TCKind::tk_except_l:
-        case TCKind::tk_value_l:
-        case TCKind::tk_value_box_l:
-        case TCKind::tk_native_l:
-        case TCKind::tk_abstract_interface_l:
-        case TCKind::tk_local_interface_l:
-        case TCKind::tk_component_l:
-        case TCKind::tk_home_l:
-        case TCKind::tk_event_l:
+        case TCKind::tk_fixed:
+        case TCKind::tk_any:
+        case TCKind::tk_TypeCode:
+        case TCKind::tk_Principal:
+        case TCKind::tk_objref:
+        case TCKind::tk_union:
+        case TCKind::tk_except:
+        case TCKind::tk_value:
+        case TCKind::tk_value_box:
+        case TCKind::tk_native:
+        case TCKind::tk_abstract_interface:
+        case TCKind::tk_local_interface:
+        case TCKind::tk_component:
+        case TCKind::tk_home:
+        case TCKind::tk_event:
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, DLINFO ACE_TEXT ("DynAny_Handler::create_typecode - Type not supported\n")));
           throw Config_Error ("", "Type not supported");

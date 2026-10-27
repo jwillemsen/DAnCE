@@ -25,23 +25,23 @@ namespace DAnCE
 
       switch (desc.resourceUsage ().integral ())
         {
-        case ResourceUsageKind::None_l:
+        case ResourceUsageKind::None:
           toconfig.resourceUsage = Deployment::None;
           break;
 
-        case ResourceUsageKind::InstanceUsesResource_l:
+        case ResourceUsageKind::InstanceUsesResource:
           toconfig.resourceUsage = Deployment::InstanceUsesResource;
           break;
 
-        case ResourceUsageKind::ResourceUsesInstance_l:
+        case ResourceUsageKind::ResourceUsesInstance:
           toconfig.resourceUsage = Deployment::ResourceUsesInstance;
           break;
 
-        case ResourceUsageKind::PortUsesResource_l:
+        case ResourceUsageKind::PortUsesResource:
           toconfig.resourceUsage = Deployment::PortUsesResource;
           break;
 
-        case ResourceUsageKind::ResourceUsesPort_l:
+        case ResourceUsageKind::ResourceUsesPort:
           toconfig.resourceUsage = Deployment::ResourceUsesPort;
           break;
 

@@ -1,6 +1,7 @@
 #include "PSPE_Handler.h"
 #include "IDD_Handler.h"
 #include "Basic_Deployment_Data.hpp"
+#include "Common.h"
 #include "dance/Deployment/Deployment_DataC.h"
 
 namespace DAnCE
@@ -51,32 +52,32 @@ namespace DAnCE
 
       switch (src.kind ().integral ())
         {
-        case CCMComponentPortKind::Facet_l:
+        case CCMComponentPortKind::Facet:
           dest.kind = Deployment::Facet;
           break;
 
-        case CCMComponentPortKind::SimplexReceptacle_l:
+        case CCMComponentPortKind::SimplexReceptacle:
           dest.kind = Deployment::SimplexReceptacle;
           break;
 
-        case CCMComponentPortKind::MultiplexReceptacle_l:
+        case CCMComponentPortKind::MultiplexReceptacle:
           dest.kind = Deployment::MultiplexReceptacle;
           break;
 
-        case CCMComponentPortKind::EventEmitter_l:
+        case CCMComponentPortKind::EventEmitter:
           dest.kind = Deployment::EventEmitter;
           break;
 
-        case CCMComponentPortKind::EventPublisher_l:
+        case CCMComponentPortKind::EventPublisher:
           dest.kind = Deployment::EventPublisher;
           break;
 
-        case CCMComponentPortKind::EventConsumer_l:
+        case CCMComponentPortKind::EventConsumer:
           dest.kind = Deployment::EventConsumer;
           break;
 
         default:
-          DANCE_DEBUG (DANCE_LOG_NONFATAL_ERROR, (LM_DEBUG, "Invalid port kind in connection\n"));
+          throw Config_Error ("", "Invalid port kind in plan subcomponent endpoint");
 
         }
     }

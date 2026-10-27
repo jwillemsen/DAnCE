@@ -14,17 +14,20 @@ namespace DAnCE
 
       switch (desc.constraint ().integral ())
         {
-        case PlanLocalityKind::SameProcess_l:
+        case PlanLocalityKind::SameProcess:
           toconfig.constraint = Deployment::PlanSameProcess;
           break;
 
-        case PlanLocalityKind::DifferentProcess_l:
+        case PlanLocalityKind::DifferentProcess:
           toconfig.constraint = Deployment::PlanDifferentProcess;
           break;
 
-        case PlanLocalityKind::NoConstraint_l:
+        case PlanLocalityKind::NoConstraint:
           toconfig.constraint = Deployment::PlanNoConstraint;
           break;
+
+        default:
+          throw Config_Error ("", "Unknown PlanLocalityKind.");
         }
 
       size_t pos {};
