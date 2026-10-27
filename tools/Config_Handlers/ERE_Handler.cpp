@@ -1,4 +1,5 @@
 #include "ERE_Handler.h"
+#include "Common.h"
 #include "Basic_Deployment_Data.hpp"
 #include "dance/Deployment/Deployment_DataC.h"
 #include "dance/Logger/Log_Macros.h"
@@ -34,6 +35,7 @@ namespace DAnCE
       for (auto const& source_item : src.supportedType ())
         dest.supportedType[supportedType_index++] = source_item.c_str ();
     }
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     ExternalReferenceEndpoint ERE_Handler::external_ref_endpoint (Deployment::ExternalReferenceEndpoint const& src)
     {
@@ -43,5 +45,6 @@ namespace DAnCE
       ExternalReferenceEndpoint erp (loc, src.provider);
       return erp;
     }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }
 }

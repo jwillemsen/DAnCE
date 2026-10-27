@@ -110,6 +110,7 @@ namespace DAnCE
       //   This case used to be supported...is it not in the schema?
 
     }
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     DataType
     DataType_Handler::data_type (const CORBA::TypeCode_ptr&  src)
@@ -159,5 +160,6 @@ namespace DAnCE
           throw Config_Error ("", "Unsupported CORBA typecode in data type conversion");
         }
     }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }
 }

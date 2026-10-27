@@ -1,4 +1,5 @@
 #include "IRDD_Handler.h"
+#include "Common.h"
 #include "Basic_Deployment_Data.hpp"
 #include "dance/Deployment/Deployment_DataC.h"
 #include "Property_Handler.h"
@@ -59,6 +60,7 @@ namespace DAnCE
       for (auto const& source_item : desc.property ())
         Property_Handler::handle_property (source_item, toconfig.property[property_index++]);
     }
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     InstanceResourceDeploymentDescription
     IRDD_Handler::instance_resource_deployment_descr (Deployment::InstanceResourceDeploymentDescription const& src)
@@ -99,6 +101,7 @@ namespace DAnCE
 
       return irdd;
     }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }
 
 }

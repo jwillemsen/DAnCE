@@ -1,4 +1,5 @@
 #include "PCD_Handler.h"
+#include "Common.h"
 #include "Req_Handler.h"
 #include "CEPE_Handler.h"
 #include "PSPE_Handler.h"
@@ -67,6 +68,7 @@ namespace DAnCE
 
     }
 
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
     PlanConnectionDescription
     PCD_Handler::get_PlanConnectionDescription (Deployment::PlanConnectionDescription const& src)
     {
@@ -85,5 +87,6 @@ namespace DAnCE
 
       return pcd;
     }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }
 }

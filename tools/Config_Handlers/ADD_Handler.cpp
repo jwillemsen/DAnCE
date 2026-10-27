@@ -1,4 +1,5 @@
 #include "ADD_Handler.h"
+#include "Common.h"
 #include "cdp.hpp"
 #include "dance/Deployment/Deployment_DataC.h"
 #include "Property_Handler.h"
@@ -67,6 +68,7 @@ namespace DAnCE
           }
 
       }
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
       ArtifactDeploymentDescription
       ADD_Handler::artifact_deployment_descr (
@@ -94,5 +96,6 @@ namespace DAnCE
 
         return add;
       }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
     }
   }

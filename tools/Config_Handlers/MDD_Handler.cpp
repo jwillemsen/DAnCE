@@ -1,4 +1,5 @@
 #include "MDD_Handler.h"
+#include "Common.h"
 #include "Basic_Deployment_Data.hpp"
 #include "dance/Deployment/Deployment_DataC.h"
 #include "ADD_Handler.h"
@@ -82,6 +83,7 @@ namespace DAnCE
                      desc.name ().c_str ()));
         }
     }
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     MonolithicDeploymentDescription
     MDD_Handler::mono_deployment_description(
@@ -108,6 +110,7 @@ namespace DAnCE
 
       return mdd;
     }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }
 
 }

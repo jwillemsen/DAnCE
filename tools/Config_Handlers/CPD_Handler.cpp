@@ -64,81 +64,54 @@ namespace DAnCE
       toconfig.exclusiveUser = desc.exclusiveUser ();
       toconfig.optional = desc.optional ();
     }
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     ComponentPortDescription CPD_Handler::component_port_description (Deployment::ComponentPortDescription const& src)
     {
       DANCE_TRACE("CPD_Handler::component_port_description - reverse");
       XMLSchema::string<char> name (src.name);
-      XMLSchema::string<char> stype (src.specificType);
-
-      XMLSchema::string<char> tval ("true");
-      XMLSchema::string<char> fval ("false");
-      XMLSchema::boolean provider {};
-      XMLSchema::boolean exclusiveProvider {};
-      XMLSchema::boolean exclusiveUser {};
-      XMLSchema::boolean optional {};
-
-      if (src.provider)
-        provider = true;
-      else
-        provider = false;
-
-      if (src.exclusiveUser)
-        exclusiveUser = true;
-      else
-        provider = false;
-
-      if (src.exclusiveProvider)
-        exclusiveProvider = true;
-      else
-        provider = false;
-
-      if (src.optional)
-        optional = true;
-      else
-        provider = false;
-
-      ComponentPortDescription cpd (name,
-                                    provider,
-                                    exclusiveProvider,
-                                    exclusiveUser,
-                                    optional,
-                                    CCMComponentPortKind::Facet);
+      XMLSchema::boolean provider (src.provider);
+      XMLSchema::boolean exclusiveProvider (src.exclusiveProvider);
+      XMLSchema::boolean exclusiveUser (src.exclusiveUser);
+      XMLSchema::boolean optional (src.optional);
+      CCMComponentPortKind kind (CCMComponentPortKind::Facet);
 
       switch (src.kind)
         {
         case ::Deployment::Facet:
-          cpd.kind (CCMComponentPortKind::Facet);
+          kind = CCMComponentPortKind::Facet;
           break;
 
         case ::Deployment::SimplexReceptacle:
-          cpd.kind (CCMComponentPortKind::SimplexReceptacle);
+          kind = CCMComponentPortKind::SimplexReceptacle;
           break;
 
         case ::Deployment::MultiplexReceptacle:
-          cpd.kind (CCMComponentPortKind::MultiplexReceptacle);
+          kind = CCMComponentPortKind::MultiplexReceptacle;
           break;
 
         case ::Deployment::EventEmitter:
-          cpd.kind (CCMComponentPortKind::EventEmitter);
+          kind = CCMComponentPortKind::EventEmitter;
           break;
 
         case ::Deployment::EventPublisher:
-          cpd.kind (CCMComponentPortKind::EventPublisher);
+          kind = CCMComponentPortKind::EventPublisher;
           break;
 
         case ::Deployment::EventConsumer:
-          cpd.kind (CCMComponentPortKind::EventConsumer);
+          kind = CCMComponentPortKind::EventConsumer;
           break;
 
         default:
           DANCE_DEBUG (DANCE_LOG_NONFATAL_ERROR,
             (LM_ERROR, ACE_TEXT("Invalid port kind in connection %C\n"),
             name.c_str ()));
+          throw Config_Error (name.c_str (), "Invalid port kind in connection");
         }
 
-      return cpd;
+      return ComponentPortDescription (name, provider, exclusiveProvider, exclusiveUser, optional, kind);
     }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
   }
 }

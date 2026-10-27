@@ -1,4 +1,5 @@
 #include "Req_Handler.h"
+#include "Common.h"
 #include "Property_Handler.h"
 #include "dance/Deployment/Deployment_BaseC.h"
 #include "dance/Logger/Log_Macros.h"
@@ -29,6 +30,7 @@ namespace DAnCE
       for (auto const& source_item : desc.property ())
         Property_Handler::handle_property (source_item, toconfig.property[property_index++]);
     }
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     Requirement Req_Handler::get_requirement (Deployment::Requirement const& src)
     {
@@ -43,5 +45,6 @@ namespace DAnCE
 
       return req;
     }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }
 }

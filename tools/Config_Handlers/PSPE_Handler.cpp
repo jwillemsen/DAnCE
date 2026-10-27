@@ -81,6 +81,7 @@ namespace DAnCE
 
         }
     }
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     PlanSubcomponentPortEndpoint
     PSPE_Handler::sub_component_port_endpoint (
@@ -135,5 +136,6 @@ namespace DAnCE
 
       return pspe;
     }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }
 }

@@ -1,4 +1,5 @@
 #include "Property_Handler.h"
+#include "Common.h"
 #include "Any_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "dance/Deployment/Deployment_DataC.h"
@@ -32,6 +33,7 @@ namespace DAnCE
           throw ex;
         }
     }
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     Property Property_Handler::get_property (Deployment::Property const& src)
     {
@@ -44,6 +46,7 @@ namespace DAnCE
 
       return prop;
     }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
   }
 }

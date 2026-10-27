@@ -1,4 +1,5 @@
 #include "DP_PCD_Handler.h"
+#include "Common.h"
 #include "CEPE_Handler.h"
 #include "PSPE_Handler.h"
 #include "ERE_Handler.h"
@@ -24,12 +25,14 @@ namespace DAnCE
         DP_PCD_Handler::plan_connection_descr (source_item, dest[pos++]);
     }
 
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
     PlanConnectionDescription DP_PCD_Handler::plan_connection_descr (Deployment::PlanConnectionDescription const& src)
     {
       DANCE_TRACE("DP_PCD_Handler::plan_connection_descr");
       PlanConnectionDescription pcd = PCD_Handler::get_PlanConnectionDescription(src);
       return pcd;
     }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     void
     DP_PCD_Handler::plan_connection_descr (

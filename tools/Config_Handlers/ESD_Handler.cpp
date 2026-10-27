@@ -1,4 +1,5 @@
 #include "ESD_Handler.h"
+#include "Common.h"
 #include "Basic_Deployment_Data.hpp"
 #include "dance/Deployment/Deployment_DataC.h"
 #include "cdp.hpp"
@@ -65,6 +66,7 @@ namespace DAnCE
       }
           // Done!
     }
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     EventServiceDeploymentDescription
     ESD_Handler::es_deployment_descr (
@@ -104,6 +106,7 @@ namespace DAnCE
 
       return esd;
     }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
   }
 }

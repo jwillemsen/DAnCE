@@ -1,4 +1,5 @@
 #include "CEPE_Handler.h"
+#include "Common.h"
 #include "Basic_Deployment_Data.hpp"
 #include "dance/Deployment/Deployment_DataC.h"
 #include "dance/Logger/Log_Macros.h"
@@ -26,6 +27,7 @@ namespace DAnCE
       DANCE_TRACE("CEOE_Handler::external_port_endpoint");
       dest.portName = src.portName ().c_str ();
     }
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     ComponentExternalPortEndpoint
     CEPE_Handler::external_port_endpoint (
@@ -36,5 +38,6 @@ namespace DAnCE
       XMLSchema::string<char> portname (src.portName);
       return ComponentExternalPortEndpoint  (portname);
     }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }
 }

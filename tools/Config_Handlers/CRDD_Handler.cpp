@@ -1,4 +1,5 @@
 #include "CRDD_Handler.h"
+#include "Common.h"
 #include "Any_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "dance/Deployment/Deployment_DataC.h"
@@ -37,6 +38,7 @@ namespace DAnCE
       for (auto const& source_item : desc.property ())
         Property_Handler::handle_property (source_item, toconfig.property[property_index++]);
     }
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     ConnectionResourceDeploymentDescription
     CRDD_Handler::connection_resource_depl_desc (
@@ -51,6 +53,7 @@ namespace DAnCE
 
       return crdd;
     }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
   }
 }

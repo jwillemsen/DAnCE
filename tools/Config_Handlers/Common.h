@@ -6,6 +6,11 @@
  */
 #ifndef CONFIG_HANDLERS_COMMON_H
 #define CONFIG_HANDLERS_COMMON_H
+
+#ifndef DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
+#define DANCE_CONFIG_HANDLERS_CORBA_TO_XSC 1
+#endif
+
 #include <string>
 #include <string_view>
 #include <utility>

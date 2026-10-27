@@ -1,4 +1,5 @@
 #include "ComponentPropertyDescription_Handler.h"
+#include "Common.h"
 #include "DataType_Handler.h"
 #include "dance/Deployment/Deployment_DataC.h"
 #include "dance/Logger/Log_Macros.h"
@@ -21,6 +22,7 @@ namespace DAnCE
       CORBA::TypeCode_ptr tcptr = toconfig.type.in ();
       DataType_Handler::data_type (desc.type (), tcptr);
     }
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     ComponentPropertyDescription
     ComponentPropertyDescription_Handler::component_property_description (
@@ -32,6 +34,7 @@ namespace DAnCE
       ComponentPropertyDescription cpd (name,dt);
       return cpd;
     }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
   }
 }

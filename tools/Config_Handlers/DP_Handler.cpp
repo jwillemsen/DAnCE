@@ -1,4 +1,5 @@
 #include "DP_Handler.h"
+#include "Common.h"
 #include "ace/UUID.h"
 #include "dance/Deployment/Deployment_DataC.h"
 
@@ -24,6 +25,7 @@ namespace DAnCE
       if (!this->resolve_plan (dp))
         throw;
     }
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     DP_Handler::DP_Handler (::Deployment::DeploymentPlan const& plan)
       : xsc_dp_ (std::make_unique<deploymentPlan> ()),
@@ -33,6 +35,7 @@ namespace DAnCE
       if (!this->build_xsc (plan))
         throw;
     }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     DP_Handler::~DP_Handler ()
       throw ()
@@ -143,6 +146,7 @@ namespace DAnCE
 
       return true;
     }
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     bool DP_Handler::build_xsc (::Deployment::DeploymentPlan const& plan)
     {
@@ -183,5 +187,6 @@ namespace DAnCE
       retval_ = true;
       return true;
     }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }
 }

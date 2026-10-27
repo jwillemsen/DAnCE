@@ -1,4 +1,5 @@
 #include "ace/UUID.h"
+#include "Common.h"
 #include "IDD_Handler.h"
 #include "IRDD_Handler.h"
 #include "MDD_Handler.h"
@@ -100,6 +101,7 @@ namespace DAnCE
 
       // Done!
     }
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     InstanceDeploymentDescription
     IDD_Handler::instance_deployment_descr (
@@ -143,6 +145,7 @@ namespace DAnCE
 
       return idd;
     }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
   }
 }

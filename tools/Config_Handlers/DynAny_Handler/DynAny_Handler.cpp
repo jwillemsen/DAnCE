@@ -339,6 +339,7 @@ namespace DAnCE
       return retval._retn ();
     }
 
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
     Any DynAny_Handler::extract_from_dynany (CORBA::Any const& any)
     {
       DANCE_TRACE("DynAny_Handler::extract_from_dynany");
@@ -346,9 +347,11 @@ namespace DAnCE
       DynamicAny::DynAny_var const dyn = this->daf_->create_dyn_any (any);
 
       DataValue const val {};
-      Any retval (TCKind::tk_char, val);
+      DataType const type (TCKind::tk_char);
+      Any retval (type, val);
       return retval;
     }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     CORBA::TypeCode_ptr DynAny_Handler::create_typecode (DataType const& type)
     {

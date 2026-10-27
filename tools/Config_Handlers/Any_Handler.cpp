@@ -1,4 +1,5 @@
 #include /**/ "ace/pre.h"
+#include "Common.h"
 
 #include "Any_Handler.h"
 #include "DataType_Handler.h"
@@ -53,6 +54,7 @@ namespace DAnCE
           throw Config_Error ("", "Caught error whilst parsing XML into Any");
         }
     }
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     Any Any_Handler::get_any (::CORBA::Any const& src)
     {
@@ -60,6 +62,7 @@ namespace DAnCE
 
       return DYNANY_HANDLER->extract_from_dynany (src);
     }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }
 }
 #include /**/ "ace/post.h"

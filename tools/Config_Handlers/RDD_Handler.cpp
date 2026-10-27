@@ -1,4 +1,5 @@
 #include "RDD_Handler.h"
+#include "Common.h"
 #include "Basic_Deployment_Data.hpp"
 #include "dance/Deployment/Deployment_DataC.h"
 #include "Any_Handler.h"
@@ -25,6 +26,7 @@ namespace DAnCE
         Property_Handler::handle_property (source_item, dest.property[property_index++]);
 
     }
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     ResourceDeploymentDescription
     RDD_Handler::resource_deployment_descr (
@@ -39,6 +41,7 @@ namespace DAnCE
 
       return rdd;
     }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
   }
 

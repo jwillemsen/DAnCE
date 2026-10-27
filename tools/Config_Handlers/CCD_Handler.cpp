@@ -1,4 +1,5 @@
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
+#include "Common.h"
 
 #include "dance/Logger/Log_Macros.h"
 #include "CCD_Handler.h"
@@ -65,6 +66,7 @@ namespace DAnCE
       for (auto const& source_item : desc.infoProperty ())
         Property_Handler::handle_property (source_item, toconfig.infoProperty[pos++]);
     }
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     ComponentInterfaceDescription
     CCD_Handler::component_interface_descr (
@@ -85,5 +87,6 @@ namespace DAnCE
 
       return cid;
     }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }
 }

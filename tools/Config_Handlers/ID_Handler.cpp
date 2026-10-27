@@ -1,4 +1,5 @@
 #include "ID_Handler.h"
+#include "Common.h"
 #include "Basic_Deployment_Data.hpp"
 #include "dance/Deployment/Deployment_DataC.h"
 #include "dance/Logger/Log_Macros.h"
@@ -23,6 +24,7 @@ namespace DAnCE
 
       toconfig.requiredType= CORBA::string_dup (desc.requiredType ().c_str ());
     }
+#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     ImplementationDependency ID_Handler::impl_dependency (::Deployment::ImplementationDependency const& src)
     {
@@ -33,6 +35,7 @@ namespace DAnCE
 
       return id;
     }
+#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
   }
 
