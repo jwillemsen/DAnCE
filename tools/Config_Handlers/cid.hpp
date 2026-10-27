@@ -33,6 +33,34 @@ namespace DAnCE
 }
 #include <memory>
 #include <string>
+#include <optional>
+#ifndef XSCRT_OPTIONAL_ARG_HPP
+#define XSCRT_OPTIONAL_ARG_HPP
+namespace XSCRT
+{
+  template <typename T>
+  class OptionalArg
+  {
+  public:
+    OptionalArg (std::nullopt_t) noexcept : value_ (nullptr)
+    {
+    }
+    OptionalArg (T const& value) noexcept : value_ (std::addressof (value))
+    {
+    }
+    explicit operator bool () const noexcept
+    {
+      return value_ != nullptr;
+    }
+    T const& operator* () const noexcept
+    {
+      return *value_;
+    }
+  private:
+    T const* value_ {};
+  };
+}
+#endif // XSCRT_OPTIONAL_ARG_HPP
 #include <list>
 #include "ace/XML_Utils/XMLSchema/Types.hpp"
 #include "ace/XML_Utils/XMLSchema/id_map.hpp"
@@ -77,7 +105,9 @@ namespace DAnCE
       requiredType_type requiredType_;
 
     public:
-      ComponentPackageReference (::DAnCE::Config_Handlers::ComponentInterfaceDescription const& requiredType__);
+      ComponentPackageReference (::DAnCE::Config_Handlers::ComponentInterfaceDescription const& requiredType__,
+                                 ::XSCRT::OptionalArg<::XMLSchema::string<char>> requiredUUID__ = std::nullopt,
+                                 ::XSCRT::OptionalArg<::XMLSchema::string<char>> requiredName__ = std::nullopt);
 
       explicit ComponentPackageReference (::XSCRT::XML::Element<char> const&);
       ComponentPackageReference (ComponentPackageReference const& s);
@@ -158,7 +188,14 @@ namespace DAnCE
       id_type id_;
 
     public:
-      SubcomponentInstantiationDescription (::XMLSchema::string<char> const& name__);
+      SubcomponentInstantiationDescription (::XMLSchema::string<char> const& name__,
+                                            ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentPackageDescription> basePackage__ = std::nullopt,
+                                            ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::PackageConfiguration> specializedConfig__ = std::nullopt,
+                                            selectRequirement_container_type const& selectRequirement__ = {},
+                                            configProperty_container_type const& configProperty__ = {},
+                                            ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentPackageReference> referencedPackage__ = std::nullopt,
+                                            ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentPackageImport> importedPackage__ = std::nullopt,
+                                            ::XSCRT::OptionalArg<::XMLSchema::ID<char>> id__ = std::nullopt);
 
       explicit SubcomponentInstantiationDescription (::XSCRT::XML::Element<char> const&);
       SubcomponentInstantiationDescription (SubcomponentInstantiationDescription const& s);
@@ -224,7 +261,8 @@ namespace DAnCE
 
     public:
       AssemblyPropertyMapping (::XMLSchema::string<char> const& name__,
-                               ::XMLSchema::string<char> const& externalName__);
+                               ::XMLSchema::string<char> const& externalName__,
+                               delegatesTo_container_type const& delegatesTo__ = {});
 
       explicit AssemblyPropertyMapping (::XSCRT::XML::Element<char> const&);
       AssemblyPropertyMapping (AssemblyPropertyMapping const& s);
@@ -321,7 +359,10 @@ namespace DAnCE
       locality_container_type locality_;
 
     public:
-      ComponentAssemblyDescription () = default;
+      ComponentAssemblyDescription (instance_container_type const& instance__ = {},
+                                    connection_container_type const& connection__ = {},
+                                    externalProperty_container_type const& externalProperty__ = {},
+                                    locality_container_type const& locality__ = {});
 
       explicit ComponentAssemblyDescription (::XSCRT::XML::Element<char> const&);
       ComponentAssemblyDescription (ComponentAssemblyDescription const& s) = default;
@@ -365,7 +406,10 @@ namespace DAnCE
       primaryArtifact_container_type primaryArtifact_;
 
     public:
-      MonolithicImplementationDescription () = default;
+      MonolithicImplementationDescription (nodeExecParameter_container_type const& nodeExecParameter__ = {},
+                                           componentExecParameter_container_type const& componentExecParameter__ = {},
+                                           deployRequirement_container_type const& deployRequirement__ = {},
+                                           primaryArtifact_container_type const& primaryArtifact__ = {});
 
       explicit MonolithicImplementationDescription (::XSCRT::XML::Element<char> const&);
       MonolithicImplementationDescription (MonolithicImplementationDescription const& s) = default;
@@ -463,7 +507,16 @@ namespace DAnCE
       href_type href_;
 
     public:
-      ComponentImplementationDescription () = default;
+      ComponentImplementationDescription (::XSCRT::OptionalArg<::XMLSchema::string<char>> label__ = std::nullopt,
+                                          ::XSCRT::OptionalArg<::XMLSchema::string<char>> UUID__ = std::nullopt,
+                                          ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentInterfaceDescription> implements__ = std::nullopt,
+                                          ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentAssemblyDescription> assemblyImpl__ = std::nullopt,
+                                          ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::MonolithicImplementationDescription> monolithicImpl__ = std::nullopt,
+                                          configProperty_container_type const& configProperty__ = {},
+                                          capability_container_type const& capability__ = {},
+                                          dependsOn_container_type const& dependsOn__ = {},
+                                          infoProperty_container_type const& infoProperty__ = {},
+                                          ::XSCRT::OptionalArg<::XMLSchema::string<char>> href__ = std::nullopt);
 
       explicit ComponentImplementationDescription (::XSCRT::XML::Element<char> const&);
       ComponentImplementationDescription (ComponentImplementationDescription const& s);
@@ -561,7 +614,16 @@ namespace DAnCE
       href_type href_;
 
     public:
-      ConnectorImplementationDescription () = default;
+      ConnectorImplementationDescription (::XSCRT::OptionalArg<::XMLSchema::string<char>> label__ = std::nullopt,
+                                          ::XSCRT::OptionalArg<::XMLSchema::string<char>> UUID__ = std::nullopt,
+                                          ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentInterfaceDescription> implements__ = std::nullopt,
+                                          ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentAssemblyDescription> assemblyImpl__ = std::nullopt,
+                                          ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::MonolithicImplementationDescription> monolithicImpl__ = std::nullopt,
+                                          configProperty_container_type const& configProperty__ = {},
+                                          capability_container_type const& capability__ = {},
+                                          dependsOn_container_type const& dependsOn__ = {},
+                                          infoProperty_container_type const& infoProperty__ = {},
+                                          ::XSCRT::OptionalArg<::XMLSchema::string<char>> href__ = std::nullopt);
 
       explicit ConnectorImplementationDescription (::XSCRT::XML::Element<char> const&);
       ConnectorImplementationDescription (ConnectorImplementationDescription const& s);

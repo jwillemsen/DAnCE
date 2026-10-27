@@ -17,6 +17,31 @@ namespace DAnCE
 {
   namespace Config_Handlers
   {
+    ComponentInterfaceDescription::ComponentInterfaceDescription (::XSCRT::OptionalArg<::XMLSchema::string<char>> label__,
+                                                                  ::XSCRT::OptionalArg<::XMLSchema::string<char>> UUID__,
+                                                                  ::XSCRT::OptionalArg<::XMLSchema::string<char>> specificType__,
+                                                                  supportedType_container_type const& supportedType__,
+                                                                  idlFile_container_type const& idlFile__,
+                                                                  configProperty_container_type const& configProperty__,
+                                                                  port_container_type const& port__,
+                                                                  property_container_type const& property__,
+                                                                  infoProperty_container_type const& infoProperty__,
+                                                                  ::XSCRT::OptionalArg<::XMLSchema::string<char>> contentLocation__,
+                                                                  ::XSCRT::OptionalArg<::XMLSchema::string<char>> href__)
+    : ::XSCRT::Type ()
+    , label_ (label__ ? std::make_unique<::XMLSchema::string<char>> (*label__) : nullptr)
+    , UUID_ (UUID__ ? std::make_unique<::XMLSchema::string<char>> (*UUID__) : nullptr)
+    , specificType_ (specificType__ ? std::make_unique<::XMLSchema::string<char>> (*specificType__) : nullptr)
+    , supportedType_ (supportedType__)
+    , idlFile_ (idlFile__)
+    , configProperty_ (configProperty__)
+    , port_ (port__)
+    , property_ (property__)
+    , infoProperty_ (infoProperty__)
+    , contentLocation_ (contentLocation__ ? std::make_unique<::XMLSchema::string<char>> (*contentLocation__) : nullptr)
+    , href_ (href__ ? std::make_unique<::XMLSchema::string<char>> (*href__) : nullptr)
+    {
+    }
     ComponentInterfaceDescription::ComponentInterfaceDescription (ComponentInterfaceDescription const& s)
     : ::XSCRT::Type (s)
     , label_ (s.label_ ? std::make_unique<::XMLSchema::string<char>> (*s.label_) : nullptr)

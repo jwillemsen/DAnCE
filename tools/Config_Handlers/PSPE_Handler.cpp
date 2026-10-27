@@ -94,8 +94,7 @@ namespace DAnCE
       IDD_Handler::IDREF.find_ref(src.instanceRef, id);
       XMLSchema::IDREF<char> idref(id.c_str());
 
-      IdRef idr {};
-      idr.idref (idref);
+      IdRef idr (std::nullopt, idref);
 
       CCMComponentPortKind::Value kind_value {};
 
@@ -131,10 +130,7 @@ namespace DAnCE
         }
 
       CCMComponentPortKind const kind (kind_value);
-      PlanSubcomponentPortEndpoint pspe (pname, kind, idr);
-      pspe.provider (provider);
-
-      return pspe;
+      return PlanSubcomponentPortEndpoint (pname, kind, idr, provider);
     }
 #endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }

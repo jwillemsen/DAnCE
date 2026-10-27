@@ -73,19 +73,10 @@ namespace DAnCE
                                             ::Deployment::ComponentInterfaceDescription const&  src)
     {
       DANCE_TRACE("CCD_Handler::component_interface_descr - reverse");
-      ComponentInterfaceDescription cid {};
-
-      //Load up the basic string members
       XMLSchema::string<char> const uuid (src.UUID);
       XMLSchema::string<char> const label (src.label);
       XMLSchema::string<char> const specifict (src.specificType);
-
-      //Then put them in the CID
-      cid.UUID (uuid);
-      cid.label (label);
-      cid.specificType (specifict);
-
-      return cid;
+      return ComponentInterfaceDescription (label, uuid, specifict);
     }
 #endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }

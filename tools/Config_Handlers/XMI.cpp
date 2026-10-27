@@ -15,6 +15,25 @@
 
 namespace XMI
 {
+  Extension::Extension (::XSCRT::OptionalArg<::XMLSchema::ID<char>> id__,
+                        ::XSCRT::OptionalArg<::XMLSchema::string<char>> label__,
+                        ::XSCRT::OptionalArg<::XMLSchema::string<char>> uuid__,
+                        ::XSCRT::OptionalArg<::XMLSchema::string<char>> href__,
+                        ::XSCRT::OptionalArg<::XMLSchema::IDREF<char>> idref__,
+                        ::XSCRT::OptionalArg<::XMLSchema::string<char>> version__,
+                        ::XSCRT::OptionalArg<::XMLSchema::string<char>> extender__,
+                        ::XSCRT::OptionalArg<::XMLSchema::string<char>> extenderID__)
+  : ::XSCRT::Type ()
+  , id_ (id__ ? std::make_unique<::XMLSchema::ID<char>> (*id__) : nullptr)
+  , label_ (label__ ? std::make_unique<::XMLSchema::string<char>> (*label__) : nullptr)
+  , uuid_ (uuid__ ? std::make_unique<::XMLSchema::string<char>> (*uuid__) : nullptr)
+  , href_ (href__ ? std::make_unique<::XMLSchema::string<char>> (*href__) : nullptr)
+  , idref_ (idref__ ? std::make_unique<::XMLSchema::IDREF<char>> (*idref__) : nullptr)
+  , version_ (version__ ? std::make_unique<::XMLSchema::string<char>> (*version__) : nullptr)
+  , extender_ (extender__ ? std::make_unique<::XMLSchema::string<char>> (*extender__) : nullptr)
+  , extenderID_ (extenderID__ ? std::make_unique<::XMLSchema::string<char>> (*extenderID__) : nullptr)
+  {
+  }
   Extension::Extension (Extension const& s)
   : ::XSCRT::Type (s)
   , id_ (s.id_ ? std::make_unique<::XMLSchema::ID<char>> (*s.id_) : nullptr)

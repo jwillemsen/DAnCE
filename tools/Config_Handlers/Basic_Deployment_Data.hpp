@@ -64,6 +64,34 @@ namespace DAnCE
 }
 #include <memory>
 #include <string>
+#include <optional>
+#ifndef XSCRT_OPTIONAL_ARG_HPP
+#define XSCRT_OPTIONAL_ARG_HPP
+namespace XSCRT
+{
+  template <typename T>
+  class OptionalArg
+  {
+  public:
+    OptionalArg (std::nullopt_t) noexcept : value_ (nullptr)
+    {
+    }
+    OptionalArg (T const& value) noexcept : value_ (std::addressof (value))
+    {
+    }
+    explicit operator bool () const noexcept
+    {
+      return value_ != nullptr;
+    }
+    T const& operator* () const noexcept
+    {
+      return *value_;
+    }
+  private:
+    T const* value_ {};
+  };
+}
+#endif // XSCRT_OPTIONAL_ARG_HPP
 #include <list>
 #include "ace/XML_Utils/XMLSchema/Types.hpp"
 #include "ace/XML_Utils/XMLSchema/id_map.hpp"
@@ -94,7 +122,8 @@ namespace DAnCE
       idref_type idref_;
 
     public:
-      IdRef () = default;
+      IdRef (::XSCRT::OptionalArg<::XMLSchema::string<char>> href__ = std::nullopt,
+             ::XSCRT::OptionalArg<::XMLSchema::IDREF<char>> idref__ = std::nullopt);
 
       explicit IdRef (::XSCRT::XML::Element<char> const&);
       IdRef (IdRef const& s);
@@ -210,7 +239,15 @@ namespace DAnCE
       id_type id_;
 
     public:
-      DataType (::DAnCE::Config_Handlers::TCKind const& kind__);
+      DataType (::DAnCE::Config_Handlers::TCKind const& kind__,
+                ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::EnumType> _cxx_enum__ = std::nullopt,
+                ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::StructType> _cxx_struct__ = std::nullopt,
+                ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ValueType> value__ = std::nullopt,
+                ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::SequenceType> sequence__ = std::nullopt,
+                ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::AliasType> alias__ = std::nullopt,
+                ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ArrayType> array__ = std::nullopt,
+                ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::BoundedStringType> boundedString__ = std::nullopt,
+                ::XSCRT::OptionalArg<::XMLSchema::ID<char>> id__ = std::nullopt);
 
       explicit DataType (::XSCRT::XML::Element<char> const&);
       DataType (DataType const& s);
@@ -342,7 +379,21 @@ namespace DAnCE
       member_container_type member_;
 
     public:
-      DataValue () = default;
+      DataValue (short_container_type const& _cxx_short__ = {},
+                 long_container_type const& _cxx_long__ = {},
+                 ushort_container_type const& ushort__ = {},
+                 ulong_container_type const& ulong__ = {},
+                 float_container_type const& _cxx_float__ = {},
+                 double_container_type const& _cxx_double__ = {},
+                 boolean_container_type const& boolean__ = {},
+                 octet_container_type const& octet__ = {},
+                 enum_container_type const& _cxx_enum__ = {},
+                 string_container_type const& string__ = {},
+                 longlong_container_type const& longlong__ = {},
+                 ulonglong_container_type const& ulonglong__ = {},
+                 longdouble_container_type const& longdouble__ = {},
+                 element_container_type const& element__ = {},
+                 member_container_type const& member__ = {});
 
       explicit DataValue (::XSCRT::XML::Element<char> const&);
       DataValue (DataValue const& s) = default;
@@ -438,7 +489,7 @@ namespace DAnCE
       bound_container_type bound_;
 
     public:
-      BoundedStringType () = default;
+      BoundedStringType (bound_container_type const& bound__ = {});
 
       explicit BoundedStringType (::XSCRT::XML::Element<char> const&);
       BoundedStringType (BoundedStringType const& s) = default;
@@ -475,7 +526,8 @@ namespace DAnCE
 
     public:
       StructType (::XMLSchema::string<char> const& name__,
-                  ::XMLSchema::string<char> const& typeId__);
+                  ::XMLSchema::string<char> const& typeId__,
+                  member_container_type const& member__ = {});
 
       explicit StructType (::XSCRT::XML::Element<char> const&);
       StructType (StructType const& s);
@@ -559,7 +611,8 @@ namespace DAnCE
       ValueType (::XMLSchema::string<char> const& name__,
                  ::XMLSchema::string<char> const& typeId__,
                  ::XMLSchema::string<char> const& modifier__,
-                 ::DAnCE::Config_Handlers::DataType const& baseType__);
+                 ::DAnCE::Config_Handlers::DataType const& baseType__,
+                 member_container_type const& member__ = {});
 
       explicit ValueType (::XSCRT::XML::Element<char> const&);
       ValueType (ValueType const& s);
@@ -684,7 +737,8 @@ namespace DAnCE
       elementType_type elementType_;
 
     public:
-      SequenceType (::DAnCE::Config_Handlers::DataType const& elementType__);
+      SequenceType (::DAnCE::Config_Handlers::DataType const& elementType__,
+                    ::XSCRT::OptionalArg<::XMLSchema::unsignedInt> bound__ = std::nullopt);
 
       explicit SequenceType (::XSCRT::XML::Element<char> const&);
       SequenceType (SequenceType const& s);
@@ -850,7 +904,8 @@ namespace DAnCE
 
     public:
       Resource (::XMLSchema::string<char> const& name__,
-                resourceType_container_type const& resourceType__);
+                resourceType_container_type const& resourceType__,
+                property_container_type const& property__ = {});
 
       explicit Resource (::XSCRT::XML::Element<char> const&);
       Resource (Resource const& s);
@@ -887,7 +942,8 @@ namespace DAnCE
 
     public:
       Requirement (::XMLSchema::string<char> const& name__,
-                   ::XMLSchema::string<char> const& resourceType__);
+                   ::XMLSchema::string<char> const& resourceType__,
+                   property_container_type const& property__ = {});
 
       explicit Requirement (::XSCRT::XML::Element<char> const&);
       Requirement (Requirement const& s);
@@ -924,7 +980,8 @@ namespace DAnCE
 
     public:
       ResourceDeploymentDescription (::XMLSchema::string<char> const& requirementName__,
-                                     ::XMLSchema::string<char> const& resourceName__);
+                                     ::XMLSchema::string<char> const& resourceName__,
+                                     property_container_type const& property__ = {});
 
       explicit ResourceDeploymentDescription (::XSCRT::XML::Element<char> const&);
       ResourceDeploymentDescription (ResourceDeploymentDescription const& s);
@@ -1002,7 +1059,13 @@ namespace DAnCE
 
     public:
       ArtifactDeploymentDescription (::XMLSchema::string<char> const& name__,
-                                     ::XMLSchema::string<char> const& node__);
+                                     ::XMLSchema::string<char> const& node__,
+                                     source_container_type const& source__ = {},
+                                     location_container_type const& location__ = {},
+                                     execParameter_container_type const& execParameter__ = {},
+                                     deployRequirement_container_type const& deployRequirement__ = {},
+                                     deployedResource_container_type const& deployedResource__ = {},
+                                     ::XSCRT::OptionalArg<::XMLSchema::ID<char>> id__ = std::nullopt);
 
       explicit ArtifactDeploymentDescription (::XSCRT::XML::Element<char> const&);
       ArtifactDeploymentDescription (ArtifactDeploymentDescription const& s);
@@ -1063,7 +1126,12 @@ namespace DAnCE
       id_type id_;
 
     public:
-      MonolithicDeploymentDescription (::XMLSchema::string<char> const& name__);
+      MonolithicDeploymentDescription (::XMLSchema::string<char> const& name__,
+                                       source_container_type const& source__ = {},
+                                       artifact_container_type const& artifact__ = {},
+                                       execParameter_container_type const& execParameter__ = {},
+                                       deployRequirement_container_type const& deployRequirement__ = {},
+                                       ::XSCRT::OptionalArg<::XMLSchema::ID<char>> id__ = std::nullopt);
 
       explicit MonolithicDeploymentDescription (::XSCRT::XML::Element<char> const&);
       MonolithicDeploymentDescription (MonolithicDeploymentDescription const& s);
@@ -1133,7 +1201,8 @@ namespace DAnCE
     public:
       InstanceResourceDeploymentDescription (::DAnCE::Config_Handlers::ResourceUsageKind const& resourceUsage__,
                                              ::XMLSchema::string<char> const& requirementName__,
-                                             ::XMLSchema::string<char> const& resourceName__);
+                                             ::XMLSchema::string<char> const& resourceName__,
+                                             property_container_type const& property__ = {});
 
       explicit InstanceResourceDeploymentDescription (::XSCRT::XML::Element<char> const&);
       InstanceResourceDeploymentDescription (InstanceResourceDeploymentDescription const& s);
@@ -1214,7 +1283,11 @@ namespace DAnCE
       InstanceDeploymentDescription (::XMLSchema::string<char> const& name__,
                                      ::XMLSchema::string<char> const& node__,
                                      ::XMLSchema::string<char> const& source__,
-                                     ::DAnCE::Config_Handlers::IdRef const& implementation__);
+                                     ::DAnCE::Config_Handlers::IdRef const& implementation__,
+                                     configProperty_container_type const& configProperty__ = {},
+                                     deployedResource_container_type const& deployedResource__ = {},
+                                     ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::InstanceResourceDeploymentDescription> deployedSharedResource__ = std::nullopt,
+                                     ::XSCRT::OptionalArg<::XMLSchema::ID<char>> id__ = std::nullopt);
 
       explicit InstanceDeploymentDescription (::XSCRT::XML::Element<char> const&);
       InstanceDeploymentDescription (InstanceDeploymentDescription const& s);
@@ -1328,7 +1401,10 @@ namespace DAnCE
                                 ::XMLSchema::boolean const& exclusiveProvider__,
                                 ::XMLSchema::boolean const& exclusiveUser__,
                                 ::XMLSchema::boolean const& optional__,
-                                ::DAnCE::Config_Handlers::CCMComponentPortKind const& kind__);
+                                ::DAnCE::Config_Handlers::CCMComponentPortKind const& kind__,
+                                ::XSCRT::OptionalArg<::XMLSchema::string<char>> specificType__ = std::nullopt,
+                                supportedType_container_type const& supportedType__ = {},
+                                templateParam_container_type const& templateParam__ = {});
 
       explicit ComponentPortDescription (::XSCRT::XML::Element<char> const&);
       ComponentPortDescription (ComponentPortDescription const& s);
@@ -1424,7 +1500,8 @@ namespace DAnCE
     public:
       PlanSubcomponentPortEndpoint (::XMLSchema::string<char> const& portName__,
                                     ::DAnCE::Config_Handlers::CCMComponentPortKind const& kind__,
-                                    ::DAnCE::Config_Handlers::IdRef const& instance__);
+                                    ::DAnCE::Config_Handlers::IdRef const& instance__,
+                                    ::XSCRT::OptionalArg<::XMLSchema::string<char>> provider__ = std::nullopt);
 
       explicit PlanSubcomponentPortEndpoint (::XSCRT::XML::Element<char> const&);
       PlanSubcomponentPortEndpoint (PlanSubcomponentPortEndpoint const& s);
@@ -1470,7 +1547,9 @@ namespace DAnCE
 
     public:
       ExternalReferenceEndpoint (::XMLSchema::string<char> const& location__,
-                                 ::XMLSchema::boolean const& provider__);
+                                 ::XMLSchema::boolean const& provider__,
+                                 ::XSCRT::OptionalArg<::XMLSchema::string<char>> portName__ = std::nullopt,
+                                 supportedType_container_type const& supportedType__ = {});
 
       explicit ExternalReferenceEndpoint (::XSCRT::XML::Element<char> const&);
       ExternalReferenceEndpoint (ExternalReferenceEndpoint const& s);
@@ -1516,7 +1595,8 @@ namespace DAnCE
     public:
       ConnectionResourceDeploymentDescription (::XMLSchema::string<char> const& targetName__,
                                                ::XMLSchema::string<char> const& requirementName__,
-                                               ::XMLSchema::string<char> const& resourceName__);
+                                               ::XMLSchema::string<char> const& resourceName__,
+                                               property_container_type const& property__ = {});
 
       explicit ConnectionResourceDeploymentDescription (::XSCRT::XML::Element<char> const&);
       ConnectionResourceDeploymentDescription (ConnectionResourceDeploymentDescription const& s);
@@ -1585,7 +1665,13 @@ namespace DAnCE
       deployedResource_container_type deployedResource_;
 
     public:
-      PlanConnectionDescription (::XMLSchema::string<char> const& name__);
+      PlanConnectionDescription (::XMLSchema::string<char> const& name__,
+                                 ::XSCRT::OptionalArg<::XMLSchema::string<char>> source__ = std::nullopt,
+                                 deployRequirement_container_type const& deployRequirement__ = {},
+                                 externalEndpoint_container_type const& externalEndpoint__ = {},
+                                 internalEndpoint_container_type const& internalEndpoint__ = {},
+                                 externalReference_container_type const& externalReference__ = {},
+                                 deployedResource_container_type const& deployedResource__ = {});
 
       explicit PlanConnectionDescription (::XSCRT::XML::Element<char> const&);
       PlanConnectionDescription (PlanConnectionDescription const& s);
@@ -1641,7 +1727,9 @@ namespace DAnCE
       property_container_type property_;
 
     public:
-      Capability (::XMLSchema::string<char> const& name__);
+      Capability (::XMLSchema::string<char> const& name__,
+                  resourceType_container_type const& resourceType__ = {},
+                  property_container_type const& property__ = {});
 
       explicit Capability (::XSCRT::XML::Element<char> const&);
       Capability (Capability const& s);
@@ -1705,7 +1793,11 @@ namespace DAnCE
 
     public:
       ImplementationRequirement (::XMLSchema::string<char> const& resourceType__,
-                                 ::XMLSchema::string<char> const& name__);
+                                 ::XMLSchema::string<char> const& name__,
+                                 ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ResourceUsageKind> resourceUsage__ = std::nullopt,
+                                 ::XSCRT::OptionalArg<::XMLSchema::string<char>> resourcePort__ = std::nullopt,
+                                 ::XSCRT::OptionalArg<::XMLSchema::string<char>> componentPort__ = std::nullopt,
+                                 property_container_type const& property__ = {});
 
       explicit ImplementationRequirement (::XSCRT::XML::Element<char> const&);
       ImplementationRequirement (ImplementationRequirement const& s);
@@ -1786,7 +1878,11 @@ namespace DAnCE
       externalReference_container_type externalReference_;
 
     public:
-      AssemblyConnectionDescription (::XMLSchema::string<char> const& name__);
+      AssemblyConnectionDescription (::XMLSchema::string<char> const& name__,
+                                     deployRequirement_container_type const& deployRequirement__ = {},
+                                     internalEndpoint_container_type const& internalEndpoint__ = {},
+                                     externalEndpoint_container_type const& externalEndpoint__ = {},
+                                     externalReference_container_type const& externalReference__ = {});
 
       explicit AssemblyConnectionDescription (::XSCRT::XML::Element<char> const&);
       AssemblyConnectionDescription (AssemblyConnectionDescription const& s);

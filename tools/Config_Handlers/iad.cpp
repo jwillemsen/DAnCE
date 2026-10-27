@@ -58,6 +58,27 @@ namespace DAnCE
       *referencedArtifact_ = e;
     }
 
+    ImplementationArtifactDescription::ImplementationArtifactDescription (::XSCRT::OptionalArg<::XMLSchema::string<char>> label__,
+                                                                          ::XSCRT::OptionalArg<::XMLSchema::string<char>> UUID__,
+                                                                          location_container_type const& location__,
+                                                                          dependsOn_container_type const& dependsOn__,
+                                                                          execParameter_container_type const& execParameter__,
+                                                                          infoProperty_container_type const& infoProperty__,
+                                                                          deployRequirement_container_type const& deployRequirement__,
+                                                                          ::XSCRT::OptionalArg<::XMLSchema::string<char>> contentLocation__,
+                                                                          ::XSCRT::OptionalArg<::XMLSchema::string<char>> href__)
+    : ::XSCRT::Type ()
+    , label_ (label__ ? std::make_unique<::XMLSchema::string<char>> (*label__) : nullptr)
+    , UUID_ (UUID__ ? std::make_unique<::XMLSchema::string<char>> (*UUID__) : nullptr)
+    , location_ (location__)
+    , dependsOn_ (dependsOn__)
+    , execParameter_ (execParameter__)
+    , infoProperty_ (infoProperty__)
+    , deployRequirement_ (deployRequirement__)
+    , contentLocation_ (contentLocation__ ? std::make_unique<::XMLSchema::string<char>> (*contentLocation__) : nullptr)
+    , href_ (href__ ? std::make_unique<::XMLSchema::string<char>> (*href__) : nullptr)
+    {
+    }
     ImplementationArtifactDescription::ImplementationArtifactDescription (ImplementationArtifactDescription const& s)
     : ::XSCRT::Type (s)
     , label_ (s.label_ ? std::make_unique<::XMLSchema::string<char>> (*s.label_) : nullptr)

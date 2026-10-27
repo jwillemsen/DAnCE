@@ -79,8 +79,6 @@ namespace DAnCE
         XMLSchema::string<char> name (src.name);
         XMLSchema::string<char> node (src.node);
 
-        ArtifactDeploymentDescription add (name,node);
-
         // Generate a UUID to use for the IDREF.
         ACE_Utils::UUID uuid {};
         ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
@@ -92,9 +90,7 @@ namespace DAnCE
         // Bind the ref and set it in the IDD
         ADD_Handler::IDREF.bind_next_available (add_id);
 
-        add.id (xml_id);
-
-        return add;
+        return ArtifactDeploymentDescription (name, node, {}, {}, {}, {}, {}, xml_id);
       }
 #endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
     }

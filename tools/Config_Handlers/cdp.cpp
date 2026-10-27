@@ -60,9 +60,11 @@ namespace DAnCE
 
     PlanPropertyMapping::PlanPropertyMapping (::XMLSchema::string<char> const& name__,
                                               ::XMLSchema::string<char> const& externalName__,
-                                              delegatesTo_container_type const& delegatesTo__)
+                                              delegatesTo_container_type const& delegatesTo__,
+                                              source_container_type const& source__)
     : ::XSCRT::Type ()
     , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
+    , source_ (source__)
     , externalName_ (std::make_unique<::XMLSchema::string<char>> (externalName__))
     , delegatesTo_ (delegatesTo__)
     {
@@ -123,6 +125,31 @@ namespace DAnCE
       return delegatesTo_;
     }
 
+    deploymentPlan::deploymentPlan (::XSCRT::OptionalArg<::XMLSchema::string<char>> label__,
+                                    ::XSCRT::OptionalArg<::XMLSchema::string<char>> UUID__,
+                                    ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentInterfaceDescription> realizes__,
+                                    implementation_container_type const& implementation__,
+                                    instance_container_type const& instance__,
+                                    connection_container_type const& connection__,
+                                    externalProperty_container_type const& externalProperty__,
+                                    dependsOn_container_type const& dependsOn__,
+                                    artifact_container_type const& artifact__,
+                                    infoProperty_container_type const& infoProperty__,
+                                    localityConstraint_container_type const& localityConstraint__)
+    : ::XSCRT::Type ()
+    , label_ (label__ ? std::make_unique<::XMLSchema::string<char>> (*label__) : nullptr)
+    , UUID_ (UUID__ ? std::make_unique<::XMLSchema::string<char>> (*UUID__) : nullptr)
+    , realizes_ (realizes__ ? std::make_unique<::DAnCE::Config_Handlers::ComponentInterfaceDescription> (*realizes__) : nullptr)
+    , implementation_ (implementation__)
+    , instance_ (instance__)
+    , connection_ (connection__)
+    , externalProperty_ (externalProperty__)
+    , dependsOn_ (dependsOn__)
+    , artifact_ (artifact__)
+    , infoProperty_ (infoProperty__)
+    , localityConstraint_ (localityConstraint__)
+    {
+    }
     deploymentPlan::deploymentPlan (deploymentPlan const& s)
     : ::XSCRT::Type (s)
     , label_ (s.label_ ? std::make_unique<::XMLSchema::string<char>> (*s.label_) : nullptr)

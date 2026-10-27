@@ -37,7 +37,7 @@ namespace DAnCE
     bool DD_Handler::build_domain ()
     {
       DANCE_TRACE("DP_PCD_Handler::build_domain");
-      this->idl_domain_.reset ( new ::Deployment::Domain );
+      this->idl_domain_ = std::make_unique<::Deployment::Domain> ();
 
       // Read in the name
       // Check if the label is there or not

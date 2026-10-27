@@ -58,7 +58,6 @@ namespace DAnCE
           throw Config_Error (desc.name ().c_str (), "Invalid port type");
         }
 
-      /* @@BUG: We need to consider how to handle booleans. */
       toconfig.provider = desc.provider ();
       toconfig.exclusiveProvider = desc.exclusiveProvider ();
       toconfig.exclusiveUser = desc.exclusiveUser ();

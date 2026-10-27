@@ -26,6 +26,34 @@ namespace DAnCE
 }
 #include <memory>
 #include <string>
+#include <optional>
+#ifndef XSCRT_OPTIONAL_ARG_HPP
+#define XSCRT_OPTIONAL_ARG_HPP
+namespace XSCRT
+{
+  template <typename T>
+  class OptionalArg
+  {
+  public:
+    OptionalArg (std::nullopt_t) noexcept : value_ (nullptr)
+    {
+    }
+    OptionalArg (T const& value) noexcept : value_ (std::addressof (value))
+    {
+    }
+    explicit operator bool () const noexcept
+    {
+      return value_ != nullptr;
+    }
+    T const& operator* () const noexcept
+    {
+      return *value_;
+    }
+  private:
+    T const* value_ {};
+  };
+}
+#endif // XSCRT_OPTIONAL_ARG_HPP
 #include <list>
 #include "ace/XML_Utils/XMLSchema/Types.hpp"
 #include "ace/XML_Utils/XMLSchema/id_map.hpp"
@@ -127,7 +155,13 @@ namespace DAnCE
       href_type href_;
 
     public:
-      ComponentPackageDescription () = default;
+      ComponentPackageDescription (::XSCRT::OptionalArg<::XMLSchema::string<char>> label__ = std::nullopt,
+                                   ::XSCRT::OptionalArg<::XMLSchema::string<char>> UUID__ = std::nullopt,
+                                   ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentInterfaceDescription> realizes__ = std::nullopt,
+                                   configProperty_container_type const& configProperty__ = {},
+                                   implementation_container_type const& implementation__ = {},
+                                   infoProperty_container_type const& infoProperty__ = {},
+                                   ::XSCRT::OptionalArg<::XMLSchema::string<char>> href__ = std::nullopt);
 
       explicit ComponentPackageDescription (::XSCRT::XML::Element<char> const&);
       ComponentPackageDescription (ComponentPackageDescription const& s);
@@ -199,7 +233,13 @@ namespace DAnCE
       href_type href_;
 
     public:
-      ConnectorPackageDescription () = default;
+      ConnectorPackageDescription (::XSCRT::OptionalArg<::XMLSchema::string<char>> label__ = std::nullopt,
+                                   ::XSCRT::OptionalArg<::XMLSchema::string<char>> UUID__ = std::nullopt,
+                                   ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentInterfaceDescription> realizes__ = std::nullopt,
+                                   configProperty_container_type const& configProperty__ = {},
+                                   implementation_container_type const& implementation__ = {},
+                                   infoProperty_container_type const& infoProperty__ = {},
+                                   ::XSCRT::OptionalArg<::XMLSchema::string<char>> href__ = std::nullopt);
 
       explicit ConnectorPackageDescription (::XSCRT::XML::Element<char> const&);
       ConnectorPackageDescription (ConnectorPackageDescription const& s);

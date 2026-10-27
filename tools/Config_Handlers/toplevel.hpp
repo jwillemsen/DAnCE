@@ -24,6 +24,34 @@ namespace DAnCE
 }
 #include <memory>
 #include <string>
+#include <optional>
+#ifndef XSCRT_OPTIONAL_ARG_HPP
+#define XSCRT_OPTIONAL_ARG_HPP
+namespace XSCRT
+{
+  template <typename T>
+  class OptionalArg
+  {
+  public:
+    OptionalArg (std::nullopt_t) noexcept : value_ (nullptr)
+    {
+    }
+    OptionalArg (T const& value) noexcept : value_ (std::addressof (value))
+    {
+    }
+    explicit operator bool () const noexcept
+    {
+      return value_ != nullptr;
+    }
+    T const& operator* () const noexcept
+    {
+      return *value_;
+    }
+  private:
+    T const* value_ {};
+  };
+}
+#endif // XSCRT_OPTIONAL_ARG_HPP
 #include <list>
 #include "ace/XML_Utils/XMLSchema/Types.hpp"
 #include "ace/XML_Utils/XMLSchema/id_map.hpp"
@@ -44,7 +72,7 @@ namespace DAnCE
       package_container_type package_;
 
     public:
-      TopLevelPackageDescription () = default;
+      TopLevelPackageDescription (package_container_type const& package__ = {});
 
       explicit TopLevelPackageDescription (::XSCRT::XML::Element<char> const&);
       TopLevelPackageDescription (TopLevelPackageDescription const& s) = default;

@@ -93,8 +93,6 @@ namespace DAnCE
 
       //Get the name and instantiate the mdd
       XMLSchema::string<char> name (src.name);
-      MonolithicDeploymentDescription mdd (name);
-
       // Generate a UUID to use for the IDREF.
       ACE_Utils::UUID uuid {};
       ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
@@ -106,9 +104,7 @@ namespace DAnCE
       // Bind the ref and set it in the IDD
       MDD_Handler::IDREF.bind_next_available (mdd_id);
 
-      mdd.id (xml_id);
-
-      return mdd;
+      return MonolithicDeploymentDescription (name, {}, {}, {}, {}, xml_id);
     }
 #endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }

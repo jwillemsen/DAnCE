@@ -30,7 +30,7 @@ namespace DAnCE
     {
       DANCE_TRACE("PCD_Handler::get_PlanConnectionDescription");
 
-      toconfig.name =(CORBA::string_dup (desc.name ().c_str ()));
+      toconfig.name = CORBA::string_dup (desc.name ().c_str ());
 
       //Source is mapped to a string in the schema and a sequence
       //in the IDL. We just assign the source string from the xml
@@ -76,16 +76,14 @@ namespace DAnCE
 
       XMLSchema::string<char> name (src.name);
 
-      PlanConnectionDescription pcd(name);
-
       //Get the source if it exists
       if(src.source.length() != 0)
         {
           XMLSchema::string<char> source(src.source[0]);
-          pcd.source(source);
+          return PlanConnectionDescription (name, source);
         }
 
-      return pcd;
+      return PlanConnectionDescription (name);
     }
 #endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }

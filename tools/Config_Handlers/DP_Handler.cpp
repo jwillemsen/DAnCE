@@ -28,8 +28,7 @@ namespace DAnCE
 #if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
     DP_Handler::DP_Handler (::Deployment::DeploymentPlan const& plan)
-      : xsc_dp_ (std::make_unique<deploymentPlan> ()),
-        retval_ (false)
+      : retval_ (false)
     {
       DANCE_TRACE("DP_Handler::constructor");
       if (!this->build_xsc (plan))
@@ -101,24 +100,17 @@ namespace DAnCE
           this->idl_dp_->UUID = CORBA::string_dup (UUID_if_set_ptr->c_str ());
         }
 
-      // Similar thing for dependsOn
+      this->idl_dp_->dependsOn.length (xsc_dp.dependsOn ().size ());
+      CORBA::ULong dependsOn_index {};
       for (auto const& source_item : xsc_dp.dependsOn ())
-        {
-          CORBA::ULong const len = this->idl_dp_->dependsOn.length ();
-          this->idl_dp_->dependsOn.length (len + 1);
-          ID_Handler::get_ImplementationDependency (source_item, this->idl_dp_->dependsOn [len]);
+        ID_Handler::get_ImplementationDependency (source_item,
+                                                  this->idl_dp_->dependsOn[dependsOn_index++]);
 
-        }
-
-      // ... An the property stuff
+      this->idl_dp_->infoProperty.length (xsc_dp.infoProperty ().size ());
+      CORBA::ULong infoProperty_index {};
       for (auto const& source_item : xsc_dp.infoProperty ())
-        {
-          CORBA::ULong const len = this->idl_dp_->infoProperty.length ();
-
-          this->idl_dp_->infoProperty.length (len + 1);
-
-          Property_Handler::handle_property (source_item, this->idl_dp_->infoProperty [len]);
-        }
+        Property_Handler::handle_property (source_item,
+                                           this->idl_dp_->infoProperty[infoProperty_index++]);
 
       // Read in the realizes, if present
       ::DAnCE::Config_Handlers::ComponentInterfaceDescription const* realizes_if_set_ptr = xsc_dp.realizes_if_set ();
@@ -160,21 +152,23 @@ namespace DAnCE
       MDD_Handler::IDREF.unbind_refs ();
       ADD_Handler::IDREF.unbind_refs ();
 
-      // Read in the label, if present, since minoccurs = 0
+      std::optional<XMLSchema::string<char>> label;
       if (plan.label != 0)
-        {
-          XMLSchema::string<char> i (plan.label);
-          this->xsc_dp_->label(i);
-        }
+        label.emplace (plan.label);
 
-      // Read in the UUID, if present
+      std::optional<XMLSchema::string<char>> uuid;
       if (plan.UUID != 0)
-        {
-          XMLSchema::string<char> j (plan.UUID);
-          this->xsc_dp_->UUID(j);
-        }
+        uuid.emplace (plan.UUID);
+
+      ::XSCRT::OptionalArg<XMLSchema::string<char>> const label_arg (
+        label ? ::XSCRT::OptionalArg<XMLSchema::string<char>> (*label) : std::nullopt);
+      ::XSCRT::OptionalArg<XMLSchema::string<char>> const uuid_arg (
+        uuid ? ::XSCRT::OptionalArg<XMLSchema::string<char>> (*uuid) : std::nullopt);
+
       // The schema currently provides a single realizes value.
-      this->xsc_dp_->realizes(CCD_Handler::component_interface_descr(plan.realizes));
+      ::DAnCE::Config_Handlers::ComponentInterfaceDescription const realizes (
+        CCD_Handler::component_interface_descr (plan.realizes));
+      this->xsc_dp_ = std::make_unique<deploymentPlan> (label_arg, uuid_arg, realizes);
       ::DAnCE::Config_Handlers::ComponentInterfaceDescription const*
         resolved_realizes_if_set_ptr = this->xsc_dp_->realizes_if_set ();
       if (!resolved_realizes_if_set_ptr)

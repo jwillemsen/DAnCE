@@ -122,13 +122,12 @@ namespace DAnCE
       XMLSchema::IDREF<char> implementation ((temp.c_str()));
 
       // Instantiate the IDD
-      IdRef xid {};
-      xid.idref (implementation);
-      InstanceDeploymentDescription idd (name, node, source, xid);
+      IdRef xid (std::nullopt, implementation);
 
-      //Check if there is a deployedSharedResource, if so store it
-      if(src.deployedSharedResource.length() != 0)
-        idd. deployedSharedResource(IRDD_Handler::instance_resource_deployment_descr(src.deployedSharedResource[0]));
+      std::optional<InstanceResourceDeploymentDescription> deployed_shared_resource;
+      if (src.deployedSharedResource.length () != 0)
+        deployed_shared_resource.emplace (
+          IRDD_Handler::instance_resource_deployment_descr (src.deployedSharedResource[0]));
 
       // Generate a UUID to use for the IDREF.
       ACE_Utils::UUID uuid {};
@@ -141,9 +140,11 @@ namespace DAnCE
       // Bind the ref and set it in the IDD
       IDD_Handler::IDREF.bind_next_available (idd_id);
 
-      idd.id (xml_id);
+      if (deployed_shared_resource)
+        return InstanceDeploymentDescription (name, node, source, xid, {}, {},
+                                              *deployed_shared_resource, xml_id);
 
-      return idd;
+      return InstanceDeploymentDescription (name, node, source, xid, {}, {}, std::nullopt, xml_id);
     }
 #endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 

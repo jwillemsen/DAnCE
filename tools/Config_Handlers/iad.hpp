@@ -25,6 +25,34 @@ namespace DAnCE
 }
 #include <memory>
 #include <string>
+#include <optional>
+#ifndef XSCRT_OPTIONAL_ARG_HPP
+#define XSCRT_OPTIONAL_ARG_HPP
+namespace XSCRT
+{
+  template <typename T>
+  class OptionalArg
+  {
+  public:
+    OptionalArg (std::nullopt_t) noexcept : value_ (nullptr)
+    {
+    }
+    OptionalArg (T const& value) noexcept : value_ (std::addressof (value))
+    {
+    }
+    explicit operator bool () const noexcept
+    {
+      return value_ != nullptr;
+    }
+    T const& operator* () const noexcept
+    {
+      return *value_;
+    }
+  private:
+    T const* value_ {};
+  };
+}
+#endif // XSCRT_OPTIONAL_ARG_HPP
 #include <list>
 #include "ace/XML_Utils/XMLSchema/Types.hpp"
 #include "ace/XML_Utils/XMLSchema/id_map.hpp"
@@ -142,7 +170,15 @@ namespace DAnCE
       href_type href_;
 
     public:
-      ImplementationArtifactDescription () = default;
+      ImplementationArtifactDescription (::XSCRT::OptionalArg<::XMLSchema::string<char>> label__ = std::nullopt,
+                                         ::XSCRT::OptionalArg<::XMLSchema::string<char>> UUID__ = std::nullopt,
+                                         location_container_type const& location__ = {},
+                                         dependsOn_container_type const& dependsOn__ = {},
+                                         execParameter_container_type const& execParameter__ = {},
+                                         infoProperty_container_type const& infoProperty__ = {},
+                                         deployRequirement_container_type const& deployRequirement__ = {},
+                                         ::XSCRT::OptionalArg<::XMLSchema::string<char>> contentLocation__ = std::nullopt,
+                                         ::XSCRT::OptionalArg<::XMLSchema::string<char>> href__ = std::nullopt);
 
       explicit ImplementationArtifactDescription (::XSCRT::XML::Element<char> const&);
       ImplementationArtifactDescription (ImplementationArtifactDescription const& s);

@@ -58,6 +58,23 @@ namespace DAnCE
       *referencedImplementation_ = e;
     }
 
+    ComponentPackageDescription::ComponentPackageDescription (::XSCRT::OptionalArg<::XMLSchema::string<char>> label__,
+                                                              ::XSCRT::OptionalArg<::XMLSchema::string<char>> UUID__,
+                                                              ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentInterfaceDescription> realizes__,
+                                                              configProperty_container_type const& configProperty__,
+                                                              implementation_container_type const& implementation__,
+                                                              infoProperty_container_type const& infoProperty__,
+                                                              ::XSCRT::OptionalArg<::XMLSchema::string<char>> href__)
+    : ::XSCRT::Type ()
+    , label_ (label__ ? std::make_unique<::XMLSchema::string<char>> (*label__) : nullptr)
+    , UUID_ (UUID__ ? std::make_unique<::XMLSchema::string<char>> (*UUID__) : nullptr)
+    , realizes_ (realizes__ ? std::make_unique<::DAnCE::Config_Handlers::ComponentInterfaceDescription> (*realizes__) : nullptr)
+    , configProperty_ (configProperty__)
+    , implementation_ (implementation__)
+    , infoProperty_ (infoProperty__)
+    , href_ (href__ ? std::make_unique<::XMLSchema::string<char>> (*href__) : nullptr)
+    {
+    }
     ComponentPackageDescription::ComponentPackageDescription (ComponentPackageDescription const& s)
     : ::XSCRT::Type (s)
     , label_ (s.label_ ? std::make_unique<::XMLSchema::string<char>> (*s.label_) : nullptr)
@@ -201,6 +218,23 @@ namespace DAnCE
       }
     }
 
+    ConnectorPackageDescription::ConnectorPackageDescription (::XSCRT::OptionalArg<::XMLSchema::string<char>> label__,
+                                                              ::XSCRT::OptionalArg<::XMLSchema::string<char>> UUID__,
+                                                              ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentInterfaceDescription> realizes__,
+                                                              configProperty_container_type const& configProperty__,
+                                                              implementation_container_type const& implementation__,
+                                                              infoProperty_container_type const& infoProperty__,
+                                                              ::XSCRT::OptionalArg<::XMLSchema::string<char>> href__)
+    : ::XSCRT::Type ()
+    , label_ (label__ ? std::make_unique<::XMLSchema::string<char>> (*label__) : nullptr)
+    , UUID_ (UUID__ ? std::make_unique<::XMLSchema::string<char>> (*UUID__) : nullptr)
+    , realizes_ (realizes__ ? std::make_unique<::DAnCE::Config_Handlers::ComponentInterfaceDescription> (*realizes__) : nullptr)
+    , configProperty_ (configProperty__)
+    , implementation_ (implementation__)
+    , infoProperty_ (infoProperty__)
+    , href_ (href__ ? std::make_unique<::XMLSchema::string<char>> (*href__) : nullptr)
+    {
+    }
     ConnectorPackageDescription::ConnectorPackageDescription (ConnectorPackageDescription const& s)
     : ::XSCRT::Type (s)
     , label_ (s.label_ ? std::make_unique<::XMLSchema::string<char>> (*s.label_) : nullptr)
