@@ -37,9 +37,7 @@ namespace DAnCE
       XMLSchema::string<char> reqname (src.requirementName);
       XMLSchema::string<char> resname (src.resourceName.in ());
 
-      ResourceDeploymentDescription rdd (reqname,resname);
-
-      return rdd;
+      return ResourceDeploymentDescription (reqname, resname);
     }
 #endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 

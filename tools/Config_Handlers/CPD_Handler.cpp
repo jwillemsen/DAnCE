@@ -73,7 +73,7 @@ namespace DAnCE
       XMLSchema::boolean exclusiveProvider (src.exclusiveProvider);
       XMLSchema::boolean exclusiveUser (src.exclusiveUser);
       XMLSchema::boolean optional (src.optional);
-      CCMComponentPortKind kind (CCMComponentPortKind::Facet);
+      CCMComponentPortKind::Value kind (CCMComponentPortKind::Facet);
 
       switch (src.kind)
         {
@@ -108,7 +108,8 @@ namespace DAnCE
           throw Config_Error (name.c_str (), "Invalid port kind in connection");
         }
 
-      return ComponentPortDescription (name, provider, exclusiveProvider, exclusiveUser, optional, kind);
+      return ComponentPortDescription (name, provider, exclusiveProvider, exclusiveUser, optional,
+                                       CCMComponentPortKind (kind));
     }
 #endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 

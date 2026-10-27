@@ -124,11 +124,6 @@ namespace DAnCE
       // Instantiate the IDD
       IdRef xid (std::nullopt, implementation);
 
-      std::optional<InstanceResourceDeploymentDescription> deployed_shared_resource;
-      if (src.deployedSharedResource.length () != 0)
-        deployed_shared_resource.emplace (
-          IRDD_Handler::instance_resource_deployment_descr (src.deployedSharedResource[0]));
-
       // Generate a UUID to use for the IDREF.
       ACE_Utils::UUID uuid {};
       ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
@@ -140,9 +135,10 @@ namespace DAnCE
       // Bind the ref and set it in the IDD
       IDD_Handler::IDREF.bind_next_available (idd_id);
 
-      if (deployed_shared_resource)
-        return InstanceDeploymentDescription (name, node, source, xid, {}, {},
-                                              *deployed_shared_resource, xml_id);
+      if (src.deployedSharedResource.length () != 0)
+        return InstanceDeploymentDescription (
+          name, node, source, xid, {}, {},
+          IRDD_Handler::instance_resource_deployment_descr (src.deployedSharedResource[0]), xml_id);
 
       return InstanceDeploymentDescription (name, node, source, xid, {}, {}, std::nullopt, xml_id);
     }

@@ -38,9 +38,7 @@ namespace DAnCE
         if (root == XML::XStr (
                     ACE_TEXT ("Deployment:topLevelPackageDescription")))
           {
-            TopLevelPackageDescription tpd {};
-
-            tpd = reader::topLevelPackageDescription (dom);
+            TopLevelPackageDescription tpd (reader::topLevelPackageDescription (dom));
 
             if (tpd.package ().empty ())
               throw Plan_Error ("Top-level package description contains no package");
@@ -49,8 +47,7 @@ namespace DAnCE
           }
         else if (root == XML::XStr (ACE_TEXT ("Deployment:packageConfiguration")))
           {
-            PackageConfiguration pcd {};
-            pcd = reader::packageConfiguration (dom);
+            PackageConfiguration pcd (reader::packageConfiguration (dom));
             PCD_Handler::package_config (pcd, toconfig);
           }
         else
@@ -63,7 +60,7 @@ namespace DAnCE
 
             delete [] croot;
 
-            throw Plan_Error ("Invalid file passed to package_config, had base");
+            throw Plan_Error (error);
           }
       }
 
@@ -117,20 +114,19 @@ namespace DAnCE
       PackageConfiguration PCD_Handler::package_config (Deployment::PackageConfiguration const& src)
       {
         DANCE_TRACE ("PCD_Handler::package_config - reverse");
-        PackageConfiguration pcd = PackageConfiguration ();
-
-        if (src.label.in () != 0)
-          pcd.label (src.label.in ());
-
-        if (src.UUID.in () != 0)
-          pcd.UUID (src.UUID.in ());
-
+        XMLSchema::string<char> label (src.label.in () == nullptr ? "" : src.label.in ());
+        XMLSchema::string<char> UUID (src.UUID.in () == nullptr ? "" : src.UUID.in ());
+        XSCRT::OptionalArg<XMLSchema::string<char>> label_arg (std::nullopt);
+        XSCRT::OptionalArg<XMLSchema::string<char>> UUID_arg (std::nullopt);
+        if (src.label.in () != nullptr)
+          label_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (label);
+        if (src.UUID.in () != nullptr)
+          UUID_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (UUID);
         if (src.basePackage.length () > 0)
-          {
-            pcd.basePackage (CPD_Handler::component_package_descr (src.basePackage[0]));
-          }
-        return pcd;
+          return PackageConfiguration (label_arg, UUID_arg,
+                                       CPD_Handler::component_package_descr (src.basePackage[0]));
 
+        return PackageConfiguration (label_arg, UUID_arg);
       }
 
       PackageConfiguration * PCD_Handler::resolve_package_config (std::string_view uri)

@@ -51,8 +51,7 @@ namespace DAnCE
     {
       DANCE_TRACE ("Capability_Handler::get_capability - reverse");
 
-      Capability retval (src.name.in ());
-      return retval;
+      return Capability (src.name.in ());
     }
       };
 
@@ -68,23 +67,23 @@ namespace DAnCE
         {
           switch (resourceUsage_if_set_ptr->integral ())
         {
-        case ResourceUsageKind::None_l:
+        case ResourceUsageKind::None:
           toconfig.resourceUsage = Deployment::None;
           break;
 
-        case ResourceUsageKind::InstanceUsesResource_l:
+        case ResourceUsageKind::InstanceUsesResource:
           toconfig.resourceUsage = Deployment::InstanceUsesResource;
           break;
 
-        case ResourceUsageKind::ResourceUsesInstance_l:
+        case ResourceUsageKind::ResourceUsesInstance:
           toconfig.resourceUsage = Deployment::ResourceUsesInstance;
           break;
 
-        case ResourceUsageKind::PortUsesResource_l:
+        case ResourceUsageKind::PortUsesResource:
           toconfig.resourceUsage = Deployment::PortUsesResource;
           break;
 
-        case ResourceUsageKind::ResourceUsesPort_l:
+        case ResourceUsageKind::ResourceUsesPort:
           toconfig.resourceUsage = Deployment::ResourceUsesPort;
           break;
 
@@ -116,40 +115,44 @@ namespace DAnCE
     {
       DANCE_TRACE ("IR_Handler::get_ir - reverse");
 
-      ImplementationRequirement retval (src.resourceType.in (), src.name.in ());
+      ResourceUsageKind::Value usage_value (ResourceUsageKind::None);
 
       if (src.resourceUsage.length () == 1)
         switch (src.resourceUsage[0])
           {
           case Deployment::None:
-        retval.resourceUsage (ResourceUsageKind::None);
-        break;
+            usage_value = ResourceUsageKind::None;
+            break;
 
           case Deployment::InstanceUsesResource:
-        retval.resourceUsage (ResourceUsageKind::InstanceUsesResource);
-        break;
+            usage_value = ResourceUsageKind::InstanceUsesResource;
+            break;
 
           case Deployment::ResourceUsesInstance:
-        retval.resourceUsage (ResourceUsageKind::ResourceUsesInstance);
-        break;
+            usage_value = ResourceUsageKind::ResourceUsesInstance;
+            break;
 
           case Deployment::PortUsesResource:
-        retval.resourceUsage (ResourceUsageKind::PortUsesResource);
-        break;
+            usage_value = ResourceUsageKind::PortUsesResource;
+            break;
 
           case Deployment::ResourceUsesPort:
-        retval.resourceUsage (ResourceUsageKind::ResourceUsesPort);
-        break;
+            usage_value = ResourceUsageKind::ResourceUsesPort;
+            break;
 
           default:
             throw Config_Error (src.name.in (), "Unknown ResourceUsageKind.");
-        break;
           }
 
-      retval.resourcePort (src.resourcePort.in ());
+      ResourceUsageKind const usage (usage_value);
+      XSCRT::OptionalArg<ResourceUsageKind> usage_arg (std::nullopt);
+      if (src.resourceUsage.length () == 1)
+        usage_arg = XSCRT::OptionalArg<ResourceUsageKind> (usage);
 
-      retval.componentPort (src.componentPort.in ());
-      return retval;
+      return ImplementationRequirement (
+        src.resourceType.in (), src.name.in (), usage_arg,
+        XMLSchema::string<char> (src.resourcePort.in ()),
+        XMLSchema::string<char> (src.componentPort.in ()));
     }
       };
 
@@ -187,8 +190,7 @@ namespace DAnCE
     {
       DANCE_TRACE ("MID_Handler::get_mid - reverse");
 
-      MonolithicImplementationDescription retval {};
-      return retval;
+      return MonolithicImplementationDescription ();
     }
 
       };
@@ -280,29 +282,36 @@ namespace DAnCE
       {
         DANCE_TRACE ("CID_Handler::component_impl_descr - reverse");
 
-        ComponentImplementationDescription retval {};
+        XMLSchema::string<char> label (src.label.in () == nullptr ? "" : src.label.in ());
+        XMLSchema::string<char> UUID (src.UUID.in () == nullptr ? "" : src.UUID.in ());
+        XSCRT::OptionalArg<XMLSchema::string<char>> label_arg (std::nullopt);
+        XSCRT::OptionalArg<XMLSchema::string<char>> UUID_arg (std::nullopt);
+        if (src.label.in () != nullptr)
+          label_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (label);
+        if (src.UUID.in () != nullptr)
+          UUID_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (UUID);
 
-        retval.label (src.label.in ());
-        retval.UUID (src.UUID.in ());
-
-        {
-          retval.implements (Comp_Intf_Descr_Handler::comp_intf_descr (src.implements));
-        }
+        ComponentInterfaceDescription implements (
+          Comp_Intf_Descr_Handler::comp_intf_descr (src.implements));
 
         if (src.assemblyImpl.length () == 1)
-          {
-            retval.assemblyImpl (CAD_Handler::component_assem_descr (src.assemblyImpl[0]));
-          }
+          return ComponentImplementationDescription (
+            label_arg, UUID_arg, implements,
+            CAD_Handler::component_assem_descr (src.assemblyImpl[0]));
         else if (src.monolithicImpl.length () == 1)
           {
-            retval.monolithicImpl (MID_Handler::get_mid (src.monolithicImpl[0]));
+            return ComponentImplementationDescription (
+              label_arg, UUID_arg, implements, std::nullopt,
+              MID_Handler::get_mid (src.monolithicImpl[0]));
           }
         else
-          DANCE_ERROR (DANCE_LOG_WARNING,
+          {
+            DANCE_ERROR (DANCE_LOG_WARNING,
             (LM_WARNING, "Warning: ComponentImplementationDescription lacks "
                          "either a required assemblyImpl or monolithicImpl, "\
                          "or has too many"));
-        return retval;
+            return ComponentImplementationDescription (label_arg, UUID_arg, implements);
+          }
       }
 
       ComponentImplementationDescription * CID_Handler::resolve_cid (std::string_view uri)

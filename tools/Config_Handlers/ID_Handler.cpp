@@ -31,9 +31,7 @@ namespace DAnCE
       DANCE_TRACE("ID_Handler::get_ImplementationDependency - reverse");
       XMLSchema::string<char> reqtype (src.requiredType);
 
-      ImplementationDependency id (reqtype);
-
-      return id;
+      return ImplementationDependency (reqtype);
     }
 #endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 

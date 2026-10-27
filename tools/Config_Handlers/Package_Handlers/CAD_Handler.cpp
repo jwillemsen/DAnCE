@@ -43,11 +43,9 @@ namespace DAnCE
       std::string str {};
       SID_Handler::IDREF.find_ref (src.instanceRef, str);
 
-      IdRef xid {};
-      xid.idref (str.c_str ());
-
       XMLSchema::string<char> port_name (src.portName.in ());
-      return SubcomponentPortEndpoint (port_name, xid);
+      return SubcomponentPortEndpoint (
+        port_name, IdRef (std::nullopt, XMLSchema::IDREF<char> (str.c_str ())));
     }
       };
 
@@ -87,8 +85,7 @@ namespace DAnCE
     {
       DANCE_TRACE("ACD_Handler::get_acd - reverse");
 
-      AssemblyConnectionDescription retval (src.name.in ());
-      return retval;
+      return AssemblyConnectionDescription (src.name.in ());
     }
       };
 
@@ -120,9 +117,8 @@ namespace DAnCE
       std::string str {};
       SID_Handler::IDREF.find_ref (src.instanceRef, str);
 
-      IdRef xid {};
-      xid.idref (str.c_str ());
-      return SubcomponentPropertyReference (src.propertyName.in (), xid);
+      return SubcomponentPropertyReference (
+        src.propertyName.in (), IdRef (std::nullopt, XMLSchema::IDREF<char> (str.c_str ())));
     }
 
       };
@@ -148,10 +144,7 @@ namespace DAnCE
     {
       DANCE_TRACE("APM_Handler::get_apm - reverse");
 
-      AssemblyPropertyMapping retval (
-        src.name.in (),
-        src.externalName.in ());
-      return retval;
+      return AssemblyPropertyMapping (src.name.in (), src.externalName.in ());
     }
       };
 
@@ -185,7 +178,7 @@ namespace DAnCE
         ::Deployment::ComponentAssemblyDescription const& /*src*/)
       {
         DANCE_TRACE("CAD_Handler::component_assem_descr - reverse");
-        return {};
+        return ComponentAssemblyDescription ();
       }
 
       ComponentAssemblyDescription * CAD_Handler::resolve_cad (std::string_view)

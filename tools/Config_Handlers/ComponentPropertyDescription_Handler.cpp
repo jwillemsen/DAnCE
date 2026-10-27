@@ -31,8 +31,7 @@ namespace DAnCE
       DANCE_TRACE("ComponentPropertyDescription_Handler::component_property_description - reverse");
       XMLSchema::string<char> name (src.name);
       DataType dt (DataType_Handler::data_type (src.type));
-      ComponentPropertyDescription cpd (name,dt);
-      return cpd;
+      return ComponentPropertyDescription (name, dt);
     }
 #endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 

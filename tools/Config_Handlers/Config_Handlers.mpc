@@ -8,6 +8,7 @@ project (XSC_XML_Generation) : install, xscdefaults {
   xscflags += --cxx-export-header XSC_XML_Handlers_Export.h
   xscflags += --cxx-char-type char
   xscflags += --cxx-cpp17
+  xscflags += --cxx-read-only
   xscflags += --search-path "$(DANCE_ROOT)/docs/schema"
 
   custom_only = 1

@@ -93,19 +93,17 @@ namespace DAnCE
         Deployment::ComponentPackageDescription const& src)
       {
         DANCE_TRACE ("CPD_Handler::component_package_descr - reverse");
-        ComponentPackageDescription toconfig {};
-
-        if (src.label.in () != 0)
-          toconfig.label (src.label.in ());
-
-        if (src.UUID.in () != 0)
-          toconfig.UUID (src.UUID.in ());
-
-        {
-          toconfig.realizes
-            (Comp_Intf_Descr_Handler::comp_intf_descr (src.realizes));
-        }
-        return toconfig;
+        XMLSchema::string<char> label (src.label.in () == nullptr ? "" : src.label.in ());
+        XMLSchema::string<char> UUID (src.UUID.in () == nullptr ? "" : src.UUID.in ());
+        XSCRT::OptionalArg<XMLSchema::string<char>> label_arg (std::nullopt);
+        XSCRT::OptionalArg<XMLSchema::string<char>> UUID_arg (std::nullopt);
+        if (src.label.in () != nullptr)
+          label_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (label);
+        if (src.UUID.in () != nullptr)
+          UUID_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (UUID);
+        ComponentInterfaceDescription realizes (
+          Comp_Intf_Descr_Handler::comp_intf_descr (src.realizes));
+        return ComponentPackageDescription (label_arg, UUID_arg, realizes);
       }
 
       ComponentPackageDescription * CPD_Handler::resolve_cpd (

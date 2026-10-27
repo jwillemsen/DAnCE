@@ -348,8 +348,7 @@ namespace DAnCE
 
       DataValue const val {};
       DataType const type (TCKind::tk_char);
-      Any retval (type, val);
-      return retval;
+      return Any (type, val);
     }
 #endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 

@@ -74,11 +74,15 @@ namespace DAnCE
       IAD_Handler::impl_artifact_descr (::Deployment::ImplementationArtifactDescription const& src)
       {
         DANCE_TRACE ("IAD_Handler::impl_artifact_descr - reverse");
-        ImplementationArtifactDescription retval {};
-
-        retval.label (src.label.in ());
-        retval.UUID (src.UUID.in ());
-        return retval;
+        XMLSchema::string<char> label (src.label.in () == nullptr ? "" : src.label.in ());
+        XMLSchema::string<char> UUID (src.UUID.in () == nullptr ? "" : src.UUID.in ());
+        XSCRT::OptionalArg<XMLSchema::string<char>> label_arg (std::nullopt);
+        XSCRT::OptionalArg<XMLSchema::string<char>> UUID_arg (std::nullopt);
+        if (src.label.in () != nullptr)
+          label_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (label);
+        if (src.UUID.in () != nullptr)
+          UUID_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (UUID);
+        return ImplementationArtifactDescription (label_arg, UUID_arg);
       }
 
       ImplementationArtifactDescription * IAD_Handler::resolve_iad (std::string_view uri)

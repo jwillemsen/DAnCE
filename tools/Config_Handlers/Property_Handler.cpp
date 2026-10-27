@@ -42,9 +42,7 @@ namespace DAnCE
       XMLSchema::string<char> name (src.name);
       Any value (Any_Handler::get_any (src.value));
 
-      Property prop (name,value);
-
-      return prop;
+      return Property (name, value);
     }
 #endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 

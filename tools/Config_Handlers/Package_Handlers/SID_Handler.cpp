@@ -97,38 +97,43 @@ namespace DAnCE
         Deployment::SubcomponentInstantiationDescription const& src)
       {
         DANCE_TRACE ("SID_Handler::sub_comp_inst_descr - reverse");
-        SubcomponentInstantiationDescription retval (src.name.in ());
+        XMLSchema::string<char> name (src.name.in ());
 
-        if (src.basePackage.length () == 1)
-          retval.basePackage
-            (CPD_Handler::component_package_descr (src.basePackage[0]));
-        else if (src.specializedConfig.length () == 1)
-          retval.specializedConfig
-            (PCD_Handler::package_config (src.specializedConfig[0]));
-        else if (src.importedPackage.length () == 1)
-          {
-            ComponentPackageImport const ci {};
-            retval.importedPackage (ci);
-          }
-        else if (src.referencedPackage.length () == 1)
-          {
-            ComponentPackageReference cpr (
-              Comp_Intf_Descr_Handler::comp_intf_descr (
-                src.referencedPackage[0].requiredType));
-            XMLSchema::string<char> required_uuid (src.referencedPackage[0].requiredUUID.in ());
-            cpr.requiredUUID (required_uuid);
-            XMLSchema::string<char> required_name (src.referencedPackage[0].requiredName.in ());
-            cpr.requiredName (required_name);
-
-            retval.referencedPackage (cpr);
-          }
         // @@MAJO This is not a good way of binding reverse IDREFS.
         std::unique_ptr<ACE_Utils::UUID> safe_uuid (ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());
         std::string uuid (safe_uuid->to_string ()->c_str ());
 
         SID_Handler::IDREF.bind_next_available (uuid);
 
-        return retval;
+        if (src.basePackage.length () == 1)
+          return SubcomponentInstantiationDescription (
+            name, CPD_Handler::component_package_descr (src.basePackage[0]));
+
+        if (src.specializedConfig.length () == 1)
+          return SubcomponentInstantiationDescription (
+            name, std::nullopt, PCD_Handler::package_config (src.specializedConfig[0]));
+
+        if (src.importedPackage.length () == 1)
+          {
+            ComponentPackageImport const imported_package {};
+            return SubcomponentInstantiationDescription (
+              name, std::nullopt, std::nullopt, {}, {}, std::nullopt, imported_package);
+          }
+
+        if (src.referencedPackage.length () == 1)
+          {
+            Deployment::ComponentPackageReference const& package_reference = src.referencedPackage[0];
+            ComponentInterfaceDescription required_type (
+              Comp_Intf_Descr_Handler::comp_intf_descr (package_reference.requiredType));
+            XMLSchema::string<char> required_uuid (package_reference.requiredUUID.in ());
+            XMLSchema::string<char> required_name (package_reference.requiredName.in ());
+            ComponentPackageReference const referenced_package (
+              required_type, required_uuid, required_name);
+            return SubcomponentInstantiationDescription (
+              name, std::nullopt, std::nullopt, {}, {}, referenced_package);
+          }
+
+        return SubcomponentInstantiationDescription (name);
       }
     }
   }

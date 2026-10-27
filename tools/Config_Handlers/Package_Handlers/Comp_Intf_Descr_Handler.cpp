@@ -107,12 +107,20 @@ namespace DAnCE
                                                 ::Deployment::ComponentInterfaceDescription const& src)
       {
         DANCE_TRACE ("Comp_Intf_Descr_Handler::comp_intf_descr - reverse");
-        ComponentInterfaceDescription retval {};
-
-        retval.label (src.label.in ());
-        retval.UUID (src.UUID.in ());
-        retval.specificType (src.specificType.in ());
-        return retval;
+        XMLSchema::string<char> label (src.label.in () == nullptr ? "" : src.label.in ());
+        XMLSchema::string<char> UUID (src.UUID.in () == nullptr ? "" : src.UUID.in ());
+        XMLSchema::string<char> specificType (
+          src.specificType.in () == nullptr ? "" : src.specificType.in ());
+        XSCRT::OptionalArg<XMLSchema::string<char>> label_arg (std::nullopt);
+        XSCRT::OptionalArg<XMLSchema::string<char>> UUID_arg (std::nullopt);
+        XSCRT::OptionalArg<XMLSchema::string<char>> specificType_arg (std::nullopt);
+        if (src.label.in () != nullptr)
+          label_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (label);
+        if (src.UUID.in () != nullptr)
+          UUID_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (UUID);
+        if (src.specificType.in () != nullptr)
+          specificType_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (specificType);
+        return ComponentInterfaceDescription (label_arg, UUID_arg, specificType_arg);
       }
 
       ComponentInterfaceDescription * Comp_Intf_Descr_Handler::resolve_cid (std::string_view uri)
