@@ -55,9 +55,6 @@ namespace DAnCE
 
       //This method takes a <Deployment::PlanConnectionDescription>
       //converts it into a <Config_Handler::PlanConnectionDescription>
-      //and returns the value
-      static PlanConnectionDescription
-        get_PlanConnectionDescription (Deployment::PlanConnectionDescription const& src);
     };
 
   }

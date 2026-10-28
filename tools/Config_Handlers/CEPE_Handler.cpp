@@ -27,17 +27,6 @@ namespace DAnCE
       DANCE_TRACE("CEOE_Handler::external_port_endpoint");
       dest.portName = src.portName ().c_str ();
     }
-#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
-    ComponentExternalPortEndpoint
-    CEPE_Handler::external_port_endpoint (
-                                          ::Deployment::ComponentExternalPortEndpoint const& src)
-    {
-      DANCE_TRACE("CEOE_Handler::external_port_endpoint - reverse");
-      //MAJO Unfinished
-      XMLSchema::string<char> portname (src.portName);
-      return ComponentExternalPortEndpoint  (portname);
-    }
-#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }
 }

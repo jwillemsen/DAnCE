@@ -30,25 +30,6 @@ namespace DAnCE
       for (auto const& source_item : desc.property ())
         Property_Handler::handle_property (source_item, toconfig.property[property_index++]);
     }
-#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
-    Requirement Req_Handler::get_requirement (Deployment::Requirement const& src)
-    {
-      DANCE_TRACE("Req_Handler::get_requirement - reverse");
-
-      //Get the values for name and res
-      XMLSchema::string<char> const name (src.name);
-      XMLSchema::string<char> const res (src.resourceType);
-
-      Requirement::property_container_type properties;
-      for (CORBA::ULong i {}; i < src.property.length (); ++i)
-        {
-          Property const property (Property_Handler::get_property (src.property[i]));
-          properties.push_back (property);
-        }
-
-      return Requirement (name, res, properties);
-    }
-#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }
 }

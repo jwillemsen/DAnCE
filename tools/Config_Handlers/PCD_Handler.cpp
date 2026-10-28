@@ -65,67 +65,7 @@ namespace DAnCE
       toconfig.deployedResource.length (desc.deployedResource ().size ());
       for (auto const& resource : desc.deployedResource ())
         crddhandler.get_ConnectionResourceDeploymentDescription (toconfig.deployedResource[pos++], resource);
-
     }
 
-#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
-    PlanConnectionDescription
-    PCD_Handler::get_PlanConnectionDescription (Deployment::PlanConnectionDescription const& src)
-    {
-      DANCE_TRACE("PCD_Handler::get_PlanConnectionDescription");
-
-      XMLSchema::string<char> name (src.name);
-      if (src.source.length () > 1)
-        throw Config_Error (src.name.in (), "Multiple source entries cannot be represented by the schema");
-
-      std::optional<XMLSchema::string<char>> source;
-      if (src.source.length () == 1)
-        source.emplace (src.source[0]);
-      ::XSCRT::OptionalArg<XMLSchema::string<char>> const source_arg (
-        source ? ::XSCRT::OptionalArg<XMLSchema::string<char>> (*source) : std::nullopt);
-
-      PlanConnectionDescription::deployRequirement_container_type requirements;
-      for (CORBA::ULong i {}; i < src.deployRequirement.length (); ++i)
-        {
-          Requirement const requirement (Req_Handler::get_requirement (src.deployRequirement[i]));
-          requirements.push_back (requirement);
-        }
-
-      PlanConnectionDescription::externalEndpoint_container_type external_endpoints;
-      for (CORBA::ULong i {}; i < src.externalEndpoint.length (); ++i)
-        {
-          ComponentExternalPortEndpoint const endpoint (
-            CEPE_Handler::external_port_endpoint (src.externalEndpoint[i]));
-          external_endpoints.push_back (endpoint);
-        }
-
-      PlanConnectionDescription::internalEndpoint_container_type internal_endpoints;
-      for (CORBA::ULong i {}; i < src.internalEndpoint.length (); ++i)
-        {
-          PlanSubcomponentPortEndpoint const endpoint (
-            PSPE_Handler::sub_component_port_endpoint (src.internalEndpoint[i]));
-          internal_endpoints.push_back (endpoint);
-        }
-
-      PlanConnectionDescription::externalReference_container_type external_references;
-      for (CORBA::ULong i {}; i < src.externalReference.length (); ++i)
-        {
-          ExternalReferenceEndpoint const endpoint (
-            ERE_Handler::external_ref_endpoint (src.externalReference[i]));
-          external_references.push_back (endpoint);
-        }
-
-      PlanConnectionDescription::deployedResource_container_type resources;
-      for (CORBA::ULong i {}; i < src.deployedResource.length (); ++i)
-        {
-          ConnectionResourceDeploymentDescription const resource (
-            CRDD_Handler::connection_resource_depl_desc (src.deployedResource[i]));
-          resources.push_back (resource);
-        }
-
-      return PlanConnectionDescription (name, source_arg, requirements, external_endpoints,
-                                        internal_endpoints, external_references, resources);
-    }
-#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }
 }

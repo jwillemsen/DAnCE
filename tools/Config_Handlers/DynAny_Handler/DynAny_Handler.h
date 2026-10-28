@@ -30,7 +30,6 @@ namespace DAnCE
 {
   namespace Config_Handlers
   {
-    class Any;
     class DataType;
     class DataValue;
 
@@ -54,8 +53,6 @@ namespace DAnCE
       DynamicAny::DynAny_ptr extract_into_dynany (DataType const& type,
                                                    DataValue const& value,
                                                    CORBA::TypeCode_ptr = CORBA::TypeCode::_nil ());
-
-      Any extract_from_dynany (CORBA::Any const& any);
 
       CORBA::ORB_ptr orb ();
 

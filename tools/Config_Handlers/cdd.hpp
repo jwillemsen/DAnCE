@@ -28,36 +28,6 @@ namespace DAnCE
 }
 #include <memory>
 #include <string>
-#include <optional>
-#ifndef XSCRT_OPTIONAL_ARG_HPP
-#define XSCRT_OPTIONAL_ARG_HPP
-namespace XSCRT
-{
-  template <typename T>
-  class OptionalArg
-  {
-  public:
-    OptionalArg (std::nullopt_t) noexcept : value_ (nullptr)
-    {
-    }
-    OptionalArg (T const& value) noexcept : value_ (std::addressof (value))
-    {
-    }
-    OptionalArg (T const&&) = delete;
-
-    explicit operator bool () const noexcept
-    {
-      return value_ != nullptr;
-    }
-    T const& operator* () const noexcept
-    {
-      return *value_;
-    }
-  private:
-    T const* value_ {};
-  };
-}
-#endif // XSCRT_OPTIONAL_ARG_HPP
 #include <list>
 #include "ace/XML_Utils/XMLSchema/Types.hpp"
 #include "ace/XML_Utils/XMLSchema/id_map.hpp"
@@ -118,14 +88,6 @@ namespace DAnCE
 
     public:
       Domain () = delete;
-      Domain (node_container_type const& node__,
-              ::XSCRT::OptionalArg<::XMLSchema::string<char>> UUID__ = std::nullopt,
-              ::XSCRT::OptionalArg<::XMLSchema::string<char>> label__ = std::nullopt,
-              interconnect_container_type const& interconnect__ = {},
-              bridge_container_type const& bridge__ = {},
-              sharedResource_container_type const& sharedResource__ = {},
-              infoProperty_container_type const& infoProperty__ = {});
-
       explicit Domain (::XSCRT::XML::Element<char> const&);
       Domain (Domain const& s);
       Domain (Domain&&) = delete;
@@ -163,11 +125,6 @@ namespace DAnCE
 
     public:
       Bridge () = delete;
-      Bridge (::XMLSchema::string<char> const& name__,
-              connect_container_type const& connect__,
-              ::XSCRT::OptionalArg<::XMLSchema::string<char>> label__ = std::nullopt,
-              resource_container_type const& resource__ = {});
-
       explicit Bridge (::XSCRT::XML::Element<char> const&);
       Bridge (Bridge const& s);
       Bridge (Bridge&&) = delete;
@@ -212,12 +169,6 @@ namespace DAnCE
 
     public:
       Interconnect () = delete;
-      Interconnect (::XMLSchema::string<char> const& name__,
-                    connect_container_type const& connect__,
-                    ::XSCRT::OptionalArg<::XMLSchema::string<char>> label__ = std::nullopt,
-                    connection_container_type const& connection__ = {},
-                    resource_container_type const& resource__ = {});
-
       explicit Interconnect (::XSCRT::XML::Element<char> const&);
       Interconnect (Interconnect const& s);
       Interconnect (Interconnect&&) = delete;
@@ -262,12 +213,6 @@ namespace DAnCE
 
     public:
       Node () = delete;
-      Node (::XMLSchema::string<char> const& name__,
-            ::XSCRT::OptionalArg<::XMLSchema::string<char>> label__ = std::nullopt,
-            connection_container_type const& connection__ = {},
-            sharedResource_container_type const& sharedResource__ = {},
-            resource_container_type const& resource__ = {});
-
       explicit Node (::XSCRT::XML::Element<char> const&);
       Node (Node const& s);
       Node (Node&&) = delete;
@@ -303,11 +248,6 @@ namespace DAnCE
 
     public:
       SharedResource () = delete;
-      SharedResource (::XMLSchema::string<char> const& name__,
-                      ::XMLSchema::string<char> const& resourceType__,
-                      ::DAnCE::Config_Handlers::Node const& node__,
-                      ::DAnCE::Config_Handlers::SatisfierProperty const& property__);
-
       explicit SharedResource (::XSCRT::XML::Element<char> const&);
       SharedResource (SharedResource const& s);
       SharedResource (SharedResource&&) = delete;

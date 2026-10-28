@@ -17,15 +17,6 @@ namespace DAnCE
 {
   namespace Config_Handlers
   {
-    ComponentPackageReference::ComponentPackageReference (::DAnCE::Config_Handlers::ComponentInterfaceDescription const& requiredType__,
-                                                          ::XSCRT::OptionalArg<::XMLSchema::string<char>> requiredUUID__,
-                                                          ::XSCRT::OptionalArg<::XMLSchema::string<char>> requiredName__)
-    : ::XSCRT::Type ()
-    , requiredUUID_ (requiredUUID__ ? std::make_unique<::XMLSchema::string<char>> (*requiredUUID__) : nullptr)
-    , requiredName_ (requiredName__ ? std::make_unique<::XMLSchema::string<char>> (*requiredName__) : nullptr)
-    , requiredType_ (std::make_unique<::DAnCE::Config_Handlers::ComponentInterfaceDescription> (requiredType__))
-    {
-    }
     ComponentPackageReference::ComponentPackageReference (ComponentPackageReference const& s)
     : ::XSCRT::Type (s)
     , requiredUUID_ (s.requiredUUID_ ? std::make_unique<::XMLSchema::string<char>> (*s.requiredUUID_) : nullptr)
@@ -46,25 +37,6 @@ namespace DAnCE
       return *requiredType_;
     }
 
-    SubcomponentInstantiationDescription::SubcomponentInstantiationDescription (::XMLSchema::string<char> const& name__,
-                                                                                ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentPackageDescription> basePackage__,
-                                                                                ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::PackageConfiguration> specializedConfig__,
-                                                                                selectRequirement_container_type const& selectRequirement__,
-                                                                                configProperty_container_type const& configProperty__,
-                                                                                ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentPackageReference> referencedPackage__,
-                                                                                ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentPackageImport> importedPackage__,
-                                                                                ::XSCRT::OptionalArg<::XMLSchema::ID<char>> id__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , basePackage_ (basePackage__ ? std::make_unique<::DAnCE::Config_Handlers::ComponentPackageDescription> (*basePackage__) : nullptr)
-    , specializedConfig_ (specializedConfig__ ? std::make_unique<::DAnCE::Config_Handlers::PackageConfiguration> (*specializedConfig__) : nullptr)
-    , selectRequirement_ (selectRequirement__)
-    , configProperty_ (configProperty__)
-    , referencedPackage_ (referencedPackage__ ? std::make_unique<::DAnCE::Config_Handlers::ComponentPackageReference> (*referencedPackage__) : nullptr)
-    , importedPackage_ (importedPackage__ ? std::make_unique<::DAnCE::Config_Handlers::ComponentPackageImport> (*importedPackage__) : nullptr)
-    , id_ (id__ ? std::make_unique<::XMLSchema::ID<char>> (*id__) : nullptr)
-    {
-    }
     SubcomponentInstantiationDescription::SubcomponentInstantiationDescription (SubcomponentInstantiationDescription const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -110,13 +82,6 @@ namespace DAnCE
       return id_.get ();
     }
 
-    SubcomponentPropertyReference::SubcomponentPropertyReference (::XMLSchema::string<char> const& propertyName__,
-                                                                  ::DAnCE::Config_Handlers::IdRef const& instance__)
-    : ::XSCRT::Type ()
-    , propertyName_ (std::make_unique<::XMLSchema::string<char>> (propertyName__))
-    , instance_ (std::make_unique<::DAnCE::Config_Handlers::IdRef> (instance__))
-    {
-    }
     SubcomponentPropertyReference::SubcomponentPropertyReference (SubcomponentPropertyReference const& s)
     : ::XSCRT::Type (s)
     , propertyName_ (std::make_unique<::XMLSchema::string<char>> (*s.propertyName_))
@@ -132,15 +97,6 @@ namespace DAnCE
       return *instance_;
     }
 
-    AssemblyPropertyMapping::AssemblyPropertyMapping (::XMLSchema::string<char> const& name__,
-                                                      ::XMLSchema::string<char> const& externalName__,
-                                                      delegatesTo_container_type const& delegatesTo__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , externalName_ (std::make_unique<::XMLSchema::string<char>> (externalName__))
-    , delegatesTo_ (delegatesTo__)
-    {
-    }
     AssemblyPropertyMapping::AssemblyPropertyMapping (AssemblyPropertyMapping const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -177,13 +133,6 @@ namespace DAnCE
     : v_ (v)
     {
     }
-    Locality::Locality (::DAnCE::Config_Handlers::LocalityKind const& constraint__,
-                        ::DAnCE::Config_Handlers::IdRef const& constrainedInstance__)
-    : ::XSCRT::Type ()
-    , constraint_ (std::make_unique<::DAnCE::Config_Handlers::LocalityKind> (constraint__))
-    , constrainedInstance_ (std::make_unique<::DAnCE::Config_Handlers::IdRef> (constrainedInstance__))
-    {
-    }
     Locality::Locality (Locality const& s)
     : ::XSCRT::Type (s)
     , constraint_ (std::make_unique<::DAnCE::Config_Handlers::LocalityKind> (*s.constraint_))
@@ -199,17 +148,6 @@ namespace DAnCE
       return *constrainedInstance_;
     }
 
-    ComponentAssemblyDescription::ComponentAssemblyDescription (instance_container_type const& instance__,
-                                                                connection_container_type const& connection__,
-                                                                externalProperty_container_type const& externalProperty__,
-                                                                locality_container_type const& locality__)
-    : ::XSCRT::Type ()
-    , instance_ (instance__)
-    , connection_ (connection__)
-    , externalProperty_ (externalProperty__)
-    , locality_ (locality__)
-    {
-    }
     ComponentAssemblyDescription::instance_container_type const& ComponentAssemblyDescription::instance () const noexcept
     {
       return instance_;
@@ -227,17 +165,6 @@ namespace DAnCE
       return locality_;
     }
 
-    MonolithicImplementationDescription::MonolithicImplementationDescription (nodeExecParameter_container_type const& nodeExecParameter__,
-                                                                              componentExecParameter_container_type const& componentExecParameter__,
-                                                                              deployRequirement_container_type const& deployRequirement__,
-                                                                              primaryArtifact_container_type const& primaryArtifact__)
-    : ::XSCRT::Type ()
-    , nodeExecParameter_ (nodeExecParameter__)
-    , componentExecParameter_ (componentExecParameter__)
-    , deployRequirement_ (deployRequirement__)
-    , primaryArtifact_ (primaryArtifact__)
-    {
-    }
     MonolithicImplementationDescription::nodeExecParameter_container_type const& MonolithicImplementationDescription::nodeExecParameter () const noexcept
     {
       return nodeExecParameter_;
@@ -255,29 +182,6 @@ namespace DAnCE
       return primaryArtifact_;
     }
 
-    ComponentImplementationDescription::ComponentImplementationDescription (::XSCRT::OptionalArg<::XMLSchema::string<char>> label__,
-                                                                            ::XSCRT::OptionalArg<::XMLSchema::string<char>> UUID__,
-                                                                            ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentInterfaceDescription> implements__,
-                                                                            ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentAssemblyDescription> assemblyImpl__,
-                                                                            ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::MonolithicImplementationDescription> monolithicImpl__,
-                                                                            configProperty_container_type const& configProperty__,
-                                                                            capability_container_type const& capability__,
-                                                                            dependsOn_container_type const& dependsOn__,
-                                                                            infoProperty_container_type const& infoProperty__,
-                                                                            ::XSCRT::OptionalArg<::XMLSchema::string<char>> href__)
-    : ::XSCRT::Type ()
-    , label_ (label__ ? std::make_unique<::XMLSchema::string<char>> (*label__) : nullptr)
-    , UUID_ (UUID__ ? std::make_unique<::XMLSchema::string<char>> (*UUID__) : nullptr)
-    , implements_ (implements__ ? std::make_unique<::DAnCE::Config_Handlers::ComponentInterfaceDescription> (*implements__) : nullptr)
-    , assemblyImpl_ (assemblyImpl__ ? std::make_unique<::DAnCE::Config_Handlers::ComponentAssemblyDescription> (*assemblyImpl__) : nullptr)
-    , monolithicImpl_ (monolithicImpl__ ? std::make_unique<::DAnCE::Config_Handlers::MonolithicImplementationDescription> (*monolithicImpl__) : nullptr)
-    , configProperty_ (configProperty__)
-    , capability_ (capability__)
-    , dependsOn_ (dependsOn__)
-    , infoProperty_ (infoProperty__)
-    , href_ (href__ ? std::make_unique<::XMLSchema::string<char>> (*href__) : nullptr)
-    {
-    }
     ComponentImplementationDescription::ComponentImplementationDescription (ComponentImplementationDescription const& s)
     : ::XSCRT::Type (s)
     , label_ (s.label_ ? std::make_unique<::XMLSchema::string<char>> (*s.label_) : nullptr)
@@ -333,29 +237,6 @@ namespace DAnCE
       return href_.get ();
     }
 
-    ConnectorImplementationDescription::ConnectorImplementationDescription (::XSCRT::OptionalArg<::XMLSchema::string<char>> label__,
-                                                                            ::XSCRT::OptionalArg<::XMLSchema::string<char>> UUID__,
-                                                                            ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentInterfaceDescription> implements__,
-                                                                            ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentAssemblyDescription> assemblyImpl__,
-                                                                            ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::MonolithicImplementationDescription> monolithicImpl__,
-                                                                            configProperty_container_type const& configProperty__,
-                                                                            capability_container_type const& capability__,
-                                                                            dependsOn_container_type const& dependsOn__,
-                                                                            infoProperty_container_type const& infoProperty__,
-                                                                            ::XSCRT::OptionalArg<::XMLSchema::string<char>> href__)
-    : ::XSCRT::Type ()
-    , label_ (label__ ? std::make_unique<::XMLSchema::string<char>> (*label__) : nullptr)
-    , UUID_ (UUID__ ? std::make_unique<::XMLSchema::string<char>> (*UUID__) : nullptr)
-    , implements_ (implements__ ? std::make_unique<::DAnCE::Config_Handlers::ComponentInterfaceDescription> (*implements__) : nullptr)
-    , assemblyImpl_ (assemblyImpl__ ? std::make_unique<::DAnCE::Config_Handlers::ComponentAssemblyDescription> (*assemblyImpl__) : nullptr)
-    , monolithicImpl_ (monolithicImpl__ ? std::make_unique<::DAnCE::Config_Handlers::MonolithicImplementationDescription> (*monolithicImpl__) : nullptr)
-    , configProperty_ (configProperty__)
-    , capability_ (capability__)
-    , dependsOn_ (dependsOn__)
-    , infoProperty_ (infoProperty__)
-    , href_ (href__ ? std::make_unique<::XMLSchema::string<char>> (*href__) : nullptr)
-    {
-    }
     ConnectorImplementationDescription::ConnectorImplementationDescription (ConnectorImplementationDescription const& s)
     : ::XSCRT::Type (s)
     , label_ (s.label_ ? std::make_unique<::XMLSchema::string<char>> (*s.label_) : nullptr)

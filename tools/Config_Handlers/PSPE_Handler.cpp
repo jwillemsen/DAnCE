@@ -15,18 +15,12 @@ namespace DAnCE
     {
       DANCE_TRACE("PSPE_Handler::sub_component_port_endpoints");
 
-      PlanConnectionDescription::internalEndpoint_const_iterator iei_e =
-        src.end_internalEndpoint ();
-      CORBA::ULong pos = 0;
-      dest.length (src.count_internalEndpoint ());
+      CORBA::ULong pos {};
+      dest.length (src.internalEndpoint ().size ());
 
-      for (PlanConnectionDescription::internalEndpoint_const_iterator iei_b =
-             src.begin_internalEndpoint ();
-           iei_b != iei_e;
-           ++iei_b)
+      for (auto const& endpoint : src.internalEndpoint ())
         {
-          PSPE_Handler::sub_component_port_endpoint ((*iei_b),
-                                                     dest[pos++]);
+          PSPE_Handler::sub_component_port_endpoint (endpoint, dest[pos++]);
         }
     }
 
@@ -89,52 +83,6 @@ namespace DAnCE
 
         }
     }
-#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
-    PlanSubcomponentPortEndpoint
-    PSPE_Handler::sub_component_port_endpoint (
-      Deployment::PlanSubcomponentPortEndpoint const& src)
-    { // @@MAJO
-      DANCE_TRACE("PSPE_Handler::sub_component_port_endpoint - reverse");
-      XMLSchema::string<char> pname (src.portName);
-      XMLSchema::string<char> provider (src.provider ? "true" : "");
-      std::string id {};
-      IDD_Handler::IDREF.find_ref(src.instanceRef, id);
-      XMLSchema::IDREF<char> idref(id.c_str());
-
-      IdRef idr (std::nullopt, idref);
-
-      CCMComponentPortKind::Value kind_value {};
-
-      switch (src.kind)
-        {
-        case ::Deployment::Facet:
-          kind_value = CCMComponentPortKind::Facet;
-          break;
-        case ::Deployment::SimplexReceptacle:
-          kind_value = CCMComponentPortKind::SimplexReceptacle;
-          break;
-        case ::Deployment::MultiplexReceptacle:
-          kind_value = CCMComponentPortKind::MultiplexReceptacle;
-          break;
-        case ::Deployment::EventEmitter:
-          kind_value = CCMComponentPortKind::EventEmitter;
-          break;
-        case ::Deployment::EventPublisher:
-          kind_value = CCMComponentPortKind::EventPublisher;
-          break;
-        case ::Deployment::EventConsumer:
-          kind_value = CCMComponentPortKind::EventConsumer;
-          break;
-
-        default:
-          DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR, (LM_ERROR, "Invalid port kind in PSPE\n"));
-          throw Config_Error (pname.c_str (), "Invalid port kind in plan subcomponent endpoint");
-        }
-
-      CCMComponentPortKind const kind (kind_value);
-      return PlanSubcomponentPortEndpoint (pname, kind, idr, provider);
-    }
-#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }
 }

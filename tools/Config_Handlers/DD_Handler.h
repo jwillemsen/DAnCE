@@ -84,11 +84,6 @@ private:
 */
 bool build_domain ();
 
-/**
-*  @brief builds the XSC data structure
-*/
-bool build_xsc ();
-
 /// The Deployment Domain structure
 std::unique_ptr<::Deployment::Domain> idl_domain_ {};
 
@@ -97,7 +92,6 @@ std::unique_ptr<Domain> domain_ptr_ {};
 
  Domain &domain_;
 /// The return value used
-bool retval_ {};
 };
 }
 }

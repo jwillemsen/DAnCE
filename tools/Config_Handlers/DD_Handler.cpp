@@ -97,11 +97,6 @@ namespace DAnCE
       return true;
     }
 
-    bool DD_Handler::build_xsc ()
-    {
-      return true;
-    }
-
     ::Deployment::Domain const *
     DD_Handler::domain_idl () const
     {

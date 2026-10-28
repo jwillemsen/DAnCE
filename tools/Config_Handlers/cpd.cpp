@@ -17,13 +17,6 @@ namespace DAnCE
 {
   namespace Config_Handlers
   {
-    PackagedComponentImplementation::PackagedComponentImplementation (::XMLSchema::string<char> const& name__,
-                                                                      ::DAnCE::Config_Handlers::ComponentImplementationDescription const& referencedImplementation__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , referencedImplementation_ (std::make_unique<::DAnCE::Config_Handlers::ComponentImplementationDescription> (referencedImplementation__))
-    {
-    }
     PackagedComponentImplementation::PackagedComponentImplementation (PackagedComponentImplementation const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -39,23 +32,6 @@ namespace DAnCE
       return *referencedImplementation_;
     }
 
-    ComponentPackageDescription::ComponentPackageDescription (::XSCRT::OptionalArg<::XMLSchema::string<char>> label__,
-                                                              ::XSCRT::OptionalArg<::XMLSchema::string<char>> UUID__,
-                                                              ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentInterfaceDescription> realizes__,
-                                                              configProperty_container_type const& configProperty__,
-                                                              implementation_container_type const& implementation__,
-                                                              infoProperty_container_type const& infoProperty__,
-                                                              ::XSCRT::OptionalArg<::XMLSchema::string<char>> href__)
-    : ::XSCRT::Type ()
-    , label_ (label__ ? std::make_unique<::XMLSchema::string<char>> (*label__) : nullptr)
-    , UUID_ (UUID__ ? std::make_unique<::XMLSchema::string<char>> (*UUID__) : nullptr)
-    , realizes_ (realizes__ ? std::make_unique<::DAnCE::Config_Handlers::ComponentInterfaceDescription> (*realizes__) : nullptr)
-    , configProperty_ (configProperty__)
-    , implementation_ (implementation__)
-    , infoProperty_ (infoProperty__)
-    , href_ (href__ ? std::make_unique<::XMLSchema::string<char>> (*href__) : nullptr)
-    {
-    }
     ComponentPackageDescription::ComponentPackageDescription (ComponentPackageDescription const& s)
     : ::XSCRT::Type (s)
     , label_ (s.label_ ? std::make_unique<::XMLSchema::string<char>> (*s.label_) : nullptr)
@@ -96,23 +72,6 @@ namespace DAnCE
       return href_.get ();
     }
 
-    ConnectorPackageDescription::ConnectorPackageDescription (::XSCRT::OptionalArg<::XMLSchema::string<char>> label__,
-                                                              ::XSCRT::OptionalArg<::XMLSchema::string<char>> UUID__,
-                                                              ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentInterfaceDescription> realizes__,
-                                                              configProperty_container_type const& configProperty__,
-                                                              implementation_container_type const& implementation__,
-                                                              infoProperty_container_type const& infoProperty__,
-                                                              ::XSCRT::OptionalArg<::XMLSchema::string<char>> href__)
-    : ::XSCRT::Type ()
-    , label_ (label__ ? std::make_unique<::XMLSchema::string<char>> (*label__) : nullptr)
-    , UUID_ (UUID__ ? std::make_unique<::XMLSchema::string<char>> (*UUID__) : nullptr)
-    , realizes_ (realizes__ ? std::make_unique<::DAnCE::Config_Handlers::ComponentInterfaceDescription> (*realizes__) : nullptr)
-    , configProperty_ (configProperty__)
-    , implementation_ (implementation__)
-    , infoProperty_ (infoProperty__)
-    , href_ (href__ ? std::make_unique<::XMLSchema::string<char>> (*href__) : nullptr)
-    {
-    }
     ConnectorPackageDescription::ConnectorPackageDescription (ConnectorPackageDescription const& s)
     : ::XSCRT::Type (s)
     , label_ (s.label_ ? std::make_unique<::XMLSchema::string<char>> (*s.label_) : nullptr)

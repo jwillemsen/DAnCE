@@ -25,36 +25,6 @@ namespace DAnCE
 }
 #include <memory>
 #include <string>
-#include <optional>
-#ifndef XSCRT_OPTIONAL_ARG_HPP
-#define XSCRT_OPTIONAL_ARG_HPP
-namespace XSCRT
-{
-  template <typename T>
-  class OptionalArg
-  {
-  public:
-    OptionalArg (std::nullopt_t) noexcept : value_ (nullptr)
-    {
-    }
-    OptionalArg (T const& value) noexcept : value_ (std::addressof (value))
-    {
-    }
-    OptionalArg (T const&&) = delete;
-
-    explicit operator bool () const noexcept
-    {
-      return value_ != nullptr;
-    }
-    T const& operator* () const noexcept
-    {
-      return *value_;
-    }
-  private:
-    T const* value_ {};
-  };
-}
-#endif // XSCRT_OPTIONAL_ARG_HPP
 #include <list>
 #include "ace/XML_Utils/XMLSchema/Types.hpp"
 #include "ace/XML_Utils/XMLSchema/id_map.hpp"
@@ -76,8 +46,7 @@ namespace DAnCE
       location_container_type location_ {};
 
     public:
-      ComponentPackageImport (location_container_type const& location__ = {});
-
+      ComponentPackageImport () = default;
       explicit ComponentPackageImport (::XSCRT::XML::Element<char> const&);
       ComponentPackageImport (ComponentPackageImport const& s) = default;
       ComponentPackageImport (ComponentPackageImport&&) = delete;
@@ -144,16 +113,7 @@ namespace DAnCE
       contentLocation_type contentLocation_ {};
 
     public:
-      PackageConfiguration (::XSCRT::OptionalArg<::XMLSchema::string<char>> label__ = std::nullopt,
-                            ::XSCRT::OptionalArg<::XMLSchema::string<char>> UUID__ = std::nullopt,
-                            ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentPackageDescription> basePackage__ = std::nullopt,
-                            ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::PackageConfiguration> specializedConfig__ = std::nullopt,
-                            ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentPackageImport> importedPackage__ = std::nullopt,
-                            ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentPackageReference> referencedPackage__ = std::nullopt,
-                            selectRequirement_container_type const& selectRequirement__ = {},
-                            configProperty_container_type const& configProperty__ = {},
-                            ::XSCRT::OptionalArg<::XMLSchema::string<char>> contentLocation__ = std::nullopt);
-
+      PackageConfiguration () = default;
       explicit PackageConfiguration (::XSCRT::XML::Element<char> const&);
       PackageConfiguration (PackageConfiguration const& s);
       PackageConfiguration (PackageConfiguration&&) = delete;

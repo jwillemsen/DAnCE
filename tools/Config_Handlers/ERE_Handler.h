@@ -47,7 +47,6 @@ namespace DAnCE
       static void external_ref_endpoints (PlanConnectionDescription const& src,
                           ::Deployment::ExternalReferenceEndpoints &dest);
 
-      static ExternalReferenceEndpoint external_ref_endpoint (Deployment::ExternalReferenceEndpoint const& src);
 
       static void handle_external_ref_endpoint (ExternalReferenceEndpoint const& src,
                                                 Deployment::ExternalReferenceEndpoint &dest);

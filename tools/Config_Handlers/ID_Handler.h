@@ -54,7 +54,6 @@ static void get_ImplementationDependency (
 ImplementationDependency const& desc,
 Deployment::ImplementationDependency& toconfig);
 
-static ImplementationDependency impl_dependency (::Deployment::ImplementationDependency const& src);
 };
 
 }

@@ -22,18 +22,6 @@ namespace DAnCE
       CORBA::TypeCode_ptr tcptr = toconfig.type.in ();
       DataType_Handler::data_type (desc.type (), tcptr);
     }
-#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
-
-    ComponentPropertyDescription
-    ComponentPropertyDescription_Handler::component_property_description (
-                                                                          ::Deployment::ComponentPropertyDescription const& src)
-    {
-      DANCE_TRACE("ComponentPropertyDescription_Handler::component_property_description - reverse");
-      XMLSchema::string<char> name (src.name);
-      DataType dt (DataType_Handler::data_type (src.type));
-      return ComponentPropertyDescription (name, dt);
-    }
-#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
   }
 }

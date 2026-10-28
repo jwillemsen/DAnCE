@@ -17,37 +17,11 @@ namespace DAnCE
 {
   namespace Config_Handlers
   {
-    ComponentPackageImport::ComponentPackageImport (location_container_type const& location__)
-    : ::XSCRT::Type ()
-    , location_ (location__)
-    {
-    }
     ComponentPackageImport::location_container_type const& ComponentPackageImport::location () const noexcept
     {
       return location_;
     }
 
-    PackageConfiguration::PackageConfiguration (::XSCRT::OptionalArg<::XMLSchema::string<char>> label__,
-                                                ::XSCRT::OptionalArg<::XMLSchema::string<char>> UUID__,
-                                                ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentPackageDescription> basePackage__,
-                                                ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::PackageConfiguration> specializedConfig__,
-                                                ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentPackageImport> importedPackage__,
-                                                ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentPackageReference> referencedPackage__,
-                                                selectRequirement_container_type const& selectRequirement__,
-                                                configProperty_container_type const& configProperty__,
-                                                ::XSCRT::OptionalArg<::XMLSchema::string<char>> contentLocation__)
-    : ::XSCRT::Type ()
-    , label_ (label__ ? std::make_unique<::XMLSchema::string<char>> (*label__) : nullptr)
-    , UUID_ (UUID__ ? std::make_unique<::XMLSchema::string<char>> (*UUID__) : nullptr)
-    , basePackage_ (basePackage__ ? std::make_unique<::DAnCE::Config_Handlers::ComponentPackageDescription> (*basePackage__) : nullptr)
-    , specializedConfig_ (specializedConfig__ ? std::make_unique<::DAnCE::Config_Handlers::PackageConfiguration> (*specializedConfig__) : nullptr)
-    , importedPackage_ (importedPackage__ ? std::make_unique<::DAnCE::Config_Handlers::ComponentPackageImport> (*importedPackage__) : nullptr)
-    , referencedPackage_ (referencedPackage__ ? std::make_unique<::DAnCE::Config_Handlers::ComponentPackageReference> (*referencedPackage__) : nullptr)
-    , selectRequirement_ (selectRequirement__)
-    , configProperty_ (configProperty__)
-    , contentLocation_ (contentLocation__ ? std::make_unique<::XMLSchema::string<char>> (*contentLocation__) : nullptr)
-    {
-    }
     PackageConfiguration::PackageConfiguration (PackageConfiguration const& s)
     : ::XSCRT::Type (s)
     , label_ (s.label_ ? std::make_unique<::XMLSchema::string<char>> (*s.label_) : nullptr)

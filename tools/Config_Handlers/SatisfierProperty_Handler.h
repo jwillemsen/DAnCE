@@ -50,7 +50,6 @@ namespace DAnCE
       /// <DAnCE::Config_Handlers::SatisfierProperty> to the CORBA IDL type
       /// <Deployment::SatisfierProperty>.
       static void handle_sat_property (SatisfierProperty const& desc, ::Deployment::SatisfierProperty& toconfig);
-      static SatisfierProperty get_sat_property (::Deployment::SatisfierProperty const& src);
     };
 
     }

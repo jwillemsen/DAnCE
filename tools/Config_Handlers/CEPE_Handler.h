@@ -46,8 +46,6 @@ namespace DAnCE
       static void external_port_endpoints (PlanConnectionDescription const& src,
                            ::Deployment::ComponentExternalPortEndpoints &dest);
 
-      static ComponentExternalPortEndpoint
-        external_port_endpoint (::Deployment::ComponentExternalPortEndpoint const& src);
 
       static void handle_external_port_endpoint (ComponentExternalPortEndpoint const& src,
                              ::Deployment::ComponentExternalPortEndpoint &dest);

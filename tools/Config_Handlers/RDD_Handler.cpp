@@ -25,28 +25,7 @@ namespace DAnCE
       CORBA::ULong property_index {};
       for (auto const& source_item : src.property ())
         Property_Handler::handle_property (source_item, dest.property[property_index++]);
-
     }
-#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
-
-    ResourceDeploymentDescription
-    RDD_Handler::resource_deployment_descr (
-                                            ::Deployment::ResourceDeploymentDescription const& src)
-    {
-      DANCE_TRACE("RDD_Handler::resource_deployment_descr - reverse");
-
-      XMLSchema::string<char> reqname (src.requirementName);
-      XMLSchema::string<char> resname (src.resourceName.in ());
-      ResourceDeploymentDescription::property_container_type properties;
-      for (CORBA::ULong i {}; i < src.property.length (); ++i)
-        {
-          Property const property (Property_Handler::get_property (src.property[i]));
-          properties.push_back (property);
-        }
-
-      return ResourceDeploymentDescription (reqname, resname, properties);
-    }
-#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
   }
 

@@ -49,8 +49,6 @@ namespace DAnCE
       static void handle_component_port_description (ComponentPortDescription const& desc,
                              ::Deployment::ComponentPortDescription &toconfig);
 
-      static ComponentPortDescription
-        component_port_description (Deployment::ComponentPortDescription const& src);
     };
 
     }

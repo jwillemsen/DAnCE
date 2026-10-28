@@ -17,23 +17,6 @@ namespace DAnCE
 {
   namespace Config_Handlers
   {
-    Domain::Domain (node_container_type const& node__,
-                    ::XSCRT::OptionalArg<::XMLSchema::string<char>> UUID__,
-                    ::XSCRT::OptionalArg<::XMLSchema::string<char>> label__,
-                    interconnect_container_type const& interconnect__,
-                    bridge_container_type const& bridge__,
-                    sharedResource_container_type const& sharedResource__,
-                    infoProperty_container_type const& infoProperty__)
-    : ::XSCRT::Type ()
-    , UUID_ (UUID__ ? std::make_unique<::XMLSchema::string<char>> (*UUID__) : nullptr)
-    , label_ (label__ ? std::make_unique<::XMLSchema::string<char>> (*label__) : nullptr)
-    , node_ (node__)
-    , interconnect_ (interconnect__)
-    , bridge_ (bridge__)
-    , sharedResource_ (sharedResource__)
-    , infoProperty_ (infoProperty__)
-    {
-    }
     Domain::Domain (Domain const& s)
     : ::XSCRT::Type (s)
     , UUID_ (s.UUID_ ? std::make_unique<::XMLSchema::string<char>> (*s.UUID_) : nullptr)
@@ -74,17 +57,6 @@ namespace DAnCE
       return infoProperty_;
     }
 
-    Bridge::Bridge (::XMLSchema::string<char> const& name__,
-                    connect_container_type const& connect__,
-                    ::XSCRT::OptionalArg<::XMLSchema::string<char>> label__,
-                    resource_container_type const& resource__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , label_ (label__ ? std::make_unique<::XMLSchema::string<char>> (*label__) : nullptr)
-    , connect_ (connect__)
-    , resource_ (resource__)
-    {
-    }
     Bridge::Bridge (Bridge const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -110,19 +82,6 @@ namespace DAnCE
       return resource_;
     }
 
-    Interconnect::Interconnect (::XMLSchema::string<char> const& name__,
-                                connect_container_type const& connect__,
-                                ::XSCRT::OptionalArg<::XMLSchema::string<char>> label__,
-                                connection_container_type const& connection__,
-                                resource_container_type const& resource__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , label_ (label__ ? std::make_unique<::XMLSchema::string<char>> (*label__) : nullptr)
-    , connection_ (connection__)
-    , connect_ (connect__)
-    , resource_ (resource__)
-    {
-    }
     Interconnect::Interconnect (Interconnect const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -153,19 +112,6 @@ namespace DAnCE
       return resource_;
     }
 
-    Node::Node (::XMLSchema::string<char> const& name__,
-                ::XSCRT::OptionalArg<::XMLSchema::string<char>> label__,
-                connection_container_type const& connection__,
-                sharedResource_container_type const& sharedResource__,
-                resource_container_type const& resource__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , label_ (label__ ? std::make_unique<::XMLSchema::string<char>> (*label__) : nullptr)
-    , connection_ (connection__)
-    , sharedResource_ (sharedResource__)
-    , resource_ (resource__)
-    {
-    }
     Node::Node (Node const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -196,17 +142,6 @@ namespace DAnCE
       return resource_;
     }
 
-    SharedResource::SharedResource (::XMLSchema::string<char> const& name__,
-                                    ::XMLSchema::string<char> const& resourceType__,
-                                    ::DAnCE::Config_Handlers::Node const& node__,
-                                    ::DAnCE::Config_Handlers::SatisfierProperty const& property__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , resourceType_ (std::make_unique<::XMLSchema::string<char>> (resourceType__))
-    , node_ (std::make_unique<::DAnCE::Config_Handlers::Node> (node__))
-    , property_ (std::make_unique<::DAnCE::Config_Handlers::SatisfierProperty> (property__))
-    {
-    }
     SharedResource::SharedResource (SharedResource const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))

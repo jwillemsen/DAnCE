@@ -17,11 +17,6 @@ namespace DAnCE
 {
   namespace Config_Handlers
   {
-    TopLevelPackageDescription::TopLevelPackageDescription (package_container_type const& package__)
-    : ::XSCRT::Type ()
-    , package_ (package__)
-    {
-    }
     TopLevelPackageDescription::package_container_type const& TopLevelPackageDescription::package () const noexcept
     {
       return package_;

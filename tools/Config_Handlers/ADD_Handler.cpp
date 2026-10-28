@@ -70,60 +70,6 @@ namespace DAnCE
           }
 
       }
-#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
-      ArtifactDeploymentDescription
-      ADD_Handler::artifact_deployment_descr (
-                                              Deployment::ArtifactDeploymentDescription const& src)
-      {
-        DANCE_TRACE("ADD_Handler::atrifact_deployment_descr - reverse");
-        //Get the name and node and store them in the add
-        XMLSchema::string<char> name (src.name);
-        XMLSchema::string<char> node (src.node);
-        ArtifactDeploymentDescription::source_container_type sources;
-        for (CORBA::ULong i {}; i < src.source.length (); ++i)
-          sources.emplace_back (src.source[i]);
-
-        ArtifactDeploymentDescription::location_container_type locations;
-        for (CORBA::ULong i {}; i < src.location.length (); ++i)
-          locations.emplace_back (src.location[i]);
-
-        ArtifactDeploymentDescription::execParameter_container_type exec_parameters;
-        for (CORBA::ULong i {}; i < src.execParameter.length (); ++i)
-          {
-            Property const property (Property_Handler::get_property (src.execParameter[i]));
-            exec_parameters.push_back (property);
-          }
-
-        ArtifactDeploymentDescription::deployRequirement_container_type requirements;
-        for (CORBA::ULong i {}; i < src.deployRequirement.length (); ++i)
-          {
-            Requirement const requirement (Req_Handler::get_requirement (src.deployRequirement[i]));
-            requirements.push_back (requirement);
-          }
-
-        ArtifactDeploymentDescription::deployedResource_container_type resources;
-        for (CORBA::ULong i {}; i < src.deployedResource.length (); ++i)
-          {
-            ResourceDeploymentDescription const resource (
-              RDD_Handler::resource_deployment_descr (src.deployedResource[i]));
-            resources.push_back (resource);
-          }
-
-        // Generate a UUID to use for the IDREF.
-        ACE_Utils::UUID uuid {};
-        ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
-        std::string add_id ("_");
-        add_id += uuid.to_string ()->c_str ();
-
-        XMLSchema::ID<char> xml_id (add_id.c_str ());
-
-        // Bind the ref and set it in the IDD
-        ADD_Handler::IDREF.bind_next_available (add_id);
-
-        return ArtifactDeploymentDescription (name, node, sources, locations, exec_parameters,
-                                             requirements, resources, xml_id);
-      }
-#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
     }
   }

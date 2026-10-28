@@ -56,51 +56,7 @@ namespace DAnCE
       for (auto const& source_item : desc.property ())
         Property_Handler::handle_property (source_item, toconfig.property[property_index++]);
     }
-#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
-    InstanceResourceDeploymentDescription
-    IRDD_Handler::instance_resource_deployment_descr (Deployment::InstanceResourceDeploymentDescription const& src)
-    {
-      DANCE_TRACE("IRDD_Handler::instance_resource_deployment_descr - reverse");
-
-      XMLSchema::string<char> reqname (src.requirementName);
-      XMLSchema::string<char> resname (src.resourceName);
-
-      ResourceUsageKind::Value usage_value {};
-
-      switch (src.resourceUsage)
-        {
-        case Deployment::None:
-          usage_value = ResourceUsageKind::None;
-          break;
-        case Deployment::InstanceUsesResource:
-          usage_value = ResourceUsageKind::InstanceUsesResource;
-          break;
-        case Deployment::ResourceUsesInstance:
-          usage_value = ResourceUsageKind::ResourceUsesInstance;
-          break;
-        case Deployment::PortUsesResource:
-          usage_value = ResourceUsageKind::PortUsesResource;
-          break;
-        case Deployment::ResourceUsesPort:
-          usage_value = ResourceUsageKind::ResourceUsesPort;
-          break;
-
-        default:
-          throw Config_Error (src.resourceName.in (), "Unknown ResourceUsageKind.");
-        }
-
-      ResourceUsageKind const usage (usage_value);
-      InstanceResourceDeploymentDescription::property_container_type properties;
-      for (CORBA::ULong i {}; i < src.property.length (); ++i)
-        {
-          Property const property (Property_Handler::get_property (src.property[i]));
-          properties.push_back (property);
-        }
-
-      return InstanceResourceDeploymentDescription (usage, reqname, resname, properties);
-    }
-#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }
 
 }

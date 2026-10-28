@@ -51,7 +51,6 @@ namespace DAnCE
       static void extract_into_any (const Any& desc,
                                     ::CORBA::Any& toconfig);
 
-      static Any get_any (const CORBA::Any &src);
     };
     }
 }

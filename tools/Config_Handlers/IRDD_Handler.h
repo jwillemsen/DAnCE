@@ -48,8 +48,6 @@ namespace DAnCE
     static void handle_irdd (InstanceResourceDeploymentDescription const& desc,
                              Deployment::InstanceResourceDeploymentDescription& toconfig);
 
-    static InstanceResourceDeploymentDescription
-    instance_resource_deployment_descr (Deployment::InstanceResourceDeploymentDescription const& src);
       };
 
     }

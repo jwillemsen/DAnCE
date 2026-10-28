@@ -22,18 +22,8 @@ namespace DAnCE
 
       DANCE_TRACE("ID_Handler::get_ImplementationDependency");
 
-      toconfig.requiredType= CORBA::string_dup (desc.requiredType ().c_str ());
+      toconfig.requiredType = CORBA::string_dup (desc.requiredType ().c_str ());
     }
-#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
-
-    ImplementationDependency ID_Handler::impl_dependency (::Deployment::ImplementationDependency const& src)
-    {
-      DANCE_TRACE("ID_Handler::get_ImplementationDependency - reverse");
-      XMLSchema::string<char> reqtype (src.requiredType);
-
-      return ImplementationDependency (reqtype);
-    }
-#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
   }
 

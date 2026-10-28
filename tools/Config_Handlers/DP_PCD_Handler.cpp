@@ -25,21 +25,12 @@ namespace DAnCE
         DP_PCD_Handler::plan_connection_descr (source_item, dest[pos++]);
     }
 
-#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
-    PlanConnectionDescription DP_PCD_Handler::plan_connection_descr (Deployment::PlanConnectionDescription const& src)
-    {
-      DANCE_TRACE("DP_PCD_Handler::plan_connection_descr");
-      PlanConnectionDescription pcd = PCD_Handler::get_PlanConnectionDescription(src);
-      return pcd;
-    }
-#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
-
     void
     DP_PCD_Handler::plan_connection_descr (
         PlanConnectionDescription const& src,
         Deployment::PlanConnectionDescription &dest)
     {
-      DANCE_TRACE("DP_PCD_Handler::plan_connection_descr - reverse");
+      DANCE_TRACE("DP_PCD_Handler::plan_connection_descr");
       dest.name = src.name ().c_str ();
 
       ::XMLSchema::string<char> const* source_if_set_ptr = src.source_if_set ();

@@ -83,58 +83,7 @@ namespace DAnCE
                      desc.name ().c_str ()));
         }
     }
-#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
-    MonolithicDeploymentDescription
-    MDD_Handler::mono_deployment_description(
-        Deployment::MonolithicDeploymentDescription const& src)
-    {
-      DANCE_TRACE("mono_deployment_description - reverse");
-
-      //Get the name and instantiate the mdd
-      XMLSchema::string<char> name (src.name);
-      MonolithicDeploymentDescription::source_container_type sources;
-      for (CORBA::ULong i {}; i < src.source.length (); ++i)
-        sources.emplace_back (src.source[i]);
-
-      MonolithicDeploymentDescription::artifact_container_type artifacts;
-      for (CORBA::ULong i {}; i < src.artifactRef.length (); ++i)
-        {
-          std::string id;
-          ADD_Handler::IDREF.find_ref (src.artifactRef[i], id);
-          XMLSchema::IDREF<char> artifact_ref (id.c_str ());
-          IdRef const artifact (std::nullopt, artifact_ref);
-          artifacts.push_back (artifact);
-        }
-
-      MonolithicDeploymentDescription::execParameter_container_type exec_parameters;
-      for (CORBA::ULong i {}; i < src.execParameter.length (); ++i)
-        {
-          Property const property (Property_Handler::get_property (src.execParameter[i]));
-          exec_parameters.push_back (property);
-        }
-
-      MonolithicDeploymentDescription::deployRequirement_container_type requirements;
-      for (CORBA::ULong i {}; i < src.deployRequirement.length (); ++i)
-        {
-          Requirement const requirement (Req_Handler::get_requirement (src.deployRequirement[i]));
-          requirements.push_back (requirement);
-        }
-      // Generate a UUID to use for the IDREF.
-      ACE_Utils::UUID uuid {};
-      ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
-      std::string mdd_id ("_");
-      mdd_id += uuid.to_string ()->c_str ();
-
-      XMLSchema::ID<char> xml_id (mdd_id.c_str ());
-
-      // Bind the ref and set it in the IDD
-      MDD_Handler::IDREF.bind_next_available (mdd_id);
-
-      return MonolithicDeploymentDescription (name, sources, artifacts, exec_parameters,
-                                             requirements, xml_id);
-    }
-#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
   }
 
 }

@@ -50,7 +50,6 @@ namespace DAnCE
       /// <DAnCE::Config_Handlers::Property> to the CORBA IDL type
       /// <Deployment::Property>.
       static void handle_property (Property const& desc, ::Deployment::Property& toconfig);
-      static Property get_property (::Deployment::Property const& src);
     };
 
     }

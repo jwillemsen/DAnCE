@@ -50,9 +50,6 @@ namespace DAnCE
           const DeploymentPlan &src,
           Deployment::PlanConnectionDescriptions& toconfig);
 
-      static PlanConnectionDescription plan_connection_descr(
-      const Deployment::PlanConnectionDescription &src);
-
     private:
       static void plan_connection_descr (
           const PlanConnectionDescription& desc,

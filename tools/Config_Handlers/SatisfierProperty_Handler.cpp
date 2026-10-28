@@ -70,49 +70,6 @@ namespace DAnCE
           throw ex;
         }
     }
-#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
-
-    SatisfierProperty SatisfierProperty_Handler::get_sat_property (Deployment::SatisfierProperty const& src)
-    {
-      DANCE_TRACE("SatisfierProperty_Handler::get_sat_property - reverse");
-
-      XMLSchema::string<char> name (src.name);
-
-      SatisfierPropertyKind::Value kind_value {};
-
-      switch (src.kind)
-        {
-        case Deployment::Quantity:
-          kind_value = SatisfierPropertyKind::Quantity;
-          break;
-        case Deployment::Capacity:
-          kind_value = SatisfierPropertyKind::Capacity;
-          break;
-        case Deployment::Minimum:
-          kind_value = SatisfierPropertyKind::Minimum;
-          break;
-        case Deployment::Maximum:
-          kind_value = SatisfierPropertyKind::Maximum;
-          break;
-        case Deployment::Attribute:
-          kind_value = SatisfierPropertyKind::Attribute;
-          break;
-        case Deployment::Selection:
-          kind_value = SatisfierPropertyKind::Selection;
-          break;
-
-        default:
-          throw Plan_Error ("Invalid SatisfierPropertyKind");
-        }
-
-      bool dynamic = src.dynamic;
-
-      Any value (Any_Handler::get_any (src.value));
-      SatisfierPropertyKind kind (kind_value);
-
-      return SatisfierProperty (name, kind, dynamic, value);
-    }
-#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
   }
 }

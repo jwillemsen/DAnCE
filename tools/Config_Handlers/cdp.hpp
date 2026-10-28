@@ -26,36 +26,6 @@ namespace DAnCE
 }
 #include <memory>
 #include <string>
-#include <optional>
-#ifndef XSCRT_OPTIONAL_ARG_HPP
-#define XSCRT_OPTIONAL_ARG_HPP
-namespace XSCRT
-{
-  template <typename T>
-  class OptionalArg
-  {
-  public:
-    OptionalArg (std::nullopt_t) noexcept : value_ (nullptr)
-    {
-    }
-    OptionalArg (T const& value) noexcept : value_ (std::addressof (value))
-    {
-    }
-    OptionalArg (T const&&) = delete;
-
-    explicit operator bool () const noexcept
-    {
-      return value_ != nullptr;
-    }
-    T const& operator* () const noexcept
-    {
-      return *value_;
-    }
-  private:
-    T const* value_ {};
-  };
-}
-#endif // XSCRT_OPTIONAL_ARG_HPP
 #include <list>
 #include "ace/XML_Utils/XMLSchema/Types.hpp"
 #include "ace/XML_Utils/XMLSchema/id_map.hpp"
@@ -81,9 +51,6 @@ namespace DAnCE
 
     public:
       PlanSubcomponentPropertyReference () = delete;
-      PlanSubcomponentPropertyReference (::XMLSchema::string<char> const& propertyName__,
-                                         ::DAnCE::Config_Handlers::InstanceDeploymentDescription const& instance__);
-
       explicit PlanSubcomponentPropertyReference (::XSCRT::XML::Element<char> const&);
       PlanSubcomponentPropertyReference (PlanSubcomponentPropertyReference const& s);
       PlanSubcomponentPropertyReference (PlanSubcomponentPropertyReference&&) = delete;
@@ -121,11 +88,6 @@ namespace DAnCE
 
     public:
       PlanPropertyMapping () = delete;
-      PlanPropertyMapping (::XMLSchema::string<char> const& name__,
-                           ::XMLSchema::string<char> const& externalName__,
-                           delegatesTo_container_type const& delegatesTo__,
-                           source_container_type const& source__ = {});
-
       explicit PlanPropertyMapping (::XSCRT::XML::Element<char> const&);
       PlanPropertyMapping (PlanPropertyMapping const& s);
       PlanPropertyMapping (PlanPropertyMapping&&) = delete;
@@ -210,18 +172,7 @@ namespace DAnCE
       localityConstraint_container_type localityConstraint_ {};
 
     public:
-      deploymentPlan (::XSCRT::OptionalArg<::XMLSchema::string<char>> label__ = std::nullopt,
-                      ::XSCRT::OptionalArg<::XMLSchema::string<char>> UUID__ = std::nullopt,
-                      ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ComponentInterfaceDescription> realizes__ = std::nullopt,
-                      implementation_container_type const& implementation__ = {},
-                      instance_container_type const& instance__ = {},
-                      connection_container_type const& connection__ = {},
-                      externalProperty_container_type const& externalProperty__ = {},
-                      dependsOn_container_type const& dependsOn__ = {},
-                      artifact_container_type const& artifact__ = {},
-                      infoProperty_container_type const& infoProperty__ = {},
-                      localityConstraint_container_type const& localityConstraint__ = {});
-
+      deploymentPlan () = default;
       explicit deploymentPlan (::XSCRT::XML::Element<char> const&);
       deploymentPlan (deploymentPlan const& s);
       deploymentPlan (deploymentPlan&&) = delete;

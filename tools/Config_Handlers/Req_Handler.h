@@ -50,8 +50,6 @@ namespace DAnCE
       ///and maps the values from the passed in XSC
       ///Requirement to its members.
       static void handle_requirement (Requirement const& desc, Deployment::Requirement& toconfig);
-      static Requirement
-        get_requirement (Deployment::Requirement const& src);
     };
 
     }

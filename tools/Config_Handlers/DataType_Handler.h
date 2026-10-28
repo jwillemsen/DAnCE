@@ -50,7 +50,6 @@ data_type (const DataType& desc,
 CORBA::TypeCode_ptr& type);
 
 
-static DataType data_type (const CORBA::TypeCode_ptr& type);
 };
 
 }

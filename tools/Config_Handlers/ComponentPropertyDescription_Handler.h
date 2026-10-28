@@ -48,9 +48,6 @@ public:
 static void component_property_description (
 const ComponentPropertyDescription& desc,
 ::Deployment::ComponentPropertyDescription& toconfig);
-static ComponentPropertyDescription
-component_property_description (
-const ::Deployment::ComponentPropertyDescription &src);
 };
 }
 }

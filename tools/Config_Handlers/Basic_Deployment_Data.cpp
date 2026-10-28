@@ -17,13 +17,6 @@ namespace DAnCE
 {
   namespace Config_Handlers
   {
-    IdRef::IdRef (::XSCRT::OptionalArg<::XMLSchema::string<char>> href__,
-                  ::XSCRT::OptionalArg<::XMLSchema::IDREF<char>> idref__)
-    : ::XSCRT::Type ()
-    , href_ (href__ ? std::make_unique<::XMLSchema::string<char>> (*href__) : nullptr)
-    , idref_ (idref__ ? std::make_unique<::XMLSchema::IDREF<char>> (*idref__) : nullptr)
-    {
-    }
     IdRef::IdRef (IdRef const& s)
     : ::XSCRT::Type (s)
     , href_ (s.href_ ? std::make_unique<::XMLSchema::string<char>> (*s.href_) : nullptr)
@@ -53,27 +46,6 @@ namespace DAnCE
     }
     TCKind::TCKind (TCKind::Value v)
     : v_ (v)
-    {
-    }
-    DataType::DataType (::DAnCE::Config_Handlers::TCKind const& kind__,
-                        ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::EnumType> _cxx_enum__,
-                        ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::StructType> _cxx_struct__,
-                        ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ValueType> value__,
-                        ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::SequenceType> sequence__,
-                        ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::AliasType> alias__,
-                        ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ArrayType> array__,
-                        ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::BoundedStringType> boundedString__,
-                        ::XSCRT::OptionalArg<::XMLSchema::ID<char>> id__)
-    : ::XSCRT::Type ()
-    , kind_ (std::make_unique<::DAnCE::Config_Handlers::TCKind> (kind__))
-    , _cxx_enum_ (_cxx_enum__ ? std::make_unique<::DAnCE::Config_Handlers::EnumType> (*_cxx_enum__) : nullptr)
-    , _cxx_struct_ (_cxx_struct__ ? std::make_unique<::DAnCE::Config_Handlers::StructType> (*_cxx_struct__) : nullptr)
-    , value_ (value__ ? std::make_unique<::DAnCE::Config_Handlers::ValueType> (*value__) : nullptr)
-    , sequence_ (sequence__ ? std::make_unique<::DAnCE::Config_Handlers::SequenceType> (*sequence__) : nullptr)
-    , alias_ (alias__ ? std::make_unique<::DAnCE::Config_Handlers::AliasType> (*alias__) : nullptr)
-    , array_ (array__ ? std::make_unique<::DAnCE::Config_Handlers::ArrayType> (*array__) : nullptr)
-    , boundedString_ (boundedString__ ? std::make_unique<::DAnCE::Config_Handlers::BoundedStringType> (*boundedString__) : nullptr)
-    , id_ (id__ ? std::make_unique<::XMLSchema::ID<char>> (*id__) : nullptr)
     {
     }
     DataType::DataType (DataType const& s)
@@ -126,39 +98,6 @@ namespace DAnCE
       return id_.get ();
     }
 
-    DataValue::DataValue (short_container_type const& _cxx_short__,
-                          long_container_type const& _cxx_long__,
-                          ushort_container_type const& ushort__,
-                          ulong_container_type const& ulong__,
-                          float_container_type const& _cxx_float__,
-                          double_container_type const& _cxx_double__,
-                          boolean_container_type const& boolean__,
-                          octet_container_type const& octet__,
-                          enum_container_type const& _cxx_enum__,
-                          string_container_type const& string__,
-                          longlong_container_type const& longlong__,
-                          ulonglong_container_type const& ulonglong__,
-                          longdouble_container_type const& longdouble__,
-                          element_container_type const& element__,
-                          member_container_type const& member__)
-    : ::XSCRT::Type ()
-    , _cxx_short_ (_cxx_short__)
-    , _cxx_long_ (_cxx_long__)
-    , ushort_ (ushort__)
-    , ulong_ (ulong__)
-    , _cxx_float_ (_cxx_float__)
-    , _cxx_double_ (_cxx_double__)
-    , boolean_ (boolean__)
-    , octet_ (octet__)
-    , _cxx_enum_ (_cxx_enum__)
-    , string_ (string__)
-    , longlong_ (longlong__)
-    , ulonglong_ (ulonglong__)
-    , longdouble_ (longdouble__)
-    , element_ (element__)
-    , member_ (member__)
-    {
-    }
     DataValue::short_container_type const& DataValue::_cxx_short () const noexcept
     {
       return _cxx_short_;
@@ -220,15 +159,6 @@ namespace DAnCE
       return member_;
     }
 
-    AliasType::AliasType (::XMLSchema::string<char> const& name__,
-                          ::XMLSchema::string<char> const& typeId__,
-                          ::DAnCE::Config_Handlers::DataType const& elementType__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , typeId_ (std::make_unique<::XMLSchema::string<char>> (typeId__))
-    , elementType_ (std::make_unique<::DAnCE::Config_Handlers::DataType> (elementType__))
-    {
-    }
     AliasType::AliasType (AliasType const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -249,15 +179,6 @@ namespace DAnCE
       return *elementType_;
     }
 
-    EnumType::EnumType (::XMLSchema::string<char> const& name__,
-                        ::XMLSchema::string<char> const& typeId__,
-                        member_container_type const& member__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , typeId_ (std::make_unique<::XMLSchema::string<char>> (typeId__))
-    , member_ (member__)
-    {
-    }
     EnumType::EnumType (EnumType const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -278,25 +199,11 @@ namespace DAnCE
       return member_;
     }
 
-    BoundedStringType::BoundedStringType (bound_container_type const& bound__)
-    : ::XSCRT::Type ()
-    , bound_ (bound__)
-    {
-    }
     BoundedStringType::bound_container_type const& BoundedStringType::bound () const noexcept
     {
       return bound_;
     }
 
-    StructType::StructType (::XMLSchema::string<char> const& name__,
-                            ::XMLSchema::string<char> const& typeId__,
-                            member_container_type const& member__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , typeId_ (std::make_unique<::XMLSchema::string<char>> (typeId__))
-    , member_ (member__)
-    {
-    }
     StructType::StructType (StructType const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -317,13 +224,6 @@ namespace DAnCE
       return member_;
     }
 
-    StructMemberType::StructMemberType (::XMLSchema::string<char> const& name__,
-                                        ::DAnCE::Config_Handlers::DataType const& type__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , type_ (std::make_unique<::DAnCE::Config_Handlers::DataType> (type__))
-    {
-    }
     StructMemberType::StructMemberType (StructMemberType const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -339,19 +239,6 @@ namespace DAnCE
       return *type_;
     }
 
-    ValueType::ValueType (::XMLSchema::string<char> const& name__,
-                          ::XMLSchema::string<char> const& typeId__,
-                          ::XMLSchema::string<char> const& modifier__,
-                          ::DAnCE::Config_Handlers::DataType const& baseType__,
-                          member_container_type const& member__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , typeId_ (std::make_unique<::XMLSchema::string<char>> (typeId__))
-    , modifier_ (std::make_unique<::XMLSchema::string<char>> (modifier__))
-    , baseType_ (std::make_unique<::DAnCE::Config_Handlers::DataType> (baseType__))
-    , member_ (member__)
-    {
-    }
     ValueType::ValueType (ValueType const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -382,15 +269,6 @@ namespace DAnCE
       return member_;
     }
 
-    ValueMemberType::ValueMemberType (::XMLSchema::string<char> const& name__,
-                                      ::XMLSchema::string<char> const& visibility__,
-                                      ::DAnCE::Config_Handlers::DataType const& type__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , visibility_ (std::make_unique<::XMLSchema::string<char>> (visibility__))
-    , type_ (std::make_unique<::DAnCE::Config_Handlers::DataType> (type__))
-    {
-    }
     ValueMemberType::ValueMemberType (ValueMemberType const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -411,13 +289,6 @@ namespace DAnCE
       return *type_;
     }
 
-    NamedValue::NamedValue (::XMLSchema::string<char> const& name__,
-                            ::DAnCE::Config_Handlers::DataValue const& value__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , value_ (std::make_unique<::DAnCE::Config_Handlers::DataValue> (value__))
-    {
-    }
     NamedValue::NamedValue (NamedValue const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -433,13 +304,6 @@ namespace DAnCE
       return *value_;
     }
 
-    ArrayType::ArrayType (::XMLSchema::unsignedInt const& length__,
-                          ::DAnCE::Config_Handlers::DataType const& elementType__)
-    : ::XSCRT::Type ()
-    , length_ (std::make_unique<::XMLSchema::unsignedInt> (length__))
-    , elementType_ (std::make_unique<::DAnCE::Config_Handlers::DataType> (elementType__))
-    {
-    }
     ArrayType::ArrayType (ArrayType const& s)
     : ::XSCRT::Type (s)
     , length_ (std::make_unique<::XMLSchema::unsignedInt> (*s.length_))
@@ -455,13 +319,6 @@ namespace DAnCE
       return *elementType_;
     }
 
-    SequenceType::SequenceType (::DAnCE::Config_Handlers::DataType const& elementType__,
-                                ::XSCRT::OptionalArg<::XMLSchema::unsignedInt> bound__)
-    : ::XSCRT::Type ()
-    , bound_ (bound__ ? std::make_unique<::XMLSchema::unsignedInt> (*bound__) : nullptr)
-    , elementType_ (std::make_unique<::DAnCE::Config_Handlers::DataType> (elementType__))
-    {
-    }
     SequenceType::SequenceType (SequenceType const& s)
     : ::XSCRT::Type (s)
     , bound_ (s.bound_ ? std::make_unique<::XMLSchema::unsignedInt> (*s.bound_) : nullptr)
@@ -477,13 +334,6 @@ namespace DAnCE
       return *elementType_;
     }
 
-    Any::Any (::DAnCE::Config_Handlers::DataType const& type__,
-              ::DAnCE::Config_Handlers::DataValue const& value__)
-    : ::XSCRT::Type ()
-    , type_ (std::make_unique<::DAnCE::Config_Handlers::DataType> (type__))
-    , value_ (std::make_unique<::DAnCE::Config_Handlers::DataValue> (value__))
-    {
-    }
     Any::Any (Any const& s)
     : ::XSCRT::Type (s)
     , type_ (std::make_unique<::DAnCE::Config_Handlers::DataType> (*s.type_))
@@ -499,13 +349,6 @@ namespace DAnCE
       return *value_;
     }
 
-    Property::Property (::XMLSchema::string<char> const& name__,
-                        ::DAnCE::Config_Handlers::Any const& value__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , value_ (std::make_unique<::DAnCE::Config_Handlers::Any> (value__))
-    {
-    }
     Property::Property (Property const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -537,17 +380,6 @@ namespace DAnCE
     : v_ (v)
     {
     }
-    SatisfierProperty::SatisfierProperty (::XMLSchema::string<char> const& name__,
-                                          ::DAnCE::Config_Handlers::SatisfierPropertyKind const& kind__,
-                                          ::XMLSchema::boolean const& dynamic__,
-                                          ::DAnCE::Config_Handlers::Any const& value__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , kind_ (std::make_unique<::DAnCE::Config_Handlers::SatisfierPropertyKind> (kind__))
-    , dynamic_ (std::make_unique<::XMLSchema::boolean> (dynamic__))
-    , value_ (std::make_unique<::DAnCE::Config_Handlers::Any> (value__))
-    {
-    }
     SatisfierProperty::SatisfierProperty (SatisfierProperty const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -573,15 +405,6 @@ namespace DAnCE
       return *value_;
     }
 
-    Resource::Resource (::XMLSchema::string<char> const& name__,
-                        resourceType_container_type const& resourceType__,
-                        property_container_type const& property__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , resourceType_ (resourceType__)
-    , property_ (property__)
-    {
-    }
     Resource::Resource (Resource const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -602,15 +425,6 @@ namespace DAnCE
       return property_;
     }
 
-    Requirement::Requirement (::XMLSchema::string<char> const& name__,
-                              ::XMLSchema::string<char> const& resourceType__,
-                              property_container_type const& property__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , resourceType_ (std::make_unique<::XMLSchema::string<char>> (resourceType__))
-    , property_ (property__)
-    {
-    }
     Requirement::Requirement (Requirement const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -631,15 +445,6 @@ namespace DAnCE
       return property_;
     }
 
-    ResourceDeploymentDescription::ResourceDeploymentDescription (::XMLSchema::string<char> const& requirementName__,
-                                                                  ::XMLSchema::string<char> const& resourceName__,
-                                                                  property_container_type const& property__)
-    : ::XSCRT::Type ()
-    , requirementName_ (std::make_unique<::XMLSchema::string<char>> (requirementName__))
-    , resourceName_ (std::make_unique<::XMLSchema::string<char>> (resourceName__))
-    , property_ (property__)
-    {
-    }
     ResourceDeploymentDescription::ResourceDeploymentDescription (ResourceDeploymentDescription const& s)
     : ::XSCRT::Type (s)
     , requirementName_ (std::make_unique<::XMLSchema::string<char>> (*s.requirementName_))
@@ -660,25 +465,6 @@ namespace DAnCE
       return property_;
     }
 
-    ArtifactDeploymentDescription::ArtifactDeploymentDescription (::XMLSchema::string<char> const& name__,
-                                                                  ::XMLSchema::string<char> const& node__,
-                                                                  source_container_type const& source__,
-                                                                  location_container_type const& location__,
-                                                                  execParameter_container_type const& execParameter__,
-                                                                  deployRequirement_container_type const& deployRequirement__,
-                                                                  deployedResource_container_type const& deployedResource__,
-                                                                  ::XSCRT::OptionalArg<::XMLSchema::ID<char>> id__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , source_ (source__)
-    , node_ (std::make_unique<::XMLSchema::string<char>> (node__))
-    , location_ (location__)
-    , execParameter_ (execParameter__)
-    , deployRequirement_ (deployRequirement__)
-    , deployedResource_ (deployedResource__)
-    , id_ (id__ ? std::make_unique<::XMLSchema::ID<char>> (*id__) : nullptr)
-    {
-    }
     ArtifactDeploymentDescription::ArtifactDeploymentDescription (ArtifactDeploymentDescription const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -724,21 +510,6 @@ namespace DAnCE
       return id_.get ();
     }
 
-    MonolithicDeploymentDescription::MonolithicDeploymentDescription (::XMLSchema::string<char> const& name__,
-                                                                      source_container_type const& source__,
-                                                                      artifact_container_type const& artifact__,
-                                                                      execParameter_container_type const& execParameter__,
-                                                                      deployRequirement_container_type const& deployRequirement__,
-                                                                      ::XSCRT::OptionalArg<::XMLSchema::ID<char>> id__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , source_ (source__)
-    , artifact_ (artifact__)
-    , execParameter_ (execParameter__)
-    , deployRequirement_ (deployRequirement__)
-    , id_ (id__ ? std::make_unique<::XMLSchema::ID<char>> (*id__) : nullptr)
-    {
-    }
     MonolithicDeploymentDescription::MonolithicDeploymentDescription (MonolithicDeploymentDescription const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -790,17 +561,6 @@ namespace DAnCE
     : v_ (v)
     {
     }
-    InstanceResourceDeploymentDescription::InstanceResourceDeploymentDescription (::DAnCE::Config_Handlers::ResourceUsageKind const& resourceUsage__,
-                                                                                  ::XMLSchema::string<char> const& requirementName__,
-                                                                                  ::XMLSchema::string<char> const& resourceName__,
-                                                                                  property_container_type const& property__)
-    : ::XSCRT::Type ()
-    , resourceUsage_ (std::make_unique<::DAnCE::Config_Handlers::ResourceUsageKind> (resourceUsage__))
-    , requirementName_ (std::make_unique<::XMLSchema::string<char>> (requirementName__))
-    , resourceName_ (std::make_unique<::XMLSchema::string<char>> (resourceName__))
-    , property_ (property__)
-    {
-    }
     InstanceResourceDeploymentDescription::InstanceResourceDeploymentDescription (InstanceResourceDeploymentDescription const& s)
     : ::XSCRT::Type (s)
     , resourceUsage_ (std::make_unique<::DAnCE::Config_Handlers::ResourceUsageKind> (*s.resourceUsage_))
@@ -826,25 +586,6 @@ namespace DAnCE
       return property_;
     }
 
-    InstanceDeploymentDescription::InstanceDeploymentDescription (::XMLSchema::string<char> const& name__,
-                                                                  ::XMLSchema::string<char> const& node__,
-                                                                  ::XMLSchema::string<char> const& source__,
-                                                                  ::DAnCE::Config_Handlers::IdRef const& implementation__,
-                                                                  configProperty_container_type const& configProperty__,
-                                                                  deployedResource_container_type const& deployedResource__,
-                                                                  ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::InstanceResourceDeploymentDescription> deployedSharedResource__,
-                                                                  ::XSCRT::OptionalArg<::XMLSchema::ID<char>> id__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , node_ (std::make_unique<::XMLSchema::string<char>> (node__))
-    , source_ (std::make_unique<::XMLSchema::string<char>> (source__))
-    , implementation_ (std::make_unique<::DAnCE::Config_Handlers::IdRef> (implementation__))
-    , configProperty_ (configProperty__)
-    , deployedResource_ (deployedResource__)
-    , deployedSharedResource_ (deployedSharedResource__ ? std::make_unique<::DAnCE::Config_Handlers::InstanceResourceDeploymentDescription> (*deployedSharedResource__) : nullptr)
-    , id_ (id__ ? std::make_unique<::XMLSchema::ID<char>> (*id__) : nullptr)
-    {
-    }
     InstanceDeploymentDescription::InstanceDeploymentDescription (InstanceDeploymentDescription const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -906,27 +647,6 @@ namespace DAnCE
     : v_ (v)
     {
     }
-    ComponentPortDescription::ComponentPortDescription (::XMLSchema::string<char> const& name__,
-                                                        ::XMLSchema::boolean const& provider__,
-                                                        ::XMLSchema::boolean const& exclusiveProvider__,
-                                                        ::XMLSchema::boolean const& exclusiveUser__,
-                                                        ::XMLSchema::boolean const& optional__,
-                                                        ::DAnCE::Config_Handlers::CCMComponentPortKind const& kind__,
-                                                        ::XSCRT::OptionalArg<::XMLSchema::string<char>> specificType__,
-                                                        supportedType_container_type const& supportedType__,
-                                                        templateParam_container_type const& templateParam__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , specificType_ (specificType__ ? std::make_unique<::XMLSchema::string<char>> (*specificType__) : nullptr)
-    , supportedType_ (supportedType__)
-    , provider_ (std::make_unique<::XMLSchema::boolean> (provider__))
-    , exclusiveProvider_ (std::make_unique<::XMLSchema::boolean> (exclusiveProvider__))
-    , exclusiveUser_ (std::make_unique<::XMLSchema::boolean> (exclusiveUser__))
-    , optional_ (std::make_unique<::XMLSchema::boolean> (optional__))
-    , kind_ (std::make_unique<::DAnCE::Config_Handlers::CCMComponentPortKind> (kind__))
-    , templateParam_ (templateParam__)
-    {
-    }
     ComponentPortDescription::ComponentPortDescription (ComponentPortDescription const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -977,13 +697,6 @@ namespace DAnCE
       return templateParam_;
     }
 
-    ComponentPropertyDescription::ComponentPropertyDescription (::XMLSchema::string<char> const& name__,
-                                                                ::DAnCE::Config_Handlers::DataType const& type__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , type_ (std::make_unique<::DAnCE::Config_Handlers::DataType> (type__))
-    {
-    }
     ComponentPropertyDescription::ComponentPropertyDescription (ComponentPropertyDescription const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -999,11 +712,6 @@ namespace DAnCE
       return *type_;
     }
 
-    ComponentExternalPortEndpoint::ComponentExternalPortEndpoint (::XMLSchema::string<char> const& portName__)
-    : ::XSCRT::Type ()
-    , portName_ (std::make_unique<::XMLSchema::string<char>> (portName__))
-    {
-    }
     ComponentExternalPortEndpoint::ComponentExternalPortEndpoint (ComponentExternalPortEndpoint const& s)
     : ::XSCRT::Type (s)
     , portName_ (std::make_unique<::XMLSchema::string<char>> (*s.portName_))
@@ -1014,17 +722,6 @@ namespace DAnCE
       return *portName_;
     }
 
-    PlanSubcomponentPortEndpoint::PlanSubcomponentPortEndpoint (::XMLSchema::string<char> const& portName__,
-                                                                ::DAnCE::Config_Handlers::CCMComponentPortKind const& kind__,
-                                                                ::DAnCE::Config_Handlers::IdRef const& instance__,
-                                                                ::XSCRT::OptionalArg<::XMLSchema::string<char>> provider__)
-    : ::XSCRT::Type ()
-    , portName_ (std::make_unique<::XMLSchema::string<char>> (portName__))
-    , provider_ (provider__ ? std::make_unique<::XMLSchema::string<char>> (*provider__) : nullptr)
-    , kind_ (std::make_unique<::DAnCE::Config_Handlers::CCMComponentPortKind> (kind__))
-    , instance_ (std::make_unique<::DAnCE::Config_Handlers::IdRef> (instance__))
-    {
-    }
     PlanSubcomponentPortEndpoint::PlanSubcomponentPortEndpoint (PlanSubcomponentPortEndpoint const& s)
     : ::XSCRT::Type (s)
     , portName_ (std::make_unique<::XMLSchema::string<char>> (*s.portName_))
@@ -1050,17 +747,6 @@ namespace DAnCE
       return *instance_;
     }
 
-    ExternalReferenceEndpoint::ExternalReferenceEndpoint (::XMLSchema::string<char> const& location__,
-                                                          ::XMLSchema::boolean const& provider__,
-                                                          ::XSCRT::OptionalArg<::XMLSchema::string<char>> portName__,
-                                                          supportedType_container_type const& supportedType__)
-    : ::XSCRT::Type ()
-    , location_ (std::make_unique<::XMLSchema::string<char>> (location__))
-    , provider_ (std::make_unique<::XMLSchema::boolean> (provider__))
-    , portName_ (portName__ ? std::make_unique<::XMLSchema::string<char>> (*portName__) : nullptr)
-    , supportedType_ (supportedType__)
-    {
-    }
     ExternalReferenceEndpoint::ExternalReferenceEndpoint (ExternalReferenceEndpoint const& s)
     : ::XSCRT::Type (s)
     , location_ (std::make_unique<::XMLSchema::string<char>> (*s.location_))
@@ -1086,17 +772,6 @@ namespace DAnCE
       return supportedType_;
     }
 
-    ConnectionResourceDeploymentDescription::ConnectionResourceDeploymentDescription (::XMLSchema::string<char> const& targetName__,
-                                                                                      ::XMLSchema::string<char> const& requirementName__,
-                                                                                      ::XMLSchema::string<char> const& resourceName__,
-                                                                                      property_container_type const& property__)
-    : ::XSCRT::Type ()
-    , targetName_ (std::make_unique<::XMLSchema::string<char>> (targetName__))
-    , requirementName_ (std::make_unique<::XMLSchema::string<char>> (requirementName__))
-    , resourceName_ (std::make_unique<::XMLSchema::string<char>> (resourceName__))
-    , property_ (property__)
-    {
-    }
     ConnectionResourceDeploymentDescription::ConnectionResourceDeploymentDescription (ConnectionResourceDeploymentDescription const& s)
     : ::XSCRT::Type (s)
     , targetName_ (std::make_unique<::XMLSchema::string<char>> (*s.targetName_))
@@ -1122,23 +797,6 @@ namespace DAnCE
       return property_;
     }
 
-    PlanConnectionDescription::PlanConnectionDescription (::XMLSchema::string<char> const& name__,
-                                                          ::XSCRT::OptionalArg<::XMLSchema::string<char>> source__,
-                                                          deployRequirement_container_type const& deployRequirement__,
-                                                          externalEndpoint_container_type const& externalEndpoint__,
-                                                          internalEndpoint_container_type const& internalEndpoint__,
-                                                          externalReference_container_type const& externalReference__,
-                                                          deployedResource_container_type const& deployedResource__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , source_ (source__ ? std::make_unique<::XMLSchema::string<char>> (*source__) : nullptr)
-    , deployRequirement_ (deployRequirement__)
-    , externalEndpoint_ (externalEndpoint__)
-    , internalEndpoint_ (internalEndpoint__)
-    , externalReference_ (externalReference__)
-    , deployedResource_ (deployedResource__)
-    {
-    }
     PlanConnectionDescription::PlanConnectionDescription (PlanConnectionDescription const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -1179,11 +837,6 @@ namespace DAnCE
       return deployedResource_;
     }
 
-    ImplementationDependency::ImplementationDependency (::XMLSchema::string<char> const& requiredType__)
-    : ::XSCRT::Type ()
-    , requiredType_ (std::make_unique<::XMLSchema::string<char>> (requiredType__))
-    {
-    }
     ImplementationDependency::ImplementationDependency (ImplementationDependency const& s)
     : ::XSCRT::Type (s)
     , requiredType_ (std::make_unique<::XMLSchema::string<char>> (*s.requiredType_))
@@ -1194,15 +847,6 @@ namespace DAnCE
       return *requiredType_;
     }
 
-    Capability::Capability (::XMLSchema::string<char> const& name__,
-                            resourceType_container_type const& resourceType__,
-                            property_container_type const& property__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , resourceType_ (resourceType__)
-    , property_ (property__)
-    {
-    }
     Capability::Capability (Capability const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -1223,21 +867,6 @@ namespace DAnCE
       return property_;
     }
 
-    ImplementationRequirement::ImplementationRequirement (::XMLSchema::string<char> const& resourceType__,
-                                                          ::XMLSchema::string<char> const& name__,
-                                                          ::XSCRT::OptionalArg<::DAnCE::Config_Handlers::ResourceUsageKind> resourceUsage__,
-                                                          ::XSCRT::OptionalArg<::XMLSchema::string<char>> resourcePort__,
-                                                          ::XSCRT::OptionalArg<::XMLSchema::string<char>> componentPort__,
-                                                          property_container_type const& property__)
-    : ::XSCRT::Type ()
-    , resourceUsage_ (resourceUsage__ ? std::make_unique<::DAnCE::Config_Handlers::ResourceUsageKind> (*resourceUsage__) : nullptr)
-    , resourcePort_ (resourcePort__ ? std::make_unique<::XMLSchema::string<char>> (*resourcePort__) : nullptr)
-    , componentPort_ (componentPort__ ? std::make_unique<::XMLSchema::string<char>> (*componentPort__) : nullptr)
-    , resourceType_ (std::make_unique<::XMLSchema::string<char>> (resourceType__))
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , property_ (property__)
-    {
-    }
     ImplementationRequirement::ImplementationRequirement (ImplementationRequirement const& s)
     : ::XSCRT::Type (s)
     , resourceUsage_ (s.resourceUsage_ ? std::make_unique<::DAnCE::Config_Handlers::ResourceUsageKind> (*s.resourceUsage_) : nullptr)
@@ -1273,13 +902,6 @@ namespace DAnCE
       return property_;
     }
 
-    SubcomponentPortEndpoint::SubcomponentPortEndpoint (::XMLSchema::string<char> const& portName__,
-                                                        ::DAnCE::Config_Handlers::IdRef const& instance__)
-    : ::XSCRT::Type ()
-    , portName_ (std::make_unique<::XMLSchema::string<char>> (portName__))
-    , instance_ (std::make_unique<::DAnCE::Config_Handlers::IdRef> (instance__))
-    {
-    }
     SubcomponentPortEndpoint::SubcomponentPortEndpoint (SubcomponentPortEndpoint const& s)
     : ::XSCRT::Type (s)
     , portName_ (std::make_unique<::XMLSchema::string<char>> (*s.portName_))
@@ -1295,19 +917,6 @@ namespace DAnCE
       return *instance_;
     }
 
-    AssemblyConnectionDescription::AssemblyConnectionDescription (::XMLSchema::string<char> const& name__,
-                                                                  deployRequirement_container_type const& deployRequirement__,
-                                                                  internalEndpoint_container_type const& internalEndpoint__,
-                                                                  externalEndpoint_container_type const& externalEndpoint__,
-                                                                  externalReference_container_type const& externalReference__)
-    : ::XSCRT::Type ()
-    , name_ (std::make_unique<::XMLSchema::string<char>> (name__))
-    , deployRequirement_ (deployRequirement__)
-    , internalEndpoint_ (internalEndpoint__)
-    , externalEndpoint_ (externalEndpoint__)
-    , externalReference_ (externalReference__)
-    {
-    }
     AssemblyConnectionDescription::AssemblyConnectionDescription (AssemblyConnectionDescription const& s)
     : ::XSCRT::Type (s)
     , name_ (std::make_unique<::XMLSchema::string<char>> (*s.name_))
@@ -1352,13 +961,6 @@ namespace DAnCE
     }
     PlanLocalityKind::PlanLocalityKind (PlanLocalityKind::Value v)
     : v_ (v)
-    {
-    }
-    PlanLocality::PlanLocality (::DAnCE::Config_Handlers::PlanLocalityKind const& constraint__,
-                                constrainedInstance_container_type const& constrainedInstance__)
-    : ::XSCRT::Type ()
-    , constraint_ (std::make_unique<::DAnCE::Config_Handlers::PlanLocalityKind> (constraint__))
-    , constrainedInstance_ (constrainedInstance__)
     {
     }
     PlanLocality::PlanLocality (PlanLocality const& s)

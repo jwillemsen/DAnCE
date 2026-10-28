@@ -63,27 +63,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       DP_Handler dp_handler (dp);
 
-      std::cout << "Instance document import succeeded.  Dumping contents to file\n";
+      std::cout << "Instance document import succeeded\n";
 
       //Retrieve the newly created IDL structure
       Deployment::DeploymentPlan *idl = dp_handler.plan();
 
       // Check for server resources, if present....
       check_srd (*idl);
-
-      //Convert it back to an XSC structure with a new DP_Handler
-      DP_Handler reverse_handler(*idl);
-
-      //Create a new DOMDocument for writing the XSC into XML
-      xercesc::DOMDocument* the_xsc
-        (XML_Helper::XML_HELPER.create_dom(0));
-
-      //Serialize the XSC into a DOMDocument
-      deploymentPlan(*reverse_handler.xsc(), the_xsc);
-
-
-      //Write it to test.xml
-      XML_Helper::XML_HELPER.write_DOM(the_xsc, "test.xml");
 
       //Cleanliness is next to Godliness
       delete doc;

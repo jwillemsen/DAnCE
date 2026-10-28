@@ -53,9 +53,6 @@ namespace DAnCE
       void get_ConnectionResourceDeploymentDescription (Deployment::ConnectionResourceDeploymentDescription& toconfig,
                                                         const ConnectionResourceDeploymentDescription& desc);
 
-      static ConnectionResourceDeploymentDescription
-      connection_resource_depl_desc (
-                                     const ::Deployment::ConnectionResourceDeploymentDescription& src);
 
     };
   }

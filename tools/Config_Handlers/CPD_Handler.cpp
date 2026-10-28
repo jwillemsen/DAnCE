@@ -58,65 +58,6 @@ namespace DAnCE
       toconfig.exclusiveUser = desc.exclusiveUser ();
       toconfig.optional = desc.optional ();
     }
-#if DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
-
-    ComponentPortDescription CPD_Handler::component_port_description (Deployment::ComponentPortDescription const& src)
-    {
-      DANCE_TRACE("CPD_Handler::component_port_description - reverse");
-      XMLSchema::string<char> name (src.name);
-      XMLSchema::boolean provider (src.provider);
-      XMLSchema::boolean exclusiveProvider (src.exclusiveProvider);
-      XMLSchema::boolean exclusiveUser (src.exclusiveUser);
-      XMLSchema::boolean optional (src.optional);
-      XMLSchema::string<char> specific_type_value (
-        src.specificType.in () == nullptr ? "" : src.specificType.in ());
-      XSCRT::OptionalArg<XMLSchema::string<char>> specific_type (std::nullopt);
-      if (src.specificType.in () != nullptr)
-        specific_type = XSCRT::OptionalArg<XMLSchema::string<char>> (specific_type_value);
-
-      ComponentPortDescription::supportedType_container_type supported_types;
-      for (CORBA::ULong i {}; i < src.supportedType.length (); ++i)
-        supported_types.emplace_back (src.supportedType[i]);
-
-      ComponentPortDescription::templateParam_container_type template_parameters;
-      for (CORBA::ULong i {}; i < src.templateParam.length (); ++i)
-        template_parameters.emplace_back (src.templateParam[i]);
-
-      CCMComponentPortKind::Value kind (CCMComponentPortKind::Facet);
-
-      switch (src.kind)
-        {
-        case ::Deployment::Facet:
-          kind = CCMComponentPortKind::Facet;
-          break;
-        case ::Deployment::SimplexReceptacle:
-          kind = CCMComponentPortKind::SimplexReceptacle;
-          break;
-        case ::Deployment::MultiplexReceptacle:
-          kind = CCMComponentPortKind::MultiplexReceptacle;
-          break;
-        case ::Deployment::EventEmitter:
-          kind = CCMComponentPortKind::EventEmitter;
-          break;
-        case ::Deployment::EventPublisher:
-          kind = CCMComponentPortKind::EventPublisher;
-          break;
-        case ::Deployment::EventConsumer:
-          kind = CCMComponentPortKind::EventConsumer;
-          break;
-
-        default:
-          DANCE_DEBUG (DANCE_LOG_NONFATAL_ERROR,
-            (LM_ERROR, ACE_TEXT("Invalid port kind in connection %C\n"),
-            name.c_str ()));
-          throw Config_Error (name.c_str (), "Invalid port kind in connection");
-        }
-
-      return ComponentPortDescription (name, provider, exclusiveProvider, exclusiveUser, optional,
-                                       CCMComponentPortKind (kind), specific_type,
-                                       supported_types, template_parameters);
-    }
-#endif // DANCE_CONFIG_HANDLERS_CORBA_TO_XSC
 
   }
 }
