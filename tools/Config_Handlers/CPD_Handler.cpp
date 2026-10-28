@@ -30,23 +30,18 @@ namespace DAnCE
         case CCMComponentPortKind::Facet:
           toconfig.kind = Deployment::Facet;
           break;
-
         case CCMComponentPortKind::SimplexReceptacle:
           toconfig.kind = Deployment::SimplexReceptacle;
           break;
-
         case CCMComponentPortKind::MultiplexReceptacle:
           toconfig.kind = Deployment::MultiplexReceptacle;
           break;
-
         case CCMComponentPortKind::EventEmitter:
           toconfig.kind = Deployment::EventEmitter;
           break;
-
         case CCMComponentPortKind::EventPublisher:
           toconfig.kind = Deployment::EventPublisher;
           break;
-
         case CCMComponentPortKind::EventConsumer:
           toconfig.kind = Deployment::EventConsumer;
           break;
@@ -94,23 +89,18 @@ namespace DAnCE
         case ::Deployment::Facet:
           kind = CCMComponentPortKind::Facet;
           break;
-
         case ::Deployment::SimplexReceptacle:
           kind = CCMComponentPortKind::SimplexReceptacle;
           break;
-
         case ::Deployment::MultiplexReceptacle:
           kind = CCMComponentPortKind::MultiplexReceptacle;
           break;
-
         case ::Deployment::EventEmitter:
           kind = CCMComponentPortKind::EventEmitter;
           break;
-
         case ::Deployment::EventPublisher:
           kind = CCMComponentPortKind::EventPublisher;
           break;
-
         case ::Deployment::EventConsumer:
           kind = CCMComponentPortKind::EventConsumer;
           break;

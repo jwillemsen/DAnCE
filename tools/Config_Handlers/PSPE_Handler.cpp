@@ -15,11 +15,19 @@ namespace DAnCE
     {
       DANCE_TRACE("PSPE_Handler::sub_component_port_endpoints");
 
-      CORBA::ULong pos {};
-      dest.length (src.internalEndpoint ().size ());
+      PlanConnectionDescription::internalEndpoint_const_iterator iei_e =
+        src.end_internalEndpoint ();
+      CORBA::ULong pos = 0;
+      dest.length (src.count_internalEndpoint ());
 
-      for (auto const& source_item : src.internalEndpoint ())
-        PSPE_Handler::sub_component_port_endpoint (source_item, dest[pos++]);
+      for (PlanConnectionDescription::internalEndpoint_const_iterator iei_b =
+             src.begin_internalEndpoint ();
+           iei_b != iei_e;
+           ++iei_b)
+        {
+          PSPE_Handler::sub_component_port_endpoint ((*iei_b),
+                                                     dest[pos++]);
+        }
     }
 
     void
@@ -103,23 +111,18 @@ namespace DAnCE
         case ::Deployment::Facet:
           kind_value = CCMComponentPortKind::Facet;
           break;
-
         case ::Deployment::SimplexReceptacle:
           kind_value = CCMComponentPortKind::SimplexReceptacle;
           break;
-
         case ::Deployment::MultiplexReceptacle:
           kind_value = CCMComponentPortKind::MultiplexReceptacle;
           break;
-
         case ::Deployment::EventEmitter:
           kind_value = CCMComponentPortKind::EventEmitter;
           break;
-
         case ::Deployment::EventPublisher:
           kind_value = CCMComponentPortKind::EventPublisher;
           break;
-
         case ::Deployment::EventConsumer:
           kind_value = CCMComponentPortKind::EventConsumer;
           break;

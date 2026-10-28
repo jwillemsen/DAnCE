@@ -136,7 +136,6 @@ namespace DAnCE
             ACE_TEXT ("DynAny_Handler::extract_into_dynany - Don't know how to handle null or void types\n")));
           throw Config_Error ("", "Null or void types not supported");
           break;
-
         case TCKind::tk_short:
           {
             if (!req_tc)
@@ -151,7 +150,6 @@ namespace DAnCE
             retval->insert_short (s);
           }
           break;
-
         case TCKind::tk_long:
           {
             if (!req_tc)
@@ -166,7 +164,6 @@ namespace DAnCE
             retval->insert_long (l);
           }
           break;
-
         case TCKind::tk_ushort:
           {
             if (!req_tc)
@@ -181,7 +178,6 @@ namespace DAnCE
             retval->insert_ushort (us);
           }
           break;
-
         case TCKind::tk_ulong:
           {
             if (!req_tc)
@@ -196,7 +192,6 @@ namespace DAnCE
             retval->insert_ulong (ul);
           }
           break;
-
         case TCKind::tk_float:
           {
             if (!req_tc)
@@ -211,7 +206,6 @@ namespace DAnCE
             retval->insert_float (f);
           }
           break;
-
         case TCKind::tk_double:
           {
             if (!req_tc)
@@ -226,7 +220,6 @@ namespace DAnCE
             retval->insert_double (d);
           }
           break;
-
         case TCKind::tk_boolean:
           {
             if (!req_tc)
@@ -241,7 +234,6 @@ namespace DAnCE
             retval->insert_boolean (b);
           }
           break;
-
         case TCKind::tk_octet:
           {
             if (!req_tc)
@@ -256,7 +248,6 @@ namespace DAnCE
             retval->insert_octet (o);
           }
           break;
-
         case TCKind::tk_longlong:
           {
             if (!req_tc)
@@ -271,7 +262,6 @@ namespace DAnCE
             retval->insert_longlong (ll);
           }
           break;
-
         case TCKind::tk_ulonglong:
           {
             if (!req_tc)
@@ -286,7 +276,6 @@ namespace DAnCE
             retval->insert_ulonglong (ull);
           }
           break;
-
         case TCKind::tk_string:
           return DynString_Handler::extract_into_dynany (type, value, req_tc);
 
@@ -304,7 +293,6 @@ namespace DAnCE
             retval->insert_char (c);
           }
           break;
-
         case TCKind::tk_wchar:
           {
             if (!req_tc)
@@ -325,7 +313,6 @@ namespace DAnCE
             retval->insert_wchar (wc);
           }
           break;
-
         case TCKind::tk_enum:
           return DynEnum_Handler::extract_into_dynany (type, value, req_tc);
 
@@ -658,7 +645,6 @@ namespace DAnCE
             ACE_TEXT ("I don't know how to handle null or void types\n")));
           throw Config_Error ("", "Null or void types not supported");
           break;
-
         case TCKind::tk_short:
           return CORBA::_tc_short;
 
@@ -701,13 +687,11 @@ namespace DAnCE
           // double. This is a very tricky conversion and doesn't work in
           // combination with certain (versions of) compilers.
           break;
-
         case TCKind::tk_wchar:
           return CORBA::_tc_wchar;
 
         case TCKind::tk_wstring:
           break;
-
         case TCKind::tk_enum:
           return DynEnum_Handler::create_typecode (type);
 

@@ -29,19 +29,15 @@ namespace DAnCE
         case ResourceUsageKind::None:
           toconfig.resourceUsage = Deployment::None;
           break;
-
         case ResourceUsageKind::InstanceUsesResource:
           toconfig.resourceUsage = Deployment::InstanceUsesResource;
           break;
-
         case ResourceUsageKind::ResourceUsesInstance:
           toconfig.resourceUsage = Deployment::ResourceUsesInstance;
           break;
-
         case ResourceUsageKind::PortUsesResource:
           toconfig.resourceUsage = Deployment::PortUsesResource;
           break;
-
         case ResourceUsageKind::ResourceUsesPort:
           toconfig.resourceUsage = Deployment::ResourceUsesPort;
           break;
@@ -77,19 +73,15 @@ namespace DAnCE
         case Deployment::None:
           usage_value = ResourceUsageKind::None;
           break;
-
         case Deployment::InstanceUsesResource:
           usage_value = ResourceUsageKind::InstanceUsesResource;
           break;
-
         case Deployment::ResourceUsesInstance:
           usage_value = ResourceUsageKind::ResourceUsesInstance;
           break;
-
         case Deployment::PortUsesResource:
           usage_value = ResourceUsageKind::PortUsesResource;
           break;
-
         case Deployment::ResourceUsesPort:
           usage_value = ResourceUsageKind::ResourceUsesPort;
           break;

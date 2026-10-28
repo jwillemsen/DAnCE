@@ -17,11 +17,9 @@ namespace DAnCE
         case PlanLocalityKind::SameProcess:
           toconfig.constraint = Deployment::PlanSameProcess;
           break;
-
         case PlanLocalityKind::DifferentProcess:
           toconfig.constraint = Deployment::PlanDifferentProcess;
           break;
-
         case PlanLocalityKind::NoConstraint:
           toconfig.constraint = Deployment::PlanNoConstraint;
           break;

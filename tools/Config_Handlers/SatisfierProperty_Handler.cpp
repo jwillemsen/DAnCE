@@ -36,23 +36,18 @@ namespace DAnCE
         case SatisfierPropertyKind::Quantity:
           toconfig.kind = Deployment::Quantity;
           break;
-
         case SatisfierPropertyKind::Capacity:
           toconfig.kind = Deployment::Capacity;
           break;
-
         case SatisfierPropertyKind::Minimum:
           toconfig.kind = Deployment::Minimum;
           break;
-
         case SatisfierPropertyKind::Maximum:
           toconfig.kind = Deployment::Maximum;
           break;
-
         case SatisfierPropertyKind::Attribute:
           toconfig.kind = Deployment::Attribute;
           break;
-
         case SatisfierPropertyKind::Selection:
           toconfig.kind = Deployment::Selection;
           break;
@@ -90,23 +85,18 @@ namespace DAnCE
         case Deployment::Quantity:
           kind_value = SatisfierPropertyKind::Quantity;
           break;
-
         case Deployment::Capacity:
           kind_value = SatisfierPropertyKind::Capacity;
           break;
-
         case Deployment::Minimum:
           kind_value = SatisfierPropertyKind::Minimum;
           break;
-
         case Deployment::Maximum:
           kind_value = SatisfierPropertyKind::Maximum;
           break;
-
         case Deployment::Attribute:
           kind_value = SatisfierPropertyKind::Attribute;
           break;
-
         case Deployment::Selection:
           kind_value = SatisfierPropertyKind::Selection;
           break;

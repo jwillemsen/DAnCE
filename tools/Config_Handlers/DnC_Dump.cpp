@@ -938,13 +938,11 @@ encoded different type"));
             temp));
         }
         break;
-
       case CORBA::tk_null:
         DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
           (LM_DEBUG, "%CAny value: null value encoded\n",
           Dump_Obj::indent ()));
         break;
-
       case CORBA::tk_void:
         DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
           (LM_DEBUG, "Any value: void type encoded\n"));
@@ -964,7 +962,6 @@ encoded with different type"));
                       temp));
         }
         break;
-
       case CORBA::tk_ushort:
         {
           CORBA::UShort temp {};
@@ -980,7 +977,6 @@ encoded with different type"));
             temp));
         }
         break;
-
       case CORBA::tk_ulong:
         {
           CORBA::ULong temp {};
@@ -996,7 +992,6 @@ encoded with different type"));
                       temp));
         }
         break;
-
       case CORBA::tk_float:
         {
           CORBA::Float temp {};
@@ -1046,7 +1041,6 @@ encoded with different type"));
             (LM_DEBUG, "Any value: False\n"));
         }
         break;
-
       case CORBA::tk_char:
         {
           CORBA::Char temp {};
@@ -1062,7 +1056,6 @@ encoded with different type"));
              temp));
         }
         break;
-
       case CORBA::tk_octet:
         {
           CORBA::Octet temp {};
@@ -1078,7 +1071,6 @@ encoded with different type"));
             temp));
         }
         break;
-
       case CORBA::tk_string:
         {
           char const* temp {};
@@ -1109,7 +1101,6 @@ encoded with different type"));
             temp));
         }
         break;
-
       case CORBA::tk_longdouble:
         {
           CORBA::LongDouble temp {};
@@ -1141,7 +1132,6 @@ encoded with different type"));
             temp));
         }
         break;
-
       case CORBA::tk_wstring:
         {
           CORBA::WChar const* temp {};
@@ -1157,7 +1147,6 @@ encoded with different type"));
             temp));
         }
         break;
-
         case CORBA::tk_enum:
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,

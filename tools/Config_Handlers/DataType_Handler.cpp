@@ -32,71 +32,54 @@ namespace DAnCE
         case  TCKind::tk_null:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_null);
           break;
-
         case  TCKind::tk_short:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_short);
           break;
-
         case  TCKind::tk_long:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_long);
           break;
-
         case  TCKind::tk_ushort:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_ushort);
           break;
-
         case  TCKind::tk_ulong:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_ulong);
           break;
-
         case  TCKind::tk_float:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_float);
           break;
-
         case  TCKind::tk_double:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_double);
           break;
-
         case  TCKind::tk_boolean:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_boolean);
           break;
-
         case  TCKind::tk_char:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_char);
           break;
-
         case  TCKind::tk_octet:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_octet);
           break;
-
         case  TCKind::tk_string:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_string);
           break;
-
         case  TCKind::tk_longlong:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_longlong);
           break;
-
         case  TCKind::tk_ulonglong:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_ulonglong);
           break;
-
         case  TCKind::tk_longdouble:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_longdouble);
           break;
-
         case  TCKind::tk_wchar:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_wchar);
           break;
-
         case  TCKind::tk_wstring:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_wstring);
           break;
-
         case  TCKind::tk_any:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_any);
           break;
-
         case  TCKind::tk_TypeCode:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_TypeCode);
           break;
