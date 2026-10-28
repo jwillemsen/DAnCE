@@ -8,26 +8,20 @@ namespace Deployment
   std::string Dump_Obj::indent_ = "-";
   std::map<std::string, CORBA::Any> Dump_Obj::desc_map_;
 
-  Dump_Obj::Dump_Obj(const char* caption)
-    : desc_()
+  Dump_Obj::Dump_Obj(char const* caption)
   {
     DANCE_TRACE ("Dump_Obj::constructor");
 
-    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-      (LM_DEBUG, "%C%C:\n", indent_.c_str(), caption));
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "%C%C:\n", indent_.c_str(), caption));
     indent_.append("  ");
   }
 
-
-  Dump_Obj::Dump_Obj(const char* caption,
-                      CORBA::Any &val)
+  Dump_Obj::Dump_Obj (char const* caption, CORBA::Any &val)
     : desc_(caption)
   {
     DANCE_TRACE ("Dump_Obj::constructor");
 
-    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "%C%C:\n",
-                indent_.c_str(),
-                caption));
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "%C%C:\n", indent_.c_str(), caption));
 
     indent_.append("   ");
 
@@ -49,7 +43,7 @@ namespace Deployment
     DANCE_TRACE ("Dump_Obj::destructor");
 
     indent_.erase(indent_.size() - 2, 2);
-    if (desc_.size() != 0)
+    if (!desc_.empty ())
       {
         if (desc_map_.find(desc_) != desc_map_.end())
           {

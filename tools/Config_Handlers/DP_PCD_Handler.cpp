@@ -1,4 +1,5 @@
 #include "DP_PCD_Handler.h"
+#include "Common.h"
 #include "CEPE_Handler.h"
 #include "PSPE_Handler.h"
 #include "ERE_Handler.h"
@@ -14,92 +15,37 @@ namespace DAnCE
   {
     void
     DP_PCD_Handler::plan_connection_descrs (
-        const DeploymentPlan &src,
+        DeploymentPlan const& src,
         Deployment::PlanConnectionDescriptions& dest)
     {
       DANCE_TRACE("DP_PCD_Handler::plan_connection_descrs");
-      DeploymentPlan::connection_const_iterator cci_e =
-        src.end_connection ();
-
-      CORBA::ULong pos = 0;
-      dest.length (src.count_connection ());
-      for (DeploymentPlan::connection_const_iterator cci_b =
-             src.begin_connection ();
-           cci_b != cci_e;
-           ++cci_b)
-        {
-          DP_PCD_Handler::plan_connection_descr (*(cci_b),
-                                                 dest[pos++]);
-        }
-    }
-
-    PlanConnectionDescription
-    DP_PCD_Handler::plan_connection_descr (
-    const Deployment::PlanConnectionDescription &src)
-    {
-      DANCE_TRACE("DP_PCD_Handler::plan_connection_descr");
-      PlanConnectionDescription pcd = PCD_Handler::get_PlanConnectionDescription(src);
-      return pcd;
+      CORBA::ULong pos {};
+      dest.length (src.connection ().size ());
+      for (auto const& source_item : src.connection ())
+        DP_PCD_Handler::plan_connection_descr (source_item, dest[pos++]);
     }
 
     void
     DP_PCD_Handler::plan_connection_descr (
-        const PlanConnectionDescription &src,
+        PlanConnectionDescription const& src,
         Deployment::PlanConnectionDescription &dest)
     {
-      DANCE_TRACE("DP_PCD_Handler::plan_connection_descr - reverse");
-      dest.name =
-        src.name ().c_str ();
+      DANCE_TRACE("DP_PCD_Handler::plan_connection_descr");
+      dest.name = src.name ().c_str ();
 
-      if (src.source_p ())
+      ::XMLSchema::string<char> const* source_if_set_ptr = src.source_if_set ();
+      if (source_if_set_ptr)
         {
           // There will be only one as per the schema
           dest.source.length (1);
-          dest.source[0] =
-            src.source ().c_str ();
+          dest.source[0] = source_if_set_ptr->c_str ();
         }
 
+      CEPE_Handler::external_port_endpoints (src, dest.externalEndpoint);
+      ERE_Handler::external_ref_endpoints (src, dest.externalReference);
 
-      CEPE_Handler::external_port_endpoints (src,
-                                             dest.externalEndpoint);
-      ERE_Handler::external_ref_endpoints (src,
-                                           dest.externalReference);
+      PSPE_Handler::sub_component_port_endpoints (src, dest.internalEndpoint);
 
-      PSPE_Handler::sub_component_port_endpoints (src,
-                                                  dest.internalEndpoint);
-
-#if 0
-      // @@MAJO: Need to figure how to use this.
-      if (desc.deployedResource_p ())
-        {
-          CRDD_Handler crddhandler;
-
-          toconfig.deployedResource.length (
-            toconfig.deployedResource.length () + 1);
-
-          crddhandler.get_ConnectionResourceDeploymentDescription (
-            toconfig.deployedResource[toconfig.deployedResource.length () - 1],
-            desc.deployedResource ());
-        }
-
-      if (desc.deployRequirement_p ())
-        {
-
-          // @@ MAJO: Not sure how to use this
-          //Create the handler for the requirements.
-          Requirement_Handler reqhandler;
-
-          //Increase the sequence length and delgate
-          //the Requirement to the Req_Handler.
-          toconfig.deployRequirement.length (
-            toconfig.deployRequirement.length () + 1);
-          reqhandler.get_Requirement (
-            toconfig.deployRequirement[toconfig.deployRequirement.length () - 1],
-            desc.deployRequirement ());
-
-
-        }
-#endif /*if 0*/
     }
   }
 }

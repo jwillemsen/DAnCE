@@ -18,6 +18,9 @@
 #include "ace/Singleton.h"
 
 #include <map>
+#include <functional>
+#include <string>
+#include <string_view>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,7 +30,6 @@ namespace DAnCE
 {
   namespace Config_Handlers
   {
-    class Any;
     class DataType;
     class DataValue;
 
@@ -46,32 +48,30 @@ namespace DAnCE
     public:
       DynAny_Handler ();
 
-      ~DynAny_Handler (void);
+      ~DynAny_Handler ();
 
-      DynamicAny::DynAny_ptr  extract_into_dynany (const DataType &type,
-                                                   const DataValue &value,
+      DynamicAny::DynAny_ptr extract_into_dynany (DataType const& type,
+                                                   DataValue const& value,
                                                    CORBA::TypeCode_ptr = CORBA::TypeCode::_nil ());
-
-      Any extract_from_dynany (const CORBA::Any &any);
 
       CORBA::ORB_ptr orb ();
 
       DynamicAny::DynAnyFactory_ptr daf ();
 
-      CORBA::TypeCode_ptr create_typecode (const DataType &type);
+      CORBA::TypeCode_ptr create_typecode (DataType const& type);
 
-      void register_typecode (const std::basic_string<ACE_TCHAR> typeID,
-                              CORBA::TypeCode_ptr tc);
+      void register_typecode (std::string_view typeID, CORBA::TypeCode_ptr tc);
 
-      CORBA::TypeCode_ptr get_typecode (const std::basic_string<ACE_TCHAR> typeID);
+      CORBA::TypeCode_ptr get_typecode (std::string_view typeID);
 
     private:
 
-      CORBA::ORB_var orb_;
+      CORBA::ORB_var orb_ {};
 
-      DynamicAny::DynAnyFactory_var daf_;
+      DynamicAny::DynAnyFactory_var daf_ {};
 
-      std::map <std::basic_string<ACE_TCHAR>, CORBA::TypeCode_ptr> typecode_map_;
+      using TypecodeMap = std::map <std::string, CORBA::TypeCode_ptr, std::less<>>;
+      TypecodeMap typecode_map_ {};
     };
 
     typedef ACE_Singleton<DynAny_Handler, ACE_Null_Mutex> DynAny_Singleton;

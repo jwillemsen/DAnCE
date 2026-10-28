@@ -1,17 +1,20 @@
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "dance/Logger/Log_Macros.h"
 #include "dance/Deployment/Deployment_Packaging_DataC.h"
-#include "ace/XML_Utils/XML_Typedefs.h"
+#include "ace/XML_Utils/XMLSchema/Types.hpp"
+#include "ace/XML_Utils/XML_Helper.h"
 #include "ace/XML_Utils/XercesString.h"
 #include "Utils/Exceptions.h"
 #include "Package_Handlers/PCD_Handler.h"
 #include "Package_Handlers/CPD_Handler.h"
+#include "Package_Handlers/Comp_Intf_Descr_Handler.h"
 #include "toplevel.hpp"
 #include "Deployment.hpp"
 #include "Property_Handler.h"
 #include "Req_Handler.h"
 
 #include <memory>
+#include <string>
 
 namespace DAnCE
 {
@@ -19,42 +22,38 @@ namespace DAnCE
   {
     namespace Packaging
     {
-      void
-      PCD_Handler::package_config (const ACE_TCHAR *uri,
-                                   ::Deployment::PackageConfiguration &toconfig)
+      void PCD_Handler::package_config (ACE_TCHAR const* uri, ::Deployment::PackageConfiguration &toconfig)
       {
-        XERCES_CPP_NAMESPACE::DOMDocument *dom = XML::XML_Typedef::XML_HELPER.create_dom (uri);
+        XML::XML_Helper<> xml_helper {};
+        XERCES_CPP_NAMESPACE::DOMDocument *dom = xml_helper.create_dom (uri);
 
         if (dom == 0)
           {
-            std::basic_string<ACE_TCHAR> error (ACE_TEXT ("Unable to open file: "));
-            error += uri;
+            std::string error ("Unable to open file: ");
+            error += ACE_TEXT_ALWAYS_CHAR (uri);
             throw Parse_Error (error);
           }
 
-        XML::XStr root = dom->getDocumentElement ()->getTagName ();
+        XML::XStr const root = dom->getDocumentElement ()->getTagName ();
 
         if (root == XML::XStr (
                     ACE_TEXT ("Deployment:topLevelPackageDescription")))
           {
-            TopLevelPackageDescription tpd;
+            TopLevelPackageDescription tpd (reader::topLevelPackageDescription (dom));
 
-            tpd = reader::topLevelPackageDescription (dom);
+            if (tpd.package ().empty ())
+              throw Plan_Error ("Top-level package description contains no package");
 
-            PCD_Handler::package_config (*(*tpd.begin_package ()),
-                                         toconfig);
+            PCD_Handler::package_config (tpd.package ().front (), toconfig);
           }
-        else if (root == XML::XStr (
-          ACE_TEXT ("Deployment:packageConfiguration")))
+        else if (root == XML::XStr (ACE_TEXT ("Deployment:packageConfiguration")))
           {
-            PackageConfiguration pcd;
-            pcd = reader::packageConfiguration (dom);
+            PackageConfiguration pcd (reader::packageConfiguration (dom));
             PCD_Handler::package_config (pcd, toconfig);
           }
         else
           {
-            std::string error (
-              "Invalid file passed to package_config, has base ");
+            std::string error ("Invalid file passed to package_config, has base ");
 
             char *croot = xercesc::XMLString::transcode (root);
 
@@ -62,103 +61,153 @@ namespace DAnCE
 
             delete [] croot;
 
-            throw Plan_Error (ACE_TEXT (
-              "Invalid file passed to package_config, had base"));
+            throw Plan_Error (error);
           }
       }
 
-      void
-      PCD_Handler::package_config (const PackageConfiguration &desc,
-                                   ::Deployment::PackageConfiguration &toconfig)
+      void PCD_Handler::package_config (PackageConfiguration const& desc, ::Deployment::PackageConfiguration &toconfig)
       {
         DANCE_TRACE ("PCD_Handler::package_config");
-        std::auto_ptr < PackageConfiguration > xsc_pcd;
+        std::unique_ptr<PackageConfiguration> xsc_pcd {};
 
-        const PackageConfiguration *pcd;
+        PackageConfiguration const* pcd {};
 
-        if (desc.contentLocation_p ())
+        ::XMLSchema::string<char> const* contentLocation_if_set_ptr = desc.contentLocation_if_set ();
+        if (contentLocation_if_set_ptr)
           {
             // Take ownership of the resolved pcd
-            xsc_pcd.reset (PCD_Handler::resolve_package_config (desc.contentLocation ().c_str ()));
+            xsc_pcd.reset (PCD_Handler::resolve_package_config (contentLocation_if_set_ptr->c_str ()));
             pcd = xsc_pcd.get ();
           }
         else
           pcd = &desc;
 
-        if (pcd->label_p ())
-          toconfig.label =
-            ACE_TEXT_ALWAYS_CHAR (pcd->label ().c_str ());
+        ::XMLSchema::string<char> const* label_if_set_ptr = pcd->label_if_set ();
+        if (label_if_set_ptr)
+          toconfig.label = label_if_set_ptr->c_str ();
 
-        if (pcd->UUID_p ())
-          toconfig.UUID =
-            ACE_TEXT_ALWAYS_CHAR (pcd->UUID ().c_str ());
+        ::XMLSchema::string<char> const* UUID_if_set_ptr = pcd->UUID_if_set ();
+        if (UUID_if_set_ptr)
+          toconfig.UUID = UUID_if_set_ptr->c_str ();
 
-        if (pcd->basePackage_p ())
+        ::DAnCE::Config_Handlers::ComponentPackageDescription const*
+          basePackage_if_set_ptr = pcd->basePackage_if_set ();
+        if (basePackage_if_set_ptr)
           {
             toconfig.basePackage.length (1);
-            CPD_Handler::handle_component_package_descr (pcd->basePackage (),
-                                                         toconfig.basePackage [0]);
+            CPD_Handler::handle_component_package_descr (*basePackage_if_set_ptr, toconfig.basePackage [0]);
           }
 
         // @@ MAJO: Support other elements present here.
 
-        toconfig.configProperty.length (desc.count_configProperty ());
-        std::for_each (desc.begin_configProperty (),
-                       desc.end_configProperty (),
-                       Property_Functor (toconfig.configProperty));
+        toconfig.configProperty.length (pcd->configProperty ().size ());
+        CORBA::ULong configProperty_index {};
+        for (auto const& source_item : pcd->configProperty ())
+          Property_Handler::handle_property (source_item, toconfig.configProperty[configProperty_index++]);
 
-        toconfig.selectRequirement.length (desc.count_selectRequirement ());
-        std::for_each (desc.begin_selectRequirement (),
-                       desc.end_selectRequirement (),
-                       Requirement_Functor (toconfig.selectRequirement));
+        toconfig.selectRequirement.length (pcd->selectRequirement ().size ());
+        CORBA::ULong selectRequirement_index {};
+        for (auto const& source_item : pcd->selectRequirement ())
+          Req_Handler::handle_requirement (source_item, toconfig.selectRequirement[selectRequirement_index++]);
 
       }
 
-      PackageConfiguration
-      PCD_Handler::package_config (const Deployment::PackageConfiguration& src)
+      PackageConfiguration PCD_Handler::package_config (Deployment::PackageConfiguration const& src)
       {
         DANCE_TRACE ("PCD_Handler::package_config - reverse");
-        PackageConfiguration pcd = PackageConfiguration ();
+        XMLSchema::string<char> label (src.label.in () == nullptr ? "" : src.label.in ());
+        XMLSchema::string<char> UUID (src.UUID.in () == nullptr ? "" : src.UUID.in ());
+        XSCRT::OptionalArg<XMLSchema::string<char>> label_arg (std::nullopt);
+        XSCRT::OptionalArg<XMLSchema::string<char>> UUID_arg (std::nullopt);
+        if (src.label.in () != nullptr)
+          label_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (label);
+        if (src.UUID.in () != nullptr)
+          UUID_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (UUID);
 
-        if (src.label.in () != 0)
-          pcd.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
-
-        if (src.UUID.in () != 0)
-          pcd.UUID (ACE_TEXT_CHAR_TO_TCHAR (src.UUID.in ()));
-
-        if (src.basePackage.length () > 0)
+        XSCRT::OptionalArg<ComponentPackageDescription> base_package (std::nullopt);
+        if (src.basePackage.length () > 1 || src.specializedConfig.length () > 1 ||
+            src.importedPackage.length () > 1 || src.referencedPackage.length () > 1)
+          throw Plan_Error ("PackageConfiguration has multiple values for a single-valued field");
+        if (src.basePackage.length () == 1)
           {
-            pcd.basePackage (CPD_Handler::component_package_descr (src.basePackage[0]));
+            ComponentPackageDescription const value (
+              CPD_Handler::component_package_descr (src.basePackage[0]));
+            base_package = XSCRT::OptionalArg<ComponentPackageDescription> (value);
           }
-#if 0
-        // @@ MAJO: Support other elements present here.
-        for (CORBA::ULong i = 0; i < src.configProperty.length (); ++i)
-          pcd.add_configProperty (Property_Handler::get_property (src.configProperty[i]));
 
-        for (CORBA::ULong i = 0; i < src.selectRequirement.length (); ++i)
-          pcd.add_selectRequirement (Req_Handler::get_requirement (src.selectRequirement[i]));
-#endif
-        return pcd;
+        XSCRT::OptionalArg<PackageConfiguration> specialized_config (std::nullopt);
+        if (src.specializedConfig.length () == 1)
+          {
+            PackageConfiguration const value (PCD_Handler::package_config (src.specializedConfig[0]));
+            specialized_config = XSCRT::OptionalArg<PackageConfiguration> (value);
+          }
 
+        XSCRT::OptionalArg<ComponentPackageImport> imported_package (std::nullopt);
+        if (src.importedPackage.length () == 1)
+          {
+            ComponentPackageImport::location_container_type locations;
+            for (CORBA::ULong i {}; i < src.importedPackage[0].location.length (); ++i)
+              locations.emplace_back (src.importedPackage[0].location[i]);
+            ComponentPackageImport const value (locations);
+            imported_package = XSCRT::OptionalArg<ComponentPackageImport> (value);
+          }
+
+        XSCRT::OptionalArg<ComponentPackageReference> referenced_package (std::nullopt);
+        if (src.referencedPackage.length () == 1)
+          {
+            ::Deployment::ComponentPackageReference const& package_reference = src.referencedPackage[0];
+            ComponentInterfaceDescription const required_type (
+              Comp_Intf_Descr_Handler::comp_intf_descr (package_reference.requiredType));
+            XMLSchema::string<char> const required_uuid (
+              package_reference.requiredUUID.in () == nullptr ? "" : package_reference.requiredUUID.in ());
+            XMLSchema::string<char> const required_name (
+              package_reference.requiredName.in () == nullptr ? "" : package_reference.requiredName.in ());
+            XSCRT::OptionalArg<XMLSchema::string<char>> required_uuid_arg (std::nullopt);
+            XSCRT::OptionalArg<XMLSchema::string<char>> required_name_arg (std::nullopt);
+            if (package_reference.requiredUUID.in () != nullptr)
+              required_uuid_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (required_uuid);
+            if (package_reference.requiredName.in () != nullptr)
+              required_name_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (required_name);
+            ComponentPackageReference const value (required_type, required_uuid_arg, required_name_arg);
+            referenced_package = XSCRT::OptionalArg<ComponentPackageReference> (value);
+          }
+
+        PackageConfiguration::selectRequirement_container_type select_requirements;
+        for (CORBA::ULong i {}; i < src.selectRequirement.length (); ++i)
+          {
+            Requirement const requirement (Req_Handler::get_requirement (src.selectRequirement[i]));
+            select_requirements.push_back (requirement);
+          }
+
+        PackageConfiguration::configProperty_container_type config_properties;
+        for (CORBA::ULong i {}; i < src.configProperty.length (); ++i)
+          {
+            Property const property (Property_Handler::get_property (src.configProperty[i]));
+            config_properties.push_back (property);
+          }
+
+        return PackageConfiguration (label_arg, UUID_arg, base_package, specialized_config,
+                                     imported_package, referenced_package,
+                                     select_requirements, config_properties);
       }
 
-      PackageConfiguration * PCD_Handler::resolve_package_config (const ACE_TCHAR *uri)
+      PackageConfiguration * PCD_Handler::resolve_package_config (std::string_view uri)
       {
-        xercesc::DOMDocument* dom =
-          XML::XML_Typedef::XML_HELPER.create_dom (uri);
+        XML::XML_Helper<> xml_helper {};
+        std::string const uri_string (uri);
+        xercesc::DOMDocument* dom = xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri_string.c_str()));
 
         if (!dom)
-          throw Parse_Error (ACE_TEXT ("Unable to create DOM for PackageConfiguration"));
+          throw Parse_Error ("Unable to create DOM for PackageConfiguration");
 
         try {
           return new PackageConfiguration (reader::packageConfiguration (dom));
         }
         catch (...) {
-          throw Parse_Error (ACE_TEXT ("Unable to create XSC structure for PackageConfiguration"));
+          throw Parse_Error ("Unable to create XSC structure for PackageConfiguration");
         }
 
       }
-
 
     }
   }

@@ -49,9 +49,6 @@ public:
 static void resource_deployment_descr (
 const ResourceDeploymentDescription& desc,
 ::Deployment::ResourceDeploymentDescription& toconfig);
-static ResourceDeploymentDescription
-resource_deployment_descr (
-const ::Deployment::ResourceDeploymentDescription &src);
 
 };
 }

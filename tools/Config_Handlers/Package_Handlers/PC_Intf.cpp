@@ -1,5 +1,5 @@
 #include "STD_PC_Intf.h"
-#include "Utils/XML_Helper.h"
+#include "ace/XML_Utils/XML_Helper.h"
 #include "Deployment.hpp"
 #include "STD_PCD_Handler.h"
 #include "ciao/Packaging_DataC.h"
@@ -9,47 +9,38 @@ namespace DAnCE
 {
   namespace Config_Handlers
   {
-    STD_PC_Intf::STD_PC_Intf (const char *file)
+    STD_PC_Intf::STD_PC_Intf (char const* file)
     {
       if (!this->prepare_PC (file))
         throw;
     }
 
-    bool
-    STD_PC_Intf::prepare_PC (const char *file)
+    bool STD_PC_Intf::prepare_PC (char const* file)
     {
       DANCE_TRACE("STD_PC_Intf::prepare_PC");
 
-      ACE_Auto_Ptr<XML_Helper> helper (new XML_Helper);
+      std::unique_ptr<XML::XML_Helper<>> helper (new XML::XML_Helper<>);
 
       if (!helper->is_initialized ())
         return false;
 
       // parse the .pcd (PackageConfigurationDescription) file
-      xercesc::DOMDocument *dom =
-        helper->create_dom (file);
+      xercesc::DOMDocument *dom = helper->create_dom (file);
 
       if (!dom)
         return false;
 
+      PackageConfiguration pc = packageConfiguration (dom);
 
-      PackageConfiguration pc =
-        packageConfiguration (dom);
-
-
-      Deployment::PackageConfiguration idl_pc;
-
+      Deployment::PackageConfiguration idl_pc {};
 
       STD_PCD_Handler pcd_handler (helper.get ());
 
-      pcd_handler.package_config (pc,
-                                  idl_pc);
+      pcd_handler.package_config (pc, idl_pc);
 
+      Deployment::PackageConfiguration *p_idl_pc = new Deployment::PackageConfiguration (idl_pc);
 
-      Deployment::PackageConfiguration *p_idl_pc =
-        new Deployment::PackageConfiguration (idl_pc);
-
-      // let ACE_Auto_Ptr take over
+      // let idl_pc_ take ownership
       this->idl_pc_.reset (p_idl_pc);
 
       if (this->idl_pc_.get ())
@@ -59,13 +50,12 @@ namespace DAnCE
     }
 
     ::Deployment::PackageConfiguration const *
-    STD_PC_Intf::get_PC (void) const
+    STD_PC_Intf::get_PC () const
     {
       return this->idl_pc_.get ();
     }
 
-    ::Deployment::PackageConfiguration *
-    STD_PC_Intf::get_PC (void)
+    ::Deployment::PackageConfiguration * STD_PC_Intf::get_PC ()
     {
       return this->idl_pc_.release ();
     }

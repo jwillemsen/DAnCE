@@ -45,13 +45,12 @@ namespace DAnCE
       class Config_Handlers_Common_Export Any_Handler
     {
     public:
-      Any_Handler (void);
-      virtual ~Any_Handler (void);
+      Any_Handler ();
+      virtual ~Any_Handler ();
 
       static void extract_into_any (const Any& desc,
                                     ::CORBA::Any& toconfig);
 
-      static Any get_any (const CORBA::Any &src);
     };
     }
 }

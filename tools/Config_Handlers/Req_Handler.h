@@ -12,7 +12,6 @@
 
 #include "Basic_Deployment_Data.hpp"
 #include "Config_Handlers_Common_Export.h"
-#include "Utils/Functors.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -44,23 +43,14 @@ namespace DAnCE
     {
     public:
 
-      Req_Handler (void);
-      virtual ~Req_Handler (void);
+      Req_Handler ();
+      virtual ~Req_Handler ();
 
       ///This method takes a <Deployment::Requirement>
       ///and maps the values from the passed in XSC
       ///Requirement to its members.
-      static void handle_requirement (const Requirement& desc,
-                       Deployment::Requirement& toconfig);
-      static Requirement
-        get_requirement (const Deployment::Requirement& src);
+      static void handle_requirement (Requirement const& desc, Deployment::Requirement& toconfig);
     };
-
-      typedef Sequence_Handler < Requirement,
-    ::Deployment::Requirements,
-    ::Deployment::Requirement,
-    Req_Handler::handle_requirement > Requirement_Functor;
-
 
     }
 }

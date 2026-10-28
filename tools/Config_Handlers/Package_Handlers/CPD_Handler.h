@@ -12,9 +12,9 @@
 #include /**/ "ace/pre.h"
 
 #include <memory>
-#include "ace/XML_Utils/XML_Typedefs.h"
-#include "Utils/Functors.h"
+#include "ace/XML_Utils/XMLSchema/Types.hpp"
 #include "Package_Handlers/Packaging_Handlers_Export.h"
+#include <string_view>
 
 namespace Deployment
 {
@@ -48,20 +48,14 @@ namespace DAnCE
         /// Maps the values from the XSC object
         /// <ComponentPackageDescription> to the CORBA IDL type
         /// <Deployment::ComponentPackageDescription>.
-        static void handle_component_package_descr (const ComponentPackageDescription &desc,
+        static void handle_component_package_descr (ComponentPackageDescription const& desc,
                                              ::Deployment::ComponentPackageDescription &toconfig);
 
-        static ComponentPackageDescription
-      component_package_descr (const Deployment::ComponentPackageDescription& src);
+        static ComponentPackageDescription component_package_descr (Deployment::ComponentPackageDescription const& src);
       private:
-        static ComponentPackageDescription * resolve_cpd (const ACE_TCHAR *uri);
+        static ComponentPackageDescription * resolve_cpd (std::string_view uri);
 
       };
-
-      typedef Sequence_Handler < ComponentPackageDescription,
-                                 ::Deployment::ComponentPackageDescriptions,
-                                 ::Deployment::ComponentPackageDescription,
-                                 CPD_Handler::handle_component_package_descr > CPD_Functor;
 
     }
 

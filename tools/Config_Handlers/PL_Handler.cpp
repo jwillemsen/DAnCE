@@ -8,43 +8,42 @@ namespace DAnCE
 {
   namespace Config_Handlers
   {
-    void
-    PL_Handler::get_PlanLocality (const PlanLocality &desc,
-                                  Deployment::PlanLocality &toconfig)
+    void PL_Handler::get_PlanLocality (PlanLocality const& desc, Deployment::PlanLocality &toconfig)
     {
       DANCE_TRACE ("PL_Handler::get_PlanLocality");
 
       switch (desc.constraint ().integral ())
         {
-        case PlanLocalityKind::SameProcess_l:
+        case PlanLocalityKind::SameProcess:
           toconfig.constraint = Deployment::PlanSameProcess;
           break;
-
-        case PlanLocalityKind::DifferentProcess_l:
+        case PlanLocalityKind::DifferentProcess:
           toconfig.constraint = Deployment::PlanDifferentProcess;
           break;
-
-        case PlanLocalityKind::NoConstraint_l:
+        case PlanLocalityKind::NoConstraint:
           toconfig.constraint = Deployment::PlanNoConstraint;
           break;
+
+        default:
+          throw Config_Error ("", "Unknown PlanLocalityKind.");
         }
 
+      size_t pos {};
+      toconfig.constrainedInstanceRef.length (desc.constrainedInstance ().size ());
 
-      size_t pos = 0;
-      toconfig.constrainedInstanceRef.length (desc.count_constrainedInstance ());
-
-      for (PlanLocality::constrainedInstance_const_iterator i = desc.begin_constrainedInstance ();
-           i != desc.end_constrainedInstance ();
-           ++i)
+      for (auto const& instance : desc.constrainedInstance ())
         {
-          CORBA::ULong tmp = 0;
-          IDD_Handler::IDREF.find_ref ((*i)->idref ().id ().c_str (), tmp);
+          CORBA::ULong tmp {};
+          ::XMLSchema::IDREF<char> const* instanceRef = instance.idref_if_set ();
+          if (!instanceRef)
+            throw Config_Error ("", "Constrained instance has no IDREF");
+
+          IDD_Handler::IDREF.find_ref (instanceRef->id ().c_str (), tmp);
 
           toconfig.constrainedInstanceRef[pos] = tmp;
           ++pos;
         }
     }
-
 
   }
 }

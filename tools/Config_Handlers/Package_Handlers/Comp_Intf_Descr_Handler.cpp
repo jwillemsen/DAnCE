@@ -1,14 +1,15 @@
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "Comp_Intf_Descr_Handler.h"
-#include "ace/XML_Utils/XML_Typedefs.h"
+#include "ace/XML_Utils/XMLSchema/Types.hpp"
+#include "ace/XML_Utils/XML_Helper.h"
 #include "Utils/Exceptions.h"
-#include "Utils/Functors.h"
 #include "DataType_Handler.h"
 #include "Property_Handler.h"
 #include "Deployment.hpp"
 #include "Package_Handlers/CPD_Handler.h"
 #include "tools/Config_Handlers/CPD_Handler.h"
 #include "dance/Logger/Log_Macros.h"
+#include <string>
 namespace DAnCE
 {
   namespace Config_Handlers
@@ -17,147 +18,168 @@ namespace DAnCE
     {
         struct Comp_Prop_Handler
         {
-          static void handle_cpd (const ComponentPropertyDescription &desc,
+          static void handle_cpd (ComponentPropertyDescription const& desc,
                                ::Deployment::ComponentPropertyDescription &toconfig)
           {
             DANCE_TRACE ("Comp_Prop_Handler::get_cpd");
 
-            toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
-            DataType_Handler::data_type (desc.type (),
-                                         toconfig.type);
+            toconfig.name = desc.name ().c_str ();
+            DataType_Handler::data_type (desc.type (), toconfig.type);
           }
 
           static ComponentPropertyDescription
-          get_cpd (const ::Deployment::ComponentPropertyDescription &src)
+          get_cpd (::Deployment::ComponentPropertyDescription const& src)
           {
             DANCE_TRACE ("Comp_Prop_Handler::get_cpd - reverse");
 
-            return ComponentPropertyDescription (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()),
+            return ComponentPropertyDescription (src.name.in (),
                                                  DataType_Handler::data_type (src.type));
           }
 
         };
 
-        typedef Sequence_Handler < ComponentPropertyDescription,
-                                   ::Deployment::ComponentPropertyDescriptions,
-                                   ::Deployment::ComponentPropertyDescription,
-                                   Comp_Prop_Handler::handle_cpd > Comp_Prop_Functor;
-
-
       void
       Comp_Intf_Descr_Handler::comp_intf_descr (
-                                                const ComponentInterfaceDescription &desc,
+                                                ComponentInterfaceDescription const& desc,
                                                 ::Deployment::ComponentInterfaceDescription &toconfig)
       {
         DANCE_TRACE ("Comp_Intf_Descr_Handler::comp_intf_descr");
 
-        const ComponentInterfaceDescription *cid = 0;
-        std::auto_ptr <ComponentInterfaceDescription> safe_cid;
+        ComponentInterfaceDescription const* cid {};
+        std::unique_ptr<ComponentInterfaceDescription> safe_cid {};
 
-        if (desc.href_p ())
+        ::XMLSchema::string<char> const* href_if_set_ptr = desc.href_if_set ();
+        if (href_if_set_ptr)
           {
-            safe_cid.reset (Comp_Intf_Descr_Handler::resolve_cid (desc.href ().c_str ()));
+            safe_cid.reset (Comp_Intf_Descr_Handler::resolve_cid (href_if_set_ptr->c_str ()));
             cid = safe_cid.get ();
           }
         else
           cid = &desc;
 
-        if (cid->label_p ())
-          toconfig.label = ACE_TEXT_ALWAYS_CHAR (cid->label ().c_str ());
+        ::XMLSchema::string<char> const* label_if_set_ptr = cid->label_if_set ();
+        if (label_if_set_ptr)
+          toconfig.label = label_if_set_ptr->c_str ();
 
-        if (cid->UUID_p ())
-          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR (cid->UUID ().c_str ());
+        ::XMLSchema::string<char> const* UUID_if_set_ptr = cid->UUID_if_set ();
+        if (UUID_if_set_ptr)
+          toconfig.UUID = UUID_if_set_ptr->c_str ();
 
         // MAJO: SpecificType should be required.
-        if (cid->specificType_p ())
-          toconfig.specificType = ACE_TEXT_ALWAYS_CHAR (cid->specificType ().c_str ());
+        ::XMLSchema::string<char> const* specificType_if_set_ptr = cid->specificType_if_set ();
+        if (specificType_if_set_ptr)
+          toconfig.specificType = specificType_if_set_ptr->c_str ();
 
-        toconfig.supportedType.length (cid->count_supportedType ());
-        std::for_each (cid->begin_supportedType (),
-                       cid->end_supportedType (),
-                       String_Seq_Functor (toconfig.supportedType));
+        toconfig.supportedType.length (cid->supportedType ().size ());
+        CORBA::ULong supportedType_index {};
+        for (auto const& source_item : cid->supportedType ())
+          toconfig.supportedType[supportedType_index++] = source_item.c_str ();
 
-        toconfig.idlFile.length (cid->count_idlFile ());
-        std::for_each (cid->begin_idlFile (),
-                       cid->end_idlFile (),
-                       String_Seq_Functor (toconfig.idlFile));
+        toconfig.idlFile.length (cid->idlFile ().size ());
+        CORBA::ULong idlFile_index {};
+        for (auto const& source_item : cid->idlFile ())
+          toconfig.idlFile[idlFile_index++] = source_item.c_str ();
 
-        toconfig.configProperty.length (cid->count_configProperty ());
-        std::for_each (cid->begin_configProperty (),
-                       cid->end_configProperty (),
-                       Property_Functor (toconfig.configProperty));
+        toconfig.configProperty.length (cid->configProperty ().size ());
+        CORBA::ULong configProperty_index {};
+        for (auto const& source_item : cid->configProperty ())
+          Property_Handler::handle_property (source_item, toconfig.configProperty[configProperty_index++]);
 
-        toconfig.port.length (cid->count_port ());
-        std::for_each (cid->begin_port (),
-                       cid->end_port (),
-                       DAnCE::Config_Handlers::CPD_Functor (toconfig.port));
+        toconfig.port.length (cid->port ().size ());
+        CORBA::ULong port_index {};
+        for (auto const& source_item : cid->port ())
+          ::DAnCE::Config_Handlers::CPD_Handler::handle_component_port_description (
+            source_item, toconfig.port[port_index++]);
 
-        toconfig.property.length (cid->count_property ());
-        SEQ_HAND_GCC_BUG_WORKAROUND (Comp_Prop_Handler::handle_cpd,
-                                     (*cid->begin_property ()),
-                                     toconfig.property);
-        std::for_each (cid->begin_property (),
-                       cid->end_property (),
-                       Comp_Prop_Functor (toconfig.property));
+        toconfig.property.length (cid->property ().size ());
+        CORBA::ULong property_index {};
+        for (auto const& source_item : cid->property ())
+          Comp_Prop_Handler::handle_cpd (source_item, toconfig.property[property_index++]);
 
-        toconfig.infoProperty.length (cid->count_infoProperty ());
-        std::for_each (cid->begin_infoProperty (),
-                       cid->end_infoProperty (),
-                       Property_Functor (toconfig.infoProperty));
+        toconfig.infoProperty.length (cid->infoProperty ().size ());
+        CORBA::ULong infoProperty_index {};
+        for (auto const& source_item : cid->infoProperty ())
+          Property_Handler::handle_property (source_item, toconfig.infoProperty[infoProperty_index++]);
       }
-
 
       ComponentInterfaceDescription
       Comp_Intf_Descr_Handler::comp_intf_descr (
-                                                const ::Deployment::ComponentInterfaceDescription &src)
+                                                ::Deployment::ComponentInterfaceDescription const& src)
       {
         DANCE_TRACE ("Comp_Intf_Descr_Handler::comp_intf_descr - reverse");
-        ComponentInterfaceDescription retval;
+        XMLSchema::string<char> label (src.label.in () == nullptr ? "" : src.label.in ());
+        XMLSchema::string<char> UUID (src.UUID.in () == nullptr ? "" : src.UUID.in ());
+        XMLSchema::string<char> specificType (
+          src.specificType.in () == nullptr ? "" : src.specificType.in ());
+        XSCRT::OptionalArg<XMLSchema::string<char>> label_arg (std::nullopt);
+        XSCRT::OptionalArg<XMLSchema::string<char>> UUID_arg (std::nullopt);
+        XSCRT::OptionalArg<XMLSchema::string<char>> specificType_arg (std::nullopt);
+        if (src.label.in () != nullptr)
+          label_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (label);
+        if (src.UUID.in () != nullptr)
+          UUID_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (UUID);
+        if (src.specificType.in () != nullptr)
+          specificType_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (specificType);
 
-        retval.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
-        retval.UUID (ACE_TEXT_CHAR_TO_TCHAR  (src.UUID.in ()));
-        retval.specificType (ACE_TEXT_CHAR_TO_TCHAR  (src.specificType.in ()));
-#if 0
-        for (CORBA::ULong i = 0; i < src.supportedType.length (); ++i)
-          retval.add_supportedType (src.supportedType[i].in ());
+        ComponentInterfaceDescription::supportedType_container_type supported_types;
+        for (CORBA::ULong i {}; i < src.supportedType.length (); ++i)
+          supported_types.emplace_back (src.supportedType[i]);
 
-        for (CORBA::ULong i = 0; i < src.idlFile.length (); ++i)
-          retval.add_idlFile (src.idlFile[i].in ());
+        ComponentInterfaceDescription::idlFile_container_type idl_files;
+        for (CORBA::ULong i {}; i < src.idlFile.length (); ++i)
+          idl_files.emplace_back (src.idlFile[i]);
 
-        for (CORBA::ULong i = 0; i < src.configProperty.length (); ++i)
-          retval.add_configProperty (
-                                     Property_Handler::get_property (src.configProperty[i]));
+        ComponentInterfaceDescription::configProperty_container_type config_properties;
+        for (CORBA::ULong i {}; i < src.configProperty.length (); ++i)
+          {
+            Property const property (Property_Handler::get_property (src.configProperty[i]));
+            config_properties.push_back (property);
+          }
 
-        for (CORBA::ULong i = 0; i < src.port.length (); ++i)
-          retval.add_port
-            (DAnCE::Config_Handlers::CPD_Handler::component_port_description (src.port[i]));
+        ComponentInterfaceDescription::port_container_type ports;
+        for (CORBA::ULong i {}; i < src.port.length (); ++i)
+          {
+            ComponentPortDescription const port (
+              ::DAnCE::Config_Handlers::CPD_Handler::component_port_description (src.port[i]));
+            ports.push_back (port);
+          }
 
-        for (CORBA::ULong i = 0; i < src.property.length (); ++i)
-          retval.add_property (Comp_Prop_Handler::get_cpd (src.property[i]));
+        ComponentInterfaceDescription::property_container_type properties;
+        for (CORBA::ULong i {}; i < src.property.length (); ++i)
+          {
+            ComponentPropertyDescription const property (Comp_Prop_Handler::get_cpd (src.property[i]));
+            properties.push_back (property);
+          }
 
-        for (CORBA::ULong i = 0; i < src.infoProperty.length (); ++i)
-          retval.add_infoProperty (
-                                   Property_Handler::get_property (src.infoProperty[i]));
-#endif
-        return retval;
+        ComponentInterfaceDescription::infoProperty_container_type info_properties;
+        for (CORBA::ULong i {}; i < src.infoProperty.length (); ++i)
+          {
+            Property const property (Property_Handler::get_property (src.infoProperty[i]));
+            info_properties.push_back (property);
+          }
+
+        return ComponentInterfaceDescription (label_arg, UUID_arg, specificType_arg,
+                                              supported_types, idl_files, config_properties,
+                                              ports, properties, info_properties);
       }
 
-      ComponentInterfaceDescription *
-      Comp_Intf_Descr_Handler::resolve_cid (const ACE_TCHAR *uri)
+      ComponentInterfaceDescription * Comp_Intf_Descr_Handler::resolve_cid (std::string_view uri)
       {
         DANCE_TRACE ("Comp_Intf_Descr_Handler::resolve_cid");
 
-        xercesc::DOMDocument *dom = XML::XML_Typedef::XML_HELPER.create_dom (uri);
+        XML::XML_Helper<> xml_helper {};
+        std::string const uri_string (uri);
+        xercesc::DOMDocument *dom = xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri_string.c_str()));
 
         if (!dom)
-          throw Parse_Error (ACE_TEXT ("Unable to create DOM for Component Interface Description."));
+          throw Parse_Error ("Unable to create DOM for Component Interface Description.");
 
         try {
           return new ComponentInterfaceDescription
             (reader::componentInterfaceDescription (dom));
         }
         catch (...) {
-          throw Parse_Error (ACE_TEXT ("Unable to create XSC structure for Component Interface Description"));
+          throw Parse_Error ("Unable to create XSC structure for Component Interface Description");
         }
       }
     }

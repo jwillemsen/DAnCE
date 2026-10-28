@@ -12,7 +12,6 @@
 #include /**/ "ace/pre.h"
 
 #include "Config_Handlers_Common_Export.h"
-#include "Utils/Functors.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -44,22 +43,14 @@ namespace DAnCE
       class Config_Handlers_Common_Export Property_Handler
     {
     public:
-      Property_Handler (void);
-      virtual ~Property_Handler (void);
+      Property_Handler ();
+      virtual ~Property_Handler ();
 
       /// This method maps the values from the XSC object
       /// <DAnCE::Config_Handlers::Property> to the CORBA IDL type
       /// <Deployment::Property>.
-      static void handle_property (const Property& desc,
-                       ::Deployment::Property& toconfig);
-      static Property get_property (const ::Deployment::Property& src);
+      static void handle_property (Property const& desc, ::Deployment::Property& toconfig);
     };
-
-
-      typedef Sequence_Handler < Property,
-                 ::Deployment::Properties,
-                 ::Deployment::Property,
-                 Property_Handler::handle_property > Property_Functor;
 
     }
 }

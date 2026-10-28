@@ -3,16 +3,15 @@
  * @author William Otte <wotte@dre.vanderbilt.edu>
  */
 
-
 #ifndef CIAO_PACKAGING_SID_HANDLER_H
 #define CIAO_PACKAGING_SID_HANDLER_H
 
 #include /**/ "ace/pre.h"
 
-#include "ace/XML_Utils/XML_Typedefs.h"
-#include "Utils/Functors.h"
+#include "ace/XML_Utils/XMLSchema/Types.hpp"
 #include "IDREF_Base.h"
 #include "Package_Handlers/Packaging_Handlers_Export.h"
+#include <string_view>
 
 namespace Deployment
 {
@@ -34,32 +33,19 @@ namespace DAnCE
        */
       class Packaging_Handlers_Export SID_Handler
       {
-        SID_Handler (XML::XML_Typedef *xml_helper)
-          : xml_helper_ (xml_helper)
-        {
-
-        }
-
       public:
-        static void handle_sub_comp_inst_descr (const SubcomponentInstantiationDescription &desc,
+        static void handle_sub_comp_inst_descr (SubcomponentInstantiationDescription const& desc,
                                          ::Deployment::SubcomponentInstantiationDescription &toconfig);
 
         static SubcomponentInstantiationDescription
-        sub_comp_inst_descr (const ::Deployment::SubcomponentInstantiationDescription &src);
+        sub_comp_inst_descr (::Deployment::SubcomponentInstantiationDescription const& src);
 
         static IDREF_Base< CORBA::ULong > IDREF;
 
       private:
-        static SubcomponentInstantiationDescription *resolve_sid (const char *uri);
-
-        XML::XML_Typedef *xml_helper_;
+        static SubcomponentInstantiationDescription *resolve_sid (std::string_view uri);
 
       };
-
-      typedef Sequence_Handler < SubcomponentInstantiationDescription,
-                                 ::Deployment::SubcomponentInstantiationDescriptions,
-                                 ::Deployment::SubcomponentInstantiationDescription,
-    SID_Handler::handle_sub_comp_inst_descr > SID_Functor;
 
     }
   }

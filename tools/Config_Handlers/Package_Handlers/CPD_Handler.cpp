@@ -6,7 +6,9 @@
 #include "dance/Deployment/Deployment_Packaging_DataC.h"
 #include "Deployment.hpp"
 #include "Utils/Exceptions.h"
+#include "ace/XML_Utils/XML_Helper.h"
 #include "Property_Handler.h"
+#include <string>
 
 namespace DAnCE
 {
@@ -16,142 +18,136 @@ namespace DAnCE
     {
       struct Packaging_Handlers_Export PCI_Handler
       {
-    static void handle_pci (const PackagedComponentImplementation &desc,
+    static void handle_pci (PackagedComponentImplementation const& desc,
                 ::Deployment::PackagedComponentImplementation &toconfig)
     {
       DANCE_TRACE ("PCI_Handler::get_pci");
-      toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
+      toconfig.name = desc.name ().c_str ();
 
-      CID_Handler::component_impl_descr (desc.referencedImplementation (),
-                         toconfig.referencedImplementation);
+      CID_Handler::component_impl_descr (desc.referencedImplementation (), toconfig.referencedImplementation);
     }
 
     static PackagedComponentImplementation
-    get_pci (const ::Deployment::PackagedComponentImplementation &src)
+    get_pci (::Deployment::PackagedComponentImplementation const& src)
     {
       DANCE_TRACE ("PCI_Handler::get_pci - reverse");
       return PackagedComponentImplementation (
-        ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()),
+        src.name.in (),
         CID_Handler::component_impl_descr (src.referencedImplementation));
     }
       };
 
-      typedef Sequence_Handler < PackagedComponentImplementation,
-                 ::Deployment::PackagedComponentImplementations,
-                 ::Deployment::PackagedComponentImplementation,
-                 PCI_Handler::handle_pci > PCI_Functor;
-
-
       void
       CPD_Handler::handle_component_package_descr (
-        const ComponentPackageDescription &desc,
+        ComponentPackageDescription const& desc,
         ::Deployment::ComponentPackageDescription &toconfig)
       {
         DANCE_TRACE ("CPD_Handler::component_package_descr");
 
-        auto_ptr < ComponentPackageDescription > xsc_cpd;
-        const ComponentPackageDescription *cpd = 0;
+        std::unique_ptr<ComponentPackageDescription> xsc_cpd {};
+        ComponentPackageDescription const* cpd {};
 
-        if (desc.href_p ())
+        ::XMLSchema::string<char> const* href_if_set_ptr = desc.href_if_set ();
+        if (href_if_set_ptr)
           {
-            xsc_cpd.reset (CPD_Handler::resolve_cpd (desc.href ().c_str ()));
+            xsc_cpd.reset (CPD_Handler::resolve_cpd (href_if_set_ptr->c_str ()));
             cpd = xsc_cpd.get ();
           }
         else
           cpd = &desc;
 
-        if (cpd->label_p ())
-          toconfig.label = ACE_TEXT_ALWAYS_CHAR (cpd->label ().c_str ());
+        ::XMLSchema::string<char> const* label_if_set_ptr = cpd->label_if_set ();
+        if (label_if_set_ptr)
+          toconfig.label = label_if_set_ptr->c_str ();
 
-        if (cpd->UUID_p ())
-          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR  (cpd->UUID ().c_str ());
+        ::XMLSchema::string<char> const* UUID_if_set_ptr = cpd->UUID_if_set ();
+        if (UUID_if_set_ptr)
+          toconfig.UUID = UUID_if_set_ptr->c_str ();
 
         // CID
-        if (cpd->realizes_p ())
-          Comp_Intf_Descr_Handler::comp_intf_descr (cpd->realizes (),
-                                                    toconfig.realizes);
+        ::DAnCE::Config_Handlers::ComponentInterfaceDescription const* realizes_if_set_ptr = cpd->realizes_if_set ();
+        if (realizes_if_set_ptr)
+          Comp_Intf_Descr_Handler::comp_intf_descr (*realizes_if_set_ptr, toconfig.realizes);
 
         // Config Properties
-        toconfig.configProperty.length (desc.count_configProperty ());
-        std::for_each (cpd->begin_infoProperty (),
-                       cpd->end_infoProperty (),
-                       Property_Functor (toconfig.configProperty));
+        toconfig.configProperty.length (cpd->configProperty ().size ());
+        CORBA::ULong configProperty_index {};
+        for (auto const& source_item : cpd->configProperty ())
+          Property_Handler::handle_property (source_item, toconfig.configProperty[configProperty_index++]);
 
         // Packaged Component Implementations
-        toconfig.implementation.length ( cpd->count_implementation ());
-        SEQ_HAND_GCC_BUG_WORKAROUND (PCI_Handler::handle_pci,
-                                     (*cpd->begin_implementation ()),
-                                     toconfig.implementation);
-        std::for_each (cpd->begin_implementation (),
-                       cpd->end_implementation (),
-                       PCI_Functor (toconfig.implementation));
+        toconfig.implementation.length (cpd->implementation ().size ());
+        CORBA::ULong implementation_index {};
+        for (auto const& source_item : cpd->implementation ())
+          PCI_Handler::handle_pci (source_item, toconfig.implementation[implementation_index++]);
 
         // Info Properties
-        toconfig.infoProperty.length (cpd->count_infoProperty ());
-        std::for_each (cpd->begin_infoProperty (),
-                       cpd->end_infoProperty (),
-                       Property_Functor (toconfig.infoProperty));
+        toconfig.infoProperty.length (cpd->infoProperty ().size ());
+        CORBA::ULong infoProperty_index {};
+        for (auto const& source_item : cpd->infoProperty ())
+          Property_Handler::handle_property (source_item, toconfig.infoProperty[infoProperty_index++]);
       }
 
       ComponentPackageDescription
       CPD_Handler::component_package_descr (
-        const Deployment::ComponentPackageDescription& src)
+        Deployment::ComponentPackageDescription const& src)
       {
         DANCE_TRACE ("CPD_Handler::component_package_descr - reverse");
-        ComponentPackageDescription toconfig;
+        XMLSchema::string<char> label (src.label.in () == nullptr ? "" : src.label.in ());
+        XMLSchema::string<char> UUID (src.UUID.in () == nullptr ? "" : src.UUID.in ());
+        XSCRT::OptionalArg<XMLSchema::string<char>> label_arg (std::nullopt);
+        XSCRT::OptionalArg<XMLSchema::string<char>> UUID_arg (std::nullopt);
+        if (src.label.in () != nullptr)
+          label_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (label);
+        if (src.UUID.in () != nullptr)
+          UUID_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (UUID);
+        ComponentInterfaceDescription realizes (
+          Comp_Intf_Descr_Handler::comp_intf_descr (src.realizes));
 
-        if (src.label.in () != 0)
-          toconfig.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
-
-        if (src.UUID.in () != 0)
-          toconfig.UUID (ACE_TEXT_CHAR_TO_TCHAR (src.UUID.in ()));
-
-        {
-          toconfig.realizes
-            (Comp_Intf_Descr_Handler::comp_intf_descr (src.realizes));
-        }
-#if 0
-        for (size_t i = 0; i < src.configProperty.length (); ++i)
+        ComponentPackageDescription::configProperty_container_type config_properties;
+        for (CORBA::ULong i {}; i < src.configProperty.length (); ++i)
           {
-            toconfig.add_configProperty (
-                     Property_Handler::get_property (src.configProperty[i]));
+            Property const property (Property_Handler::get_property (src.configProperty[i]));
+            config_properties.push_back (property);
           }
 
-        { // Packaged Component Implementations
-          for (size_t i = 0; i < src.implementation.length (); ++i)
-            toconfig.add_implementation (
-                     PCI_Handler::get_pci (src.implementation[i]));
-        }
-
-        for (size_t i = 0; i < src.infoProperty.length (); ++i)
+        ComponentPackageDescription::implementation_container_type implementations;
+        for (CORBA::ULong i {}; i < src.implementation.length (); ++i)
           {
-            toconfig.add_infoProperty (
-                       Property_Handler::get_property (src.infoProperty[i]));
+            PackagedComponentImplementation const implementation (PCI_Handler::get_pci (src.implementation[i]));
+            implementations.push_back (implementation);
           }
-#endif
-        return toconfig;
+
+        ComponentPackageDescription::infoProperty_container_type info_properties;
+        for (CORBA::ULong i {}; i < src.infoProperty.length (); ++i)
+          {
+            Property const property (Property_Handler::get_property (src.infoProperty[i]));
+            info_properties.push_back (property);
+          }
+
+        return ComponentPackageDescription (label_arg, UUID_arg, realizes,
+                                            config_properties, implementations, info_properties);
       }
 
       ComponentPackageDescription * CPD_Handler::resolve_cpd (
-        const ACE_TCHAR *uri)
+        std::string_view uri)
       {
         DANCE_TRACE ("CPD_Handler::resolve_cpd");
-        if (!XML::XML_Typedef::XML_HELPER.is_initialized ())
+        XML::XML_Helper<> xml_helper {};
+        if (!xml_helper.is_initialized ())
           return 0;
 
-        xercesc::DOMDocument* dom =
-          XML::XML_Typedef::XML_HELPER.create_dom (uri);
+        std::string const uri_string (uri);
+        xercesc::DOMDocument* dom = xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri_string.c_str()));
 
         if (!dom)
-          throw Parse_Error ( ACE_TEXT (
-            "Unable to create DOM for component package description"));
+          throw Parse_Error ("Unable to create DOM for component package description");
 
         try {
           return new ComponentPackageDescription (reader::componentPackageDescription (dom));
         }
         catch (...) {
-          throw Parse_Error (ACE_TEXT (
-            "Unable to create XSC structure for CID"));
+          throw Parse_Error ("Unable to create XSC structure for CID");
         }
       }
     }

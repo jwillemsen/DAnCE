@@ -3,12 +3,13 @@
 #include "Basic_Deployment_Data.hpp"
 #include "Property_Handler.h"
 #include "Req_Handler.h"
-#include "Utils/Functors.h"
 #include "Utils/Exceptions.h"
-#include "ace/XML_Utils/XML_Typedefs.h"
+#include "ace/XML_Utils/XMLSchema/Types.hpp"
+#include "ace/XML_Utils/XML_Helper.h"
 
 #include "Deployment.hpp"
 #include "dance/Logger/Log_Macros.h"
+#include <string>
 
 namespace DAnCE
 {
@@ -18,103 +19,123 @@ namespace DAnCE
     {
 
       void
-      IAD_Handler::impl_artifact_descr (const ImplementationArtifactDescription &desc,
+      IAD_Handler::impl_artifact_descr (ImplementationArtifactDescription const& desc,
                                         ::Deployment::ImplementationArtifactDescription &toconfig)
       {
         DANCE_TRACE ("IAD_Handler::impl_artifact_descr");
 
-        const ImplementationArtifactDescription *iad = 0;
-        std::auto_ptr <ImplementationArtifactDescription> safe_iad;
+        ImplementationArtifactDescription const* iad {};
+        std::unique_ptr<ImplementationArtifactDescription> safe_iad {};
 
-        if (desc.href_p ())
+        ::XMLSchema::string<char> const* href_if_set_ptr = desc.href_if_set ();
+        if (href_if_set_ptr)
           {
-            safe_iad.reset (IAD_Handler::resolve_iad (desc.href ().c_str ()));
+            safe_iad.reset (IAD_Handler::resolve_iad (href_if_set_ptr->c_str ()));
             iad = safe_iad.get ();
           }
         else
           iad = &desc;
 
+        ::XMLSchema::string<char> const* label_if_set_ptr = iad->label_if_set ();
+        if (label_if_set_ptr)
+          toconfig.label = label_if_set_ptr->c_str ();
 
-        if (iad->label_p ())
-          toconfig.label = ACE_TEXT_ALWAYS_CHAR ( iad->label ().c_str ());
+        ::XMLSchema::string<char> const* UUID_if_set_ptr = iad->UUID_if_set ();
+        if (UUID_if_set_ptr)
+          toconfig.UUID = UUID_if_set_ptr->c_str ();
 
-        if (iad->UUID_p ())
-          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR (iad->UUID ().c_str ());
+        toconfig.location.length (iad->location ().size ());
+        CORBA::ULong location_index {};
+        for (auto const& source_item : iad->location ())
+          toconfig.location[location_index++] = source_item.c_str ();
 
-        toconfig.location.length (iad->count_location ());
-        std::for_each (iad->begin_location (),
-                       iad->end_location (),
-                       String_Seq_Functor (toconfig.location));
+        toconfig.dependsOn.length (iad->dependsOn ().size ());
+        CORBA::ULong dependsOn_index {};
+        for (auto const& source_item : iad->dependsOn ())
+          NIA_Handler::handle_nia (source_item, toconfig.dependsOn[dependsOn_index++]);
 
-        toconfig.dependsOn.length (iad->count_dependsOn ());
-        SEQ_HAND_GCC_BUG_WORKAROUND (NIA_Handler::handle_nia,
-                                     (*desc.begin_dependsOn ()),
-                                     toconfig.dependsOn);
-        std::for_each (iad->begin_dependsOn (),
-                       iad->end_dependsOn (),
-                       NIA_Functor (toconfig.dependsOn));
+        toconfig.execParameter.length (iad->execParameter ().size ());
+        CORBA::ULong execParameter_index {};
+        for (auto const& source_item : iad->execParameter ())
+          Property_Handler::handle_property (source_item, toconfig.execParameter[execParameter_index++]);
 
-        toconfig.execParameter.length (iad->count_execParameter ());
-        std::for_each (iad->begin_execParameter (),
-                       iad->end_execParameter (),
-                       Property_Functor (toconfig.execParameter));
+        toconfig.infoProperty.length (iad->infoProperty ().size ());
+        CORBA::ULong infoProperty_index {};
+        for (auto const& source_item : iad->infoProperty ())
+          Property_Handler::handle_property (source_item, toconfig.infoProperty[infoProperty_index++]);
 
-        toconfig.infoProperty.length (iad->count_infoProperty ());
-        std::for_each (iad->begin_infoProperty (),
-                       iad->end_infoProperty (),
-                       Property_Functor (toconfig.infoProperty));
-
-        toconfig.deployRequirement.length (iad->count_deployRequirement ());
-        std::for_each (iad->begin_deployRequirement (),
-                       iad->end_deployRequirement (),
-                       Requirement_Functor (toconfig.deployRequirement ));
+        toconfig.deployRequirement.length (iad->deployRequirement ().size ());
+        CORBA::ULong deployRequirement_index {};
+        for (auto const& source_item : iad->deployRequirement ())
+          Req_Handler::handle_requirement (source_item, toconfig.deployRequirement[deployRequirement_index++]);
       }
 
       ImplementationArtifactDescription
-      IAD_Handler::impl_artifact_descr (const ::Deployment::ImplementationArtifactDescription &src)
+      IAD_Handler::impl_artifact_descr (::Deployment::ImplementationArtifactDescription const& src)
       {
         DANCE_TRACE ("IAD_Handler::impl_artifact_descr - reverse");
-        ImplementationArtifactDescription retval;
+        XMLSchema::string<char> label (src.label.in () == nullptr ? "" : src.label.in ());
+        XMLSchema::string<char> UUID (src.UUID.in () == nullptr ? "" : src.UUID.in ());
+        XSCRT::OptionalArg<XMLSchema::string<char>> label_arg (std::nullopt);
+        XSCRT::OptionalArg<XMLSchema::string<char>> UUID_arg (std::nullopt);
+        if (src.label.in () != nullptr)
+          label_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (label);
+        if (src.UUID.in () != nullptr)
+          UUID_arg = XSCRT::OptionalArg<XMLSchema::string<char>> (UUID);
 
-        retval.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
-        retval.UUID (ACE_TEXT_CHAR_TO_TCHAR  (src.UUID.in ()));
-#if 0
-        for (CORBA::ULong i = 0; i < src.location.length (); ++i)
-          retval.add_location (src.location[i].in ());
+        ImplementationArtifactDescription::location_container_type locations;
+        for (CORBA::ULong i {}; i < src.location.length (); ++i)
+          locations.emplace_back (src.location[i]);
 
-        for (CORBA::ULong i = 0; i < src.dependsOn.length (); ++i)
-          retval.add_dependsOn (NIA_Handler::get_nia (src.dependsOn[i]));
+        ImplementationArtifactDescription::dependsOn_container_type dependencies;
+        for (CORBA::ULong i {}; i < src.dependsOn.length (); ++i)
+          {
+            NamedImplementationArtifact const dependency (NIA_Handler::get_nia (src.dependsOn[i]));
+            dependencies.push_back (dependency);
+          }
 
-        for (CORBA::ULong i = 0; i < src.execParameter.length (); ++i)
-          retval.add_execParameter
-            (Property_Handler::get_property (src.execParameter[i]));
+        ImplementationArtifactDescription::execParameter_container_type exec_parameters;
+        for (CORBA::ULong i {}; i < src.execParameter.length (); ++i)
+          {
+            Property const property (Property_Handler::get_property (src.execParameter[i]));
+            exec_parameters.push_back (property);
+          }
 
-        for (CORBA::ULong i = 0; i < src.infoProperty.length (); ++i)
-          retval.add_infoProperty
-            (Property_Handler::get_property ( src.infoProperty[i]));
+        ImplementationArtifactDescription::infoProperty_container_type info_properties;
+        for (CORBA::ULong i {}; i < src.infoProperty.length (); ++i)
+          {
+            Property const property (Property_Handler::get_property (src.infoProperty[i]));
+            info_properties.push_back (property);
+          }
 
-        for (CORBA::ULong i = 0; i < src.deployRequirement.length (); ++i)
-          retval.add_deployRequirement
-            (Req_Handler::get_requirement (src.deployRequirement[i]));
-#endif
-        return retval;
+        ImplementationArtifactDescription::deployRequirement_container_type requirements;
+        for (CORBA::ULong i {}; i < src.deployRequirement.length (); ++i)
+          {
+            Requirement const requirement (Req_Handler::get_requirement (src.deployRequirement[i]));
+            requirements.push_back (requirement);
+          }
+
+        return ImplementationArtifactDescription (label_arg, UUID_arg, locations, dependencies,
+                                                  exec_parameters, info_properties, requirements);
       }
 
-      ImplementationArtifactDescription *  IAD_Handler::resolve_iad (const ACE_TCHAR *uri)
+      ImplementationArtifactDescription * IAD_Handler::resolve_iad (std::string_view uri)
       {
         DANCE_TRACE ("IAD_Handler::resolve_iad");
 
-        xercesc::DOMDocument *dom = XML::XML_Typedef::XML_HELPER.create_dom (uri);
+        XML::XML_Helper<> xml_helper {};
+        std::string const uri_string (uri);
+        xercesc::DOMDocument *dom = xml_helper.create_dom (ACE_TEXT_CHAR_TO_TCHAR (uri_string.c_str()));
 
         if (!dom)
-          throw Parse_Error (ACE_TEXT ("Unable to create DOM for IAD"));
+          throw Parse_Error ("Unable to create DOM for IAD");
 
         try {
           return new ImplementationArtifactDescription
             (reader::implementationArtifactDescription (dom));
         }
         catch (...) {
-          throw Parse_Error (ACE_TEXT ("Unable to create XSC structure for IAD"));
+          throw Parse_Error ("Unable to create XSC structure for IAD");
         }
       }
 

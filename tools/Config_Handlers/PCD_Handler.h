@@ -11,7 +11,6 @@
 #include /**/ "ace/pre.h"
 
 #include "Config_Handlers_Export.h"
-#include "Utils/Functors.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -45,26 +44,18 @@ namespace DAnCE
 
     public:
 
-      PCD_Handler (void);
-      virtual ~PCD_Handler (void);
+      PCD_Handler ();
+      virtual ~PCD_Handler ();
 
       ///This method takes a <Deployment::PlanConnectionDescription>
       ///and maps the values from the passed in XSC
       ///PlanConnectionDescription to its members.
-      static void handle_PlanConnectionDescription (const PlanConnectionDescription& desc,
+      static void handle_PlanConnectionDescription (PlanConnectionDescription const& desc,
                                           ::Deployment::PlanConnectionDescription& toconfig);
 
       //This method takes a <Deployment::PlanConnectionDescription>
       //converts it into a <Config_Handler::PlanConnectionDescription>
-      //and returns the value
-      static PlanConnectionDescription
-        get_PlanConnectionDescription (const Deployment::PlanConnectionDescription &src);
     };
-
-    typedef Sequence_Handler < PlanConnectionDescription,
-                               ::Deployment::PlanConnectionDescriptions,
-                               ::Deployment::PlanConnectionDescription,
-                               PCD_Handler::handle_PlanConnectionDescription > PCD_Functor;
 
   }
 }

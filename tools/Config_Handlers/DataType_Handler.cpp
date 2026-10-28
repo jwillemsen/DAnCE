@@ -1,17 +1,19 @@
 #include "DataType_Handler.h"
+#include "Common.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "dance/Logger/Log_Macros.h"
+#include <functional>
 namespace DAnCE
 {
   namespace Config_Handlers
   {
 
-    DataType_Handler::DataType_Handler (void)
+    DataType_Handler::DataType_Handler ()
     {
       DANCE_TRACE("DataType_Handler::constructor");
     }
-    DataType_Handler::~DataType_Handler (void)
+    DataType_Handler::~DataType_Handler ()
     {
       DANCE_TRACE("DataType_Handler::destructor");
     }
@@ -27,75 +29,58 @@ namespace DAnCE
 
       switch (kind.integral ())
         {
-        case  TCKind::tk_null_l:
+        case  TCKind::tk_null:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_null);
           break;
-
-        case  TCKind::tk_short_l:
+        case  TCKind::tk_short:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_short);
           break;
-
-        case  TCKind::tk_long_l:
+        case  TCKind::tk_long:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_long);
           break;
-
-        case  TCKind::tk_ushort_l:
+        case  TCKind::tk_ushort:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_ushort);
           break;
-
-        case  TCKind::tk_ulong_l:
+        case  TCKind::tk_ulong:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_ulong);
           break;
-
-        case  TCKind::tk_float_l:
+        case  TCKind::tk_float:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_float);
           break;
-
-        case  TCKind::tk_double_l:
+        case  TCKind::tk_double:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_double);
           break;
-
-        case  TCKind::tk_boolean_l:
+        case  TCKind::tk_boolean:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_boolean);
           break;
-
-        case  TCKind::tk_char_l:
+        case  TCKind::tk_char:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_char);
           break;
-
-        case  TCKind::tk_octet_l:
+        case  TCKind::tk_octet:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_octet);
           break;
-
-        case  TCKind::tk_string_l:
+        case  TCKind::tk_string:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_string);
           break;
-
-        case  TCKind::tk_longlong_l:
+        case  TCKind::tk_longlong:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_longlong);
           break;
-
-        case  TCKind::tk_ulonglong_l:
+        case  TCKind::tk_ulonglong:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_ulonglong);
           break;
-
-        case  TCKind::tk_longdouble_l:
+        case  TCKind::tk_longdouble:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_longdouble);
           break;
-
-        case  TCKind::tk_wchar_l:
+        case  TCKind::tk_wchar:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_wchar);
           break;
-
-        case  TCKind::tk_wstring_l:
+        case  TCKind::tk_wstring:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_wstring);
           break;
-
-        case  TCKind::tk_any_l:
+        case  TCKind::tk_any:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_any);
           break;
-
-        case  TCKind::tk_TypeCode_l:
+        case  TCKind::tk_TypeCode:
           type = CORBA::TypeCode::_duplicate (CORBA::_tc_TypeCode);
           break;
 
@@ -103,63 +88,12 @@ namespace DAnCE
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR,
             "DataType_Handler::data_type, Invalid typecode in any\n"));
-          throw 1;
+          throw Config_Error ("", "Invalid typecode in data type description");
         }
 
       //   This case used to be supported...is it not in the schema?
-      //    case  TCKind::tk_Object)
-      //      type = CORBA::TypeCode::_duplicate (CORBA::_tc_Object);*/
 
     }
 
-    DataType
-    DataType_Handler::data_type (const CORBA::TypeCode_ptr&  src)
-    {
-      DANCE_TRACE("DataType_Handler::data_type - reverse");
-      switch (src->kind ())
-        {
-        case ::CORBA::tk_null:
-          return DataType (TCKind::tk_null);
-        case CORBA::tk_short:
-          return DataType (TCKind::tk_short);
-        case CORBA::tk_long:
-          return DataType (TCKind::tk_long);
-        case CORBA::tk_ushort:
-          return DataType (TCKind::tk_ushort);
-        case CORBA::tk_ulong:
-          return DataType (TCKind::tk_ulong);
-        case CORBA::tk_float:
-          return DataType (TCKind::tk_float);
-        case CORBA::tk_double:
-          return DataType (TCKind::tk_double);
-        case CORBA::tk_boolean:
-          return DataType (TCKind::tk_boolean);
-        case CORBA::tk_char:
-          return DataType (TCKind::tk_char);
-        case CORBA::tk_octet:
-          return DataType (TCKind::tk_octet);
-        case CORBA::tk_string:
-          return DataType (TCKind::tk_string);
-        case CORBA::tk_longlong:
-          return DataType (TCKind::tk_longlong);
-        case CORBA::tk_ulonglong:
-          return DataType (TCKind::tk_ulonglong);
-        case CORBA::tk_longdouble:
-          return DataType (TCKind::tk_longdouble);
-        case CORBA::tk_wchar:
-          return DataType (TCKind::tk_wchar);
-        case CORBA::tk_wstring:
-          return DataType (TCKind::tk_wstring);
-        case CORBA::tk_any:
-          return DataType (TCKind::tk_any);
-        case CORBA::tk_TypeCode:
-          return DataType (TCKind::tk_TypeCode);
-        default:
-          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_ERROR, "DataType_Handler::data_type, Invalid typecode\n"));
-          throw 1;
-        }
-      throw 1;
-    }
   }
 }

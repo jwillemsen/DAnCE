@@ -44,8 +44,8 @@ namespace DAnCE
 
     public:
 
-      CRDD_Handler (void);
-      virtual ~CRDD_Handler (void);
+      CRDD_Handler ();
+      virtual ~CRDD_Handler ();
 
       ///This method takes a <Deployment::ConnectionResourceDeploymentDescription>
       ///and maps the values from the passed in XSC
@@ -53,9 +53,6 @@ namespace DAnCE
       void get_ConnectionResourceDeploymentDescription (Deployment::ConnectionResourceDeploymentDescription& toconfig,
                                                         const ConnectionResourceDeploymentDescription& desc);
 
-      static ConnectionResourceDeploymentDescription
-      connection_resource_depl_desc (
-                                     const ::Deployment::ConnectionResourceDeploymentDescription& src);
 
     };
   }

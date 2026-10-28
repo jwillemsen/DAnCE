@@ -44,8 +44,6 @@ class Config_Handlers_Export CCD_Handler
 public:
 static void component_interface_descr (const ComponentInterfaceDescription &src,
 ::Deployment::ComponentInterfaceDescription& dest);
-static ComponentInterfaceDescription
-component_interface_descr (const ::Deployment::ComponentInterfaceDescription&  src);
 
 };
 }

@@ -6,7 +6,10 @@
  */
 #ifndef CONFIG_HANDLERS_COMMON_H
 #define CONFIG_HANDLERS_COMMON_H
+
 #include <string>
+#include <string_view>
+#include <utility>
 
 namespace DAnCE
 {
@@ -19,27 +22,22 @@ namespace DAnCE
     class Config_Error
     {
     public:
-      Config_Error (const std::basic_string<ACE_TCHAR> &name,
-                    const std::basic_string<ACE_TCHAR> &error) :
-        name_ (name),
-        error_ (error)
-      {};
+      Config_Error (std::string name, std::string error) : name_ (std::move (name)), error_ (std::move (error)) {};
 
-      void add_name (const std::basic_string<ACE_TCHAR> &name)
+      void add_name (std::string_view name)
       {
-        name_ = name + ACE_TEXT (":") + name_;
+        name_ = std::string (name) + ":" + name_;
       }
 
       /// Some identifying information about the element that
       /// caused the error
-      std::basic_string<ACE_TCHAR> name_;
+      std::string name_;
 
       /// A human readable error message
-      std::basic_string<ACE_TCHAR> error_;
+      std::string error_;
 
     };
   }
 }
 #endif /* CONFIG_HANDLERS_COMMON_H */
-
 

@@ -12,7 +12,6 @@
 #include /**/ "ace/pre.h"
 
 #include "Config_Handlers_Common_Export.h"
-#include "Utils/Functors.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -44,21 +43,14 @@ namespace DAnCE
       class Config_Handlers_Common_Export SatisfierProperty_Handler
     {
     public:
-      SatisfierProperty_Handler (void);
-      virtual ~SatisfierProperty_Handler (void);
+      SatisfierProperty_Handler ();
+      virtual ~SatisfierProperty_Handler ();
 
       /// This method maps the values from the XSC object
       /// <DAnCE::Config_Handlers::SatisfierProperty> to the CORBA IDL type
       /// <Deployment::SatisfierProperty>.
-      static void handle_sat_property (const SatisfierProperty& desc,
-                       ::Deployment::SatisfierProperty& toconfig);
-      static SatisfierProperty get_sat_property (const ::Deployment::SatisfierProperty& src);
+      static void handle_sat_property (SatisfierProperty const& desc, ::Deployment::SatisfierProperty& toconfig);
     };
-
-      typedef Sequence_Handler < SatisfierProperty,
-    ::Deployment::SatisfierProperties,
-    ::Deployment::SatisfierProperty,
-    SatisfierProperty_Handler::handle_sat_property> SatisfierProperty_Functor;
 
     }
 }
