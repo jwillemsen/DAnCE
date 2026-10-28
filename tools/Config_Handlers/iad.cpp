@@ -134,6 +134,8 @@ namespace DAnCE
           referencedArtifact_ = std::make_unique<::DAnCE::Config_Handlers::ImplementationArtifactDescription> (e);
         }
       }
+      if (!name_)throw std::invalid_argument ("missing required XML element: name");
+      if (!referencedArtifact_)throw std::invalid_argument ("missing required XML element: referencedArtifact");
     }
     ImplementationArtifactDescription::ImplementationArtifactDescription (::XSCRT::XML::Element<char> const& element)
     : ::XSCRT::Type (element)

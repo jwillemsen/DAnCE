@@ -156,9 +156,13 @@ namespace DAnCE
       IDD_Handler::IDREF.bind_next_available (idd_id);
 
       if (src.deployedSharedResource.length () != 0)
-        return InstanceDeploymentDescription (
-          name, node, source, xid, config_properties, resources,
-          IRDD_Handler::instance_resource_deployment_descr (src.deployedSharedResource[0]), xml_id);
+        {
+          InstanceResourceDeploymentDescription const shared_resource (
+            IRDD_Handler::instance_resource_deployment_descr (src.deployedSharedResource[0]));
+          return InstanceDeploymentDescription (
+            name, node, source, xid, config_properties, resources,
+            shared_resource, xml_id);
+        }
 
       return InstanceDeploymentDescription (name, node, source, xid, config_properties, resources,
                                             std::nullopt, xml_id);

@@ -184,6 +184,8 @@ namespace DAnCE
           instance_ = std::make_unique<::DAnCE::Config_Handlers::InstanceDeploymentDescription> (e);
         }
       }
+      if (!propertyName_)throw std::invalid_argument ("missing required XML element: propertyName");
+      if (!instance_)throw std::invalid_argument ("missing required XML element: instance");
     }
     PlanPropertyMapping::PlanPropertyMapping (::XSCRT::XML::Element<char> const& element)
     : ::XSCRT::Type (element)
@@ -212,6 +214,9 @@ namespace DAnCE
           delegatesTo_.emplace_back (e);
         }
       }
+      if (!name_)throw std::invalid_argument ("missing required XML element: name");
+      if (!externalName_)throw std::invalid_argument ("missing required XML element: externalName");
+      if (delegatesTo_.size () < 1)throw std::invalid_argument ("missing required XML element: delegatesTo");
     }
     deploymentPlan::deploymentPlan (::XSCRT::XML::Element<char> const& element)
     : ::XSCRT::Type (element)

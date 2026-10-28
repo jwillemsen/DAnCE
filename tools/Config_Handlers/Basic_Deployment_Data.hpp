@@ -79,6 +79,8 @@ namespace XSCRT
     OptionalArg (T const& value) noexcept : value_ (std::addressof (value))
     {
     }
+    OptionalArg (T const&&) = delete;
+
     explicit operator bool () const noexcept
     {
       return value_ != nullptr;
