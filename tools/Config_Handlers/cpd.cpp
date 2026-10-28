@@ -177,8 +177,8 @@ namespace DAnCE
           referencedImplementation_ = std::make_unique<::DAnCE::Config_Handlers::ComponentImplementationDescription> (e);
         }
       }
-      if (!name_)throw std::invalid_argument ("missing required XML element: name");
-      if (!referencedImplementation_)throw std::invalid_argument ("missing required XML element: referencedImplementation");
+      if (!name_) throw std::invalid_argument ("missing required XML element: name");
+      if (!referencedImplementation_) throw std::invalid_argument ("missing required XML element: referencedImplementation");
     }
     ComponentPackageDescription::ComponentPackageDescription (::XSCRT::XML::Element<char> const& element)
     : ::XSCRT::Type (element)
